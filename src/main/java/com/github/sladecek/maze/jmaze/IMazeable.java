@@ -11,19 +11,19 @@ package com.github.sladecek.maze.jmaze;
  */
 public interface IMazeable {
 	
-	int GetRoomCount();
+	int getRoomCount();
 	
-	Iterable<Integer> GetWalls(int room);
+	Iterable<Integer> getWalls(int room);
 	
-	int GetStartRoom();
+	int getStartRoom();
 	
-	int GetTargetRoom();
+	int getTargetRoom();
 	
-	boolean IsWallClosed(int wall);
+	boolean isWallClosed(int wall);
 	
-	void SetWallClosed(int wall, boolean value);
+	void setWallClosed(int wall, boolean value);
 	
-	double GetRoomDistance(int r1, int r2);
+	double getRoomDistance(int r1, int r2);
 	
 
 }

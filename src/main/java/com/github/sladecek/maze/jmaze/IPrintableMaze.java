@@ -6,8 +6,9 @@ package com.github.sladecek.maze.jmaze;
  */
 public interface IPrintableMaze {
 	
-	enum ShapeType { innerWall, outerWall, solution };
 	
-	Iterable<IMazeShape> GetShapes(ShapeType whichType);
+	Iterable<IMazeShape> getShapes();
+	int getPictureHeight();
+	int getPictureWidth();
 
 }

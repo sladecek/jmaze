@@ -28,10 +28,9 @@ public class XmlWriter implements java.lang.AutoCloseable {
 	}
 
 	public void addAttribute(String name, String value) throws IOException {
-		out.write(" " + name + "\"" + value + "\"" + " ");
+		out.write(" " + name + "=\"" + value + "\"" + " ");
 	}
 	
-	@Override
 	public void close() throws IOException {		
 		out.close();
 		stream.close();
@@ -44,6 +43,7 @@ public class XmlWriter implements java.lang.AutoCloseable {
 			out.write("/>\n");
 			nestedElements.pop();
 		} else {
+			// full form </element>
 			out.write("</" + nestedElements.pop() + ">\n");
 		}
 	}
