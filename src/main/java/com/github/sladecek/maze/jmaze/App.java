@@ -8,7 +8,7 @@ public class App
     public static void main( String[] args )
     {
     	Rectangular2DMaze maze = new Rectangular2DMaze(10,10);
-    	AStarMazeGenerator g = new AStarMazeGenerator();
+    	IMazeGenerator g = new DepthFirstMazeGenerator();
     	g.generateMaze(maze);
     	SvgMazePrinter smp = new SvgMazePrinter();
     	smp.printMaze(maze, "maze.svg");

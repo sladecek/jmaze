@@ -1,5 +1,6 @@
 package com.github.sladecek.maze.jmaze;
 
+import java.security.InvalidParameterException;
 import java.util.BitSet;
 import java.util.Vector;
 
@@ -132,6 +133,35 @@ public class Rectangular2DMaze implements IMazeable, IPrintableMaze {
 	@Override
 	public int getPictureWidth() {
 		return width;
+	}
+
+	@Override
+	public int getOtherRoom(int room, int wall) {
+		if (wall < eastWestWallCount)
+		{
+			final int y = wall / (width-1);
+			final int x = wall % (width-1);
+			final int westRoom = y*width+x;
+			final int eastRoom = westRoom+1;
+			if (!(room == westRoom || room == eastRoom))
+			{
+				throw new InvalidParameterException("Wall is not adjacent to room");
+			}
+			return room == westRoom ? eastRoom : westRoom;
+		}
+		else
+		{
+			final int y = (wall-eastWestWallCount) / width;
+			final int x = (wall-eastWestWallCount) % width;
+			final int northRoom = y*width+x;
+			final int southRoom = northRoom+width;
+			if (!(room == northRoom || room == southRoom))
+			{
+				throw new InvalidParameterException("Wall is not adjacent to room");
+			}
+			return room == northRoom ? southRoom : northRoom;
+		}
+		
 	}
 
 }

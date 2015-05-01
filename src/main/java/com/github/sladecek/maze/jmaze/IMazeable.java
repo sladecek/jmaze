@@ -24,6 +24,8 @@ public interface IMazeable {
 	void setWallClosed(int wall, boolean value);
 	
 	double getRoomDistance(int r1, int r2);
+
+	int getOtherRoom(int room, int wall);
 	
 
 }
