@@ -20,6 +20,7 @@ public class LineShape implements IMazeShape {
 
 	public void printToSvg(SvgMazePrinter svg) throws IOException  {
 		String style = "";
+		boolean center = false;
 		switch (shapeType)
 		{
 		case outerWall:
@@ -30,10 +31,11 @@ public class LineShape implements IMazeShape {
 			break;
 		case solution:
 			style = "stroke:rgb(255,0,0);stroke-width:2";
+			center = true;
 			break;
 			
 		}
-		svg.printLine(y1, x1, y2, x2, style);		
+		svg.printLine(y1, x1, y2, x2, style, center);		
 	}
 
 	private int x1;

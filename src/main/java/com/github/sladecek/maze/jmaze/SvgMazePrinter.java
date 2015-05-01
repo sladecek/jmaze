@@ -7,13 +7,13 @@ public class SvgMazePrinter implements IMazePrinter {
 	final int cellSize = 10;
 	final int margin = cellSize/2;
 
-	public void printLine(int y1, int x1, int y2, int x2, String style) throws IOException  {
-		
+	public void printLine(int y1, int x1, int y2, int x2, String style, boolean center) throws IOException  {
+		int offs = center ? cellSize/2 : 0;
 		xml.startElement("line");
-		xml.addAttribute("x1",toUnits(x1));
-		xml.addAttribute("y1",toUnits(y1));
-		xml.addAttribute("x2",toUnits(x2));
-		xml.addAttribute("y2",toUnits(y2));
+		xml.addAttribute("x1",toUnits(x1)+offs);
+		xml.addAttribute("y1",toUnits(y1)+offs);
+		xml.addAttribute("x2",toUnits(x2)+offs);
+		xml.addAttribute("y2",toUnits(y2)+offs);
 		xml.addAttribute("style", style);
 		xml.closeElement();
 		

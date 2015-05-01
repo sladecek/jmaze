@@ -15,6 +15,7 @@ public class Rectangular2DMaze implements IMazeable, IPrintableMaze {
 	private int height;
 	private BitSet isWallClosed;
 	private int width;
+	private Vector<Integer> solution = new Vector<Integer>();
 	
 	public Rectangular2DMaze(int height, int width) {
 		this.width = width;
@@ -71,12 +72,24 @@ public class Rectangular2DMaze implements IMazeable, IPrintableMaze {
 		{
 			for (int x = 0; x < width; x++)
 			{
-				int wall = x + y * (width-1) + eastWestWallCount;
+				int wall = x + y * width + eastWestWallCount;
 				if (isWallClosed(wall))
 				{
 					result.add(new LineShape(iw, y+1, x, y+1,  x+1));
 				}
 			}
+		}
+		
+		// solution
+		final IMazeShape.ShapeType is = IMazeShape.ShapeType.solution;
+		for (int i = 0; i < solution.size()-1; i++) {
+			int room1 = solution.get(i);
+			int room2 = solution.get(i+1);
+			int y1 = room1/width;
+			int x1 = room1%width;
+			int y2 = room2/width;
+			int x2 = room2%width;
+			result.add(new LineShape(is, y1, x1, y2, x2));
 		}
 		return result;
 	}
@@ -161,6 +174,12 @@ public class Rectangular2DMaze implements IMazeable, IPrintableMaze {
 			}
 			return room == northRoom ? southRoom : northRoom;
 		}
+		
+	}
+
+	@Override
+	public void SetSolution(Vector<Integer> solution) {
+		this.solution=solution;
 		
 	}
 

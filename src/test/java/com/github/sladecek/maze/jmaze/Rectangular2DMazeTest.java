@@ -157,6 +157,7 @@ public class Rectangular2DMazeTest {
 	public void testGetOtherRoom_0() {
 		assertEquals(1, maze.getOtherRoom(0, 0));
 		assertEquals(0, maze.getOtherRoom(1, 0));
+
 	}
 
 	@Test

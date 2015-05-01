@@ -1,5 +1,7 @@
 package com.github.sladecek.maze.jmaze;
 
+import java.util.Vector;
+
 /***
  * Interface for spaces (2D, 3D, rectangular, circular ...) that can be filled with maze.
  *
@@ -26,6 +28,8 @@ public interface IMazeable {
 	double getRoomDistance(int r1, int r2);
 
 	int getOtherRoom(int room, int wall);
+	
+	void SetSolution(Vector<Integer> solution);
 	
 
 }
