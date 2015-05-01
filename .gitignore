@@ -2,5 +2,7 @@
 *.jar
 *.war
 *.ear
+*~
+maze.svg
 
 /target/
