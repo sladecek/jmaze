@@ -29,7 +29,7 @@ public interface IMazeable {
 
 	int getOtherRoom(int room, int wall);
 	
-	void SetSolution(Vector<Integer> solution);
+	void setSolution(Vector<Integer> solution);
 	
 
 }

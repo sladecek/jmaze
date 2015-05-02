@@ -33,7 +33,7 @@ public class DepthFirstMazeGenerator implements IMazeGenerator {
 				for(Integer i: stack) {
 					solution.add(i);
 				}
-				maze.SetSolution(solution);
+				maze.setSolution(solution);
 				
 				// do not continue from the target room, instead backtrace to fill gaps
 				stack.pop();

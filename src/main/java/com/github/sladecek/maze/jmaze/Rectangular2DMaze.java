@@ -8,26 +8,15 @@ import java.util.Vector;
  * 2D rectangular maze. Both rooms and walls are numbered first by rows, then by columns. East/west walls are numbered 
  * before south/north ones.
  */
-public class Rectangular2DMaze implements IMazeable, IPrintableMaze {
-
+public class Rectangular2DMaze extends ReactangularMazeBase implements IMazeable, IPrintableMaze {
 	private int eastWestWallCount;
 	private int southNorthWallCount;
-	private int height;
-	private BitSet isWallClosed;
-	private int width;
-	private Vector<Integer> solution = new Vector<Integer>();
 	
-	public Rectangular2DMaze(int height, int width) {
-		this.width = width;
-		this.height = height;
+	public Rectangular2DMaze(int height, int width) {	
+		super(height, width);
 		eastWestWallCount = (width - 1) * height;
 		southNorthWallCount = width * (height-1);
-		isWallClosed = new BitSet(eastWestWallCount + southNorthWallCount);
-		isWallClosed.set(0, isWallClosed.size(), true);
-	}
-
-	public int getRoomCount() {
-		return width * height;
+		allocateWalls(eastWestWallCount + southNorthWallCount);		
 	}
 
 	public double getRoomDistance(int r1, int r2) {
@@ -94,14 +83,6 @@ public class Rectangular2DMaze implements IMazeable, IPrintableMaze {
 		return result;
 	}
 
-	public int getStartRoom() {
-		return 0;
-	}
-
-	public int getTargetRoom() {
-		return getRoomCount() - 1;
-	}
-
 	public Iterable<Integer> getWalls(int room) {
 
 		int y = room / width;
@@ -130,24 +111,6 @@ public class Rectangular2DMaze implements IMazeable, IPrintableMaze {
 		return result;
 	}
 
-	public boolean isWallClosed(int wall) {
-		return isWallClosed.get(wall);
-	}
-
-	public void setWallClosed(int wall, boolean value) {
-		isWallClosed.set(wall, value);
-	}
-
-	@Override
-	public int getPictureHeight() {
-		return height;
-	}
-
-	@Override
-	public int getPictureWidth() {
-		return width;
-	}
-
 	@Override
 	public int getOtherRoom(int room, int wall) {
 		if (wall < eastWestWallCount)
@@ -174,12 +137,6 @@ public class Rectangular2DMaze implements IMazeable, IPrintableMaze {
 			}
 			return room == northRoom ? southRoom : northRoom;
 		}
-		
-	}
-
-	@Override
-	public void SetSolution(Vector<Integer> solution) {
-		this.solution=solution;
 		
 	}
 
