@@ -7,7 +7,9 @@ public class App
 {
     public static void main( String[] args )
     {
-    	Rectangular2DMaze maze = new Rectangular2DMaze(100, 150);
+    	
+    	//Rectangular2DMaze maze = new Rectangular2DMaze(100, 150);
+    	MoebiusMaze maze = new MoebiusMaze(40, 60);
     	IMazeGenerator g = new DepthFirstMazeGenerator();
     	g.generateMaze(maze);
     	SvgMazePrinter smp = new SvgMazePrinter();

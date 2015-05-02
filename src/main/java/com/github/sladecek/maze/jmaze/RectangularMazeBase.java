@@ -3,14 +3,14 @@ package com.github.sladecek.maze.jmaze;
 import java.util.BitSet;
 import java.util.Vector;
 
-public class ReactangularMazeBase {
+public class RectangularMazeBase {
 
 	protected int height;
 	protected BitSet isWallClosed;
 	protected int width;
 	protected Vector<Integer> solution = new Vector<Integer>();
 
-	public ReactangularMazeBase(int height, int width) {
+	public RectangularMazeBase(int height, int width) {
 		this.width = width;
 		this.height = height;
 	}

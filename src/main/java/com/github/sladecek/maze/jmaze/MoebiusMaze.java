@@ -1,44 +1,41 @@
 package com.github.sladecek.maze.jmaze;
 
 import java.security.InvalidParameterException;
-import java.util.BitSet;
 import java.util.Vector;
 
 /**
- * 2D rectangular maze. Both rooms and walls are numbered first by rows, then by columns. East/west walls are numbered 
- * before south/north ones.
+ * 2D rectangular maze on Moebius strip. Rooms and walls (including holes) are numbered first by rows, then by columns. East/west walls are numbered 
+ * before south/north ones. Holes are numbered after south/north walls. 
  */
-public class Rectangular2DMaze extends RectangularMazeBase implements IMazeable, IPrintableMaze {
+
+public class MoebiusMaze extends RectangularMazeBase implements IMazeable,
+		IPrintableMaze {
+	
 	private int eastWestWallCount;
 	private int southNorthWallCount;
-	
-	public Rectangular2DMaze(int height, int width) {	
+	private int holeCount;
+
+	public MoebiusMaze(int height, int width) {
 		super(height, width);
-		eastWestWallCount = (width - 1) * height;
+		if (width %2 != 0) {
+			throw new InvalidParameterException("Moebius maze must have even width");
+		}
+		if (height %2 != 0) {
+			throw new InvalidParameterException("Moebius maze must have even height");
+		}
+		eastWestWallCount = width * height;
 		southNorthWallCount = width * (height-1);
-		allocateWalls(eastWestWallCount + southNorthWallCount);		
+		holeCount = width * height / 2;
+		allocateWalls(eastWestWallCount + southNorthWallCount + holeCount);		
 	}
 
-	public double getRoomDistance(int r1, int r2) {
-		int y1 = r1 / width;
-		int x1 = r1 % width;
-		int y2 = r2 / width;
-		int x2 = r2 % width;
-		// Manhattan (l1) distance
-		return Math.abs(y1 - y2) + Math.abs(x1 - x2);
-	}
-
-	/**
-	 * Get all geometric shapes needed to print this maze.
-	 */
+	@Override
 	public Iterable<IMazeShape> getShapes() {
 		Vector<IMazeShape> result = new Vector<IMazeShape>();
 		
 		// outer walls
 		final IMazeShape.ShapeType ow = IMazeShape.ShapeType.outerWall;
 		result.add(new LineShape(ow, 0, 0, 0, width));
-		result.add(new LineShape(ow, 0, 0, height, 0));
-		result.add(new LineShape(ow, 0, width, height, width));
 		result.add(new LineShape(ow, height, 0, height, width));
 		
 		final IMazeShape.ShapeType iw = IMazeShape.ShapeType.innerWall;
@@ -46,7 +43,7 @@ public class Rectangular2DMaze extends RectangularMazeBase implements IMazeable,
 		// inner walls - east/west
 		for (int y = 0; y < height; y++)
 		{
-			for (int x = 0; x < width-1; x++)
+			for (int x = 0; x < width; x++)
 			{
 				int wall = x + y * (width-1);
 				if (isWallClosed(wall))
@@ -69,6 +66,19 @@ public class Rectangular2DMaze extends RectangularMazeBase implements IMazeable,
 			}
 		}
 		
+		// holes - up down
+		for (int y = 0; y < height/2; y++)
+		{
+			for (int x = 0; x < width; x++)
+			{
+				int wall = x + y * width + eastWestWallCount + southNorthWallCount;
+				if (!isWallClosed(wall))
+				{
+					result.add(new HoleShape(y, x));
+				}
+			}
+		}
+
 		// solution
 		final IMazeShape.ShapeType is = IMazeShape.ShapeType.solution;
 		for (int i = 0; i < solution.size()-1; i++) {
@@ -80,26 +90,23 @@ public class Rectangular2DMaze extends RectangularMazeBase implements IMazeable,
 			int x2 = room2%width;
 			result.add(new LineShape(is, y1, x1, y2, x2));
 		}
-		return result;
-	}
+		return result;	}
 
+
+	@Override
 	public Iterable<Integer> getWalls(int room) {
 
 		int y = room / width;
 		int x = room % width;
-
+		
 		Vector<Integer> result = new Vector<Integer>();
 
-	
 		// east
-		if (x < width - 1) {
-			result.add(y * (width - 1) + x);
-		}
-		// west
-		if (x > 0) {
-			result.add(y * (width - 1) + x-1);
-		}
+		result.add(room);
 
+		// west
+		result.add(y * width + (x+width-1) % width) ;
+	
 		// south
 		if (y < height - 1) {
 			result.add(eastWestWallCount+y*width+x);
@@ -108,24 +115,56 @@ public class Rectangular2DMaze extends RectangularMazeBase implements IMazeable,
 		if (y > 0) {
 			result.add(eastWestWallCount+(y-1)*width+x);
 		}
-		return result;
+		
+		// hole
+		int h = room;
+		if (y >= height/2) 
+		{
+			h = getTheOtherSideOfHole(room);
+		}
+		result.add(eastWestWallCount + southNorthWallCount+h);
+		
+		return result;	
+	
+		
+		
+	}
+
+	protected int getTheOtherSideOfHole(int room) {
+		int y = room / width;
+		int x = room % width;
+		int hy = height - 1 - y;
+		int hx = (x + width/2) % width;
+		return hy*width+hx;
+	}
+
+
+	@Override
+	public int getTargetRoom() {
+		return width / 4 + (height-1) * width;		
+	}
+
+	@Override
+	public double getRoomDistance(int r1, int r2) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	@Override
 	public int getOtherRoom(int room, int wall) {
 		if (wall < eastWestWallCount)
 		{
-			final int y = wall / (width-1);
-			final int x = wall % (width-1);
-			final int westRoom = y*width+x;
-			final int eastRoom = westRoom+1;
+			final int y = wall / width;
+			final int x = wall % width;
+			final int westRoom = wall;
+			final int eastRoom = y*width+(x+1)%width;
 			if (!(room == westRoom || room == eastRoom))
 			{
 				throw new InvalidParameterException("Wall is not adjacent to room");
 			}
 			return room == westRoom ? eastRoom : westRoom;
 		}
-		else
+		else if (wall < eastWestWallCount+southNorthWallCount)
 		{
 			final int y = (wall-eastWestWallCount) / width;
 			final int x = (wall-eastWestWallCount) % width;
@@ -137,7 +176,14 @@ public class Rectangular2DMaze extends RectangularMazeBase implements IMazeable,
 			}
 			return room == northRoom ? southRoom : northRoom;
 		}
+		else
+		{
+			// hole
+			return getTheOtherSideOfHole(room);
+			
+		}
 		
+	
 	}
 
 }
