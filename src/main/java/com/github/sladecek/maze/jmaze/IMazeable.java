@@ -31,5 +31,7 @@ public interface IMazeable {
 	
 	void setSolution(Vector<Integer> solution);
 	
+	int getWallProbabilityWeight(int wall);
+	
 
 }

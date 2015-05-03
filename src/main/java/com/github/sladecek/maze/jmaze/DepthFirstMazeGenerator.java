@@ -77,7 +77,18 @@ public class DepthFirstMazeGenerator implements IMazeGenerator {
 				}						
 			}
 		}
-		return candidates;
+		if (candidates.size() <= 1) {
+			return candidates;
+		}
+		Vector<Integer> weightedCandidates = new Vector<Integer>();
+		for(int wall: candidates) {
+			int weight = maze.getWallProbabilityWeight(wall);
+			for(int i = 0; i < weight; i++) {
+				weightedCandidates.add(wall);
+			}
+		}
+		return weightedCandidates;
+		
 	}
 	private void visitRoom(int room) {
 		assert !visitedRooms.get(room) : "Cannot visit the same room twice";

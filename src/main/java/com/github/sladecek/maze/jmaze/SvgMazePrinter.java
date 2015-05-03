@@ -19,6 +19,17 @@ public class SvgMazePrinter implements IMazePrinter {
 		
 	}
 
+	public void printMark(int y, int x, String fill) throws IOException {
+		//  <circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="red" />
+		int offs = cellSize/2 ;
+		xml.startElement("circle");
+		xml.addAttribute("cx",toUnits(x)+offs);
+		xml.addAttribute("cy",toUnits(y)+offs);
+		xml.addAttribute("r",cellSize/4);
+		xml.addAttribute("fill", fill);
+		xml.closeElement();
+	}
+	
 	private int toUnits(int xy) {
 		return margin + xy*cellSize;
 	}
@@ -56,4 +67,6 @@ public class SvgMazePrinter implements IMazePrinter {
 		}
 
 	}
+
+
 }

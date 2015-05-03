@@ -140,4 +140,9 @@ public class Rectangular2DMaze extends RectangularMazeBase implements IMazeable,
 		
 	}
 
+	@Override
+	public int getWallProbabilityWeight(int wall) {
+		return 1;
+	}
+
 }

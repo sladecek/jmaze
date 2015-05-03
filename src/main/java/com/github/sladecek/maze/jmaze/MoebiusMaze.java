@@ -43,6 +43,10 @@ public class MoebiusMaze extends RectangularMazeBase implements IMazeable,
 		
 		final IMazeShape.ShapeType iw = IMazeShape.ShapeType.innerWall;
 
+		
+		result.add(new MarkShape(IMazeShape.ShapeType.startRoom, getStartRoom()/width, getStartRoom()%width));
+		result.add(new MarkShape(IMazeShape.ShapeType.targetRoom, getTargetRoom()/width, getTargetRoom()%width));
+		
 		// inner walls - east/west
 		for (int y = 0; y < height; y++)
 		{
@@ -219,6 +223,26 @@ public class MoebiusMaze extends RectangularMazeBase implements IMazeable,
 		}
 		
 	
+	}
+
+	@Override
+	public int getWallProbabilityWeight(int wall) {
+		if (wall < eastWestWallCount)
+		{
+			// horizontal
+			return 30;
+		}
+		else if (wall < eastWestWallCount+southNorthWallCount)
+		{
+			// vertical
+			return 3;
+		}
+		else
+		{
+			// hole
+			return 1;
+			
+		}
 	}
 
 }
