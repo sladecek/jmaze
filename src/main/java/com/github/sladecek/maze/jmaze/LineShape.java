@@ -33,6 +33,9 @@ public class LineShape implements IMazeShape {
 			style = "stroke:rgb(255,0,0);stroke-width:2";
 			center = true;
 			break;
+		case auxiliaryWall:
+			style = "stroke:rgb(240,240,240);stroke-width:1";
+			break;
 			
 		}
 		svg.printLine(y1, x1, y2, x2, style, center);		

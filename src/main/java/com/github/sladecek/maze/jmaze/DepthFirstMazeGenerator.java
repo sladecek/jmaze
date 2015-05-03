@@ -25,6 +25,7 @@ public class DepthFirstMazeGenerator implements IMazeGenerator {
 		while (!stack.isEmpty())
 		{
 			int room = stack.peek();
+			log.log(Level.INFO, " observing room: "+ room);
 			if (room == maze.getTargetRoom() )
 			{
 				// save solution
@@ -57,6 +58,7 @@ public class DepthFirstMazeGenerator implements IMazeGenerator {
 				choice = randomGenerator.nextInt(candidates.size());
 			}
 			int wall = candidates.elementAt(choice);
+			log.log(Level.INFO, " opening wall "+wall);
 			maze.setWallClosed(wall, false);
 			int otherRoom = maze.getOtherRoom(room, wall);
 			visitRoom(otherRoom);			

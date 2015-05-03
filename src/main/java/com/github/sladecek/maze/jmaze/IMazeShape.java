@@ -6,7 +6,7 @@ import java.io.IOException;
  * Shapes for maze drawing.
  */
 public interface IMazeShape {
-	public enum ShapeType { innerWall, outerWall, solution };
+	public enum ShapeType { innerWall, outerWall, solution, auxiliaryWall };
 	
 	ShapeType getShapeType();
 	
