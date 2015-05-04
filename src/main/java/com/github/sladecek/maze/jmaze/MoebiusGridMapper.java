@@ -2,7 +2,7 @@ package com.github.sladecek.maze.jmaze;
 
 import java.security.InvalidParameterException;
 
-/// Converts integer points of a maze into 3D points without deformation.
+/// Converts integer points of a maze into 3D points without Moebius deformation.
 public class MoebiusGridMapper {
 
 	public MoebiusGridMapper(Maze3DSizes sizes, int height, int width) {
@@ -15,7 +15,7 @@ public class MoebiusGridMapper {
 		}
 		innerWallThickness_mm = sizes.getCellSize_mm() * sizes.getInnerWallToCellRatio();
 		outerWallThickness_mm = sizes.getCellSize_mm() * sizes.getOuterWallToCellRatio();
-		width_mm = sizes.getCellSize_mm() * width + innerWallThickness_mm * (width -1) + 2* outerWallThickness_mm;
+		height_mm = sizes.getCellSize_mm() * height + innerWallThickness_mm * (height -1) + 2* outerWallThickness_mm;
 		// TODO moebius only
 		length_mm = sizes.getCellSize_mm() * width + innerWallThickness_mm * width;
 		cellStep_mm = sizes.getCellSize_mm() + innerWallThickness_mm;
@@ -25,7 +25,7 @@ public class MoebiusGridMapper {
 	int width;
 	int height;
 	double length_mm;
-	double width_mm;
+	double height_mm;
 	double innerWallThickness_mm;
 	double outerWallThickness_mm;
 	double cellStep_mm;
@@ -34,21 +34,34 @@ public class MoebiusGridMapper {
 		return length_mm;
 	}
 	
-	public double getWidth_mm() {
-		return width_mm;
+	public double getHeight_mm() {
+		return height_mm;
 	}
 	
-	Point getOuterPoint(int cellX, UpDown ud, SouthNorth sn, InnerOuter io) {
-		double x = cellX * cellStep_mm;
-		double y = width_mm/2;
-		if (io == InnerOuter.inner) {
+
+	
+	Point getBasePoint(int cellY, int cellX, UpDown ud, SouthNorth sn, EastWest ew) {
+		double y = (((sn == SouthNorth.south) ? 0 : 1) + cellY-height/2) * cellStep_mm;
+		double x = (((ew == EastWest.east) ? 0 : 1) + cellX) * cellStep_mm;
+		double z = ud == UpDown.down ? 0 : sizes.getBaseThickness_mm();
+		return new Point(x,y,z);
+	}
+
+	public Point getOuterPoint(int cellX, EastWest ew, UpDown ud,
+			SouthNorth snWall, SouthNorth snEdge) {
+		
+		double x = (((ew == EastWest.east) ? 0 : 1) + cellX) * cellStep_mm;
+		double y = height_mm/2;
+		if (snWall == snEdge) {
 			y -= outerWallThickness_mm;
 		}
-		if (sn == SouthNorth.north) {
+		if (snWall == SouthNorth.north) {
 			y *= -1;
 		}
+	
 		double z = ud == UpDown.down ? 0 : sizes.getWallHeight_mm();
 		return new Point(x,y,z);
 	}
+	
 
 }

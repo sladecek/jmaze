@@ -6,7 +6,7 @@ public class Maze3DSizes {
 	double baseThickness_mm = 5;
 	double innerWallToCellRatio = 0.3;
 	double outerWallToCellRatio = 0.1;
-	double wallHeight_mm = 8;
+	double wallHeight_mm = 10;
 
 	public double getCellSize_mm() {
 		return cellSize_mm;

@@ -5,7 +5,7 @@ public class App
 {
     public static void main( String[] args )
     {   	
-    	MoebiusMaze maze = new MoebiusMaze(40, 106);
+    	MoebiusMaze maze = new MoebiusMaze(10, 100);
     	IMazeGenerator g = new DepthFirstMazeGenerator();
     	g.generateMaze(maze);
     	SvgMazePrinter smp = new SvgMazePrinter();
