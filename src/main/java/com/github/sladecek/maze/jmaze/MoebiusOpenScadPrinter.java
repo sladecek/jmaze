@@ -3,8 +3,10 @@ package com.github.sladecek.maze.jmaze;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class MoebiusOpenScadPrinter implements IMazePrinter {
+public class MoebiusOpenScadPrinter implements IMazePrinter, I3DShapeConsumer  {
 
+	private ArrayList<LineShape> walls;
+	private ArrayList<HoleShape> holes;
 	public MoebiusOpenScadPrinter(Maze3DSizes sizes) {
 		super();
 		this.sizes = sizes;
@@ -14,13 +16,19 @@ public class MoebiusOpenScadPrinter implements IMazePrinter {
 	public void printMaze(IPrintableMaze maze, String fileName) {
 		this.maze = maze;
 		
+		walls = new ArrayList<LineShape>();
+		holes = new ArrayList<HoleShape>();
+		for(IMazeShape shape: maze.getShapes()) {
+			shape.produce3DShapes(this);
+		}
+		
 		try (OpenScadWriter s = new OpenScadWriter(fileName)) {
 			scad = s;
 			cellHeight = maze.getPictureHeight();
 			cellWidth = maze.getPictureWidth();
 			this.gridMapper = new MoebiusGridMapper(sizes, cellHeight, cellWidth);
 			deformator = new MoebiusDeformator(gridMapper.getLength_mm(), gridMapper.getHeight_mm());
-			scad.beginDifference()
+			scad.beginDifference();
 			scad.beginUnion();
 			printBase();
 			printOuterWalls();
@@ -42,17 +50,30 @@ public class MoebiusOpenScadPrinter implements IMazePrinter {
 		
 	}
 	
-	private void printInnerWalls() {
-		for(IMazeShape shape: maze.getShapes()){
-		printShape(shape);
-	}
-		
-	}
-
-	private void printShape(IMazeShape shape) {
+	private void printHoles() {
 		// TODO Auto-generated method stub
 		
 	}
+
+	private void printInnerWalls() throws IOException {
+		final double wt = sizes.innerWallToCellRatio/2;
+		final double z = sizes.getWallHeight_mm();
+		for (LineShape wall: walls) {
+			ArrayList<Point> p = new ArrayList<Point>();
+						
+				p.add(gridMapper.getBasePointWithOffset(wall.getY1(), wall.getX1(), -wt, -wt, 0));
+				p.add(gridMapper.getBasePointWithOffset(wall.getY1(), wall.getX1(), -wt, -wt, z));
+				p.add(gridMapper.getBasePointWithOffset(wall.getY2(), wall.getX1(),  wt, -wt, 0));
+				p.add(gridMapper.getBasePointWithOffset(wall.getY2(), wall.getX1(),  wt, -wt, z));
+				p.add(gridMapper.getBasePointWithOffset(wall.getY1(), wall.getX2(), -wt, wt, 0));
+				p.add(gridMapper.getBasePointWithOffset(wall.getY1(), wall.getX2(), -wt, wt, z));
+				p.add(gridMapper.getBasePointWithOffset(wall.getY2(), wall.getX2(),  wt, wt, 0));
+				p.add(gridMapper.getBasePointWithOffset(wall.getY2(), wall.getX2(),  wt, wt, z));
+			printPolyhedron(p);
+		}
+	}
+		
+	
 	
 	private void printPolyhedron(ArrayList<Point> gridPoints) throws IOException {
 		ArrayList<Point> deformed = new ArrayList<Point>();
@@ -106,6 +127,17 @@ public class MoebiusOpenScadPrinter implements IMazePrinter {
 	OpenScadWriter scad;
 	int cellHeight;
 	int cellWidth;
+	@Override
+	public void consumeHole(HoleShape hs) {
+		holes.add(hs);
+		
+	}
+
+	@Override
+	public void consumeWall(LineShape ls) {
+		walls.add(ls);
+		
+	}
 	
 	
 }

@@ -12,4 +12,8 @@ public interface IMazeShape {
 	
 	void printToSvg(SvgMazePrinter printer) throws IOException;
 
+	void produce3DShapes(I3DShapeConsumer is);
+	
+	
+
 }

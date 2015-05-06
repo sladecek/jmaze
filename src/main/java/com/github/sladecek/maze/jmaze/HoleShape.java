@@ -25,4 +25,10 @@ public class HoleShape implements IMazeShape {
 		svg.printLine(y+1, x, y, x+1, style, false);
 	}
 
+	@Override
+	public void produce3DShapes(I3DShapeConsumer is) {
+		is.consumeHole(this);
+		
+	}
+
 }

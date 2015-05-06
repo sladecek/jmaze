@@ -38,13 +38,18 @@ public class MoebiusGridMapper {
 		return height_mm;
 	}
 	
-
+	Point getBasePointWithOffset(int cellY, int cellX, double offsetY, double offsetX, double z) {
+		double y = (offsetY + cellY-height/2) * cellStep_mm;
+		double x = (offsetX + cellX) * cellStep_mm;		
+		return new Point(x,y,z);
+	}
 	
 	Point getBasePoint(int cellY, int cellX, UpDown ud, SouthNorth sn, EastWest ew) {
-		double y = (((sn == SouthNorth.south) ? 0 : 1) + cellY-height/2) * cellStep_mm;
-		double x = (((ew == EastWest.east) ? 0 : 1) + cellX) * cellStep_mm;
+		double offsetY = (sn == SouthNorth.south) ? 0 : 1;
+		double offsetX = (ew == EastWest.east) ? 0 : 1;
 		double z = ud == UpDown.down ? 0 : sizes.getBaseThickness_mm();
-		return new Point(x,y,z);
+		return getBasePointWithOffset(cellY, cellX,  offsetY, offsetX, z);
+		
 	}
 
 	public Point getOuterPoint(int cellX, EastWest ew, UpDown ud,
