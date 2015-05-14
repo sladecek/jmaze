@@ -4,5 +4,6 @@
 *.ear
 *~
 maze.svg
+*.scad
 
 /target/

@@ -50,9 +50,22 @@ public class MoebiusOpenScadPrinter implements IMazePrinter, I3DShapeConsumer  {
 		
 	}
 	
-	private void printHoles() {
-		// TODO Auto-generated method stub
-		
+	private void printHoles() throws IOException {
+		final double wt = 0.3;
+		final double z = sizes.getBaseThickness_mm();
+		for (HoleShape hs: holes) {
+			ArrayList<Point> p = new ArrayList<Point>();
+						
+				p.add(gridMapper.getBasePointWithOffset(hs.getY(), hs.getX(), -wt, -wt, 0));
+				p.add(gridMapper.getBasePointWithOffset(hs.getY(), hs.getX(), -wt, -wt, z));
+				p.add(gridMapper.getBasePointWithOffset(hs.getY(), hs.getX(), wt, -wt, 0));
+				p.add(gridMapper.getBasePointWithOffset(hs.getY(), hs.getX(), wt, -wt, z));
+				p.add(gridMapper.getBasePointWithOffset(hs.getY(), hs.getX(), -wt, wt, 0));
+				p.add(gridMapper.getBasePointWithOffset(hs.getY(), hs.getX(), -wt, wt, z));
+				p.add(gridMapper.getBasePointWithOffset(hs.getY(), hs.getX(), wt, wt, 0));
+				p.add(gridMapper.getBasePointWithOffset(hs.getY(), hs.getX(), wt, wt, z));
+			printPolyhedron(p);
+		}
 	}
 
 	private void printInnerWalls() throws IOException {

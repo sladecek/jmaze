@@ -31,4 +31,15 @@ public class HoleShape implements IMazeShape {
 		
 	}
 
+	public int getY() {
+		return y;
+	}
+
+
+	public int getX() {
+		return x;
+	}
+
+
+
 }

@@ -6,7 +6,11 @@ public class MoebiusDeformator {
 	double width_mm;
 	
 	Point transform(Point p) {
-		return p;
+		double r = length_mm / (Math.PI); 
+		double theta = 4 * Math.PI * p.x / length_mm;
+		r += p.z;
+		Point result = new Point(r*Math.cos(theta), p.y, r*Math.sin(theta));
+		return result;
 	}
 
 	public MoebiusDeformator(double length_mm, double width_mm) {
