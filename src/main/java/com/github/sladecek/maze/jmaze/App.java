@@ -6,7 +6,7 @@ public class App
 	public static void main(String[] args)
     {   	
 		final int width_cells = 6;
-		final int length_cells = 24;
+		final int length_cells = 100;
 
 		MoebiusMaze maze = new MoebiusMaze(width_cells, length_cells);
     	IMazeGenerator g = new DepthFirstMazeGenerator();

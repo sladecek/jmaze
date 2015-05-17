@@ -57,11 +57,12 @@ public class OpenScadWriter implements java.lang.AutoCloseable {
 	 * @param polyhedron
 	 * @throws IOException
 	 */
-	public void printPolyhedron(ArrayList<Point> polyhedron) throws IOException {
+	public void printPolyhedron(ArrayList<Point> polyhedron, String comment, String color) throws IOException {
 		if (polyhedron.size() != 8) {
 			throw new InvalidParameterException("Polyhedrons must have 8 points");
 		}
-		out.write("polyhedron (points =[");
+		out.write("/* "+ comment+"*/\n");
+		out.write("color("+color+") polyhedron (points =[");
 		for (int i = 0; i < 8; i++) {
 			printPoint(polyhedron.get(i));
 			if (i < 7) {

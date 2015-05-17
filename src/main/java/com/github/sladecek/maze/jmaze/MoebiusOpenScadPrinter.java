@@ -36,11 +36,9 @@ public class MoebiusOpenScadPrinter implements IMazePrinter, I3DShapeConsumer  {
 	
 			scad.closeUnion();
 			scad.beginUnion();
-			printHoles();
+			//printHoles();
 			scad.closeUnion();
 			scad.closeDifference();
-			
-			
 
 		} catch (IOException ioe) {
 			System.out.println(ioe.getMessage());
@@ -64,36 +62,63 @@ public class MoebiusOpenScadPrinter implements IMazePrinter, I3DShapeConsumer  {
 				p.add(gridMapper.getBasePointWithOffset(hs.getY(), hs.getX(), -wt, wt, z));
 				p.add(gridMapper.getBasePointWithOffset(hs.getY(), hs.getX(), wt, wt, 0));
 				p.add(gridMapper.getBasePointWithOffset(hs.getY(), hs.getX(), wt, wt, z));
-			printPolyhedron(p);
+			printPolyhedron(p, "hole", "[1,1,1]");
 		}
 	}
 
 	private void printInnerWalls() throws IOException {
+		
 		final double wt = sizes.innerWallToCellRatio/2;
-		final double z = sizes.getWallHeight_mm();
+		
 		for (LineShape wall: walls) {
-			ArrayList<Point> p = new ArrayList<Point>();
-						
-				p.add(gridMapper.getBasePointWithOffset(wall.getY1(), wall.getX1(), -wt, -wt, 0));
-				p.add(gridMapper.getBasePointWithOffset(wall.getY1(), wall.getX1(), -wt, -wt, z));
-				p.add(gridMapper.getBasePointWithOffset(wall.getY2(), wall.getX1(),  wt, -wt, 0));
-				p.add(gridMapper.getBasePointWithOffset(wall.getY2(), wall.getX1(),  wt, -wt, z));
-				p.add(gridMapper.getBasePointWithOffset(wall.getY1(), wall.getX2(), -wt, wt, 0));
-				p.add(gridMapper.getBasePointWithOffset(wall.getY1(), wall.getX2(), -wt, wt, z));
-				p.add(gridMapper.getBasePointWithOffset(wall.getY2(), wall.getX2(),  wt, wt, 0));
-				p.add(gridMapper.getBasePointWithOffset(wall.getY2(), wall.getX2(),  wt, wt, z));
-			printPolyhedron(p);
+			int y1 = wall.getY1();
+			int y2 = wall.getY2();
+			int x1 = wall.getX1();
+			int x2 = wall.getX2();
+/*
+			if (y1 > 2) continue;
+			if (x2 > 2) continue;
+			if (y1 > 2) continue;
+			if (y2 > 2) continue;
+	*/					
+			// There is an overlap in the corner between walls. Overlaps are not nice, they make
+			// ramparts. Therefore the wall must be rendered from three parts - the corners must be rendered separately.
+			printInnerWallElement(y1, y1, x1, x1, wt, wt, "inner wall corner " + wall.toString(), "[0.5,0.5,0]");
+			printInnerWallElement(y2, y2, x2, x2, wt, wt, "inner wall corner " + wall.toString(), "[0.5,0.5,0]");
+			if (x1 == x2) {
+				printInnerWallElement(y1, y2, x1, x2, -wt, wt, "inner wall along y " + wall.toString(), "[0.8,0.8,0]");
+			} else {
+				printInnerWallElement(y1, y2, x1, x2, wt, -wt, "inner wall along x " + wall.toString(), "[0.8,0.8,0]");
+			}
+			
 		}
+	}
+
+	private void printInnerWallElement(int y1, int y2, int x1, int x2, double wy, double wx, 
+			String comment, String color) throws IOException {
+		
+		
+		final double z = sizes.getWallHeight_mm();
+		ArrayList<Point> p = new ArrayList<Point>();
+		p.add(gridMapper.getBasePointWithOffset(y1, x1, -wy, -wx, 0));
+		p.add(gridMapper.getBasePointWithOffset(y1, x1, -wy, -wx, z));
+		p.add(gridMapper.getBasePointWithOffset(y2, x1,  wy, -wx, 0));
+		p.add(gridMapper.getBasePointWithOffset(y2, x1,  wy, -wx, z));
+		p.add(gridMapper.getBasePointWithOffset(y1, x2, -wy, wx, 0));
+		p.add(gridMapper.getBasePointWithOffset(y1, x2, -wy, wx, z));
+		p.add(gridMapper.getBasePointWithOffset(y2, x2,  wy, wx, 0));
+		p.add(gridMapper.getBasePointWithOffset(y2, x2,  wy, wx, z));
+		printPolyhedron(p, comment, color);	
 	}
 		
 	
 	
-	private void printPolyhedron(ArrayList<Point> gridPoints) throws IOException {
+	private void printPolyhedron(ArrayList<Point> gridPoints, String comment, String color) throws IOException {
 		ArrayList<Point> deformed = new ArrayList<Point>();
 		for(Point p: gridPoints) {
 			deformed.add(deformator.transform(p));
 		}
-		scad.printPolyhedron(deformed);
+		scad.printPolyhedron(deformed, comment, color);
 	}
 	
 
@@ -109,7 +134,7 @@ public class MoebiusOpenScadPrinter implements IMazePrinter, I3DShapeConsumer  {
 						}
 					}
 				}
-				printPolyhedron(p);
+				printPolyhedron(p, "outer wall "+cellX,  "[0,0,1]");
 			}
 		}
 		scad.closeUnion();
@@ -127,7 +152,7 @@ public class MoebiusOpenScadPrinter implements IMazePrinter, I3DShapeConsumer  {
 						}
 					}
 				}
-				printPolyhedron(p);
+				printPolyhedron(p, "base "+cellX+" "+cellY, "[1,0,1]");
 			}
 		}
 		scad.closeUnion();	
