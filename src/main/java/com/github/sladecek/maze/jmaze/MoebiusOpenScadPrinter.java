@@ -36,7 +36,7 @@ public class MoebiusOpenScadPrinter implements IMazePrinter, I3DShapeConsumer  {
 	
 			scad.closeUnion();
 			scad.beginUnion();
-			//printHoles();
+		printHoles();
 			scad.closeUnion();
 			scad.closeDifference();
 
@@ -49,20 +49,21 @@ public class MoebiusOpenScadPrinter implements IMazePrinter, I3DShapeConsumer  {
 	}
 	
 	private void printHoles() throws IOException {
-		final double wt = 0.3;
+		final double c = 0.5;
+		final double wt = 0.1;
 		final double z = sizes.getBaseThickness_mm();
 		for (HoleShape hs: holes) {
 			ArrayList<Point> p = new ArrayList<Point>();
 						
-				p.add(gridMapper.getBasePointWithOffset(hs.getY(), hs.getX(), -wt, -wt, 0));
-				p.add(gridMapper.getBasePointWithOffset(hs.getY(), hs.getX(), -wt, -wt, z));
-				p.add(gridMapper.getBasePointWithOffset(hs.getY(), hs.getX(), wt, -wt, 0));
-				p.add(gridMapper.getBasePointWithOffset(hs.getY(), hs.getX(), wt, -wt, z));
-				p.add(gridMapper.getBasePointWithOffset(hs.getY(), hs.getX(), -wt, wt, 0));
-				p.add(gridMapper.getBasePointWithOffset(hs.getY(), hs.getX(), -wt, wt, z));
-				p.add(gridMapper.getBasePointWithOffset(hs.getY(), hs.getX(), wt, wt, 0));
-				p.add(gridMapper.getBasePointWithOffset(hs.getY(), hs.getX(), wt, wt, z));
-			printPolyhedron(p, "hole", "[1,1,1]");
+				p.add(gridMapper.getBasePointWithOffset(hs.getY(), hs.getX(), c-wt, c-wt, -z));
+				p.add(gridMapper.getBasePointWithOffset(hs.getY(), hs.getX(), c-wt, c-wt, 2*z));
+				p.add(gridMapper.getBasePointWithOffset(hs.getY(), hs.getX(), c+wt, c-wt, -z));
+				p.add(gridMapper.getBasePointWithOffset(hs.getY(), hs.getX(), c+wt, c-wt, 2*z));
+				p.add(gridMapper.getBasePointWithOffset(hs.getY(), hs.getX(), c-wt, c+wt, -z));
+				p.add(gridMapper.getBasePointWithOffset(hs.getY(), hs.getX(), c-wt, c+wt, 2*z));
+				p.add(gridMapper.getBasePointWithOffset(hs.getY(), hs.getX(), c+wt, c+wt, -z));
+				p.add(gridMapper.getBasePointWithOffset(hs.getY(), hs.getX(), c+wt, c+wt, 2*z));
+			printPolyhedron(p, "hole", "[1,0,0]");
 		}
 	}
 
@@ -152,7 +153,7 @@ public class MoebiusOpenScadPrinter implements IMazePrinter, I3DShapeConsumer  {
 						}
 					}
 				}
-				printPolyhedron(p, "base "+cellX+" "+cellY, "[1,0,1]");
+				printPolyhedron(p, "base "+cellX+" "+cellY, "[0,1,1]");
 			}
 		}
 		scad.closeUnion();	
