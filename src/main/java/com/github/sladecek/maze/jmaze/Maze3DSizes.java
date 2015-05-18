@@ -3,10 +3,10 @@ package com.github.sladecek.maze.jmaze;
 public class Maze3DSizes {
 
 	double cellSize_mm = 4;
-	double baseThickness_mm = 5;
+	double baseThickness_mm = 1;
 	double innerWallToCellRatio = 0.2;
 	double outerWallToCellRatio = 0.4;
-	double wallHeight_mm = 10;
+	double wallHeight_mm = 5;
 
 	public double getCellSize_mm() {
 		return cellSize_mm;

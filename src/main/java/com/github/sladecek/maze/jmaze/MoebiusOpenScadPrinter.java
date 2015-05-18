@@ -5,6 +5,21 @@ import java.util.ArrayList;
 
 public class MoebiusOpenScadPrinter implements IMazePrinter, I3DShapeConsumer  {
 
+	/*
+	private static final String baseColor = "[0,1,1]";
+	private static final String outerWallColor = "[0,0,1]";
+	private static final String innerWallColor = "[0.5,0.5,0]";
+	private static final String cornerColor = "[0.8,0.8,0]";
+	private static final String holeColor = "[1,1,1]";
+	*/
+
+	private static final String baseColor = "[0.7,0.7,0.7]";
+	private static final String outerWallColor = "[0.7,0.7,0.7]";
+	private static final String innerWallColor = "[0.5,0.5,0]";
+	private static final String cornerColor = "[0.8,0.8,0]";
+	private static final String holeColor = "[1,1,1]";
+
+	
 	private ArrayList<LineShape> walls;
 	private ArrayList<HoleShape> holes;
 	public MoebiusOpenScadPrinter(Maze3DSizes sizes) {
@@ -50,7 +65,7 @@ public class MoebiusOpenScadPrinter implements IMazePrinter, I3DShapeConsumer  {
 	
 	private void printHoles() throws IOException {
 		final double c = 0.5;
-		final double wt = 0.1;
+		final double wt = (1-sizes.innerWallToCellRatio)/2;
 		final double z = sizes.getBaseThickness_mm();
 		for (HoleShape hs: holes) {
 			ArrayList<Point> p = new ArrayList<Point>();
@@ -63,7 +78,7 @@ public class MoebiusOpenScadPrinter implements IMazePrinter, I3DShapeConsumer  {
 				p.add(gridMapper.getBasePointWithOffset(hs.getY(), hs.getX(), c-wt, c+wt, 2*z));
 				p.add(gridMapper.getBasePointWithOffset(hs.getY(), hs.getX(), c+wt, c+wt, -z));
 				p.add(gridMapper.getBasePointWithOffset(hs.getY(), hs.getX(), c+wt, c+wt, 2*z));
-			printPolyhedron(p, "hole", "[1,1,1]");
+			printPolyhedron(p, "hole", holeColor);
 		}
 	}
 
@@ -84,12 +99,12 @@ public class MoebiusOpenScadPrinter implements IMazePrinter, I3DShapeConsumer  {
 	*/					
 			// There is an overlap in the corner between walls. Overlaps are not nice, they make
 			// ramparts. Therefore the wall must be rendered from three parts - the corners must be rendered separately.
-			printInnerWallElement(y1, y1, x1, x1, wt, wt, "inner wall corner " + wall.toString(), "[0.5,0.5,0]");
-			printInnerWallElement(y2, y2, x2, x2, wt, wt, "inner wall corner " + wall.toString(), "[0.5,0.5,0]");
+			printInnerWallElement(y1, y1, x1, x1, wt, wt, "inner wall corner " + wall.toString(), innerWallColor);
+			printInnerWallElement(y2, y2, x2, x2, wt, wt, "inner wall corner " + wall.toString(), innerWallColor);
 			if (x1 == x2) {
-				printInnerWallElement(y1, y2, x1, x2, -wt, wt, "inner wall along y " + wall.toString(), "[0.8,0.8,0]");
+				printInnerWallElement(y1, y2, x1, x2, -wt, wt, "inner wall along y " + wall.toString(), cornerColor);
 			} else {
-				printInnerWallElement(y1, y2, x1, x2, wt, -wt, "inner wall along x " + wall.toString(), "[0.8,0.8,0]");
+				printInnerWallElement(y1, y2, x1, x2, wt, -wt, "inner wall along x " + wall.toString(), cornerColor);
 			}
 			
 		}
@@ -135,7 +150,7 @@ public class MoebiusOpenScadPrinter implements IMazePrinter, I3DShapeConsumer  {
 						}
 					}
 				}
-				printPolyhedron(p, "outer wall "+cellX,  "[0,0,1]");
+				printPolyhedron(p, "outer wall "+cellX,  outerWallColor);
 			}
 		}
 		scad.closeUnion();
@@ -153,7 +168,7 @@ public class MoebiusOpenScadPrinter implements IMazePrinter, I3DShapeConsumer  {
 						}
 					}
 				}
-				printPolyhedron(p, "base "+cellX+" "+cellY, "[0,1,1]");
+				printPolyhedron(p, "base "+cellX+" "+cellY, baseColor);
 			}
 		}
 		scad.closeUnion();	

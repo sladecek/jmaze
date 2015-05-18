@@ -6,6 +6,8 @@ public class MoebiusDeformator {
 	double width_mm;
 	
 	Point transform(Point p) {
+		//return p;
+		
 		double r = length_mm / (4*Math.PI); 
 		double theta = 4 * Math.PI * p.x / length_mm;
 		double phi = theta / 2;
