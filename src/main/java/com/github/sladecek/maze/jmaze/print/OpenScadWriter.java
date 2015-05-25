@@ -1,4 +1,4 @@
-package com.github.sladecek.maze.jmaze;
+package com.github.sladecek.maze.jmaze.print;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -6,6 +6,8 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
+
+import com.github.sladecek.maze.jmaze.Point;
 
 public class OpenScadWriter implements java.lang.AutoCloseable {
 
@@ -47,7 +49,7 @@ public class OpenScadWriter implements java.lang.AutoCloseable {
 
 	
 	private void printPoint(Point p0) throws IOException {
-		out.write(" [ "+ p0.x+ ","+ p0.y+ ","+ p0.z+ "] ");
+		out.write(" [ "+ p0.getX()+ ","+ p0.getY()+ ","+ p0.getZ()+ "] ");
 		
 	}
 

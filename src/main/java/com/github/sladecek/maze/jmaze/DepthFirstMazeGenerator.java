@@ -14,7 +14,7 @@ public class DepthFirstMazeGenerator implements IMazeGenerator {
 	private Random randomGenerator = new Random();
 	
 	@Override
-	public void generateMaze(IMazeable maze) {
+	public void generateMaze(IMazeSpace maze) {
 		//log.addHandler(new ConsoleHandler());
 		log.setLevel(Level.SEVERE);
 		Vector<Integer> solution = null;
@@ -65,7 +65,7 @@ public class DepthFirstMazeGenerator implements IMazeGenerator {
 		}
 		
 	}
-	private Vector<Integer> findAllPossibleNextRooms(IMazeable maze, int room) {
+	private Vector<Integer> findAllPossibleNextRooms(IMazeSpace maze, int room) {
 		Vector<Integer> candidates = new Vector<Integer>();
 		for(int wall: maze.getWalls(room))
 		{

@@ -1,4 +1,6 @@
-package com.github.sladecek.maze.jmaze;
+package com.github.sladecek.maze.jmaze.moebius;
+
+import com.github.sladecek.maze.jmaze.Point;
 
 public class MoebiusDeformator {
 	
@@ -9,11 +11,11 @@ public class MoebiusDeformator {
 		//return p;
 		
 		double r = length_mm / (4*Math.PI); 
-		double theta = 4 * Math.PI * p.x / length_mm;
+		double theta = 4 * Math.PI * p.getX() / length_mm;
 		double phi = theta / 2;
 		
-		double y2 = p.y*Math.cos(phi) + p.z*Math.sin(phi);
-		double z2 = -p.y*Math.sin(phi) + p.z*Math.cos(phi);
+		double y2 = p.getY()*Math.cos(phi) + p.getZ()*Math.sin(phi);
+		double z2 = -p.getY()*Math.sin(phi) + p.getZ()*Math.cos(phi);
 		
 		r += z2;
 		Point result = new Point(r*Math.cos(theta), r*Math.sin(theta), y2);

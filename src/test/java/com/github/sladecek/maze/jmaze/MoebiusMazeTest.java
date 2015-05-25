@@ -10,6 +10,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.github.sladecek.maze.jmaze.moebius.MoebiusMaze;
+
 public class MoebiusMazeTest {
 
 	private MoebiusMaze maze;

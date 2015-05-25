@@ -1,4 +1,4 @@
-package com.github.sladecek.maze.jmaze;
+package com.github.sladecek.maze.jmaze.print;
 
 import java.io.FileOutputStream;
 import java.io.IOException;

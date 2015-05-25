@@ -15,7 +15,7 @@ public class RectangularMazeBase {
 		this.height = height;
 	}
 
-	void allocateWalls(int wallCount) {
+	protected void allocateWalls(int wallCount) {
 		isWallClosed = new BitSet(wallCount);
 		isWallClosed.set(0, isWallClosed.size(), true);
 	}

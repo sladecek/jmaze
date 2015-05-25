@@ -1,14 +1,23 @@
-package com.github.sladecek.maze.jmaze;
+package com.github.sladecek.maze.jmaze.moebius;
 
 import java.security.InvalidParameterException;
 import java.util.Vector;
+
+import com.github.sladecek.maze.jmaze.IMazeShape;
+import com.github.sladecek.maze.jmaze.IMazeSpace;
+import com.github.sladecek.maze.jmaze.IPrintableMaze;
+import com.github.sladecek.maze.jmaze.RectangularMazeBase;
+import com.github.sladecek.maze.jmaze.IMazeShape.ShapeType;
+import com.github.sladecek.maze.jmaze.shapes.HoleShape;
+import com.github.sladecek.maze.jmaze.shapes.LineShape;
+import com.github.sladecek.maze.jmaze.shapes.MarkShape;
 
 /**
  * 2D rectangular maze on Moebius strip. Rooms and walls (including holes) are numbered first by rows, then by columns. East/west walls are numbered 
  * before south/north ones. Holes are numbered after south/north walls. 
  */
 
-public class MoebiusMaze extends RectangularMazeBase implements IMazeable,
+public class MoebiusMaze extends RectangularMazeBase implements IMazeSpace,
 		IPrintableMaze {
 	
 	private int eastWestWallCount;
@@ -78,22 +87,22 @@ public class MoebiusMaze extends RectangularMazeBase implements IMazeable,
 			}
 		}
 		
-		// holes - up down
+		// holes and their dual (non holes) - up down
+		// the user will use either holes or non-holes
 		for (int y = 0; y < height/2; y++)
 		{
 			for (int x = 0; x < width; x++)
 			{
 				int wall = x + y * width + eastWestWallCount + southNorthWallCount;
-				if (!isWallClosed(wall))
-				{
-					result.add(new HoleShape(y, x));
-					int hy = getTheOtherSideOfHoleY(y,x);
-					int hx = getTheOtherSideOfHoleX(y,x);
-					result.add(new HoleShape(hy, hx));
-				}
+				final boolean isHole = !isWallClosed(wall);
+				result.add(new HoleShape(y, x, isHole));
+				int hy = getTheOtherSideOfHoleY(y,x);
+				int hx = getTheOtherSideOfHoleX(y,x);
+				result.add(new HoleShape(hy, hx, isHole));
 			}
 		}
 
+	
 		// solution
 		final IMazeShape.ShapeType is = IMazeShape.ShapeType.solution;
 		for (int i = 0; i < solution.size()-1; i++) {

@@ -1,12 +1,17 @@
-package com.github.sladecek.maze.jmaze;
+package com.github.sladecek.maze.jmaze.shapes;
 
 import java.io.IOException;
+
+import com.github.sladecek.maze.jmaze.I3DShapeConsumer;
+import com.github.sladecek.maze.jmaze.IMazeShape;
+import com.github.sladecek.maze.jmaze.IMazeShape.ShapeType;
+import com.github.sladecek.maze.jmaze.print.SvgMazePrinter;
 
 public class MarkShape implements IMazeShape {
 	
 	private ShapeType shapeType;
 
-	MarkShape(ShapeType type, int y, int x) {
+	public MarkShape(ShapeType type, int y, int x) {
 		this.shapeType = type;
 		this.y = y;
 		this.x = x;

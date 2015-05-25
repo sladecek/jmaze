@@ -1,14 +1,15 @@
-package com.github.sladecek.maze.jmaze;
+package com.github.sladecek.maze.jmaze;	
 
 import java.security.InvalidParameterException;
-import java.util.BitSet;
 import java.util.Vector;
+
+import com.github.sladecek.maze.jmaze.shapes.LineShape;
 
 /**
  * 2D rectangular maze. Both rooms and walls are numbered first by rows, then by columns. East/west walls are numbered 
  * before south/north ones.
  */
-public class Rectangular2DMaze extends RectangularMazeBase implements IMazeable, IPrintableMaze {
+public class Rectangular2DMaze extends RectangularMazeBase implements IMazeSpace, IPrintableMaze {
 	private int eastWestWallCount;
 	private int southNorthWallCount;
 	
