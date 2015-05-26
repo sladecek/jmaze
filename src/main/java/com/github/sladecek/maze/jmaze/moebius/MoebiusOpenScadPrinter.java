@@ -16,19 +16,11 @@ import com.github.sladecek.maze.jmaze.print.OpenScadWriter;
 import com.github.sladecek.maze.jmaze.shapes.HoleShape;
 import com.github.sladecek.maze.jmaze.shapes.LineShape;
 
+/**
+ *  Print rooms of 3D Moebius maze as OpenScad file.
+ *
+ */
 public class MoebiusOpenScadPrinter implements IMazePrinter, I3DShapeConsumer  {
-
-
-
-	private static final String baseColor = "[0.7,0.7,0.7]";
-	private static final String outerWallColor = "[0.7,0.7,0.7]";
-	private static final String innerWallColor = "[0.5,0.5,0]";
-	private static final String cornerColor = "[0.8,0.8,0]";
-	private static final String holeColor = "[1,1,1]";
-
-	
-	private ArrayList<LineShape> walls;
-	private ArrayList<HoleShape> nonHoles;
 	public MoebiusOpenScadPrinter(Maze3DSizes sizes) {
 		super();
 		this.sizes = sizes;
@@ -49,14 +41,14 @@ public class MoebiusOpenScadPrinter implements IMazePrinter, I3DShapeConsumer  {
 			cellHeight = maze.getPictureHeight();
 			cellWidth = maze.getPictureWidth();
 			this.gridMapper = new MoebiusGridMapper(sizes, cellHeight, cellWidth);
-			deformator = new MoebiusDeformator(gridMapper.getLength_mm(), gridMapper.getHeight_mm());
+			deformator = new MoebiusDeformator(gridMapper.getLength_mm());
 	
 			scad.beginUnion();
 			printBaseWithoutHole();
 			printNonHoles();
 			printOuterWalls();
 			printInnerWalls();
-				scad.closeUnion();
+			scad.closeUnion();
 	
 		} catch (IOException ioe) {
 			System.out.println(ioe.getMessage());
@@ -69,8 +61,8 @@ public class MoebiusOpenScadPrinter implements IMazePrinter, I3DShapeConsumer  {
 		final double z = sizes.getBaseThickness_mm();
 
 		return gridMapper.getBasePointWithOffsetAndZ(y, x, ud, 
-				c + (sn == SouthNorth.north ? -wt: wt),
-				c + (ew == EastWest.west ? -wt: wt));
+				c + (sn == SouthNorth.south ? -wt: wt),
+				c + (ew == EastWest.east ? -wt: wt));
 	
 	}
 	
@@ -93,63 +85,62 @@ public class MoebiusOpenScadPrinter implements IMazePrinter, I3DShapeConsumer  {
 		scad.beginUnion();
 		for (int cellX = 0; cellX < cellWidth; cellX++) {
 			for (int cellY = 0; cellY < cellHeight; cellY++) {
-				
-				
-				ArrayList<Point> pw = new ArrayList<Point>();
-				for(SouthNorth sn: SouthNorth.values()) {
-					for(UpDown ud: UpDown.values()) {
-						Point p = gridMapper.getBasePoint(cellY, cellX, ud, sn, EastWest.west);
-						pw.add(p);
-					}
-				}
-				for(SouthNorth sn: SouthNorth.values()) {
-					for(UpDown ud: UpDown.values()) {
-						Point p = getHolePoint(cellY, cellX, EastWest.east, sn, ud);
-						pw.add(p);
-					}
-				}
-				printPolyhedron(pw, "base w"+cellX+" "+cellY, baseColor);
-
+			
+			/*	if (cellY > 1) continue;
+				if (cellX > 1) continue;
+*/
 				ArrayList<Point> pe = new ArrayList<Point>();
-				for(SouthNorth sn: SouthNorth.values()) {
-					for(UpDown ud: UpDown.values()) {						
-						Point p = getHolePoint(cellY, cellX, EastWest.west, sn, ud);
-						pe.add(p);
-					}
-				}
-				
 				for(SouthNorth sn: SouthNorth.values()) {
 					for(UpDown ud: UpDown.values()) {						
 						Point p = gridMapper.getBasePoint(cellY, cellX, ud, sn, EastWest.east);
 						pe.add(p);
 					}
 				}
+				for(SouthNorth sn: SouthNorth.values()) {
+					for(UpDown ud: UpDown.values()) {						
+						Point p = getHolePoint(cellY, cellX, EastWest.east, sn, ud);
+						pe.add(p);
+					}
+				}				
 				printPolyhedron(pe, "base e "+cellX+" "+cellY, baseColor);
+
+				ArrayList<Point> pw = new ArrayList<Point>();
+				for(SouthNorth sn: SouthNorth.values()) {
+					for(UpDown ud: UpDown.values()) {
+						Point p = getHolePoint(cellY, cellX, EastWest.west, sn, ud);
+						pw.add(p);
+					}
+				}
+				for(SouthNorth sn: SouthNorth.values()) {
+					for(UpDown ud: UpDown.values()) {
+						Point p = gridMapper.getBasePoint(cellY, cellX, ud, sn, EastWest.west);
+						pw.add(p);
+					}
+				}
+				printPolyhedron(pw, "base w"+cellX+" "+cellY, baseColor);
 				
 				ArrayList<Point> pn = new ArrayList<Point>();
 				pn.add(pw.get(0));
 				pn.add(pw.get(1));
 				pn.add(pw.get(4));
 				pn.add(pw.get(5));				
-				pn.add(pe.get(0));
-				pn.add(pe.get(1));
 				pn.add(pe.get(4));
 				pn.add(pe.get(5));
+				pn.add(pe.get(0));
+				pn.add(pe.get(1));
 				printPolyhedron(pn, "base n "+cellX+" "+cellY, baseColor);
 				
 				ArrayList<Point> ps = new ArrayList<Point>();
-				ps.add(pw.get(2));
-				ps.add(pw.get(3));
 				ps.add(pw.get(6));
 				ps.add(pw.get(7));				
+				ps.add(pw.get(2));
+				ps.add(pw.get(3));
 				ps.add(pe.get(2));
 				ps.add(pe.get(3));
 				ps.add(pe.get(6));
 				ps.add(pe.get(7));
-				printPolyhedron(pn, "base s "+cellX+" "+cellY, baseColor);
-						
-	
-				
+				printPolyhedron(ps, "base s "+cellX+" "+cellY, baseColor);
+					
 			}
 		}
 		scad.closeUnion();	
@@ -230,6 +221,18 @@ public class MoebiusOpenScadPrinter implements IMazePrinter, I3DShapeConsumer  {
 		scad.closeUnion();
 	}
 
+
+
+
+	private static final String baseColor = "[0.7,0.7,0.7]";
+	private static final String outerWallColor = "[0.7,0.7,0.7]";
+	private static final String innerWallColor = "[0.5,0.5,0]";
+	private static final String cornerColor = "[0.8,0.8,0]";
+	private static final String holeColor = "[1,1,1]";
+
+	
+	private ArrayList<LineShape> walls;
+	private ArrayList<HoleShape> nonHoles;
 
 	IPrintableMaze maze;
 	MoebiusGridMapper gridMapper;
