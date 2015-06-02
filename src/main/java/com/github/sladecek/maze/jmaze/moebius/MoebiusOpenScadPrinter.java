@@ -156,12 +156,7 @@ public class MoebiusOpenScadPrinter implements IMazePrinter, I3DShapeConsumer  {
 			int y2 = wall.getY2();
 			int x1 = wall.getX1();
 			int x2 = wall.getX2();
-/*
-			if (y1 > 2) continue;
-			if (x2 > 2) continue;
-			if (y1 > 2) continue;
-			if (y2 > 2) continue;
-	*/					
+				
 			// There is an overlap in the corner between walls. Overlaps are not nice, they make
 			// ramparts. Therefore the wall must be rendered from three parts - the corners must be rendered separately.
 			printInnerWallElement(y1, y1, x1, x1, wt, wt, "inner wall corner " + wall.toString(), innerWallColor);
