@@ -1,4 +1,4 @@
-package com.github.sladecek.maze.jmaze;
+package com.github.sladecek.maze.jmaze.generator;
 
 import java.util.Vector;
 

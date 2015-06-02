@@ -3,17 +3,17 @@ package com.github.sladecek.maze.jmaze.moebius;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import com.github.sladecek.maze.jmaze.EastWest;
-import com.github.sladecek.maze.jmaze.I3DShapeConsumer;
-import com.github.sladecek.maze.jmaze.IMazePrinter;
-import com.github.sladecek.maze.jmaze.IMazeShape;
-import com.github.sladecek.maze.jmaze.IPrintableMaze;
-import com.github.sladecek.maze.jmaze.Point;
-import com.github.sladecek.maze.jmaze.SouthNorth;
-import com.github.sladecek.maze.jmaze.UpDown;
+import com.github.sladecek.maze.jmaze.geometry.EastWest;
+import com.github.sladecek.maze.jmaze.geometry.Point;
+import com.github.sladecek.maze.jmaze.geometry.SouthNorth;
+import com.github.sladecek.maze.jmaze.geometry.UpDown;
+import com.github.sladecek.maze.jmaze.print.IMazePrinter;
+import com.github.sladecek.maze.jmaze.print.IPrintableMaze;
 import com.github.sladecek.maze.jmaze.print.Maze3DSizes;
 import com.github.sladecek.maze.jmaze.print.OpenScadWriter;
 import com.github.sladecek.maze.jmaze.shapes.HoleShape;
+import com.github.sladecek.maze.jmaze.shapes.I3DShapeConsumer;
+import com.github.sladecek.maze.jmaze.shapes.IMazeShape;
 import com.github.sladecek.maze.jmaze.shapes.LineShape;
 
 /**

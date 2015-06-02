@@ -1,4 +1,6 @@
-package com.github.sladecek.maze.jmaze;
+package com.github.sladecek.maze.jmaze.print;
+
+import com.github.sladecek.maze.jmaze.shapes.IMazeShape;
 
 /***
  * Interface for mazes. Maze is a drawing consisting of outer walls, inner walls and 

@@ -1,4 +1,4 @@
-package com.github.sladecek.maze.jmaze;
+package com.github.sladecek.maze.jmaze.rectangular;
 
 import java.util.BitSet;
 import java.util.Vector;

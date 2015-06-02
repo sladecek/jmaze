@@ -1,8 +1,11 @@
-package com.github.sladecek.maze.jmaze;	
+package com.github.sladecek.maze.jmaze.rectangular;	
 
 import java.security.InvalidParameterException;
 import java.util.Vector;
 
+import com.github.sladecek.maze.jmaze.generator.IMazeSpace;
+import com.github.sladecek.maze.jmaze.print.IPrintableMaze;
+import com.github.sladecek.maze.jmaze.shapes.IMazeShape;
 import com.github.sladecek.maze.jmaze.shapes.LineShape;
 
 /**

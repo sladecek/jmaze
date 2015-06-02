@@ -2,9 +2,7 @@ package com.github.sladecek.maze.jmaze.print;
 
 import java.io.IOException;
 
-import com.github.sladecek.maze.jmaze.IMazePrinter;
-import com.github.sladecek.maze.jmaze.IMazeShape;
-import com.github.sladecek.maze.jmaze.IPrintableMaze;
+import com.github.sladecek.maze.jmaze.shapes.IMazeShape;
 
 public class SvgMazePrinter implements IMazePrinter {
 	

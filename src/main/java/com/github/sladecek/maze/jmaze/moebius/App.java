@@ -1,7 +1,7 @@
-package com.github.sladecek.maze.jmaze;
+package com.github.sladecek.maze.jmaze.moebius;
 
-import com.github.sladecek.maze.jmaze.moebius.MoebiusMaze;
-import com.github.sladecek.maze.jmaze.moebius.MoebiusOpenScadPrinter;
+import com.github.sladecek.maze.jmaze.generator.DepthFirstMazeGenerator;
+import com.github.sladecek.maze.jmaze.generator.IMazeGenerator;
 import com.github.sladecek.maze.jmaze.print.Maze3DSizes;
 import com.github.sladecek.maze.jmaze.print.SvgMazePrinter;
 

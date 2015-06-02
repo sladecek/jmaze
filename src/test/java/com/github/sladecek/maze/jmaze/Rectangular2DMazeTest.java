@@ -10,6 +10,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.github.sladecek.maze.jmaze.rectangular.Rectangular2DMaze;
+import com.github.sladecek.maze.jmaze.shapes.IMazeShape;
+
 public class Rectangular2DMazeTest {
 
 	private Rectangular2DMaze maze;

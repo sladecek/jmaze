@@ -2,10 +2,8 @@ package com.github.sladecek.maze.jmaze.shapes;
 
 import java.io.IOException;
 
-import com.github.sladecek.maze.jmaze.I3DShapeConsumer;
-import com.github.sladecek.maze.jmaze.IMazeShape;
-import com.github.sladecek.maze.jmaze.IMazeShape.ShapeType;
 import com.github.sladecek.maze.jmaze.print.SvgMazePrinter;
+import com.github.sladecek.maze.jmaze.shapes.IMazeShape.ShapeType;
 
 public class LineShape implements IMazeShape {
 	

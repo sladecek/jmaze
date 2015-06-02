@@ -1,6 +1,6 @@
 package com.github.sladecek.maze.jmaze.moebius;
 
-import com.github.sladecek.maze.jmaze.Point;
+import com.github.sladecek.maze.jmaze.geometry.Point;
 
 /** Transform point in planar maze into point on Moebius list.
  */

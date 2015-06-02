@@ -3,14 +3,14 @@ package com.github.sladecek.maze.jmaze.moebius;
 import java.security.InvalidParameterException;
 import java.util.Vector;
 
-import com.github.sladecek.maze.jmaze.IMazeShape;
-import com.github.sladecek.maze.jmaze.IMazeSpace;
-import com.github.sladecek.maze.jmaze.IPrintableMaze;
-import com.github.sladecek.maze.jmaze.RectangularMazeBase;
-import com.github.sladecek.maze.jmaze.IMazeShape.ShapeType;
+import com.github.sladecek.maze.jmaze.generator.IMazeSpace;
+import com.github.sladecek.maze.jmaze.print.IPrintableMaze;
+import com.github.sladecek.maze.jmaze.rectangular.RectangularMazeBase;
 import com.github.sladecek.maze.jmaze.shapes.HoleShape;
+import com.github.sladecek.maze.jmaze.shapes.IMazeShape;
 import com.github.sladecek.maze.jmaze.shapes.LineShape;
 import com.github.sladecek.maze.jmaze.shapes.MarkShape;
+import com.github.sladecek.maze.jmaze.shapes.IMazeShape.ShapeType;
 
 /**
  * 2D rectangular maze on Moebius strip. Rooms and walls (including holes) are numbered first by rows, then by columns. East/west walls are numbered 

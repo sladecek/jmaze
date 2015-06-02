@@ -7,7 +7,7 @@ import java.io.Writer;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
 
-import com.github.sladecek.maze.jmaze.Point;
+import com.github.sladecek.maze.jmaze.geometry.Point;
 
 public class OpenScadWriter implements java.lang.AutoCloseable {
 
