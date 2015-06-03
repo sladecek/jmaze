@@ -16,7 +16,7 @@ public class App
 		final double ellipseMinor_mm = 20;
 		final double eggCoef = 0.2;
 		
-		Egg egg = new Egg(ellipseMajor_mm, ellipseMinor_mm, eggCoef);
+		EggGeometry egg = new EggGeometry(ellipseMajor_mm, ellipseMinor_mm, eggCoef);
 		EggMaze maze = new EggMaze(egg, equator_cells);
     	IMazeGenerator g = new DepthFirstMazeGenerator();
     	g.generateMaze(maze);

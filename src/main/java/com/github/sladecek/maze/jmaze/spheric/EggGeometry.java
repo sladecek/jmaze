@@ -5,14 +5,14 @@ package com.github.sladecek.maze.jmaze.spheric;
  * Define geometry of egg-like shape.
  *
  */
-public class Egg {
+public class EggGeometry {
 
 
 	private double ellipseMajor_mm;
 	private double ellipseMinor_mm;
 	private double eggCoef;
 	
-	public Egg(double ellipseMajor_mm, double ellipseMinor_mm, double eggCoef) {
+	public EggGeometry(double ellipseMajor_mm, double ellipseMinor_mm, double eggCoef) {
 		super();
 		this.ellipseMajor_mm = ellipseMajor_mm;
 		this.ellipseMinor_mm = ellipseMinor_mm;
@@ -26,5 +26,21 @@ public class Egg {
 	}
 	public double getEggCoef() {
 		return eggCoef;
+	}
+	public double computeY(double x) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	public double getBaseRoomSize_mm() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	public double findNextX(double x, double d) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	public int getCircumferenceAt_mm(double x) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }
