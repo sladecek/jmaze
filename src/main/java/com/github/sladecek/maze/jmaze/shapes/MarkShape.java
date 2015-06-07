@@ -35,10 +35,5 @@ public class MarkShape implements IMazeShape {
 	private int x;
 	private int y;
 
-	@Override
-	public void produce3DShapes(I3DShapeConsumer is) {
-		// TODO
-		
-	}
 
 }

@@ -10,14 +10,14 @@ import java.util.Vector;
 class EggMazeHemisphere {
 
 	/***
-	 * Number of cells in egg layer. Zero index contains number of cells on the equator.
+	 * Number of rooms in egg layer. Zero index contains number of rooms on the equator.
 	 */
-	public Vector<Integer> layerCellCnt = new Vector<Integer>();
+	public Vector<Integer> layerRoomCnt = new Vector<Integer>();
 	
 	/***
 	 * Id of the first room (Greenwich room) in the layer.
 	 */
-	public Vector<Integer> greenwichWall = new Vector<Integer>();
+	public Vector<Integer> greenwichRoom = new Vector<Integer>();
 
 	
 	/*

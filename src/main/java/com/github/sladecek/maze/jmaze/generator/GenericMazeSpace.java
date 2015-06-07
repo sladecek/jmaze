@@ -5,10 +5,9 @@ import java.util.Vector;
 import junit.framework.Assert;
 
 /**
- * Maze space without any particular properties. Rooms and wall must be
- * added to lists one by one.
- * 
- *
+ * Generic maze space implementation without any particular properties. There is a list
+ * of rooms and walls. Ther rooms and wall must be added to lists one by one
+ * during maze construction.
  */
 public class GenericMazeSpace extends MazeBase implements IMazeSpace {
 

@@ -49,14 +49,6 @@ public class LineShape implements IMazeShape {
 	private int y1;
 	private int y2;
 
-	@Override
-	public void produce3DShapes(I3DShapeConsumer is) {
-		if (shapeType == ShapeType.innerWall) {
-			is.consumeWall(this);
-		}
-		
-	}
-
 	public int getX1() {
 		return x1;
 	}

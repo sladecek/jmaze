@@ -20,14 +20,11 @@ public class App
 		EggMaze maze = new EggMaze(egg, equator_cells);
     	IMazeGenerator g = new DepthFirstMazeGenerator();
     	g.generateMaze(maze);
-    	
-    	SvgMazePrinter smp = new SvgMazePrinter();
-    	smp.printMaze(maze, "maze.svg");
-    	
+    	   	
     	Maze3DSizes sizes = new Maze3DSizes();
     	sizes.setCellSize_mm(2);
     	
-    	EggOpenScadPrinter osp = new EggOpenScadPrinter(sizes);
+    	EggOpenScadPrinter osp = new EggOpenScadPrinter(sizes, egg);
     	osp.printMaze(maze,"maze.scad");
     }
 }

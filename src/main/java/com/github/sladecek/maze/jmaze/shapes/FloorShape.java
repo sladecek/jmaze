@@ -8,7 +8,7 @@ import com.github.sladecek.maze.jmaze.shapes.IMazeShape.ShapeType;
 /// Represent hole in the ground of the maze or the lack of thereof.
 /// The user usually prints either holes or non-holes depending on output
 /// type.
-public class HoleShape implements IMazeShape {
+public class FloorShape implements IMazeShape {
 
 	private int y;
 	private int x;
@@ -18,7 +18,7 @@ public class HoleShape implements IMazeShape {
 		return isHole;
 	}
 
-	public HoleShape(int y, int x, boolean isHole) {
+	public FloorShape(int y, int x, boolean isHole) {
 		super();
 		this.y = y;
 		this.x = x;
@@ -37,12 +37,6 @@ public class HoleShape implements IMazeShape {
 			svg.printLine(y, x, y+1, x+1, style, false);
 			svg.printLine(y+1, x, y, x+1, style, false);
 		}
-	}
-
-	@Override
-	public void produce3DShapes(I3DShapeConsumer is) {
-		is.consumeHole(this);
-		
 	}
 
 	public int getY() {

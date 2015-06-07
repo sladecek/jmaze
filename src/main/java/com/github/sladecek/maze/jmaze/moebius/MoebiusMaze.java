@@ -6,7 +6,7 @@ import java.util.Vector;
 import com.github.sladecek.maze.jmaze.generator.IMazeSpace;
 import com.github.sladecek.maze.jmaze.print.IPrintableMaze;
 import com.github.sladecek.maze.jmaze.rectangular.RectangularMazeBase;
-import com.github.sladecek.maze.jmaze.shapes.HoleShape;
+import com.github.sladecek.maze.jmaze.shapes.FloorShape;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape;
 import com.github.sladecek.maze.jmaze.shapes.LineShape;
 import com.github.sladecek.maze.jmaze.shapes.MarkShape;
@@ -95,10 +95,10 @@ public class MoebiusMaze extends RectangularMazeBase implements IMazeSpace,
 			{
 				int wall = x + y * width + eastWestWallCount + southNorthWallCount;
 				final boolean isHole = !isWallClosed(wall);
-				result.add(new HoleShape(y, x, isHole));
+				result.add(new FloorShape(y, x, isHole));
 				int hy = getTheOtherSideOfHoleY(y,x);
 				int hx = getTheOtherSideOfHoleX(y,x);
-				result.add(new HoleShape(hy, hx, isHole));
+				result.add(new FloorShape(hy, hx, isHole));
 			}
 		}
 

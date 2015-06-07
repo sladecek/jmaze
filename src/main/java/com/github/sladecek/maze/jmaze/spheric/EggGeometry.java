@@ -1,5 +1,7 @@
 package com.github.sladecek.maze.jmaze.spheric;
 
+import java.util.Vector;
+
 /**
  * 
  * Define geometry of egg-like shape.
@@ -42,5 +44,10 @@ public class EggGeometry {
 	public int getCircumferenceAt_mm(double x) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+	public Vector<Double> divideMeridianEquidistantly(double baseRoomSize_mm,
+			int dix) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

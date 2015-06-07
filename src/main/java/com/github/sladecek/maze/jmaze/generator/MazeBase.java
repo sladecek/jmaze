@@ -3,6 +3,12 @@ package com.github.sladecek.maze.jmaze.generator;
 import java.util.BitSet;
 import java.util.Vector;
 
+/**
+ * 
+ * Data structure which defines one particular maze. Defines which walls are open 
+ * on the maze. Also contains solution.
+ *
+ */
 public class MazeBase {
 	
 	protected BitSet isWallClosed;

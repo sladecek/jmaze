@@ -3,15 +3,18 @@ package com.github.sladecek.maze.jmaze.moebius;
 import java.security.InvalidParameterException;
 
 import com.github.sladecek.maze.jmaze.geometry.EastWest;
+import com.github.sladecek.maze.jmaze.geometry.IMaze3DMapper;
 import com.github.sladecek.maze.jmaze.geometry.Point;
 import com.github.sladecek.maze.jmaze.geometry.SouthNorth;
 import com.github.sladecek.maze.jmaze.geometry.UpDown;
 import com.github.sladecek.maze.jmaze.print.Maze3DSizes;
 
-/// Converts integer points of a maze into 3D points without Moebius deformation.
-public class MoebiusGridMapper {
+public class Moebius3dMapper implements IMaze3DMapper {
 
-	public MoebiusGridMapper(Maze3DSizes sizes, int height, int width) {
+
+	
+	
+	public Moebius3dMapper(Maze3DSizes sizes, int height, int width) {
 		super();
 		this.sizes = sizes;
 		this.width = width;
@@ -25,47 +28,43 @@ public class MoebiusGridMapper {
 		// TODO moebius only
 		length_mm = sizes.getCellSize_mm() * width + innerWallThickness_mm * width;
 		cellStep_mm = sizes.getCellSize_mm() + innerWallThickness_mm;
+
+		deformator = new MoebiusDeformator(length_mm);
+
+
 	}
 
-	Maze3DSizes sizes;
-	int width;
-	int height;
-	double length_mm;
-	double height_mm;
-	double innerWallThickness_mm;
-	double outerWallThickness_mm;
-	double cellStep_mm;
-	
-	public double getLength_mm() {
-		return length_mm;
-	}
-	
-	public double getHeight_mm() {
-		return height_mm;
-	}
-	
-	Point getBasePointWithOffset(int cellY, int cellX, double offsetY, double offsetX, double z) {
-		double y = (offsetY + cellY-height/2) * cellStep_mm;
-		double x = (offsetX + cellX) * cellStep_mm;		
-		return new Point(x,y,z);
-	}
-	
-	Point getBasePointWithOffsetAndZ(int cellY, int cellX, UpDown ud, double offsetY, double offsetX) {
-		double z = ud == UpDown.down ? 0 : sizes.getBaseThickness_mm();
-		return getBasePointWithOffset(cellY, cellX,  offsetY, offsetX, z);
-	}
-	
-	
-	Point getBasePoint(int cellY, int cellX, UpDown ud, SouthNorth sn, EastWest ew) {
-		double offsetY = (sn == SouthNorth.south) ? 0 : 1;
-		double offsetX = (ew == EastWest.east) ? 0 : 1;		
-		return getBasePointWithOffsetAndZ(cellY, cellX,  ud, offsetY, offsetX);
+	MoebiusDeformator deformator;
+		Maze3DSizes sizes;
+		int width;
+		int height;
+		double length_mm;
+		double height_mm;
+		double innerWallThickness_mm;
+		double outerWallThickness_mm;
+		double cellStep_mm;
 		
+		public double getLength_mm() {
+			return length_mm;
+		}
+		
+		public double getHeight_mm() {
+			return height_mm;
+		}
+		
+		
+	@Override
+	public Point mapPoint(int cellY, int cellX, double offsetY,
+			double offsetX, double z) {
+		double y = (offsetY + cellY-height/2) * cellStep_mm;
+		double x = (offsetX + cellX) * cellStep_mm;	
+		return deformator.transform(new Point(y,x,z));
 	}
 
+
+	@Override
 	public Point getOuterPoint(int cellX, EastWest ew, UpDown ud,
 			SouthNorth snWall, SouthNorth snEdge) {
-		
 		double x = (((ew == EastWest.east) ? 0 : 1) + cellX) * cellStep_mm;
 		double y = height_mm/2;
 		if (snWall == snEdge) {
@@ -76,8 +75,8 @@ public class MoebiusGridMapper {
 		}
 	
 		double z = ud == UpDown.down ? 0 : sizes.getWallHeight_mm();
-		return new Point(x,y,z);
+		
+		return deformator.transform(new Point(x,y,z));
 	}
 	
-
 }
