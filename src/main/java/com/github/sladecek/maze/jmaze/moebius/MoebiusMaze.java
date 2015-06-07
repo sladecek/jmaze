@@ -8,7 +8,7 @@ import com.github.sladecek.maze.jmaze.print.IPrintableMaze;
 import com.github.sladecek.maze.jmaze.rectangular.RectangularMazeBase;
 import com.github.sladecek.maze.jmaze.shapes.FloorShape;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape;
-import com.github.sladecek.maze.jmaze.shapes.LineShape;
+import com.github.sladecek.maze.jmaze.shapes.WallShape;
 import com.github.sladecek.maze.jmaze.shapes.MarkShape;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape.ShapeType;
 
@@ -44,11 +44,11 @@ public class MoebiusMaze extends RectangularMazeBase implements IMazeSpace,
 		
 		// outer walls
 		final IMazeShape.ShapeType ow = IMazeShape.ShapeType.outerWall;
-		result.add(new LineShape(ow, 0, 0, 0, width));
-		result.add(new LineShape(ow, height, 0, height, width));
+		result.add(new WallShape(ow, 0, 0, 0, width));
+		result.add(new WallShape(ow, height, 0, height, width));
 		final IMazeShape.ShapeType aw = IMazeShape.ShapeType.auxiliaryWall;
-		result.add(new LineShape(aw, 0, 0, height, 0));
-		result.add(new LineShape(aw, 0, width, height, width));
+		result.add(new WallShape(aw, 0, 0, height, 0));
+		result.add(new WallShape(aw, 0, width, height, width));
 		
 		final IMazeShape.ShapeType iw = IMazeShape.ShapeType.innerWall;
 
@@ -64,11 +64,11 @@ public class MoebiusMaze extends RectangularMazeBase implements IMazeSpace,
 				int wall = x + y * width;
 				if (isWallClosed(wall))
 				{
-					result.add(new LineShape(iw, y, x+1, y+1,  x+1));
+					result.add(new WallShape(iw, y, x+1, y+1,  x+1));
 					if (x == width-1)
 					{
 						// repeat wrapped east border
-						result.add(new LineShape(iw, y, 0, y+1,  0));
+						result.add(new WallShape(iw, y, 0, y+1,  0));
 					}
 				}
 			}
@@ -82,7 +82,7 @@ public class MoebiusMaze extends RectangularMazeBase implements IMazeSpace,
 				int wall = x + y * width + eastWestWallCount;
 				if (isWallClosed(wall))
 				{
-					result.add(new LineShape(iw, y+1, x, y+1,  x+1));
+					result.add(new WallShape(iw, y+1, x, y+1,  x+1));
 				}
 			}
 		}
@@ -127,10 +127,10 @@ public class MoebiusMaze extends RectangularMazeBase implements IMazeSpace,
 			}
 			
 			if (wrapAround) {
-				result.add(new LineShape(is, y1, -1, y2, 0));
-				result.add(new LineShape(is, y1, width-1, y2, width));
+				result.add(new WallShape(is, y1, -1, y2, 0));
+				result.add(new WallShape(is, y1, width-1, y2, width));
 			} else {
-				result.add(new LineShape(is, y1, x1, y2, x2));
+				result.add(new WallShape(is, y1, x1, y2, x2));
 			}
 			
 		}

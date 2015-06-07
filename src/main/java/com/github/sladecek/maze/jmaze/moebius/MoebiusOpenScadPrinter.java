@@ -4,10 +4,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import com.github.sladecek.maze.jmaze.geometry.EastWest;
-import com.github.sladecek.maze.jmaze.geometry.IMaze3DMapper;
 import com.github.sladecek.maze.jmaze.geometry.Point;
 import com.github.sladecek.maze.jmaze.geometry.SouthNorth;
 import com.github.sladecek.maze.jmaze.geometry.UpDown;
+import com.github.sladecek.maze.jmaze.print.IMaze3DMapper;
 import com.github.sladecek.maze.jmaze.print.IMazePrinter;
 import com.github.sladecek.maze.jmaze.print.IPrintableMaze;
 import com.github.sladecek.maze.jmaze.print.Maze3DSizes;
@@ -16,7 +16,7 @@ import com.github.sladecek.maze.jmaze.print.OpenScadWriter;
 import com.github.sladecek.maze.jmaze.shapes.FloorShape;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape.ShapeType;
-import com.github.sladecek.maze.jmaze.shapes.LineShape;
+import com.github.sladecek.maze.jmaze.shapes.WallShape;
 
 /**
  *  Print rooms of 3D Moebius maze as OpenScad file.
@@ -27,15 +27,15 @@ public class MoebiusOpenScadPrinter extends OpenScadMazePrinter implements IMaze
 		super(sizes);
 	}
 
-	protected void collectMazeShapes(IPrintableMaze maze) {
-		walls = new ArrayList<LineShape>();
+	protected void prepareShapes(IPrintableMaze maze) {
+		walls = new ArrayList<WallShape>();
 		floor = new ArrayList<FloorShape>();
 		for(IMazeShape shape: maze.getShapes()) {
 			if (shape.getShapeType() == ShapeType.hole && !((FloorShape)shape).isHole()) {
 				floor.add((FloorShape)shape);
 			} else {
 				if (shape.getShapeType() == ShapeType.innerWall) {
-					walls.add((LineShape)shape);
+					walls.add((WallShape)shape);
 				}
 			}
 		}
@@ -79,10 +79,10 @@ public class MoebiusOpenScadPrinter extends OpenScadMazePrinter implements IMaze
 	
 	private void printInnerWalls() throws IOException {
 		
-		final double wt = sizes.getInnerWallToCellRatio()/2;
+		final double wallThickness = sizes.getInnerWallToCellRatio()/2;
 		
-		for (LineShape wall: walls) {
-			printWallsOneRoom(wt, wall);
+		for (WallShape wall: walls) {
+			printWallsOneRoom(wallThickness, wall);
 			
 		}
 	}
@@ -107,7 +107,7 @@ public class MoebiusOpenScadPrinter extends OpenScadMazePrinter implements IMaze
 	}
 
 
-	private ArrayList<LineShape> walls;
+	private ArrayList<WallShape> walls;
 	private ArrayList<FloorShape> floor;
 
 	int cellHeight;

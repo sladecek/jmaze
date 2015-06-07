@@ -4,12 +4,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import com.github.sladecek.maze.jmaze.geometry.EastWest;
-import com.github.sladecek.maze.jmaze.geometry.IMaze3DMapper;
 import com.github.sladecek.maze.jmaze.geometry.Point;
 import com.github.sladecek.maze.jmaze.geometry.SouthNorth;
 import com.github.sladecek.maze.jmaze.geometry.UpDown;
 import com.github.sladecek.maze.jmaze.shapes.FloorShape;
-import com.github.sladecek.maze.jmaze.shapes.LineShape;
+import com.github.sladecek.maze.jmaze.shapes.WallShape;
 
 /**
  * Base class for 3D OpenScad Maze printers. Responsible for shared operations such as
@@ -23,7 +22,7 @@ public abstract class OpenScadMazePrinter {
 	
 
 	public void printMaze(IPrintableMaze maze, String fileName) {	
-		collectMazeShapes(maze);
+		prepareShapes(maze);
 		
 		try (OpenScadWriter s = new OpenScadWriter(fileName)) {
 			scad = s;
@@ -36,14 +35,14 @@ public abstract class OpenScadMazePrinter {
 
 	
 	// virtual method
-	protected abstract void collectMazeShapes(IPrintableMaze maze);
+	protected abstract void prepareShapes(IPrintableMaze maze);
 
 	// virtual method
 	protected abstract void printShapes(IPrintableMaze maze) throws IOException;
 		
 	
 
-	protected void printWallsOneRoom(final double wallThickness, LineShape wall)
+	protected void printWallsOneRoom(final double wallThickness, WallShape wall)
 			throws IOException {
 		int y1 = wall.getY1();
 		int y2 = wall.getY2();

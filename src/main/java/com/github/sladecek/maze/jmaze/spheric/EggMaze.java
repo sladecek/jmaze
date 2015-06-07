@@ -12,7 +12,7 @@ import com.github.sladecek.maze.jmaze.print.IPrintableMaze;
 import com.github.sladecek.maze.jmaze.shapes.FloorShape;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape.ShapeType;
-import com.github.sladecek.maze.jmaze.shapes.LineShape;
+import com.github.sladecek.maze.jmaze.shapes.WallShape;
 
 /**
  * 
@@ -65,7 +65,7 @@ public class EggMaze extends GenericMazeSpace implements IMazeSpace,
 
 		for (int i = 0; i < equatorCellCnt; i++) {
 			addWall(gRoomNorth+i, gRoomSouth+i);
-			shapes.add(new LineShape(ShapeType.innerWall, i, 0, i+1, 0));		
+			shapes.add(new WallShape(ShapeType.innerWall, i, 0, i+1, 0));		
 		}
 
 	}
@@ -92,7 +92,7 @@ public class EggMaze extends GenericMazeSpace implements IMazeSpace,
 			for(int j=0; j < cellCntRatio; j++) {
 				int roomNext = roomThis * cellCntRatio + j;
 				addWall(gRoomThis+roomThis, gRoomNext + roomNext);
-				shapes.add(new LineShape(ShapeType.innerWall, roomThis, x, roomThis+1, x));								
+				shapes.add(new WallShape(ShapeType.innerWall, roomThis, x, roomThis+1, x));								
 			}
 		}
 		
@@ -164,7 +164,7 @@ public class EggMaze extends GenericMazeSpace implements IMazeSpace,
 			final int gr = h.greenwichRoom.elementAt(i);
 			for (int j = 0; j < cnt; j++) {
 				addWall(gr + j, gr + (j + 1) % cnt);
-				shapes.add(new LineShape(ShapeType.innerWall, j, i, j, i + 1));
+				shapes.add(new WallShape(ShapeType.innerWall, j, i, j, i + 1));
 			}
 		}
 

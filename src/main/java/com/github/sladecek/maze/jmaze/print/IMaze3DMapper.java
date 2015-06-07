@@ -1,4 +1,9 @@
-package com.github.sladecek.maze.jmaze.geometry;
+package com.github.sladecek.maze.jmaze.print;
+
+import com.github.sladecek.maze.jmaze.geometry.EastWest;
+import com.github.sladecek.maze.jmaze.geometry.Point;
+import com.github.sladecek.maze.jmaze.geometry.SouthNorth;
+import com.github.sladecek.maze.jmaze.geometry.UpDown;
 
 /**
  * 

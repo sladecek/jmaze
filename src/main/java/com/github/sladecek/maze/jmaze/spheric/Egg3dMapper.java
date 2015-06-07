@@ -1,10 +1,10 @@
 package com.github.sladecek.maze.jmaze.spheric;
 
 import com.github.sladecek.maze.jmaze.geometry.EastWest;
-import com.github.sladecek.maze.jmaze.geometry.IMaze3DMapper;
 import com.github.sladecek.maze.jmaze.geometry.Point;
 import com.github.sladecek.maze.jmaze.geometry.SouthNorth;
 import com.github.sladecek.maze.jmaze.geometry.UpDown;
+import com.github.sladecek.maze.jmaze.print.IMaze3DMapper;
 
 public class Egg3dMapper implements IMaze3DMapper {
 

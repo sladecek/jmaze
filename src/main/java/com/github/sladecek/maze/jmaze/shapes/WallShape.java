@@ -5,11 +5,11 @@ import java.io.IOException;
 import com.github.sladecek.maze.jmaze.print.SvgMazePrinter;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape.ShapeType;
 
-public class LineShape implements IMazeShape {
+public class WallShape implements IMazeShape {
 	
 	private ShapeType shapeType;
 
-	public LineShape(ShapeType type, int y1, int x1, int y2, int x2) {
+	public WallShape(ShapeType type, int y1, int x1, int y2, int x2) {
 		this.shapeType = type;
 		this.y1 = y1;
 		this.y2 = y2;

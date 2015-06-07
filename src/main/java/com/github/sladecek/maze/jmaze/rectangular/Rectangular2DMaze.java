@@ -6,7 +6,7 @@ import java.util.Vector;
 import com.github.sladecek.maze.jmaze.generator.IMazeSpace;
 import com.github.sladecek.maze.jmaze.print.IPrintableMaze;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape;
-import com.github.sladecek.maze.jmaze.shapes.LineShape;
+import com.github.sladecek.maze.jmaze.shapes.WallShape;
 
 /**
  * 2D rectangular maze. Both rooms and walls are numbered first by rows, then by columns. East/west walls are numbered 
@@ -40,10 +40,10 @@ public class Rectangular2DMaze extends RectangularMazeBase implements IMazeSpace
 		
 		// outer walls
 		final IMazeShape.ShapeType ow = IMazeShape.ShapeType.outerWall;
-		result.add(new LineShape(ow, 0, 0, 0, width));
-		result.add(new LineShape(ow, 0, 0, height, 0));
-		result.add(new LineShape(ow, 0, width, height, width));
-		result.add(new LineShape(ow, height, 0, height, width));
+		result.add(new WallShape(ow, 0, 0, 0, width));
+		result.add(new WallShape(ow, 0, 0, height, 0));
+		result.add(new WallShape(ow, 0, width, height, width));
+		result.add(new WallShape(ow, height, 0, height, width));
 		
 		final IMazeShape.ShapeType iw = IMazeShape.ShapeType.innerWall;
 
@@ -55,7 +55,7 @@ public class Rectangular2DMaze extends RectangularMazeBase implements IMazeSpace
 				int wall = x + y * (width-1);
 				if (isWallClosed(wall))
 				{
-					result.add(new LineShape(iw, y, x+1, y+1,  x+1));
+					result.add(new WallShape(iw, y, x+1, y+1,  x+1));
 				}
 			}
 		}
@@ -68,7 +68,7 @@ public class Rectangular2DMaze extends RectangularMazeBase implements IMazeSpace
 				int wall = x + y * width + eastWestWallCount;
 				if (isWallClosed(wall))
 				{
-					result.add(new LineShape(iw, y+1, x, y+1,  x+1));
+					result.add(new WallShape(iw, y+1, x, y+1,  x+1));
 				}
 			}
 		}
@@ -82,7 +82,7 @@ public class Rectangular2DMaze extends RectangularMazeBase implements IMazeSpace
 			int x1 = room1%width;
 			int y2 = room2/width;
 			int x2 = room2%width;
-			result.add(new LineShape(is, y1, x1, y2, x2));
+			result.add(new WallShape(is, y1, x1, y2, x2));
 		}
 		return result;
 	}

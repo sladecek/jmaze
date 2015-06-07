@@ -2,8 +2,6 @@ package com.github.sladecek.maze.jmaze.generator;
 
 import java.util.Vector;
 
-import junit.framework.Assert;
-
 /**
  * Generic maze space implementation without any particular properties. There is a list
  * of rooms and walls. Ther rooms and wall must be added to lists one by one
