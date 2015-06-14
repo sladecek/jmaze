@@ -1,4 +1,4 @@
-package com.github.sladecek.maze.jmaze;
+package com.github.sladecek.maze.jmaze.rectangular;
 
 import static org.junit.Assert.assertEquals;
 
@@ -61,7 +61,7 @@ public class Rectangular2DMazeTest {
 		int cnt = 0;
 		for (IMazeShape ms: maze.getShapes()) {
 			cnt++;
-			assertEquals("class com.github.sladecek.maze.jmaze.LineShape", ms.getClass().toString());
+			assertEquals("class com.github.sladecek.maze.jmaze.shapes.WallShape", ms.getClass().toString());
 		}
 		assertEquals(4+12+10, cnt);
 	}

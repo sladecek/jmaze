@@ -1,6 +1,7 @@
 package com.github.sladecek.maze.jmaze.spheric;
 
 import com.github.sladecek.maze.jmaze.geometry.EastWest;
+import com.github.sladecek.maze.jmaze.geometry.OrientationVector2D;
 import com.github.sladecek.maze.jmaze.geometry.Point;
 import com.github.sladecek.maze.jmaze.geometry.SouthNorth;
 import com.github.sladecek.maze.jmaze.geometry.UpDown;
@@ -18,40 +19,45 @@ public class Egg3dMapper implements IMaze3DMapper {
 	 * Map integer room coordinates to 3D coordinates on the egg.
 	 * 
 	 * @param y
-	 *            Longitudeal room number.
+	 *            Longitudal room number.
 	 * @param x
-	 *            Latitudeal room number. Zero index is north equator layer.
+	 *            Latitudal room number. Zero index is north equator layer.
 	 *            Minus one layer is south equator layer.
-	 * @return 3D coordinate of south-western corner of the room.
+	 *            
+	 * @return 3D coordinate of south-western corner of the room + offset.
+	 * 
 	 */
-	public Point mapPoint(int y, int x) {
+	@Override	
+	public Point mapPoint(int cellY, int cellX, double offsetY,
+			double offsetX, double offsetZ) {
 		double xx;
 		int cnt;
-		
-		if (x >= 0 ) {
+
+		if (cellX >= 0 ) {
 			EggMazeHemisphere h = maze.getHemisphere(SouthNorth.north);
-			xx = h.layerXPosition.elementAt(x);
-			cnt = h.layerRoomCnt.elementAt(x);
+			xx = h.layerXPosition.elementAt(cellX);
+			cnt = h.layerRoomCnt.elementAt(cellX);			
 		} else {
 			EggMazeHemisphere h = maze.getHemisphere(SouthNorth.south);
-			xx = -h.layerXPosition.elementAt(-x);
-			cnt = h.layerRoomCnt.elementAt(-x);
+			xx = -h.layerXPosition.elementAt(-cellX);
+			cnt = h.layerRoomCnt.elementAt(-cellX);
 		}
-		double r = egg.computeY(xx);
-		double angle = 2*Math.PI*(double)y/(double)cnt;
-		Point result = new Point(xx, r*Math.cos(angle), r*Math.sin(angle));
+		
+		OrientationVector2D normal = egg.computeNormalVector(xx);
+		OrientationVector2D tangent = normal.getOrthogonal();
+		
+		double xxx = xx + offsetX * tangent.getX() + offsetZ * normal.getX();
+		double yyy = egg.computeY(xx) + offsetX * tangent.getY() + offsetZ * normal.getY();
+		double angle = 2*Math.PI*cellY/cnt;
+		
+		double yyyy = yyy*Math.cos(angle) + offsetY*Math.sin(angle);
+		double zzzz = -yyy*Math.sin(angle) + offsetY*Math.cos(angle);
+		
+		Point result = new Point(xxx, yyyy, zzzz);
 		return result;			
 	}
 	
-	@Override
-	public Point mapPoint(int cellY, int cellX, double offsetY,
-			double offsetX, double z) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-
+	
 	@Override
 	public Point getOuterPoint(int cellX, EastWest ew, UpDown ud,
 			SouthNorth snWall, SouthNorth snEdge) {

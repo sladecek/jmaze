@@ -53,10 +53,10 @@ public class Moebius3dMapper implements IMaze3DMapper {
 
 	@Override
 	public Point mapPoint(int cellY, int cellX, double offsetY, double offsetX,
-			double z) {
+			double offsetZ) {
 		double y = (offsetY + cellY - height / 2) * cellStep_mm;
 		double x = (offsetX + cellX) * cellStep_mm;
-		return deformator.transform(new Point(y, x, z));
+		return deformator.transform(new Point(y, x, offsetZ));
 	}
 
 	@Override

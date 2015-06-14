@@ -1,4 +1,4 @@
-package com.github.sladecek.maze.jmaze;
+package com.github.sladecek.maze.jmaze.moebius;
 
 import static org.junit.Assert.assertEquals;
 

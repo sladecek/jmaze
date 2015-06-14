@@ -14,7 +14,7 @@ public interface IMaze3DMapper {
 
 
 
-	Point mapPoint(int cellY, int cellX, double offsetY, double offsetX, double z);
+	Point mapPoint(int cellY, int cellX, double offsetY, double offsetX, double offsetZ);
 	
 	public Point getOuterPoint(int cellX, EastWest ew, UpDown ud,
 			SouthNorth snWall, SouthNorth snEdge);

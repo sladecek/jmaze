@@ -2,6 +2,8 @@ package com.github.sladecek.maze.jmaze.spheric;
 
 import java.util.Vector;
 
+import com.github.sladecek.maze.jmaze.geometry.OrientationVector2D;
+
 /**
  * 
  * Define geometry of egg-like shape.
@@ -30,24 +32,42 @@ public class EggGeometry {
 		return eggCoef;
 	}
 	public double computeY(double x) {
-		// TODO Auto-generated method stub
-		return 0;
+		final double tx = 1 / (1-this.eggCoef*x);
+		final double aa = this.ellipseMajor_mm * this.ellipseMajor_mm;
+		final double bb = this.ellipseMinor_mm * this.ellipseMinor_mm;
+		final double yy = (1-x*x/aa)*bb/tx;
+		return Math.sqrt(yy);
 	}
-	public double getBaseRoomSize_mm() {
-		// TODO Auto-generated method stub
-		return 0;
+
+	public Vector<Double> divideMeridianEquidistantly(double baseRoomSize_mm) {
+
+		final double probe_mm = baseRoomSize_mm / 10;
+		Vector<Double> result = new Vector<Double>();
+		double x_mm = 0;
+		
+		while(x_mm < this.ellipseMajor_mm - 2*probe_mm)
+		{
+			double angle_rad = Math.atan2(computeY(x_mm+probe_mm) - computeY(x_mm), probe_mm);
+			double dx_mm = baseRoomSize_mm * Math.cos(angle_rad);
+			x_mm += dx_mm;
+			if (x_mm >= this.ellipseMajor_mm) {
+				break;
+			}
+			result.add(x_mm);
+		}		
+		return result;
 	}
-	public double findNextX(double x, double d) {
-		// TODO Auto-generated method stub
-		return 0;
+	
+	public OrientationVector2D computeNormalVector(double x) {
+		double y = computeY(x);
+		double cc = x / Math.pow(this.ellipseMajor_mm,2);
+		double ss = y / Math.pow(this.ellipseMinor_mm,2);
+		double norm = Math.sqrt(cc*cc+ss*ss);
+		return new OrientationVector2D(cc/norm, ss/norm);
 	}
-	public int getCircumferenceAt_mm(double x) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-	public Vector<Double> divideMeridianEquidistantly(double baseRoomSize_mm,
-			int dix) {
-		// TODO Auto-generated method stub
-		return null;
+	
+	public double computeBaseRoomSize_mm(int equatorCellCnt) {
+		final double equatorCircumference_mm = ellipseMinor_mm * 2 * Math.PI;
+		return equatorCircumference_mm / equatorCellCnt;
 	}
 }

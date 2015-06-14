@@ -3,7 +3,6 @@ package com.github.sladecek.maze.jmaze.spheric;
 import com.github.sladecek.maze.jmaze.generator.DepthFirstMazeGenerator;
 import com.github.sladecek.maze.jmaze.generator.IMazeGenerator;
 import com.github.sladecek.maze.jmaze.print.Maze3DSizes;
-import com.github.sladecek.maze.jmaze.print.SvgMazePrinter;
 
 
 public class App 

@@ -28,6 +28,7 @@ public class EggMaze extends GenericMazeSpace implements IMazeSpace,
 	private EggMazeHemisphere north = new EggMazeHemisphere();
 	private EggMazeHemisphere south = new EggMazeHemisphere();
 	private Vector<IMazeShape> shapes = new Vector<IMazeShape>();
+	private double baseRoomSize_mm;
 
 	public EggMazeHemisphere getHemisphere(SouthNorth sn) {
 		return sn == SouthNorth.north ? north : south;
@@ -36,7 +37,8 @@ public class EggMaze extends GenericMazeSpace implements IMazeSpace,
 	public EggMaze(EggGeometry egg, int equatorCellCnt) {
 		this.egg = egg;
 		this.equatorCellCnt = equatorCellCnt;
-
+		this.baseRoomSize_mm = egg.computeBaseRoomSize_mm(equatorCellCnt);
+		
 		if (this.equatorCellCnt < 4) {
 			throw new IllegalArgumentException(
 					"Maze must have at least 4 cells.");
@@ -111,9 +113,9 @@ public class EggMaze extends GenericMazeSpace implements IMazeSpace,
 	private void generateRooms(final double x0, final int dix,
 			final EggMazeHemisphere half) {
 
-		final double baseRoomSize_mm = egg.getBaseRoomSize_mm();
 
-		half.layerXPosition = egg.divideMeridianEquidistantly(baseRoomSize_mm, dix);
+
+		half.layerXPosition = egg.divideMeridianEquidistantly(baseRoomSize_mm);
 		half.layerRoomCnt = computeRoomCounts(half.layerXPosition, equatorCellCnt, baseRoomSize_mm);
 
 		for (int ix =0; ix < half.layerRoomCnt.size(); ix++) {
