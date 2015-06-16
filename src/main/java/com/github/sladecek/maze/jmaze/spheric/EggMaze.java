@@ -1,12 +1,9 @@
 package com.github.sladecek.maze.jmaze.spheric;
 
-import java.awt.List;
-import java.util.Arrays;
 import java.util.Vector;
 
 import com.github.sladecek.maze.jmaze.generator.GenericMazeSpace;
 import com.github.sladecek.maze.jmaze.generator.IMazeSpace;
-import com.github.sladecek.maze.jmaze.geometry.Point;
 import com.github.sladecek.maze.jmaze.geometry.SouthNorth;
 import com.github.sladecek.maze.jmaze.print.IPrintableMaze;
 import com.github.sladecek.maze.jmaze.shapes.FloorShape;
@@ -49,14 +46,14 @@ public class EggMaze extends GenericMazeSpace implements IMazeSpace,
 					"Cell number must be power of 2.");
 		}
 
-		generateRooms(0, 1, north);
-		generateParallelWalls(north);
-		generateMeridianWalls(north);
-
-		generateRooms(0, -1, south);
-		generateParallelWalls(south);
-		generateMeridianWalls(south);
-
+		// generate both hemispheres
+		for (SouthNorth sn: SouthNorth.values())
+		{
+			generateRooms(sn);
+			EggMazeHemisphere h = getHemisphere(sn);
+			generateParallelWalls(h);
+			generateMeridianWalls(h);
+		}
 		generateParallelWallsOnEquator();
 
 	}
@@ -105,17 +102,11 @@ public class EggMaze extends GenericMazeSpace implements IMazeSpace,
 	/**
 	 * Generate rooms of either north or south hemisphere.
 	 * 
-	 * @param x0
-	 * @param dix
-	 * @param half
-	 *            which hemisphere.
 	 */
-	private void generateRooms(final double x0, final int dix,
-			final EggMazeHemisphere half) {
+	private void generateRooms(SouthNorth sn) {
 
-
-
-		half.layerXPosition = egg.divideMeridianEquidistantly(baseRoomSize_mm);
+		final EggMazeHemisphere half = getHemisphere(sn);
+		half.layerXPosition = egg.divideMeridian(baseRoomSize_mm, sn);
 		half.layerRoomCnt = computeRoomCounts(half.layerXPosition, equatorCellCnt, baseRoomSize_mm);
 
 		for (int ix =0; ix < half.layerRoomCnt.size(); ix++) {
@@ -123,7 +114,7 @@ public class EggMaze extends GenericMazeSpace implements IMazeSpace,
 		}
 	}
 
-	private Vector<Integer> computeRoomCounts(Vector<Double> layerXPosition,
+	public Vector<Integer> computeRoomCounts(Vector<Double> layerXPosition,
 			int layerRoomCnt, double baseRoomSize_mm) {
 		
 		final int layerCnt = layerXPosition.size();
@@ -199,6 +190,10 @@ public class EggMaze extends GenericMazeSpace implements IMazeSpace,
 	public int getPictureWidth() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	public double getBaseRoomSize_mm() {
+		return this.baseRoomSize_mm;
 	}
 
 }

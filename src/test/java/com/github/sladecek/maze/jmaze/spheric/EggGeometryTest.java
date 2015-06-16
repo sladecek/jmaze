@@ -7,8 +7,9 @@ import java.util.Vector;
 import org.junit.Test;
 
 import com.github.sladecek.maze.jmaze.geometry.OrientationVector2D;
+import com.github.sladecek.maze.jmaze.geometry.SouthNorth;
 
-public class EggMazeTest {
+public class EggGeometryTest {
 
 	static final double delta = 0.0000001;
 
@@ -54,23 +55,44 @@ public class EggMazeTest {
 	
 
 	@Test
-	public void testDivideMeridianEquidistantly() {
+	public void testDivideMeridian() {
 		EggGeometry e = new EggGeometry(4, 3, 0.2);
 		final double b = 0.1;
-		Vector<Double> v = e.divideMeridianEquidistantly(b);
 		
-		assertEquals(50,  v.size());
+		for (SouthNorth sn: SouthNorth.values())
+		{
 		
-		// all distances must be in 50% tolerance
-		for (int i = 0; i < v.size()-1; i++) {
-			final double x0 = v.elementAt(i);
-			final double y0 = e.computeY(x0);
-			final double x1 = v.elementAt(i+1);
-			final double y1 = e.computeY(x1);
-			final double dx = x1-x0;
-			final double dy = y1-y0;
-			final double d = Math.sqrt(dx*dx+dy*dy);
-			assertEquals(b, d, 0.5*b);
+			Vector<Double> v = e.divideMeridian(b, sn);
+			if (sn == SouthNorth.south) {
+				assertEquals(56,  v.size());
+			} else {
+				assertEquals(51,  v.size());
+			}			
+			
+			
+			// all distances must be in 50% tolerance
+			for (int i = 0; i < v.size()-1; i++) {
+				final double x0 = v.elementAt(i);
+				final double y0 = e.computeY(x0);
+				final double x1 = v.elementAt(i+1);
+				final double y1 = e.computeY(x1);
+				final double dx = x1-x0;
+				final double dy = y1-y0;
+				final double d = Math.sqrt(dx*dx+dy*dy);
+				assertEquals(b, d, 0.5*b);
+				
+				// all distances must be on the proper hemisphere
+				if (sn == SouthNorth.south) {
+					assert(x1 < 0);
+				} else {
+					assert(x1 > 0);
+				}				
+			}
+			
+			// first distance must be on equator
+			assertEquals(0, v.elementAt(0), delta);
+			
+			
 		}
 	}
 

@@ -3,7 +3,6 @@ package com.github.sladecek.maze.jmaze.shapes;
 import java.io.IOException;
 
 import com.github.sladecek.maze.jmaze.print.SvgMazePrinter;
-import com.github.sladecek.maze.jmaze.shapes.IMazeShape.ShapeType;
 
 /// Represent hole in the ground of the maze or the lack of thereof.
 /// The user usually prints either holes or non-holes depending on output

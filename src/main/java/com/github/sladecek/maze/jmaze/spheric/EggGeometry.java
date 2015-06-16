@@ -3,6 +3,7 @@ package com.github.sladecek.maze.jmaze.spheric;
 import java.util.Vector;
 
 import com.github.sladecek.maze.jmaze.geometry.OrientationVector2D;
+import com.github.sladecek.maze.jmaze.geometry.SouthNorth;
 
 /**
  * 
@@ -39,21 +40,31 @@ public class EggGeometry {
 		return Math.sqrt(yy);
 	}
 
-	public Vector<Double> divideMeridianEquidistantly(double baseRoomSize_mm) {
+	/**
+	 * Divide egg meridian into steps of required size (approximate). Keep the rest at pole.
+	 *  
+	 * @param step_mm Required step size. 
+	 * @param hemisphere Which hemisphere to divide.
+	 * @return Vector of x positions starting with the equator (x==0).
+	 */
+	public Vector<Double> divideMeridian(double step_mm, SouthNorth hemisphere) {
 
-		final double probe_mm = baseRoomSize_mm / 10;
+		
+		final double d = hemisphere  == SouthNorth.north ? 1 : -1;
+		final double probe_mm = step_mm / 10;
 		Vector<Double> result = new Vector<Double>();
 		double x_mm = 0;
+		result.add(x_mm);
 		
 		while(x_mm < this.ellipseMajor_mm - 2*probe_mm)
 		{
-			double angle_rad = Math.atan2(computeY(x_mm+probe_mm) - computeY(x_mm), probe_mm);
-			double dx_mm = baseRoomSize_mm * Math.cos(angle_rad);
+			double angle_rad = Math.atan2(computeY(d*(x_mm+probe_mm)) - computeY(d*x_mm), probe_mm);
+			double dx_mm = step_mm * Math.cos(angle_rad);
 			x_mm += dx_mm;
 			if (x_mm >= this.ellipseMajor_mm) {
 				break;
 			}
-			result.add(x_mm);
+			result.add(x_mm*d);
 		}		
 		return result;
 	}
