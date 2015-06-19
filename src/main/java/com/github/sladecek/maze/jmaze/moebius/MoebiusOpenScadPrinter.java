@@ -27,10 +27,10 @@ public class MoebiusOpenScadPrinter extends OpenScadMazePrinter implements IMaze
 
 	protected void prepareShapes(IPrintableMaze maze) {
 		walls = new ArrayList<WallShape>();
-		floor = new ArrayList<FloorShape>();
+		floors = new ArrayList<FloorShape>();
 		for(IMazeShape shape: maze.getShapes()) {
-			if (shape.getShapeType() == ShapeType.hole && !((FloorShape)shape).isHole()) {
-				floor.add((FloorShape)shape);
+			if (shape.getShapeType() == ShapeType.nonHole ) {
+				floors.add((FloorShape)shape);
 			} else {
 				if (shape.getShapeType() == ShapeType.innerWall) {
 					walls.add((WallShape)shape);
@@ -69,7 +69,7 @@ public class MoebiusOpenScadPrinter extends OpenScadMazePrinter implements IMaze
 
 	
 	private void fillHolesInFloors() throws IOException {
-		for (FloorShape hs: floor) {
+		for (FloorShape hs: floors) {
 			fillHoleInTheFloorOneRoom(hs);
 		}
 	}
@@ -94,7 +94,7 @@ public class MoebiusOpenScadPrinter extends OpenScadMazePrinter implements IMaze
 				for(EastWest ew: EastWest.values()) {
 					for(SouthNorth snEdge: SouthNorth.values()) {
 						for(UpDown ud: UpDown.values()) {						
-							p.add(maze3dMapper.getOuterPoint(cellX, ew, ud, snWall, snEdge));
+							p.add(maze3dMapper.mapCorner(cellX, ew, ud, snWall, snEdge));
 						}
 					}
 				}
@@ -106,7 +106,7 @@ public class MoebiusOpenScadPrinter extends OpenScadMazePrinter implements IMaze
 
 
 	private ArrayList<WallShape> walls;
-	private ArrayList<FloorShape> floor;
+	private ArrayList<FloorShape> floors;
 
 	int cellHeight;
 	int cellWidth;

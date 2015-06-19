@@ -23,6 +23,6 @@ public class App
     	sizes.setCellSize_mm(2);
     	
     	MoebiusOpenScadPrinter osp = new MoebiusOpenScadPrinter(sizes);
-    	osp.printMaze(maze,"maze.scad");
+    	osp.printMaze(maze,"maze-moebius.scad");
     }
 }

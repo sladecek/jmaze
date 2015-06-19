@@ -44,6 +44,7 @@ public abstract class OpenScadMazePrinter {
 
 	protected void printWallsOneRoom(final double wallThickness, WallShape wall)
 			throws IOException {
+		System.out.println(wall);
 		int y1 = wall.getY1();
 		int y2 = wall.getY2();
 		int x1 = wall.getX1();

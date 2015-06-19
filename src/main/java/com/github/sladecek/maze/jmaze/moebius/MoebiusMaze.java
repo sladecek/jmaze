@@ -15,7 +15,6 @@ import com.github.sladecek.maze.jmaze.shapes.WallShape;
  * 2D rectangular maze on Moebius strip. Rooms and walls (including holes) are numbered first by rows, then by columns. East/west walls are numbered 
  * before south/north ones. Holes are numbered after south/north walls. 
  */
-
 public class MoebiusMaze extends RectangularMazeBase implements IMazeSpace,
 		IPrintableMaze {
 	

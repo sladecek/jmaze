@@ -34,5 +34,11 @@ public class MarkShape implements IMazeShape {
 	private int x;
 	private int y;
 
+	@Override
+	public String toString() {
+		return "MarkShape [shapeType=" + shapeType + ", x=" + x + ", y=" + y
+				+ "]";
+	}
+
 
 }

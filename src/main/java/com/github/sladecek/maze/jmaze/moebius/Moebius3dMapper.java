@@ -24,16 +24,16 @@ public class Moebius3dMapper implements IMaze3DMapper {
 		outerWallThickness_mm = sizes.getCellSize_mm()	* sizes.getOuterWallToCellRatio();
 		height_mm = sizes.getCellSize_mm() * height + innerWallThickness_mm
 				* (height - 1) + 2 * outerWallThickness_mm;
-		// TODO moebius only
+		
 		length_mm = sizes.getCellSize_mm() * width + innerWallThickness_mm
 				* width;
 		cellStep_mm = sizes.getCellSize_mm() + innerWallThickness_mm;
 
-		deformator = new MoebiusDeformator(length_mm);
+		geometry = new MoebiusStripGeometry(length_mm);
 
 	}
 
-	MoebiusDeformator deformator;
+	MoebiusStripGeometry geometry;
 	Maze3DSizes sizes;
 	int width;
 	int height;
@@ -56,11 +56,11 @@ public class Moebius3dMapper implements IMaze3DMapper {
 			double offsetZ) {
 		double y = (offsetY + cellY - height / 2) * cellStep_mm;
 		double x = (offsetX + cellX) * cellStep_mm;
-		return deformator.transform(new Point(y, x, offsetZ));
+		return geometry.transform(new Point(x, y, offsetZ));
 	}
 
 	@Override
-	public Point getOuterPoint(int cellX, EastWest ew, UpDown ud,
+	public Point mapCorner(int cellX, EastWest ew, UpDown ud,
 			SouthNorth snWall, SouthNorth snEdge) {
 		double x = (((ew == EastWest.east) ? 0 : 1) + cellX) * cellStep_mm;
 		double y = height_mm / 2;
@@ -73,7 +73,7 @@ public class Moebius3dMapper implements IMaze3DMapper {
 
 		double z = ud == UpDown.down ? 0 : sizes.getWallHeight_mm();
 
-		return deformator.transform(new Point(x, y, z));
+		return geometry.transform(new Point(x, y, z));
 	}
 
 }

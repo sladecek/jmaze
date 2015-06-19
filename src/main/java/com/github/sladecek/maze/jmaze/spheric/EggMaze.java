@@ -49,10 +49,9 @@ public class EggMaze extends GenericMazeSpace implements IMazeSpace,
 		// generate both hemispheres
 		for (SouthNorth sn: SouthNorth.values())
 		{
-			generateRooms(sn);
-			EggMazeHemisphere h = getHemisphere(sn);
-			generateParallelWalls(h);
-			generateMeridianWalls(h);
+			generateRooms(sn);			
+			generateParallelWalls(sn);
+			generateMeridianWalls(sn);
 		}
 		generateParallelWallsOnEquator();
 
@@ -63,56 +62,48 @@ public class EggMaze extends GenericMazeSpace implements IMazeSpace,
 		final int gRoomSouth = south.greenwichRoom.elementAt(0);
 
 		for (int i = 0; i < equatorCellCnt; i++) {
-			addWall(gRoomNorth+i, gRoomSouth+i);
-			shapes.add(new WallShape(ShapeType.innerWall, i, 0, i+1, 0));		
+			addWall(gRoomNorth+i, gRoomSouth+i);			
+			addWallShape(equatorCellCnt, i, i+1, 0,0);			
 		}
 
 	}
 
 
-	private void generateParallelWalls(EggMazeHemisphere h) {
+	public int getEquatorCellCnt() {
+		return equatorCellCnt;
+	}
+
+	private void generateParallelWalls(SouthNorth sn) {
+		EggMazeHemisphere h = getHemisphere(sn);
 		for (int i = 0; i < h.layerXPosition.size()-1; i++) {
  
-			final int cellCntThis = h.layerRoomCnt.elementAt(i);
-			final int cellCntNext = h.layerRoomCnt.elementAt(i+1);
-			final int cellCntRatio = cellCntThis/cellCntNext;
-			
+			// the next layer may have less rooms than this one
+			final int roomCntThis = h.layerRoomCnt.elementAt(i);
+			final int roomCntNext = h.layerRoomCnt.elementAt(i+1);
 			final int gRoomThis = h.greenwichRoom.elementAt(i);
 			final int gRoomNext = h.greenwichRoom.elementAt(i+1);
 					
+			int x = sn == SouthNorth.south ? -1-i : i+1;
 			
-			generateParallelWallLayer(i, cellCntThis, cellCntRatio, gRoomThis, gRoomNext);
-		}
-		
-	}
-
-	private void generateParallelWallLayer(int x, int roomCnt, int cellCntRatio, int gRoomThis, int gRoomNext) {
-		for (int roomThis = 0; roomThis< roomCnt; roomThis++ ) {
-			for(int j=0; j < cellCntRatio; j++) {
-				int roomNext = roomThis * cellCntRatio + j;
-				addWall(gRoomThis+roomThis, gRoomNext + roomNext);
-				shapes.add(new WallShape(ShapeType.innerWall, roomThis, x, roomThis+1, x));								
+			final int roomCntRatio = roomCntThis/roomCntNext;		
+			for (int roomNext = 0; roomNext< roomCntNext; roomNext++ ) {
+				for(int j=0; j < roomCntRatio; j++) {
+					int roomThis = roomNext * roomCntRatio + j;
+					addWall(gRoomThis+roomThis, gRoomNext + roomNext); 
+					addWallShape(roomCntThis, roomThis, roomThis+1, x, x);								
+				}
 			}
 		}
 		
 	}
 
-
-
-	/**
-	 * Generate rooms of either north or south hemisphere.
-	 * 
-	 */
-	private void generateRooms(SouthNorth sn) {
-
-		final EggMazeHemisphere half = getHemisphere(sn);
-		half.layerXPosition = egg.divideMeridian(baseRoomSize_mm, sn);
-		half.layerRoomCnt = computeRoomCounts(half.layerXPosition, equatorCellCnt, baseRoomSize_mm);
-
-		for (int ix =0; ix < half.layerRoomCnt.size(); ix++) {
-			createLayerOfCells(half, ix, half.layerRoomCnt.elementAt(ix));
-		}
+	private void addWallShape(int roomCntThisLayer, int yr1, int yr2, int x1, int x2) {
+		final int roomMapRatio = equatorCellCnt/roomCntThisLayer;
+		final int y1 = (yr1 * roomMapRatio) % equatorCellCnt;
+		final int y2 = (yr2 * roomMapRatio) % equatorCellCnt; 
+		shapes.add(new WallShape(ShapeType.innerWall, y1, x1, y2, x2));
 	}
+
 
 	public Vector<Integer> computeRoomCounts(Vector<Double> layerXPosition,
 			int layerRoomCnt, double baseRoomSize_mm) {
@@ -139,25 +130,50 @@ public class EggMaze extends GenericMazeSpace implements IMazeSpace,
 		return result;
 	}
 
-	private void createLayerOfCells(EggMazeHemisphere hemisphere, int ix,
-			 int layerRoomCnt) {
-		for (int i = 0; i < layerRoomCnt; i++) {
+	/**
+	 * Generate rooms of either north or south hemisphere.
+	 * 
+	 */
+	private void generateRooms(SouthNorth sn) {
+
+		final EggMazeHemisphere h = getHemisphere(sn);
+		h.layerXPosition = egg.divideMeridian(baseRoomSize_mm, sn);
+		h.layerRoomCnt = computeRoomCounts(h.layerXPosition, equatorCellCnt, baseRoomSize_mm);
+
+		for (int ix = 0; ix < h.layerRoomCnt.size(); ix++) {
+			int x = ix;
+			if (sn == SouthNorth.south) {
+				x = -1 -ix;
+			}
+			createLayerOfCells(h, x, h.layerRoomCnt.elementAt(ix));
+		}
+	}
+
+
+	private void createLayerOfCells(EggMazeHemisphere hemisphere, int x,
+			 int roomCnt) {
+		final int roomMapRatio = equatorCellCnt/roomCnt;
+		for (int y = 0; y < roomCnt; y++) {
 			int r = addRoom();
-			if (i == 0) {
+			if (y == 0) {
 				hemisphere.greenwichRoom.add(r);
 			}
-			shapes.add(new FloorShape(i, ix, false));
+			shapes.add(new FloorShape(y*roomMapRatio, x, false));
 		}
 
 	}
 
-	private void generateMeridianWalls(EggMazeHemisphere h) {
+	private void generateMeridianWalls(SouthNorth sn) {
+		EggMazeHemisphere h = getHemisphere(sn);
 		for (int i = 0; i < h.layerRoomCnt.size(); i++) {
 			final int cnt = h.layerRoomCnt.elementAt(i);
-			final int gr = h.greenwichRoom.elementAt(i);
-			for (int j = 0; j < cnt; j++) {
-				addWall(gr + j, gr + (j + 1) % cnt);
-				shapes.add(new WallShape(ShapeType.innerWall, j, i, j, i + 1));
+			if (cnt > 1) {
+				final int roomMapRatio = equatorCellCnt/cnt;
+				final int gr = h.greenwichRoom.elementAt(i);
+				for (int j = 0; j < cnt; j++) {
+					addWall(gr + j, gr + (j + 1) % cnt);
+					addWallShape(cnt, j, j, i, i+1);;
+				}
 			}
 		}
 

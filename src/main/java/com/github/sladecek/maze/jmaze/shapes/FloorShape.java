@@ -47,6 +47,11 @@ public class FloorShape implements IMazeShape {
 		return x;
 	}
 
+	@Override
+	public String toString() {
+		return "FloorShape [y=" + y + ", x=" + x + ", isHole=" + isHole + "]";
+	}
+
 
 
 }

@@ -19,10 +19,13 @@ public class Egg3dMapper implements IMaze3DMapper {
 	 * Map integer room coordinates to 3D coordinates on the egg.
 	 * 
 	 * @param y
-	 *            Longitudal room number.
+	 *            Longitudal room number. Unit is 2*pi/#of rooms on the equator. The
+	 *            rooms on the equator have consecutive numbers 0,1,2.... Following layers
+	 *            may have less rooms and their numbers may skip some numbers 0,4,8....
+	 *            
 	 * @param x
-	 *            Latitudal room number. Zero index is north equator layer.
-	 *            Minus one layer is south equator layer.
+	 *            Latitudal room number. Zero index is equator.
+	 *            
 	 *            
 	 * @return 3D coordinate of south-western corner of the room + offset.
 	 * 
@@ -31,16 +34,16 @@ public class Egg3dMapper implements IMaze3DMapper {
 	public Point mapPoint(int cellY, int cellX, double offsetY,
 			double offsetX, double offsetZ) {
 		double xx;
-		int cnt;
+		final int cnt = maze.getEquatorCellCnt();
 
 		if (cellX >= 0 ) {
 			EggMazeHemisphere h = maze.getHemisphere(SouthNorth.north);
 			xx = h.layerXPosition.elementAt(cellX);
-			cnt = h.layerRoomCnt.elementAt(cellX);			
+					
 		} else {
 			EggMazeHemisphere h = maze.getHemisphere(SouthNorth.south);
 			xx = -h.layerXPosition.elementAt(-cellX);
-			cnt = h.layerRoomCnt.elementAt(-cellX);
+			
 		}
 		
 		OrientationVector2D normal = egg.computeNormalVector(xx);
@@ -59,7 +62,7 @@ public class Egg3dMapper implements IMaze3DMapper {
 	
 	
 	@Override
-	public Point getOuterPoint(int cellX, EastWest ew, UpDown ud,
+	public Point mapCorner(int cellX, EastWest ew, UpDown ud,
 			SouthNorth snWall, SouthNorth snEdge) {
 		throw new IllegalArgumentException("Egg has no corners");
 	}
