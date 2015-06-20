@@ -37,6 +37,9 @@ public class EggGeometry {
 		final double aa = this.ellipseMajor_mm * this.ellipseMajor_mm;
 		final double bb = this.ellipseMinor_mm * this.ellipseMinor_mm;
 		final double yy = (1-x*x/aa)*bb/tx;
+		if (yy == Double.NaN || yy < 0) {
+			return 0;
+		}
 		return Math.sqrt(yy);
 	}
 

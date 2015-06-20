@@ -15,19 +15,19 @@ public class App
 		final double ellipseMinor_mm = 20;
 		final double eggCoef = 0.2;
 		
-		EggGeometry egg = new EggGeometry(4, 3, 0.5);
-		EggMaze maze = new EggMaze(egg, 8);
-	
-	/*	
-		EggGeometry egg = new EggGeometry(ellipseMajor_mm, ellipseMinor_mm, eggCoef);
+		EggGeometry egg = new EggGeometry(4, 3, 0.2);
+//		EggGeometry egg = new EggGeometry(ellipseMajor_mm, ellipseMinor_mm, eggCoef);
 		EggMaze maze = new EggMaze(egg, equator_cells);
-    	*/IMazeGenerator g = new DepthFirstMazeGenerator();
+    	IMazeGenerator g = new DepthFirstMazeGenerator();
     	g.generateMaze(maze);
     	   	
     	Maze3DSizes sizes = new Maze3DSizes();
-    	sizes.setCellSize_mm(2);
+    	sizes.setCellSize_mm(0.1);
+    	sizes.setBaseThickness_mm(0.03);
+    	sizes.setWallHeight_mm(0.3);
+    	sizes.setInnerWallToCellRatio(0.05);
     	
-    	EggOpenScadPrinter osp = new EggOpenScadPrinter(sizes, egg);
+    	EggOpenScadPrinter osp = new EggOpenScadPrinter(sizes, egg, equator_cells);
     	osp.printMaze(maze,"maze-egg.scad");
     }
 }

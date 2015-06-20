@@ -17,8 +17,8 @@ public class EggOpenScadPrinter extends OpenScadMazePrinter implements IMazePrin
 
 	private EggGeometry egg;
 	
-	public EggOpenScadPrinter(Maze3DSizes sizes, EggGeometry egg) {
-		super(sizes);
+	public EggOpenScadPrinter(Maze3DSizes sizes, EggGeometry egg, int equatorCellCnt) {
+		super(sizes,egg.computeBaseRoomSize_mm(equatorCellCnt));
 		this.egg = egg;
 	}
 
@@ -26,7 +26,7 @@ public class EggOpenScadPrinter extends OpenScadMazePrinter implements IMazePrin
 		walls = new ArrayList<WallShape>();
 		floor = new ArrayList<FloorShape>();
 		for(IMazeShape shape: maze.getShapes()) {
-			if (shape.getShapeType() == ShapeType.hole && !((FloorShape)shape).isHole()) {
+			if (shape.getShapeType() == ShapeType.nonHole ) {
 				floor.add((FloorShape)shape);
 			} else {
 				if (shape.getShapeType() == ShapeType.innerWall) {

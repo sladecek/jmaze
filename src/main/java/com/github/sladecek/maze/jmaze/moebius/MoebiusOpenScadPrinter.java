@@ -22,7 +22,7 @@ import com.github.sladecek.maze.jmaze.shapes.WallShape;
  */
 public class MoebiusOpenScadPrinter extends OpenScadMazePrinter implements IMazePrinter  {
 	public MoebiusOpenScadPrinter(Maze3DSizes sizes) {
-		super(sizes);
+		super(sizes,1);
 	}
 
 	protected void prepareShapes(IPrintableMaze maze) {

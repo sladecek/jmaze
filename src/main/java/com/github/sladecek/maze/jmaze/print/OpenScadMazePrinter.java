@@ -16,8 +16,10 @@ import com.github.sladecek.maze.jmaze.shapes.WallShape;
  */
 public abstract class OpenScadMazePrinter {
 	
-	public OpenScadMazePrinter(Maze3DSizes sizes) {
+	private double approxRoomSize_mm;
+	public OpenScadMazePrinter(Maze3DSizes sizes, double approxRoomSize_mm) {
 		this.sizes = sizes;
+		this.approxRoomSize_mm = approxRoomSize_mm;
 	}
 	
 
@@ -79,7 +81,7 @@ public abstract class OpenScadMazePrinter {
 	}
 		
 
-	protected void printFloorWithHoleOneRoom(int cellX, int cellY) throws IOException {
+	protected void printFloorWithHoleOneRoom(int cellY, int cellX) throws IOException {
 		ArrayList<Point> pe = new ArrayList<Point>();
 		for(SouthNorth sn: SouthNorth.values()) {
 			for(UpDown ud: UpDown.values()) {						
@@ -131,7 +133,8 @@ public abstract class OpenScadMazePrinter {
 		ps.add(pe.get(6));
 		ps.add(pe.get(7));
 		scad.printPolyhedron(ps, "base s "+cellX+" "+cellY, baseColor);
-	}
+	
+		}
 
 	protected void fillHoleInTheFloorOneRoom(FloorShape hs) throws IOException {
 		ArrayList<Point> p = new ArrayList<Point>();
@@ -146,13 +149,15 @@ public abstract class OpenScadMazePrinter {
 	}
 
 	protected Point getHolePoint(int y, int x, EastWest ew, SouthNorth sn, UpDown ud) {
-		final double c = 0.5;
-		final double wt = (1-sizes.getInnerWallToCellRatio())/2;
-		final double z = sizes.getBaseThickness_mm();
 
-		return mapPointWithZ(y, x, ud, 
-				c + (sn == SouthNorth.south ? -wt: wt),
-				c + (ew == EastWest.east ? -wt: wt));
+		final double wt = sizes.getInnerWallToCellRatio()/2*approxRoomSize_mm;
+		final double z = sizes.getBaseThickness_mm();
+		final int dY = (sn == SouthNorth.south) ? 0 : 1;
+		final int dX = (ew == EastWest.east) ? 0 : 1;	
+		
+		return mapPointWithZ(y+dY, x+dX, ud, 
+				(sn == SouthNorth.south ? wt: -wt),
+				(ew == EastWest.east ? wt: -wt));
 	
 	}
 	
@@ -164,9 +169,9 @@ public abstract class OpenScadMazePrinter {
 	
 	
 	Point getBasePoint(int cellY, int cellX, UpDown ud, SouthNorth sn, EastWest ew) {
-		double offsetY = (sn == SouthNorth.south) ? 0 : 1;
-		double offsetX = (ew == EastWest.east) ? 0 : 1;		
-		return mapPointWithZ(cellY, cellX,  ud, offsetY, offsetX);
+		final int dY = (sn == SouthNorth.south) ? 0 : 1;
+		final int dX = (ew == EastWest.east) ? 0 : 1;	
+		return mapPointWithZ(cellY+dY, cellX+dX,  ud, 0, 0);
 		
 	}
 	

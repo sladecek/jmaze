@@ -42,7 +42,7 @@ public class Egg3dMapper implements IMaze3DMapper {
 					
 		} else {
 			EggMazeHemisphere h = maze.getHemisphere(SouthNorth.south);
-			xx = -h.layerXPosition.elementAt(-cellX);
+			xx = h.layerXPosition.elementAt(-cellX);
 			
 		}
 		
@@ -53,8 +53,8 @@ public class Egg3dMapper implements IMaze3DMapper {
 		double yyy = egg.computeY(xx) + offsetX * tangent.getY() + offsetZ * normal.getY();
 		double angle = 2*Math.PI*cellY/cnt;
 		
-		double yyyy = yyy*Math.cos(angle) + offsetY*Math.sin(angle);
-		double zzzz = -yyy*Math.sin(angle) + offsetY*Math.cos(angle);
+		double yyyy = yyy*Math.cos(angle) - offsetY*Math.sin(angle);
+		double zzzz = -yyy*Math.sin(angle) - offsetY*Math.cos(angle);
 		
 		Point result = new Point(xxx, yyyy, zzzz);
 		return result;			
