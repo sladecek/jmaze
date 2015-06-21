@@ -76,4 +76,9 @@ public class Moebius3dMapper implements IMaze3DMapper {
 		return geometry.transform(new Point(x, y, z));
 	}
 
+	@Override
+	public int getStepY(int y, int x) {
+		return 1;
+	}
+
 }

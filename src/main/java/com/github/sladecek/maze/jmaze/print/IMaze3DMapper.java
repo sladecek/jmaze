@@ -15,6 +15,8 @@ public interface IMaze3DMapper {
 	Point mapPoint(int cellY, int cellX, double offsetY, double offsetX, double offsetZ);
 	
 	Point mapCorner(int cellX, EastWest ew, UpDown ud, SouthNorth snWall, SouthNorth snEdge);
+
+	int getStepY(int y, int x);
 		
 	
 }

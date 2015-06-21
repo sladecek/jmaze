@@ -9,6 +9,8 @@ import com.github.sladecek.maze.jmaze.print.IMaze3DMapper;
 
 public class Egg3dMapper implements IMaze3DMapper {
 
+	private static final double SMALL_Y_MM = 0.001;
+	
 	public Egg3dMapper(EggGeometry egg, EggMaze maze) {
 		super();
 		this.egg = egg;
@@ -18,12 +20,12 @@ public class Egg3dMapper implements IMaze3DMapper {
 	/**
 	 * Map integer room coordinates to 3D coordinates on the egg.
 	 * 
-	 * @param y
+	 * @param cellVerical 
 	 *            Longitudal room number. Unit is 2*pi/#of rooms on the equator. The
 	 *            rooms on the equator have consecutive numbers 0,1,2.... Following layers
 	 *            may have less rooms and their numbers may skip some numbers 0,4,8....
 	 *            
-	 * @param x
+	 * @param cellHorizontal
 	 *            Latitudal room number. Zero index is equator.
 	 *            
 	 *            
@@ -31,32 +33,67 @@ public class Egg3dMapper implements IMaze3DMapper {
 	 * 
 	 */
 	@Override	
-	public Point mapPoint(int cellY, int cellX, double offsetY,
-			double offsetX, double offsetZ) {
-		double xx;
-		final int cnt = maze.getEquatorCellCnt();
-
-		if (cellX >= 0 ) {
-			EggMazeHemisphere h = maze.getHemisphere(SouthNorth.north);
-			xx = h.layerXPosition.elementAt(cellX);
-					
-		} else {
-			EggMazeHemisphere h = maze.getHemisphere(SouthNorth.south);
-			xx = h.layerXPosition.elementAt(-cellX);
-			
-		}
+	public Point mapPoint(int cellVertical, int cellHorizontal, double offsetV,
+			double offsetH, double offsetA) {
 		
+		final int eqCnt = maze.getEquatorCellCnt();
+		
+		// South hemisphere has separate data structure.
+		SouthNorth sn = SouthNorth.north;
+		int indexH = cellHorizontal;
+		if (cellHorizontal < 0 ) {
+			sn = SouthNorth.south;
+			indexH = -cellHorizontal;
+		}		
+		EggMazeHemisphere hem = maze.getHemisphere(sn);
+		final int layerCnt = hem.getLayerCnt();
+		
+		assert indexH >= 0: "Invalid horizontal coordinate - negative";
+		assert indexH <= layerCnt: "Invalid horizontal coordinate - too big";
+
+		// Compute coordinates in meridian plane.
+		double xx;
+		double yy;
+		
+		if (indexH < hem.getLayerCnt()) {
+			// this is normal layer 
+			xx = hem.getLayerXPosition(indexH);
+			final double ySurface = egg.computeY(xx);
+			yy = ySurface;
+			
+			// When layers have different number of rooms, the split rooms do not meet on
+			// egg surface but slightly below on the line connecting the corners of the common room.			
+			int roomCntThis = hem.getGeometricalRoomCntInLayer(indexH);
+			
+			int roomCntNext = hem.getGeometricalRoomCntInNextLayer(indexH);
+			assert roomCntThis >= roomCntNext: "Egg cannot extend.";
+			int k = roomCntThis / roomCntNext;
+			if (k > 1) {	
+				// ratio of corner distance divided by ySurface
+				double lra = 2 * Math.sin(Math.PI/roomCntNext);
+				double ik = (double)(cellVertical % k)/(double)k;
+				yy = ySurface * Math.sqrt((ik*ik-ik)*lra*lra+1);				
+			}
+		} else {
+			// polar layer - this defines "equatorial" side of the polar room
+			// should not be used for the "polar" side
+			xx = hem.getLastLayerXPosition();
+			yy = SMALL_Y_MM;
+		}
+	
+
+		// add local offsets
 		OrientationVector2D normal = egg.computeNormalVector(xx);
 		OrientationVector2D tangent = normal.getOrthogonal();
+		double xxx = xx + offsetH * tangent.getX() + offsetA * normal.getX();
+		double yyy = yy + offsetH * tangent.getY() + offsetA * normal.getY();
 		
-		double xxx = xx + offsetX * tangent.getX() + offsetZ * normal.getX();
-		double yyy = egg.computeY(xx) + offsetX * tangent.getY() + offsetZ * normal.getY();
-		double angle = 2*Math.PI*cellY/cnt;
-		
-		double yyyy = yyy*Math.cos(angle) - offsetY*Math.sin(angle);
-		double zzzz = -yyy*Math.sin(angle) - offsetY*Math.cos(angle);
-		
+		// rotate meridian plane by longitude angle
+		double angle = 2*Math.PI*cellVertical/eqCnt;		
+		double yyyy = yyy*Math.cos(angle) - offsetV*Math.sin(angle);
+		double zzzz = -yyy*Math.sin(angle) - offsetV*Math.cos(angle);		
 		Point result = new Point(xxx, yyyy, zzzz);
+		
 		return result;			
 	}
 	
@@ -69,4 +106,31 @@ public class Egg3dMapper implements IMaze3DMapper {
 
 	EggGeometry egg;
 	EggMaze maze;
+
+	@Override
+	public int getStepY(int y, int x) {
+		final int eqCnt = maze.getEquatorCellCnt();
+		
+		// South hemisphere has separate data structure.
+		SouthNorth sn = SouthNorth.north;
+		int indexH = x;
+		if (x < 0 ) {
+			sn = SouthNorth.south;
+			indexH = -x;
+		}		
+		EggMazeHemisphere hem = maze.getHemisphere(sn);
+		final int layerCnt = hem.getLayerCnt();
+		
+		assert indexH >= 0: "Invalid horizontal coordinate - negative";
+		assert indexH <= layerCnt: "Invalid horizontal coordinate - too big";
+
+		
+		
+		if (indexH < hem.getLayerCnt()) {
+			// this is normal layer 
+			int roomCntThis = hem.getGeometricalRoomCntInLayer(indexH);
+			return eqCnt / roomCntThis;
+		}
+		return 1;
+	}
 }

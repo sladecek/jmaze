@@ -152,7 +152,7 @@ public abstract class OpenScadMazePrinter {
 
 		final double wt = sizes.getInnerWallToCellRatio()/2*approxRoomSize_mm;
 		final double z = sizes.getBaseThickness_mm();
-		final int dY = (sn == SouthNorth.south) ? 0 : 1;
+		final int dY = (sn == SouthNorth.south) ? 0 : maze3dMapper.getStepY(y,x);
 		final int dX = (ew == EastWest.east) ? 0 : 1;	
 		
 		return mapPointWithZ(y+dY, x+dX, ud, 
@@ -168,8 +168,8 @@ public abstract class OpenScadMazePrinter {
 	}
 	
 	
-	Point getBasePoint(int cellY, int cellX, UpDown ud, SouthNorth sn, EastWest ew) {
-		final int dY = (sn == SouthNorth.south) ? 0 : 1;
+	Point getBasePoint(int cellY, int cellX,  UpDown ud, SouthNorth sn, EastWest ew) {
+		final int dY = (sn == SouthNorth.south) ? 0 : maze3dMapper.getStepY(cellY,cellX);
 		final int dX = (ew == EastWest.east) ? 0 : 1;	
 		return mapPointWithZ(cellY+dY, cellX+dX,  ud, 0, 0);
 		
