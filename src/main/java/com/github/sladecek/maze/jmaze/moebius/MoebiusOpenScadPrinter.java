@@ -3,6 +3,7 @@ package com.github.sladecek.maze.jmaze.moebius;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import com.github.sladecek.maze.jmaze.generator.MazeRealization;
 import com.github.sladecek.maze.jmaze.geometry.EastWest;
 import com.github.sladecek.maze.jmaze.geometry.Point;
 import com.github.sladecek.maze.jmaze.geometry.SouthNorth;
@@ -40,7 +41,7 @@ public class MoebiusOpenScadPrinter extends OpenScadMazePrinter implements IMaze
 	}
 
 	@Override
-	protected void printShapes(IPrintableMaze maze) throws IOException {
+	protected void printShapes(IPrintableMaze maze, MazeRealization realization) throws IOException {
  
 		cellHeight = maze.getPictureHeight();
 		cellWidth = maze.getPictureWidth();

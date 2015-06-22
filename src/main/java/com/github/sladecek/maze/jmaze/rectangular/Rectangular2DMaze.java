@@ -20,7 +20,7 @@ public class Rectangular2DMaze extends RectangularMazeBase implements IMazeSpace
 		super(height, width);
 		eastWestWallCount = (width - 1) * height;
 		southNorthWallCount = width * (height-1);
-		allocateWalls(eastWestWallCount + southNorthWallCount);		
+	
 	}
 
 	public double getRoomDistance(int r1, int r2) {
@@ -53,10 +53,9 @@ public class Rectangular2DMaze extends RectangularMazeBase implements IMazeSpace
 			for (int x = 0; x < width-1; x++)
 			{
 				int wall = x + y * (width-1);
-				if (isWallClosed(wall))
-				{
+			
 					result.add(new WallShape(iw, y, x+1, y+1,  x+1));
-				}
+			
 			}
 		}
 		
@@ -66,13 +65,10 @@ public class Rectangular2DMaze extends RectangularMazeBase implements IMazeSpace
 			for (int x = 0; x < width; x++)
 			{
 				int wall = x + y * width + eastWestWallCount;
-				if (isWallClosed(wall))
-				{
 					result.add(new WallShape(iw, y+1, x, y+1,  x+1));
-				}
 			}
 		}
-		
+		/*
 		// solution
 		final IMazeShape.ShapeType is = IMazeShape.ShapeType.solution;
 		for (int i = 0; i < solution.size()-1; i++) {
@@ -84,6 +80,7 @@ public class Rectangular2DMaze extends RectangularMazeBase implements IMazeSpace
 			int x2 = room2%width;
 			result.add(new WallShape(is, y1, x1, y2, x2));
 		}
+		*/
 		return result;
 	}
 
@@ -147,6 +144,12 @@ public class Rectangular2DMaze extends RectangularMazeBase implements IMazeSpace
 	@Override
 	public int getWallProbabilityWeight(int wall) {
 		return 1;
+	}
+
+	@Override
+	public int getWallCnt() {
+		return eastWestWallCount + southNorthWallCount;
+		
 	}
 
 }

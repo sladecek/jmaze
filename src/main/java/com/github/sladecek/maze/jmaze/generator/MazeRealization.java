@@ -9,7 +9,7 @@ import java.util.Vector;
  * on the maze. Also contains solution.
  *
  */
-public class MazeBase {
+public class MazeRealization {
 	
 	protected BitSet isWallClosed;
 	protected Vector<Integer> solution = new Vector<Integer>();

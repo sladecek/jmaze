@@ -4,10 +4,10 @@ import java.util.Vector;
 
 /**
  * Generic maze space implementation without any particular properties. There is a list
- * of rooms and walls. Ther rooms and wall must be added to lists one by one
+ * of rooms and walls. The rooms and wall must be added to lists one by one
  * during maze construction.
  */
-public class GenericMazeSpace extends MazeBase implements IMazeSpace {
+public class GenericMazeSpace  implements IMazeSpace {
 
 	private int startRoom;
 	private int targetRoom;
@@ -24,11 +24,16 @@ public class GenericMazeSpace extends MazeBase implements IMazeSpace {
 	}
 	
 	public int addWall(int room1, int room2) {
+		System.out.println("..addWall "+room1+" "+room2);
+		if (rooms.size() <= room1 || rooms.size() <= room2){
+			System.out.println("cannot add wall");
+			return 0;
+		}
 		int id = wallRoom1.size();	
 		wallRoom1.add(room1);
-		wallRoom2.add(room2);
 		rooms.elementAt(room1).add(id);
-		rooms.elementAt(room1).add(id);
+		wallRoom2.add(room2);		
+		rooms.elementAt(room2).add(id);
 		return id;
 	}
 
@@ -69,7 +74,7 @@ public class GenericMazeSpace extends MazeBase implements IMazeSpace {
 	@Override
 	public int getOtherRoom(int room, int wall) {
 		int r1 = wallRoom1.elementAt(wall);
-		int r2 = wallRoom1.elementAt(wall);
+		int r2 = wallRoom2.elementAt(wall);
 		return r1 == room ? r2 : r1;
 	}
 
@@ -77,6 +82,11 @@ public class GenericMazeSpace extends MazeBase implements IMazeSpace {
 	@Override
 	public int getWallProbabilityWeight(int wall) {
 		return 1;
+	}
+
+	@Override
+	public int getWallCnt() {
+		return wallRoom1.size();
 	}
 
 	

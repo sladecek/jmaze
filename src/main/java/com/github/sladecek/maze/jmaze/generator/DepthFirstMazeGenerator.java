@@ -4,19 +4,22 @@ import java.util.BitSet;
 import java.util.Random;
 import java.util.Stack;
 import java.util.Vector;
+import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class DepthFirstMazeGenerator implements IMazeGenerator {
 	
-	private final static Logger log = Logger.getLogger(""); 
+	private final static Logger log = Logger.getLogger("1.log"); 
 	
 	private Random randomGenerator = new Random();
 	
 	@Override
-	public void generateMaze(IMazeSpace maze) {
+	public MazeRealization generateMaze(IMazeSpace maze) {
+		MazeRealization result = new MazeRealization();
+		result.allocateWalls(maze.getWallCnt());
 		//log.addHandler(new ConsoleHandler());
-		log.setLevel(Level.SEVERE);
+		log.setLevel(Level.INFO);
 		Vector<Integer> solution = null;
 		randomGenerator.setSeed(27);
 		visitedRooms = new BitSet(maze.getRoomCount());
@@ -34,13 +37,13 @@ public class DepthFirstMazeGenerator implements IMazeGenerator {
 				for(Integer i: stack) {
 					solution.add(i);
 				}
-				maze.setSolution(solution);
+				result.setSolution(solution);
 				
 				// do not continue from the target room, instead backtrace to fill gaps
 				stack.pop();
 				continue;
 			}
-			Vector<Integer> candidates = findAllPossibleNextRooms(maze, room);
+			Vector<Integer> candidates = findAllPossibleNextRooms(maze, result, room);
 			if (candidates.isEmpty())
 			{
 				// backtrace - no way to go
@@ -59,17 +62,18 @@ public class DepthFirstMazeGenerator implements IMazeGenerator {
 			}
 			int wall = candidates.elementAt(choice);
 			log.log(Level.INFO, " opening wall "+wall);
-			maze.setWallClosed(wall, false);
+			result.setWallClosed(wall, false);
 			int otherRoom = maze.getOtherRoom(room, wall);
 			visitRoom(otherRoom);			
 		}
+		return result;
 		
 	}
-	private Vector<Integer> findAllPossibleNextRooms(IMazeSpace maze, int room) {
+	private Vector<Integer> findAllPossibleNextRooms(IMazeSpace maze, MazeRealization real, int room) {
 		Vector<Integer> candidates = new Vector<Integer>();
 		for(int wall: maze.getWalls(room))
 		{
-			if (maze.isWallClosed(wall))
+			if (real.isWallClosed(wall))
 			{
 				int otherRoom = maze.getOtherRoom(room, wall);
 				if (!visitedRooms.get(otherRoom)) {

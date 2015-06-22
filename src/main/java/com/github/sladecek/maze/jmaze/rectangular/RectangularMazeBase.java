@@ -1,8 +1,7 @@
 package com.github.sladecek.maze.jmaze.rectangular;
 
-import com.github.sladecek.maze.jmaze.generator.MazeBase;
 
-public class RectangularMazeBase extends MazeBase {
+public class RectangularMazeBase {
 
 	protected int height;
 	protected int width;

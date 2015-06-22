@@ -127,7 +127,7 @@ public class Rectangular2DMazeTest {
 			assertEquals(walls[i], (int)v.get(i));
 		}
 	}
-
+/*
 	@Test
 	public void testIsWallClosed_initial() {
 		assertEquals(true, maze.isWallClosed(0));
@@ -139,7 +139,7 @@ public class Rectangular2DMazeTest {
 		maze.setWallClosed(0, false);
 		assertEquals(false, maze.isWallClosed(0));
 	}
-
+*/
 	@Test
 	public void testGetPictureHeight() {
 		assertEquals(3, maze.getPictureHeight());

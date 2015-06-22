@@ -2,6 +2,7 @@ package com.github.sladecek.maze.jmaze.shapes;
 
 import java.io.IOException;
 
+import com.github.sladecek.maze.jmaze.generator.MazeRealization;
 import com.github.sladecek.maze.jmaze.print.SvgMazePrinter;
 
 public class WallShape implements IMazeShape {
@@ -14,6 +15,15 @@ public class WallShape implements IMazeShape {
 		this.y2 = y2;
 		this.x1 = x1;
 		this.x2 = x2;
+		this.wall = -1;
+	}
+
+	public int getWall() {
+		return wall;
+	}
+
+	public void setWall(int wall) {
+		this.wall = wall;
 	}
 
 	public ShapeType getShapeType() {
@@ -47,6 +57,7 @@ public class WallShape implements IMazeShape {
 	private int x2;
 	private int y1;
 	private int y2;
+	private int wall;
 
 	public int getX1() {
 		return x1;
@@ -68,5 +79,13 @@ public class WallShape implements IMazeShape {
 	public String toString() {
 		return "WallShape [shapeType=" + shapeType + ", x1=" + x1 + ", x2="
 				+ x2 + ", y1=" + y1 + ", y2=" + y2 + "]";
+	}
+
+	@Override
+	public boolean isInRealization(MazeRealization real) {
+		if (this.wall < 0) {
+			return true;
+		}
+		return !real.isWallClosed(this.wall);
 	}
 }

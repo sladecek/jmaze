@@ -3,6 +3,7 @@ package com.github.sladecek.maze.jmaze.print;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import com.github.sladecek.maze.jmaze.generator.MazeRealization;
 import com.github.sladecek.maze.jmaze.geometry.EastWest;
 import com.github.sladecek.maze.jmaze.geometry.Point;
 import com.github.sladecek.maze.jmaze.geometry.SouthNorth;
@@ -17,18 +18,21 @@ import com.github.sladecek.maze.jmaze.shapes.WallShape;
 public abstract class OpenScadMazePrinter {
 	
 	private double approxRoomSize_mm;
+	
+	
 	public OpenScadMazePrinter(Maze3DSizes sizes, double approxRoomSize_mm) {
 		this.sizes = sizes;
 		this.approxRoomSize_mm = approxRoomSize_mm;
 	}
 	
 
-	public void printMaze(IPrintableMaze maze, String fileName) {	
+	public void printMaze(IPrintableMaze maze, MazeRealization real, String fileName) {	
+		
 		prepareShapes(maze);
 		
 		try (OpenScadWriter s = new OpenScadWriter(fileName)) {
 			scad = s;
-			printShapes(maze);
+			printShapes(maze,real);
 	
 		} catch (IOException ioe) {
 			System.out.println(ioe.getMessage());
@@ -36,11 +40,14 @@ public abstract class OpenScadMazePrinter {
 	}
 
 	
+
+
+
 	// virtual method
 	protected abstract void prepareShapes(IPrintableMaze maze);
 
 	// virtual method
-	protected abstract void printShapes(IPrintableMaze maze) throws IOException;
+	protected abstract void printShapes(IPrintableMaze maze, MazeRealization real) throws IOException;
 		
 	
 

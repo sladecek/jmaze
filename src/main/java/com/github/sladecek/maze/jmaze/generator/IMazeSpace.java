@@ -1,6 +1,5 @@
 package com.github.sladecek.maze.jmaze.generator;
 
-import java.util.Vector;
 
 /***
  * Interface for spaces (2D, 3D, rectangular, circular ...) that can be filled with maze.
@@ -21,17 +20,13 @@ public interface IMazeSpace {
 	
 	int getTargetRoom();
 	
-	boolean isWallClosed(int wall);
-	
-	void setWallClosed(int wall, boolean value);
-	
 	double getRoomDistance(int r1, int r2);
 
 	int getOtherRoom(int room, int wall);
-	
-	void setSolution(Vector<Integer> solution);
-	
+		
 	int getWallProbabilityWeight(int wall);
+
+	int getWallCnt();
 	
 
 }

@@ -3,6 +3,7 @@ package com.github.sladecek.maze.jmaze.spheric;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import com.github.sladecek.maze.jmaze.generator.MazeRealization;
 import com.github.sladecek.maze.jmaze.print.IMazePrinter;
 import com.github.sladecek.maze.jmaze.print.IPrintableMaze;
 import com.github.sladecek.maze.jmaze.print.Maze3DSizes;
@@ -37,13 +38,13 @@ public class EggOpenScadPrinter extends OpenScadMazePrinter implements IMazePrin
 	}
 
 	@Override
-	protected void printShapes(IPrintableMaze maze) throws IOException {
+	protected void printShapes(IPrintableMaze maze, MazeRealization real) throws IOException {
  
 		maze3dMapper = new Egg3dMapper(egg, (EggMaze)maze);
 		
 		scad.beginUnion();
 		printFloors();
-		printWalls();
+		printWalls(real);
 		scad.closeUnion();
 	}
 	
@@ -56,13 +57,17 @@ public class EggOpenScadPrinter extends OpenScadMazePrinter implements IMazePrin
 		scad.closeUnion();	
 	}
 
-	private void printWalls() throws IOException {
+	private void printWalls(MazeRealization real) throws IOException {
 		
 		final double wt = sizes.getInnerWallToCellRatio()/2;
 		
 		for (WallShape wall: walls) {
-			printWallsOneRoom(wt, wall);
-			
+			if (wall.isInRealization(real)) {
+				System.out.println("wall "+wall+" is in realization");
+				printWallsOneRoom(wt, wall);	
+			} else {
+				System.out.println("wall "+wall+" is not in realization");
+			}
 		}
 	}
 
@@ -70,6 +75,7 @@ public class EggOpenScadPrinter extends OpenScadMazePrinter implements IMazePrin
 	
 	private ArrayList<WallShape> walls;
 	private ArrayList<FloorShape> floor;
+
 
 
 

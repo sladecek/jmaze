@@ -2,6 +2,7 @@ package com.github.sladecek.maze.jmaze.print;
 
 import java.io.IOException;
 
+import com.github.sladecek.maze.jmaze.generator.MazeRealization;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape;
 
 public class SvgMazePrinter implements IMazePrinter {
@@ -38,7 +39,7 @@ public class SvgMazePrinter implements IMazePrinter {
 
 	XmlWriter xml;
 
-	public void printMaze(IPrintableMaze maze, String fileName) {
+	public void printMaze(IPrintableMaze maze, MazeRealization realization, String fileName) {
 
 		final int canvasWidth = 2*margin+maze.getPictureWidth()*cellSize;
 		final int canvasHeight = 2*margin+maze.getPictureHeight()*cellSize;
@@ -69,6 +70,8 @@ public class SvgMazePrinter implements IMazePrinter {
 		}
 
 	}
+
+
 
 
 }

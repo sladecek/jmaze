@@ -2,6 +2,7 @@ package com.github.sladecek.maze.jmaze.shapes;
 
 import java.io.IOException;
 
+import com.github.sladecek.maze.jmaze.generator.MazeRealization;
 import com.github.sladecek.maze.jmaze.print.SvgMazePrinter;
 
 /// Represent hole in the ground of the maze or the lack of thereof.
@@ -50,6 +51,11 @@ public class FloorShape implements IMazeShape {
 	@Override
 	public String toString() {
 		return "FloorShape [y=" + y + ", x=" + x + ", isHole=" + isHole + "]";
+	}
+
+	@Override
+	public boolean isInRealization(MazeRealization real) {
+		return true; // TODO
 	}
 
 

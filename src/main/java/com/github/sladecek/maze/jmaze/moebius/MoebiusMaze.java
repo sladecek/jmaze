@@ -32,8 +32,7 @@ public class MoebiusMaze extends RectangularMazeBase implements IMazeSpace,
 		}
 		eastWestWallCount = width * height;
 		southNorthWallCount = width * (height-1);
-		holeCount = width * height / 2;
-		allocateWalls(eastWestWallCount + southNorthWallCount + holeCount);		
+		holeCount = width * height / 2;		
 	}
 
 	@Override
@@ -60,14 +59,11 @@ public class MoebiusMaze extends RectangularMazeBase implements IMazeSpace,
 			for (int x = 0; x < width; x++)
 			{
 				int wall = x + y * width;
-				if (isWallClosed(wall))
+				result.add(new WallShape(iw, y, x+1, y+1,  x+1));
+				if (x == width-1)
 				{
-					result.add(new WallShape(iw, y, x+1, y+1,  x+1));
-					if (x == width-1)
-					{
-						// repeat wrapped east border
-						result.add(new WallShape(iw, y, 0, y+1,  0));
-					}
+					// repeat wrapped east border
+					result.add(new WallShape(iw, y, 0, y+1,  0));
 				}
 			}
 		}
@@ -78,10 +74,7 @@ public class MoebiusMaze extends RectangularMazeBase implements IMazeSpace,
 			for (int x = 0; x < width; x++)
 			{
 				int wall = x + y * width + eastWestWallCount;
-				if (isWallClosed(wall))
-				{
-					result.add(new WallShape(iw, y+1, x, y+1,  x+1));
-				}
+				result.add(new WallShape(iw, y+1, x, y+1,  x+1));
 			}
 		}
 		
@@ -92,7 +85,7 @@ public class MoebiusMaze extends RectangularMazeBase implements IMazeSpace,
 			for (int x = 0; x < width; x++)
 			{
 				int wall = x + y * width + eastWestWallCount + southNorthWallCount;
-				final boolean isHole = !isWallClosed(wall);
+				final boolean isHole = true; // TODO !isWallClosed(wall);
 				result.add(new FloorShape(y, x, isHole));
 				int hy = getTheOtherSideOfHoleY(y,x);
 				int hx = getTheOtherSideOfHoleX(y,x);
@@ -100,7 +93,7 @@ public class MoebiusMaze extends RectangularMazeBase implements IMazeSpace,
 			}
 		}
 
-	
+	/* TODO 
 		// solution
 		final IMazeShape.ShapeType is = IMazeShape.ShapeType.solution;
 		for (int i = 0; i < solution.size()-1; i++) {
@@ -130,9 +123,10 @@ public class MoebiusMaze extends RectangularMazeBase implements IMazeSpace,
 			} else {
 				result.add(new WallShape(is, y1, x1, y2, x2));
 			}
-			
+			*/
+		
+		return result;	
 		}
-		return result;	}
 
 
 	@Override
@@ -250,6 +244,11 @@ public class MoebiusMaze extends RectangularMazeBase implements IMazeSpace,
 			return 1;
 			
 		}
+	}
+
+	@Override
+	public int getWallCnt() {
+		return eastWestWallCount + southNorthWallCount + holeCount;
 	}
 
 }

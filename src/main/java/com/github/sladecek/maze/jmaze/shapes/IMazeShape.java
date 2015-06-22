@@ -2,6 +2,7 @@ package com.github.sladecek.maze.jmaze.shapes;
 
 import java.io.IOException;
 
+import com.github.sladecek.maze.jmaze.generator.MazeRealization;
 import com.github.sladecek.maze.jmaze.print.SvgMazePrinter;
 
 /**
@@ -14,7 +15,7 @@ public interface IMazeShape {
 	
 	void printToSvg(SvgMazePrinter printer) throws IOException;
 
-	
+	boolean isInRealization(MazeRealization real);
 	
 
 }
