@@ -1,6 +1,8 @@
 package com.github.sladecek.maze.jmaze.generator;
 
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Generic maze space implementation without any particular properties. There is a list
@@ -8,6 +10,8 @@ import java.util.Vector;
  * during maze construction.
  */
 public class GenericMazeSpace  implements IMazeSpace {
+	
+	private final static Logger log = Logger.getLogger("LOG");
 
 	private int startRoom;
 	private int targetRoom;
@@ -19,14 +23,14 @@ public class GenericMazeSpace  implements IMazeSpace {
 	public int addRoom() {
 		int id = rooms.size();
 		rooms.add(new Vector<Integer>());
+		log.log(Level.INFO, "add room id="+id);
 		return id;
 		
 	}
 	
 	public int addWall(int room1, int room2) {
-		System.out.println("..addWall "+room1+" "+room2);
 		if (rooms.size() <= room1 || rooms.size() <= room2){
-			System.out.println("cannot add wall");
+			log.log(Level.SEVERE, "cannot add wall room1="+room1+" room2="+room2);
 			return 0;
 		}
 		int id = wallRoom1.size();	
@@ -34,6 +38,7 @@ public class GenericMazeSpace  implements IMazeSpace {
 		rooms.elementAt(room1).add(id);
 		wallRoom2.add(room2);		
 		rooms.elementAt(room2).add(id);
+		log.log(Level.INFO, "add wall id="+id+" room1="+room1+" room2="+room2);
 		return id;
 	}
 

@@ -4,13 +4,12 @@ import java.util.BitSet;
 import java.util.Random;
 import java.util.Stack;
 import java.util.Vector;
-import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class DepthFirstMazeGenerator implements IMazeGenerator {
 	
-	private final static Logger log = Logger.getLogger("1.log"); 
+	private final static Logger log = Logger.getLogger("LOG"); 
 	
 	private Random randomGenerator = new Random();
 	
@@ -18,8 +17,6 @@ public class DepthFirstMazeGenerator implements IMazeGenerator {
 	public MazeRealization generateMaze(IMazeSpace maze) {
 		MazeRealization result = new MazeRealization();
 		result.allocateWalls(maze.getWallCnt());
-		//log.addHandler(new ConsoleHandler());
-		log.setLevel(Level.INFO);
 		Vector<Integer> solution = null;
 		randomGenerator.setSeed(27);
 		visitedRooms = new BitSet(maze.getRoomCount());

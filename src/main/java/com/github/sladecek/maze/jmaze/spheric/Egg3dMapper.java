@@ -46,7 +46,7 @@ public class Egg3dMapper implements IMaze3DMapper {
 			indexH = -cellHorizontal;
 		}		
 		EggMazeHemisphere hem = maze.getHemisphere(sn);
-		final int layerCnt = hem.getLayerCnt();
+		final int layerCnt = hem.getCircleCnt();
 		
 		assert indexH >= 0: "Invalid horizontal coordinate - negative";
 		assert indexH <= layerCnt: "Invalid horizontal coordinate - too big";
@@ -55,7 +55,7 @@ public class Egg3dMapper implements IMaze3DMapper {
 		double xx;
 		double yy;
 		
-		if (indexH < hem.getLayerCnt()) {
+		if (indexH < hem.getCircleCnt()) {
 			// this is normal layer 
 			xx = hem.getLayerXPosition(indexH);
 			final double ySurface = egg.computeY(xx);
@@ -63,9 +63,8 @@ public class Egg3dMapper implements IMaze3DMapper {
 			
 			// When layers have different number of rooms, the split rooms do not meet on
 			// egg surface but slightly below on the line connecting the corners of the common room.			
-			int roomCntThis = hem.getGeometricalRoomCntInLayer(indexH);
-			
-			int roomCntNext = hem.getGeometricalRoomCntInNextLayer(indexH);
+			int roomCntThis = hem.getWallCntOnCircle(indexH);			
+			int roomCntNext = hem.getWallCntOnCircle(indexH+1);
 			assert roomCntThis >= roomCntNext: "Egg cannot extend.";
 			int k = roomCntThis / roomCntNext;
 			if (k > 1) {	
@@ -119,16 +118,16 @@ public class Egg3dMapper implements IMaze3DMapper {
 			indexH = -x;
 		}		
 		EggMazeHemisphere hem = maze.getHemisphere(sn);
-		final int layerCnt = hem.getLayerCnt();
+		final int layerCnt = hem.getCircleCnt();
 		
 		assert indexH >= 0: "Invalid horizontal coordinate - negative";
 		assert indexH <= layerCnt: "Invalid horizontal coordinate - too big";
 
 		
 		
-		if (indexH < hem.getLayerCnt()) {
+		if (indexH < hem.getCircleCnt()) {
 			// this is normal layer 
-			int roomCntThis = hem.getGeometricalRoomCntInLayer(indexH);
+			int roomCntThis = hem.getWallCntOnCircle(indexH);
 			return eqCnt / roomCntThis;
 		}
 		return 1;

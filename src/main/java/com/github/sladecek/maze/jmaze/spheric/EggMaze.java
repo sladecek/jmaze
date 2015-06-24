@@ -1,6 +1,8 @@
 package com.github.sladecek.maze.jmaze.spheric;
 
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.github.sladecek.maze.jmaze.generator.GenericMazeSpace;
 import com.github.sladecek.maze.jmaze.generator.IMazeSpace;
@@ -10,7 +12,6 @@ import com.github.sladecek.maze.jmaze.shapes.FloorShape;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape.ShapeType;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
-
 /**
  * 
  * Represent and generate rooms and walls of a maze on an egg-like shape.
@@ -19,6 +20,8 @@ import com.github.sladecek.maze.jmaze.shapes.WallShape;
 public class EggMaze extends GenericMazeSpace implements IMazeSpace,
 		IPrintableMaze {
 
+	private final static Logger log = Logger.getLogger("LOG");
+	
 	private EggGeometry egg;
 	private int equatorCellCnt;
 
@@ -49,6 +52,7 @@ public class EggMaze extends GenericMazeSpace implements IMazeSpace,
 		// generate both hemispheres
 		for (SouthNorth sn : SouthNorth.values()) {
 			divideSpace(sn);
+			log.log(Level.INFO, "generate hemisphere "+sn+" cnt="+getHemisphere(sn).getCircleCnt());
 			generateRooms(sn);
 
 			generateParallelWalls(sn);
@@ -60,8 +64,8 @@ public class EggMaze extends GenericMazeSpace implements IMazeSpace,
 	}
 
 	private void assignStartAndTragetRooms() {
-		setStartRoom(north.getGreenwichRoom(north.getLayerCnt()-1));
-		setTargetRoom(south.getGreenwichRoom(south.getLayerCnt()-1));
+		setStartRoom(north.getGreenwichRoom(north.getCircleCnt()-1));
+		setTargetRoom(south.getGreenwichRoom(south.getCircleCnt()-1));
 		
 	}
 
@@ -85,15 +89,16 @@ public class EggMaze extends GenericMazeSpace implements IMazeSpace,
 
 		final EggMazeHemisphere h = getHemisphere(sn);
 
-		final int cnt = h.getLayerCnt();
+		final int cnt = h.getCircleCnt();
 		for (int ix = 0; ix < cnt; ix++) {
 			int x = ix;
 			if (sn == SouthNorth.south) {
 				x = -1 - ix;
 			}
 			// if (ix == cnt-3) {
-			final int cntThis = h.getGeometricalRoomCntInLayer(ix);
-			final int cntNext = h.getGeometricalRoomCntInNextLayer(ix);
+			final int cntThis = h.getRoomCntBeforeCircle(ix);
+			final int cntNext = h.getRoomCntAfterCircle(ix);
+			log.log(Level.INFO, "generate row of rooms ix="+ix+" x="+x+" ctnThis="+cntThis+" cntNext="+cntNext);
 			generateRowOfRooms(h, x, cntThis, cntNext, h.isPolarLayer(ix));
 			// }
 		}
@@ -118,16 +123,20 @@ public class EggMaze extends GenericMazeSpace implements IMazeSpace,
 
 	private void generateParallelWalls(SouthNorth sn) {
 		EggMazeHemisphere h = getHemisphere(sn);
-		for (int i = 0; i < h.getLayerCnt() - 1; i++) {
-			System.out.println("para layer="+i);
+		for (int i = 1; i < h.getCircleCnt(); i++) {
+			log.log(Level.INFO, "generateParallesWalls("+sn+") i="+i);
 
+			if (i==13 && sn == SouthNorth.north){
+				log.log(Level.INFO, "generateParallesWalls("+sn+") i="+i);	
+			}
+			
 			// the next layer may have less rooms than this one
-			final int roomCntThis = h.getLogicalRoomCntInLayer(i);
-			final int roomCntNext = h.getLogicalRoomCntInLayer(i + 1);
-			final int gRoomThis = h.getGreenwichRoom(i);
-			final int gRoomNext = h.getGreenwichRoom(i + 1);
+			final int roomCntThis = h.getRoomCntAfterCircle(i);
+			final int roomCntNext = h.getRoomCntAfterCircle(i+1);
+			final int gRoomThis = h.getGreenwichRoom(i-1);
+			final int gRoomNext = h.getGreenwichRoom(i);
 
-			int x = sn == SouthNorth.south ? -1 - i : i + 1;
+			int x = sn == SouthNorth.south ? - i : i ;
 
 			final int roomCntRatio = roomCntThis / roomCntNext;
 			for (int roomNext = 0; roomNext < roomCntNext; roomNext++) {
@@ -144,7 +153,7 @@ public class EggMaze extends GenericMazeSpace implements IMazeSpace,
 	private void generateParallelWallsOnEquator() {
 		final int gRoomNorth = north.getGreenwichRoom(0);
 		final int gRoomSouth = south.getGreenwichRoom(0);
-
+		log.log(Level.INFO, "generateParallelWallsOnEquator");
 		for (int i = 0; i < equatorCellCnt; i++) {
 			int id = addWall(gRoomNorth + i, gRoomSouth + i);
 			addWallShape(equatorCellCnt, i, i + 1, 0, 0, id);
@@ -195,9 +204,10 @@ public class EggMaze extends GenericMazeSpace implements IMazeSpace,
 
 	private void generateMeridianWalls(SouthNorth sn) {
 		EggMazeHemisphere h = getHemisphere(sn);
-		for (int i = 0; i < h.getLayerCnt(); i++) {
+		for (int i = 0; i < h.getCircleCnt(); i++) {
+			log.log(Level.INFO, "generateMeridianWalls("+sn+") i="+i);
 			if (!h.isPolarLayer(i)) {
-				final int cnt = h.getGeometricalRoomCntInLayer(i);
+				final int cnt = h.getRoomCntAfterCircle(i);
 
 				final int gr = h.getGreenwichRoom(i);
 				for (int j = 0; j < cnt; j++) {

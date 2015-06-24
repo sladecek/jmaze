@@ -9,14 +9,42 @@ import java.util.Vector;
  */
 class EggMazeHemisphere {
 	
-	public int getLayerCnt() {
+	/**
+	 * 
+	 * @return Number of circles parallel to the equator.
+	 */
+	public int getCircleCnt() {
 		return  layerRoomCnt.size();
 	}
 
-	public int getGeometricalRoomCntInLayer(int layer) {
-		return layerRoomCnt.get(layer);
+
+/**
+ * 
+ * @param circle Ordinal number of the circle starting from equator.
+ * @return Number of rooms in the layer that follows i-th circle. The last circle (polar)
+	 * circle may contain several walls but is followed by only one polar room. 
+ */
+	public int getRoomCntAfterCircle(int circle) {
+		// polar room has only one room
+		if (circle >= getCircleCnt()-1) {
+						return 1;
+					} else {
+						return layerRoomCnt.get(circle+1);
+					}
 	}
 	
+
+
+		/**
+	 * 
+	 * @param circle Ordinal number of the circle starting from equator.
+	 * @return Number of rooms in the layer that precedes i-th circle. 
+	 */
+		public int getRoomCntBeforeCircle(int circle) {
+			return getRoomCntAfterCircle(circle-1);
+		}
+		
+	/*
 	
 	public int getLogicalRoomCntInLayer(int layer) {
 		// polar room has only one room
@@ -35,10 +63,10 @@ class EggMazeHemisphere {
 		}
 	}
 	
-
+*/
 	
 	public boolean isPolarLayer(int layer) {
-		return layer == getLayerCnt()-1;
+		return layer == getCircleCnt()-1;
 	}
 
 	/***
@@ -79,8 +107,21 @@ class EggMazeHemisphere {
 	}
 
 	public double getLastLayerXPosition() {
-		return getLayerXPosition(getLayerCnt()-1);
+		return getLayerXPosition(getCircleCnt()-1);
 		
+	}
+
+
+	/**
+	 * 
+	 * @param circle
+	 * @return Number of walls on a circle (geometrical).
+	 */
+	public int getWallCntOnCircle(int circle) {
+		if (circle >= layerRoomCnt.size()) {
+			return 1;
+		}
+		return layerRoomCnt.get(circle);
 	}
 	
 	
