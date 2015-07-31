@@ -3,7 +3,8 @@
 *.war
 *.ear
 *~
-maze.svg
+*.svg
 *.scad
-
+maze.log.*
+maze.log
 /target/

@@ -9,10 +9,11 @@ public class MarkShape implements IMazeShape {
 	
 	private ShapeType shapeType;
 
-	public MarkShape(ShapeType type, int y, int x) {
+	public MarkShape(ShapeType type, int y, int x, String id) {
 		this.shapeType = type;
 		this.y = y;
 		this.x = x;
+		this.id = id;
 	}
 
 	public ShapeType getShapeType() {
@@ -34,6 +35,7 @@ public class MarkShape implements IMazeShape {
 
 	private int x;
 	private int y;
+	private String id;
 
 	@Override
 	public String toString() {
@@ -42,8 +44,13 @@ public class MarkShape implements IMazeShape {
 	}
 
 	@Override
-	public boolean isInRealization(MazeRealization real) {
+	public boolean isOpen(MazeRealization real) {
 		return true;
+	}
+
+	@Override
+	public String getId() {
+		return id;
 	}
 
 

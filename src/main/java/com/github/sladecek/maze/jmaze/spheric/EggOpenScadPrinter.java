@@ -2,6 +2,8 @@ package com.github.sladecek.maze.jmaze.spheric;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.github.sladecek.maze.jmaze.generator.MazeRealization;
 import com.github.sladecek.maze.jmaze.print.IMazePrinter;
@@ -15,6 +17,7 @@ import com.github.sladecek.maze.jmaze.shapes.WallShape;
 
 public class EggOpenScadPrinter extends OpenScadMazePrinter implements IMazePrinter 	
 {
+	private final static Logger log = Logger.getLogger("LOG"); 
 
 	private EggGeometry egg;
 	
@@ -52,7 +55,7 @@ public class EggOpenScadPrinter extends OpenScadMazePrinter implements IMazePrin
 		scad.beginUnion();
 		for (FloorShape hs: floor) {
 			printFloorWithHoleOneRoom(hs.getY(), hs.getX());			
-			fillHoleInTheFloorOneRoom(hs);
+			fillHoleInTheFloorOneRoom(hs);			
 		}
 		scad.closeUnion();	
 	}
@@ -62,11 +65,9 @@ public class EggOpenScadPrinter extends OpenScadMazePrinter implements IMazePrin
 		final double wt = sizes.getInnerWallToCellRatio()/2;
 		
 		for (WallShape wall: walls) {
-			if (wall.isInRealization(real)) {
-				System.out.println("wall "+wall+" is in realization");
+			if (!wall.isOpen(real)) {
+				log.log(Level.INFO, "wall "+wall+" is closed");
 				printWallsOneRoom(wt, wall);	
-			} else {
-				System.out.println("wall "+wall+" is not in realization");
 			}
 		}
 	}

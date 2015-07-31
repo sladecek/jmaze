@@ -33,8 +33,7 @@ public class OpenScadWriter implements java.lang.AutoCloseable {
 	}
 	
 	public void closeUnion() throws IOException {
-		out.write("}\n");
-		
+		out.write("}\n");		
 	}
 
 
@@ -47,12 +46,24 @@ public class OpenScadWriter implements java.lang.AutoCloseable {
 		
 	}
 
+	public void printTranslate(Point p0) throws IOException {
+		out.write("translate(");
+		printPoint(p0);
+		out.write(")" );
+	}
+
+	public void printText(String text, String color, double size) throws IOException {
+		out.write("color(" + color + ") {\n");
+		out.write("text(\""+text+"\", size="+size+");\n");
+		out.write("}\n" );
+	}
 	
 	private void printPoint(Point p0) throws IOException {
 		out.write(" [ "+ p0.getX()+ ","+ p0.getY()+ ","+ p0.getZ()+ "] ");
 		
 	}
 
+	
 	
 	/**
 	 * Print polyhedron consisting of 8 points. The points must be ordered by x (most important), then y, then z.

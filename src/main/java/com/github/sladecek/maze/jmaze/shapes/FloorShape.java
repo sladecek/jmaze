@@ -13,17 +13,20 @@ public class FloorShape implements IMazeShape {
 	private int y;
 	private int x;
 	private boolean isHole;
+	private String id;
 	
 	public boolean isHole() {
 		return isHole;
 	}
 
-	public FloorShape(int y, int x, boolean isHole) {
+	public FloorShape(int y, int x, boolean isHole, String id) {
 		super();
 		this.y = y;
 		this.x = x;
 		this.isHole = isHole;
+		this.id = id;
 	}
+
 
 	@Override
 	public ShapeType getShapeType() {
@@ -50,12 +53,17 @@ public class FloorShape implements IMazeShape {
 
 	@Override
 	public String toString() {
-		return "FloorShape [y=" + y + ", x=" + x + ", isHole=" + isHole + "]";
+		return "FloorShape [id=" + id + " y=" + y + ", x=" + x + ", isHole=" + isHole + "]";
 	}
 
 	@Override
-	public boolean isInRealization(MazeRealization real) {
+	public boolean isOpen(MazeRealization real) {
 		return true; // TODO
+	}
+
+	@Override
+	public String getId() {
+		return id;
 	}
 
 

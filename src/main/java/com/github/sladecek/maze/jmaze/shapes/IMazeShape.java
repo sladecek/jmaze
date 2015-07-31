@@ -13,9 +13,11 @@ public interface IMazeShape {
 	
 	ShapeType getShapeType();
 	
+	String getId();
+	
 	void printToSvg(SvgMazePrinter printer) throws IOException;
 
-	boolean isInRealization(MazeRealization real);
+	boolean isOpen(MazeRealization real);
 	
 
 }

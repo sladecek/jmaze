@@ -109,14 +109,16 @@ public class EggMaze extends GenericMazeSpace implements IMazeSpace,
 		final int thisNextRatio = cntThis / cntNext;
 		final int roomMapRatio = equatorCellCnt / cntThis;
 		for (int iy = 0; iy < cntThis; iy++) {
+			int r = 0;
 			if (iy == 0) {
-				int r = addRoom();
+				r = addRoom();
 				hemisphere.addGreenwichRoom(r);
 			} else if (!isPolarLayer && iy % thisNextRatio == 0) {
 				// polar layers have only one room
-				addRoom();
+				r = addRoom();
 			}
-			shapes.add(new FloorShape(iy * roomMapRatio, ix, false));
+			String floorId = "r" + Integer.toString(r);
+			shapes.add(new FloorShape(iy * roomMapRatio, ix, false, floorId));
 		}
 
 	}
@@ -131,8 +133,8 @@ public class EggMaze extends GenericMazeSpace implements IMazeSpace,
 			}
 			
 			// the next layer may have less rooms than this one
-			final int roomCntThis = h.getRoomCntAfterCircle(i);
-			final int roomCntNext = h.getRoomCntAfterCircle(i+1);
+			final int roomCntThis = h.getRoomCntBeforeCircle(i);
+			final int roomCntNext = h.getRoomCntAfterCircle(i);
 			final int gRoomThis = h.getGreenwichRoom(i-1);
 			final int gRoomNext = h.getGreenwichRoom(i);
 
@@ -171,7 +173,7 @@ public class EggMaze extends GenericMazeSpace implements IMazeSpace,
 		final int y1 = (yr1 * roomMapRatio) % equatorCellCnt;
 		final int y2 = (yr2 * roomMapRatio) % equatorCellCnt;
 		WallShape ws = new WallShape(ShapeType.innerWall, y1, x1, y2, x2);
-		ws.setWall(id);
+		ws.setWallId(id);
 		shapes.add(ws);
 	}
 
@@ -206,19 +208,22 @@ public class EggMaze extends GenericMazeSpace implements IMazeSpace,
 		EggMazeHemisphere h = getHemisphere(sn);
 		for (int i = 0; i < h.getCircleCnt(); i++) {
 			log.log(Level.INFO, "generateMeridianWalls("+sn+") i="+i);
-			if (!h.isPolarLayer(i)) {
-				final int cnt = h.getRoomCntAfterCircle(i);
 
-				final int gr = h.getGreenwichRoom(i);
-				for (int j = 0; j < cnt; j++) {
-					int id = addWall(gr + j, gr + (j + 1) % cnt);
-					if (sn == SouthNorth.north) {
-						addWallShape(cnt, j, j, i, i + 1, id);
-					} else {
-						addWallShape(cnt, j, j, -i - 1, -i, id);
-					}
+			final int cnt = h.getRoomCntAfterCircle(i);
+			if (cnt <= 1) {
+				continue;
+			}
+
+			final int gr = h.getGreenwichRoom(i);
+			for (int j = 0; j < cnt; j++) {
+				int id = addWall(gr + j, gr + (j + 1) % cnt);
+				if (sn == SouthNorth.north) {
+					addWallShape(cnt, j, j, i, i + 1, id);
+				} else {
+					addWallShape(cnt, j, j, -i - 1, -i, id);
 				}
 			}
+
 		}
 
 	}

@@ -41,8 +41,6 @@ public abstract class OpenScadMazePrinter {
 
 	
 
-
-
 	// virtual method
 	protected abstract void prepareShapes(IPrintableMaze maze);
 
@@ -59,19 +57,20 @@ public abstract class OpenScadMazePrinter {
 		int x1 = wall.getX1();
 		int x2 = wall.getX2();
 			
+		String id = wall.getId();
 		// There is an overlap in the corner between walls. Overlaps are not nice, they make
 		// ramparts. Therefore the wall must be rendered from three parts - the corners must be rendered separately.
-		printInnerWallElement(y1, y1, x1, x1, wallThickness, wallThickness, "inner wall corner " + wall.toString(), innerWallColor);
-		printInnerWallElement(y2, y2, x2, x2, wallThickness, wallThickness, "inner wall corner " + wall.toString(), innerWallColor);
+		printInnerWallElement(y1, y1, x1, x1, wallThickness, wallThickness, null, "inner wall corner " + wall.toString(), innerWallColor);
+		printInnerWallElement(y2, y2, x2, x2, wallThickness, wallThickness, null, "inner wall corner " + wall.toString(), innerWallColor);
 		if (x1 == x2) {
-			printInnerWallElement(y1, y2, x1, x2, -wallThickness, wallThickness, "inner wall along y " + wall.toString(), cornerColor);
+			printInnerWallElement(y1, y2, x1, x2, -wallThickness, wallThickness, id, "inner wall along y " + wall.toString(), cornerColor);
 		} else {
-			printInnerWallElement(y1, y2, x1, x2, wallThickness, -wallThickness, "inner wall along x " + wall.toString(), cornerColor);
+			printInnerWallElement(y1, y2, x1, x2, wallThickness, -wallThickness, id, "inner wall along x " + wall.toString(), cornerColor);
 		}
 	}
 
 	private void printInnerWallElement(int y1, int y2, int x1, int x2, double wy, double wx, 
-			String comment, String color) throws IOException {
+			String id, String comment, String color) throws IOException {
 		
 		
 		final double z = sizes.getWallHeight_mm();
@@ -85,6 +84,11 @@ public abstract class OpenScadMazePrinter {
 		p.add(maze3dMapper.mapPoint(y2, x2,  wy, wx, 0));
 		p.add(maze3dMapper.mapPoint(y2, x2,  wy, wx, z));
 		scad.printPolyhedron(p, comment, color);	
+		
+		if (id != null) {
+			Point mp = Point.midpoint(p.get(1), p.get(7));
+			printText(mp, id, debugWallColor);
+		}
 	}
 		
 
@@ -153,6 +157,15 @@ public abstract class OpenScadMazePrinter {
 			}
 		}
 		scad.printPolyhedron(p, "hole", holeColor);
+		Point mp = Point.midpoint(p.get(0), p.get(6));
+		printText(mp, hs.getId(), debugFloorColor);
+
+	}
+	
+	protected void printText(Point p,  String text, String color) throws IOException {
+		scad.printTranslate(p);
+		final double size = 0.05;
+		scad.printText(text, color, size);
 	}
 
 	protected Point getHolePoint(int y, int x, EastWest ew, SouthNorth sn, UpDown ud) {
@@ -183,11 +196,14 @@ public abstract class OpenScadMazePrinter {
 	}
 	
 	
+	
 	protected static final String baseColor = "[0.7,0.7,0.7]";
 	protected static final String outerWallColor = "[0.7,0.7,0.7]";
 	protected static final String innerWallColor = "[0.5,0.5,0]";
 	protected static final String cornerColor = "[0.8,0.8,0]";
 	protected static final String holeColor = "[1,1,1]";
+	protected static final String debugWallColor = "[1,0,0]";
+	protected static final String debugFloorColor = "[0,1,0]";
 	protected Maze3DSizes sizes;
 	protected OpenScadWriter scad;
 	protected IMaze3DMapper maze3dMapper;

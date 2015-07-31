@@ -51,18 +51,18 @@ public class Egg3dMapper implements IMaze3DMapper {
 		assert indexH >= 0: "Invalid horizontal coordinate - negative";
 		assert indexH <= layerCnt: "Invalid horizontal coordinate - too big";
 
-		// Compute coordinates in meridian plane.
-		double xx;
-		double yy;
+		// (1) Compute coordinates in meridian plane. -------------------------------------
+		double xx; // coordinate along egg main axis, from the center towards pole
+		double yy; // coordinate from the egg center towards surface 
 		
-		if (indexH < hem.getCircleCnt()) {
-			// this is normal layer 
+		final boolean isPolarRoom = indexH >= hem.getCircleCnt();
+		if (!isPolarRoom) { 
 			xx = hem.getLayerXPosition(indexH);
+			// y coordinate on the egg surface			
 			final double ySurface = egg.computeY(xx);
 			yy = ySurface;
-			
 			// When layers have different number of rooms, the split rooms do not meet on
-			// egg surface but slightly below on the line connecting the corners of the common room.			
+			// egg surface but slightly below on the line connecting the corners of the common room.									
 			int roomCntThis = hem.getWallCntOnCircle(indexH);			
 			int roomCntNext = hem.getWallCntOnCircle(indexH+1);
 			assert roomCntThis >= roomCntNext: "Egg cannot extend.";
@@ -81,13 +81,13 @@ public class Egg3dMapper implements IMaze3DMapper {
 		}
 	
 
-		// add local offsets
+		// (2) Add local offsets. ------------------------------------------------------
 		OrientationVector2D normal = egg.computeNormalVector(xx);
 		OrientationVector2D tangent = normal.getOrthogonal();
 		double xxx = xx + offsetH * tangent.getX() + offsetA * normal.getX();
 		double yyy = yy + offsetH * tangent.getY() + offsetA * normal.getY();
 		
-		// rotate meridian plane by longitude angle
+		// (3) Rotate meridian plane by longitude angle. -------------------------------
 		double angle = 2*Math.PI*cellVertical/eqCnt;		
 		double yyyy = yyy*Math.cos(angle) - offsetV*Math.sin(angle);
 		double zzzz = -yyy*Math.sin(angle) - offsetV*Math.cos(angle);		

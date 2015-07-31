@@ -15,15 +15,15 @@ public class WallShape implements IMazeShape {
 		this.y2 = y2;
 		this.x1 = x1;
 		this.x2 = x2;
-		this.wall = -1;
+		this.wallId = -1;
 	}
 
-	public int getWall() {
-		return wall;
+	public int getWallId() {
+		return wallId;
 	}
 
-	public void setWall(int wall) {
-		this.wall = wall;
+	public void setWallId(int value) {
+		this.wallId = value;
 	}
 
 	public ShapeType getShapeType() {
@@ -57,7 +57,7 @@ public class WallShape implements IMazeShape {
 	private int x2;
 	private int y1;
 	private int y2;
-	private int wall;
+	private int wallId;
 
 	public int getX1() {
 		return x1;
@@ -77,15 +77,21 @@ public class WallShape implements IMazeShape {
 
 	@Override
 	public String toString() {
-		return "WallShape [shapeType=" + shapeType + ", x1=" + x1 + ", x2="
+		return "WallShape [id="+wallId+" shapeType=" + shapeType + ", x1=" + x1 + ", x2="
 				+ x2 + ", y1=" + y1 + ", y2=" + y2 + "]";
 	}
 
 	@Override
-	public boolean isInRealization(MazeRealization real) {
-		if (this.wall < 0) {
+	public boolean isOpen(MazeRealization real) {
+		if (this.wallId < 0) {
 			return true;
 		}
-		return !real.isWallClosed(this.wall);
+		return !real.isWallClosed(this.wallId);
 	}
+	
+	@Override
+	public String getId() {
+		return "w"+Integer.toString(wallId);
+	}
+
 }

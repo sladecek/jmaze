@@ -50,8 +50,8 @@ public class MoebiusMaze extends RectangularMazeBase implements IMazeSpace,
 		final IMazeShape.ShapeType iw = IMazeShape.ShapeType.innerWall;
 
 		
-		result.add(new MarkShape(IMazeShape.ShapeType.startRoom, getStartRoom()/width, getStartRoom()%width));
-		result.add(new MarkShape(IMazeShape.ShapeType.targetRoom, getTargetRoom()/width, getTargetRoom()%width));
+		result.add(new MarkShape(IMazeShape.ShapeType.startRoom, getStartRoom()/width, getStartRoom()%width, "start"));
+		result.add(new MarkShape(IMazeShape.ShapeType.targetRoom, getTargetRoom()/width, getTargetRoom()%width, "stop"));
 		
 		// inner walls - east/west
 		for (int y = 0; y < height; y++)
@@ -85,11 +85,12 @@ public class MoebiusMaze extends RectangularMazeBase implements IMazeSpace,
 			for (int x = 0; x < width; x++)
 			{
 				int wall = x + y * width + eastWestWallCount + southNorthWallCount;
+				String floorId = "f" + Integer.toString(wall);
 				final boolean isHole = true; // TODO !isWallClosed(wall);
-				result.add(new FloorShape(y, x, isHole));
+				result.add(new FloorShape(y, x, isHole, floorId));
 				int hy = getTheOtherSideOfHoleY(y,x);
 				int hx = getTheOtherSideOfHoleX(y,x);
-				result.add(new FloorShape(hy, hx, isHole));
+				result.add(new FloorShape(hy, hx, isHole, floorId));
 			}
 		}
 
