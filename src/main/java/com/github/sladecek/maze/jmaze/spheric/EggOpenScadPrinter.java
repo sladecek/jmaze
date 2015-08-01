@@ -54,8 +54,15 @@ public class EggOpenScadPrinter extends OpenScadMazePrinter implements IMazePrin
 	private void printFloors() throws IOException {
 		scad.beginUnion();
 		for (FloorShape hs: floor) {
-			printFloorWithHoleOneRoom(hs.getY(), hs.getX());			
-			fillHoleInTheFloorOneRoom(hs);			
+			// TODO smazat if (hs.getId().equals("r65") || hs.getId().equals("r79") || hs.getId().equals("r80")) {
+				log.log(Level.INFO,hs.toString());
+				log.log(Level.INFO, "room");
+				printFloorWithHoleOneRoom(hs.getY(), hs.getX());
+				log.log(Level.INFO, "hole");
+			fillHoleInTheFloorOneRoom(hs);	
+			log.log(Level.INFO, "end");
+			
+			
 		}
 		scad.closeUnion();	
 	}
@@ -67,7 +74,9 @@ public class EggOpenScadPrinter extends OpenScadMazePrinter implements IMazePrin
 		for (WallShape wall: walls) {
 			if (!wall.isOpen(real)) {
 				log.log(Level.INFO, "wall "+wall+" is closed");
-				printWallsOneRoom(wt, wall);	
+				//if (wall.getId().equals("w167")) { TODO smazat
+				printWallElements(wt, wall);
+				
 			}
 		}
 	}

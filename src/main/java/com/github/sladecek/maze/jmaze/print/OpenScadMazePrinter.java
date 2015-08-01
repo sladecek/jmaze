@@ -2,6 +2,8 @@ package com.github.sladecek.maze.jmaze.print;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.github.sladecek.maze.jmaze.generator.MazeRealization;
 import com.github.sladecek.maze.jmaze.geometry.EastWest;
@@ -18,6 +20,8 @@ import com.github.sladecek.maze.jmaze.shapes.WallShape;
 public abstract class OpenScadMazePrinter {
 	
 	private double approxRoomSize_mm;
+	
+	private final static Logger log = Logger.getLogger("LOG");
 	
 	
 	public OpenScadMazePrinter(Maze3DSizes sizes, double approxRoomSize_mm) {
@@ -49,9 +53,10 @@ public abstract class OpenScadMazePrinter {
 		
 	
 
-	protected void printWallsOneRoom(final double wallThickness, WallShape wall)
+	protected void printWallElements(final double wallThickness, WallShape wall)
 			throws IOException {
-		System.out.println(wall);
+		
+		log.log(Level.INFO,wall.toString());
 		int y1 = wall.getY1();
 		int y2 = wall.getY2();
 		int x1 = wall.getX1();
@@ -147,7 +152,7 @@ public abstract class OpenScadMazePrinter {
 	
 		}
 
-	protected void fillHoleInTheFloorOneRoom(FloorShape hs) throws IOException {
+	protected void fillHoleInTheFloorOneRoom(FloorShape hs) throws IOException {		
 		ArrayList<Point> p = new ArrayList<Point>();
 		for(EastWest ew: EastWest.values()) {
 			for(SouthNorth sn: SouthNorth.values()) {

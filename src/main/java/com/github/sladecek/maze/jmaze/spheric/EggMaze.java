@@ -95,12 +95,10 @@ public class EggMaze extends GenericMazeSpace implements IMazeSpace,
 			if (sn == SouthNorth.south) {
 				x = -1 - ix;
 			}
-			// if (ix == cnt-3) {
 			final int cntThis = h.getRoomCntBeforeCircle(ix);
 			final int cntNext = h.getRoomCntAfterCircle(ix);
 			log.log(Level.INFO, "generate row of rooms ix="+ix+" x="+x+" ctnThis="+cntThis+" cntNext="+cntNext);
 			generateRowOfRooms(h, x, cntThis, cntNext, h.isPolarLayer(ix));
-			// }
 		}
 	}
 
@@ -217,10 +215,12 @@ public class EggMaze extends GenericMazeSpace implements IMazeSpace,
 			final int gr = h.getGreenwichRoom(i);
 			for (int j = 0; j < cnt; j++) {
 				int id = addWall(gr + j, gr + (j + 1) % cnt);
+				// strange wall naming convention - wall 0 is between room 0 and 1
+				int jj = (j+1) % cnt; 
 				if (sn == SouthNorth.north) {
-					addWallShape(cnt, j, j, i, i + 1, id);
+					addWallShape(cnt, jj, jj, i, i + 1, id);
 				} else {
-					addWallShape(cnt, j, j, -i - 1, -i, id);
+					addWallShape(cnt, jj, jj, -i - 1, -i, id);
 				}
 			}
 

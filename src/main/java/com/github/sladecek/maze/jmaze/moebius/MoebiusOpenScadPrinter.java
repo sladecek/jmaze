@@ -81,7 +81,7 @@ public class MoebiusOpenScadPrinter extends OpenScadMazePrinter implements IMaze
 		final double wallThickness = sizes.getInnerWallToCellRatio()/2;
 		
 		for (WallShape wall: walls) {
-			printWallsOneRoom(wallThickness, wall);
+			printWallElements(wallThickness, wall);
 			
 		}
 	}

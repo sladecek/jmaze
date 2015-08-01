@@ -1,5 +1,8 @@
 package com.github.sladecek.maze.jmaze.spheric;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import com.github.sladecek.maze.jmaze.geometry.EastWest;
 import com.github.sladecek.maze.jmaze.geometry.OrientationVector2D;
 import com.github.sladecek.maze.jmaze.geometry.Point;
@@ -9,6 +12,8 @@ import com.github.sladecek.maze.jmaze.print.IMaze3DMapper;
 
 public class Egg3dMapper implements IMaze3DMapper {
 
+	private final static Logger log = Logger.getLogger("LOG");
+	
 	private static final double SMALL_Y_MM = 0.001;
 	
 	public Egg3dMapper(EggGeometry egg, EggMaze maze) {
@@ -36,6 +41,7 @@ public class Egg3dMapper implements IMaze3DMapper {
 	public Point mapPoint(int cellVertical, int cellHorizontal, double offsetV,
 			double offsetH, double offsetA) {
 		
+		log.log(Level.INFO, "mapPoint v="+cellVertical+" h="+cellHorizontal+" ov="+offsetV+" oh="+offsetH);
 		final int eqCnt = maze.getEquatorCellCnt();
 		
 		// South hemisphere has separate data structure.

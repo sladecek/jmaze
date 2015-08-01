@@ -1,6 +1,8 @@
 package com.github.sladecek.maze.jmaze.shapes;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.github.sladecek.maze.jmaze.generator.MazeRealization;
 import com.github.sladecek.maze.jmaze.print.SvgMazePrinter;
@@ -15,6 +17,8 @@ public class FloorShape implements IMazeShape {
 	private boolean isHole;
 	private String id;
 	
+	private final static Logger log = Logger.getLogger("LOG");
+	
 	public boolean isHole() {
 		return isHole;
 	}
@@ -25,6 +29,7 @@ public class FloorShape implements IMazeShape {
 		this.x = x;
 		this.isHole = isHole;
 		this.id = id;
+		log.log(Level.INFO, "FloorShape id="+id+" x="+x+" y="+y);
 	}
 
 
