@@ -27,14 +27,10 @@ public class App
 			log.addHandler(fh);
 			fh.setFormatter(new SimpleFormatter());
 		
-			final int equator_cells = 32; // must be power of 2
-			final double ellipseMajor_mm = 150;
-			final double ellipseMinor_mm = 20;
-			
-			final double eggCoef = 0.2;
-			
-			EggGeometry egg = new EggGeometry(5, 3, 0.2);
-	//		EggGeometry egg = new EggGeometry(ellipseMajor_mm, ellipseMinor_mm, eggCoef);
+			final int equator_cells = 64; // must be power of 2			
+//			EggGeometry egg = new EggGeometry(5, 3, 0.2);
+			EggGeometry egg = new EggGeometry(5, 5, 0);
+
 			EggMaze maze = new EggMaze(egg, equator_cells);
 	    	IMazeGenerator g = new DepthFirstMazeGenerator();
 	    	MazeRealization real = g.generateMaze(maze);

@@ -86,6 +86,12 @@ class EggMazeHemisphere {
 	private Vector<Double> layerXPosition = new Vector<Double>();
 
 
+	public EggMazeHemisphere(double poleXPosition) {
+		super();
+		this.poleXPosition = poleXPosition;
+	}
+
+
 	public int getGreenwichRoom(int layer) {
 		return greenwichRoom.get(layer);
 	}
@@ -123,7 +129,13 @@ class EggMazeHemisphere {
 		}
 		return layerRoomCnt.get(circle);
 	}
+
+
+	public double getPoleXPosition() {
+		return poleXPosition;
+	}
 	
+	protected double poleXPosition;
 	
 	
 

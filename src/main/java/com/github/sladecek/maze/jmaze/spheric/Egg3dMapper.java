@@ -82,7 +82,7 @@ public class Egg3dMapper implements IMaze3DMapper {
 		} else {
 			// polar layer - this defines "equatorial" side of the polar room
 			// should not be used for the "polar" side
-			xx = hem.getLastLayerXPosition();
+			xx = (hem.getPoleXPosition() + hem.getLastLayerXPosition())/2;
 			yy = SMALL_Y_MM;
 		}
 	
