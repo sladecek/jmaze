@@ -27,7 +27,7 @@ public class App
 			log.addHandler(fh);
 			fh.setFormatter(new SimpleFormatter());
 		
-			final int equator_cells = 16; // must be power of 2
+			final int equator_cells = 32; // must be power of 2
 			final double ellipseMajor_mm = 150;
 			final double ellipseMinor_mm = 20;
 			

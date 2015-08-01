@@ -90,7 +90,7 @@ public abstract class OpenScadMazePrinter {
 		p.add(maze3dMapper.mapPoint(y2, x2,  wy, wx, z));
 		scad.printPolyhedron(p, comment, color);	
 		
-		if (id != null) {
+		if (debugPrintNumbers && id != null) {
 			Point mp = Point.midpoint(p.get(1), p.get(7));
 			printText(mp, id, debugWallColor);
 		}
@@ -162,8 +162,10 @@ public abstract class OpenScadMazePrinter {
 			}
 		}
 		scad.printPolyhedron(p, "hole", holeColor);
-		Point mp = Point.midpoint(p.get(0), p.get(6));
-		printText(mp, hs.getId(), debugFloorColor);
+		if (debugPrintNumbers) {
+			Point mp = Point.midpoint(p.get(0), p.get(6));
+			printText(mp, hs.getId(), debugFloorColor);
+		}
 
 	}
 	
@@ -201,7 +203,7 @@ public abstract class OpenScadMazePrinter {
 	}
 	
 	
-	
+	private static final boolean debugPrintNumbers = false;
 	protected static final String baseColor = "[0.7,0.7,0.7]";
 	protected static final String outerWallColor = "[0.7,0.7,0.7]";
 	protected static final String innerWallColor = "[0.5,0.5,0]";
