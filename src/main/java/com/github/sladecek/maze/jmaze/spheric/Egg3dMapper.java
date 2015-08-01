@@ -129,13 +129,14 @@ public class Egg3dMapper implements IMaze3DMapper {
 		assert indexH >= 0: "Invalid horizontal coordinate - negative";
 		assert indexH <= layerCnt: "Invalid horizontal coordinate - too big";
 
-		
-		
-		if (indexH < hem.getCircleCnt()) {
-			// this is normal layer 
-			int roomCntThis = hem.getWallCntOnCircle(indexH);
+		final boolean isPole = indexH > hem.getCircleCnt();
+		final boolean isPolarCircle = indexH == hem.getCircleCnt();
+		if (isPole) {
+			return 1;
+		} else {
+			// polar circle uses room count from last normal layer to form polar cups			
+			int roomCntThis = hem.getWallCntOnCircle(isPolarCircle ? indexH-1 : indexH);
 			return eqCnt / roomCntThis;
 		}
-		return 1;
 	}
 }

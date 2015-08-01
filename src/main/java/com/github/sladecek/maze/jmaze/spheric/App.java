@@ -28,8 +28,8 @@ public class App
 			fh.setFormatter(new SimpleFormatter());
 		
 			final int equator_cells = 64; // must be power of 2			
-//			EggGeometry egg = new EggGeometry(5, 3, 0.2);
-			EggGeometry egg = new EggGeometry(5, 5, 0);
+		EggGeometry egg = new EggGeometry(5, 3, 0.2);
+	//		EggGeometry egg = new EggGeometry(5, 5, 0);
 
 			EggMaze maze = new EggMaze(egg, equator_cells);
 	    	IMazeGenerator g = new DepthFirstMazeGenerator();
