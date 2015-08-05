@@ -40,12 +40,22 @@ public class SvgMazePrinter implements IMazePrinter {
 	XmlWriter xml;
 
 	public void printMaze(IPrintableMaze maze, MazeRealization realization, String fileName) {
+		
+		try (XmlWriter x = new XmlWriter(fileName)) {
+			printMaze(maze, realization, x);
+		} catch (IOException ioe) {
+			System.out.println(ioe.getMessage());
+		}
+
+	}
+
+	public void printMaze(IPrintableMaze maze, MazeRealization realization, XmlWriter x) {
 
 		final int canvasWidth = 2*margin+maze.getPictureWidth()*cellSize;
 		final int canvasHeight = 2*margin+maze.getPictureHeight()*cellSize;
 		
 		
-		try (XmlWriter x = new XmlWriter(fileName)) {
+		try  {
 			xml = x;
 			xml.startElement("svg");
 			xml.addAttribute("xmlns", "http://www.w3.org/2000/svg");
@@ -59,7 +69,9 @@ public class SvgMazePrinter implements IMazePrinter {
 			xml.addAttribute("style", "fill:rgb(255,255,0)");
 	*/		
 			for(IMazeShape shape: maze.getShapes()){
-				shape.printToSvg(this);
+				if (!shape.isOpen(realization)) {
+					shape.printToSvg(this);
+				}
 			}
 			
 		//	xml.closeElement(); // rect
@@ -70,7 +82,6 @@ public class SvgMazePrinter implements IMazePrinter {
 		}
 
 	}
-
 
 
 

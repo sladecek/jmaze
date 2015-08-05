@@ -52,9 +52,11 @@ public class Rectangular2DMaze extends RectangularMazeBase implements IMazeSpace
 		{
 			for (int x = 0; x < width-1; x++)
 			{
-				int wall = x + y * (width-1);
+				int wallId = x + y * (width-1);
 			
-					result.add(new WallShape(iw, y, x+1, y+1,  x+1));
+				WallShape w = new WallShape(iw, y, x+1, y+1,  x+1);
+				w.setWallId(wallId);
+				result.add(w);
 			
 			}
 		}
@@ -64,8 +66,10 @@ public class Rectangular2DMaze extends RectangularMazeBase implements IMazeSpace
 		{
 			for (int x = 0; x < width; x++)
 			{
-				int wall = x + y * width + eastWestWallCount;
-					result.add(new WallShape(iw, y+1, x, y+1,  x+1));
+				int wallId = x + y * width + eastWestWallCount;
+				WallShape w = new WallShape(iw, y+1, x, y+1,  x+1);
+				w.setWallId(wallId);
+				result.add(w);
 			}
 		}
 		/*

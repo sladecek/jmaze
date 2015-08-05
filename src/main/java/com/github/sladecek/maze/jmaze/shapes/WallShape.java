@@ -35,7 +35,7 @@ public class WallShape implements IMazeShape {
 		return this.shapeType;
 	}
 
-	public void printToSvg(SvgMazePrinter svg) throws IOException  {
+	public void printToSvg(SvgMazePrinter svg) throws IOException  {		
 		String style = "";
 		boolean center = false;
 		switch (shapeType)
@@ -44,7 +44,7 @@ public class WallShape implements IMazeShape {
 			style = "stroke:rgb(0,0,0);stroke-width:2";
 			break;
 		case innerWall:
-			style = "stroke:rgb(0,0,0);stroke-width:1";
+			style = "stroke:rgb(0,0,0);stroke-width:1";		
 			break;
 		case solution:
 			style = "stroke:rgb(255,0,0);stroke-width:2";
@@ -88,6 +88,10 @@ public class WallShape implements IMazeShape {
 
 	@Override
 	public boolean isOpen(MazeRealization real) {
+		if (shapeType != ShapeType.innerWall)
+		{
+			return false;
+		}
 		if (this.wallId < 0) {
 			return true;
 		}

@@ -23,6 +23,10 @@ public class XmlWriter implements java.lang.AutoCloseable {
 		out = new OutputStreamWriter(stream, "UTF8");
 	}
 
+	public XmlWriter(Writer w) throws IOException {
+		out = w;
+	}
+	
 	public void addAttribute(String name, int value) throws IOException {
 		addAttribute(name, String.valueOf(value));
 	}

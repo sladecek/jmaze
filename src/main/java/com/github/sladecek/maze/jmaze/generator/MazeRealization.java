@@ -1,7 +1,8 @@
 package com.github.sladecek.maze.jmaze.generator;
 
-import java.util.BitSet;
 import java.util.Vector;
+
+import com.github.sladecek.maze.jmaze.util.BitSetWithPrint;
 
 /**
  * 
@@ -11,12 +12,12 @@ import java.util.Vector;
  */
 public class MazeRealization {
 	
-	protected BitSet isWallClosed;
+	protected BitSetWithPrint isWallClosed;
 	protected Vector<Integer> solution = new Vector<Integer>();
 
 	
 	protected void allocateWalls(int wallCount) {
-		isWallClosed = new BitSet(wallCount);
+		isWallClosed = new BitSetWithPrint(wallCount);
 		isWallClosed.set(0, isWallClosed.size(), true);
 	}
 
@@ -34,5 +35,10 @@ public class MazeRealization {
 
 	}
 
+	public String printClosedWalls()
+	{
+		return isWallClosed.printAsIntervals();
+	}
+	
 	
 }
