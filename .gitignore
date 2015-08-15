@@ -8,3 +8,4 @@
 maze.log.*
 maze.log
 /target/
+/.sonar
