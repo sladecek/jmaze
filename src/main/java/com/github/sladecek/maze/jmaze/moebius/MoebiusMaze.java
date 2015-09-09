@@ -22,16 +22,16 @@ public class MoebiusMaze extends RectangularMazeBase implements IMazeSpace,
 	private int southNorthWallCount;
 	private int holeCount;
 
-	public MoebiusMaze(int height, int width) {
+	public MoebiusMaze(final int height, final int width) {
 		super(height, width);
-		if (width %2 != 0) {
+		if (width % 2 != 0) {
 			throw new InvalidParameterException("Moebius maze must have even width");
 		}
-		if (height %2 != 0) {
+		if (height % 2 != 0) {
 			throw new InvalidParameterException("Moebius maze must have even height");
 		}
 		eastWestWallCount = width * height;
-		southNorthWallCount = width * (height-1);
+		southNorthWallCount = width * (height - 1);
 		holeCount = width * height / 2;		
 	}
 
@@ -59,11 +59,15 @@ public class MoebiusMaze extends RectangularMazeBase implements IMazeSpace,
 			for (int x = 0; x < width; x++)
 			{
 				int wall = x + y * width;
-				result.add(new WallShape(iw, y, x+1, y+1,  x+1));
+				WallShape ws1 = new WallShape(iw, y, x+1, y+1,  x+1);
+				ws1.setWallId(wall);
+				result.add(ws1);
 				if (x == width-1)
 				{
 					// repeat wrapped east border
-					result.add(new WallShape(iw, y, 0, y+1,  0));
+					WallShape ws2 = new WallShape(iw, y, 0, y+1,  0);
+					ws2.setWallId(wall);
+					result.add(ws2);
 				}
 			}
 		}
@@ -74,7 +78,9 @@ public class MoebiusMaze extends RectangularMazeBase implements IMazeSpace,
 			for (int x = 0; x < width; x++)
 			{
 				int wall = x + y * width + eastWestWallCount;
-				result.add(new WallShape(iw, y+1, x, y+1,  x+1));
+				WallShape ws = new WallShape(iw, y+1, x, y+1,  x+1);
+				ws.setWallId(wall);
+				result.add(ws);
 			}
 		}
 		
@@ -87,10 +93,14 @@ public class MoebiusMaze extends RectangularMazeBase implements IMazeSpace,
 				int wall = x + y * width + eastWestWallCount + southNorthWallCount;
 				String floorId = "f" + Integer.toString(wall);
 				final boolean isHole = true; // TODO !isWallClosed(wall);
-				result.add(new FloorShape(y, x, isHole, floorId));
+				FloorShape fs1 = new FloorShape(y, x, isHole, floorId);
+				fs1.setWallId(wall);
+				result.add(fs1);
 				int hy = getTheOtherSideOfHoleY(y,x);
 				int hx = getTheOtherSideOfHoleX(y,x);
-				result.add(new FloorShape(hy, hx, isHole, floorId));
+				FloorShape fs2 = new FloorShape(hy, hx, isHole, floorId);	
+				fs2.setWallId(wall);
+				result.add(fs2);
 			}
 		}
 

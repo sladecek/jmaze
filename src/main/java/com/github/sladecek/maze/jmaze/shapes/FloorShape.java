@@ -16,6 +16,7 @@ public class FloorShape implements IMazeShape {
 	private int x;
 	private boolean isHole;
 	private String id;
+	private int wallId = -1;
 	
 	private final static Logger log = Logger.getLogger("LOG");
 	
@@ -32,6 +33,10 @@ public class FloorShape implements IMazeShape {
 		log.log(Level.INFO, "FloorShape id="+id+" x="+x+" y="+y);
 	}
 
+
+	public void setWallId(int wallId) {
+		this.wallId = wallId;
+	}
 
 	@Override
 	public ShapeType getShapeType() {
@@ -63,7 +68,10 @@ public class FloorShape implements IMazeShape {
 
 	@Override
 	public boolean isOpen(MazeRealization real) {
-		return true; // TODO
+		if (this.wallId < 0) {
+			return true;
+		}
+		return !real.isWallClosed(this.wallId);
 	}
 
 	@Override

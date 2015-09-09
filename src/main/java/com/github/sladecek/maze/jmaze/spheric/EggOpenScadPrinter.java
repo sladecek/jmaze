@@ -65,12 +65,12 @@ public final class EggOpenScadPrinter extends OpenScadMazePrinter implements IMa
 		scad.closeUnion();	
 	}
 
-	private void printWalls(final MazeRealization real) throws IOException {
+	private void printWalls(final MazeRealization realization) throws IOException {
 		
 		final double wt = sizes.getInnerWallToCellRatio() / 2;
 		
 		for (WallShape wall: walls) {
-			if (!wall.isOpen(real)) {
+			if (!wall.isOpen(realization)) {
 				LOGGER.log(Level.INFO, "wall " + wall + " is closed");
 				printWallElements(wt, wall);
 				

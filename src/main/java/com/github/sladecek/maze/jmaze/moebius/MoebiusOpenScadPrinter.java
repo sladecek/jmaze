@@ -31,7 +31,7 @@ public class MoebiusOpenScadPrinter extends OpenScadMazePrinter implements IMaze
 		walls = new ArrayList<WallShape>();
 		floors = new ArrayList<FloorShape>();
 		for(IMazeShape shape: maze.getShapes()) {
-			if (shape.getShapeType() == ShapeType.nonHole ) {
+			if (shape.getShapeType() == ShapeType.hole ) {
 				floors.add((FloorShape)shape);
 			} else {
 				if (shape.getShapeType() == ShapeType.innerWall) {
@@ -42,16 +42,16 @@ public class MoebiusOpenScadPrinter extends OpenScadMazePrinter implements IMaze
 	}
 
 	@Override
-	protected void printShapes(IPrintableMaze maze, MazeRealization realization) throws IOException {
+	protected void printShapes(final IPrintableMaze maze, final MazeRealization realization) throws IOException {
  
 		cellHeight = maze.getPictureHeight();
 		cellWidth = maze.getPictureWidth();
 		maze3dMapper = new Moebius3dMapper(sizes, cellHeight, cellWidth);
 		scad.beginUnion();
 		printFloors();
-		fillHolesInFloors();
+		fillHolesInFloors(realization);
 		printOuterWalls();
-		printInnerWalls();
+		printInnerWalls(realization);
 		scad.closeUnion();
 	}
 
@@ -59,31 +59,30 @@ public class MoebiusOpenScadPrinter extends OpenScadMazePrinter implements IMaze
 		scad.beginUnion();
 		for (int cellX = 0; cellX < cellWidth; cellX++) {
 			for (int cellY = 0; cellY < cellHeight; cellY++) {
-			
-			/*	if (cellY > 1) continue;
-				if (cellX > 1) continue;
-*/
-				printFloorWithHoleOneRoom(cellX, cellY);				
+
+				printFloorWithHoleOneRoom(cellY, cellX);				
 			}
 		}
 		scad.closeUnion();	
 	}
 
 	
-	private void fillHolesInFloors() throws IOException {
+	private void fillHolesInFloors(final MazeRealization realization) throws IOException {
 		for (FloorShape hs: floors) {
-			fillHoleInTheFloorOneRoom(hs);
+			if (!hs.isOpen(realization)) {
+				fillHoleInTheFloorOneRoom(hs);
+			}
 		}
 	}
 
 	
-	private void printInnerWalls() throws IOException {
-		
-		final double wallThickness = sizes.getInnerWallToCellRatio()/2;
+	private void printInnerWalls(final MazeRealization realization) throws IOException {		
+		final double wallThickness = sizes.getInnerWallToCellRatio() / 2;
 		
 		for (WallShape wall: walls) {
-			printWallElements(wallThickness, wall);
-			
+			if (!wall.isOpen(realization)) {
+				printWallElements(wallThickness, wall);
+			}
 		}
 	}
 
@@ -91,16 +90,16 @@ public class MoebiusOpenScadPrinter extends OpenScadMazePrinter implements IMaze
 	private void printOuterWalls() throws IOException {
 		scad.beginUnion();
 		for (int cellX = 0; cellX < cellWidth; cellX++) {
-			for(SouthNorth snWall: SouthNorth.values()) {
+			for (SouthNorth snWall: SouthNorth.values()) {
 				ArrayList<Point> p = new ArrayList<Point>();
-				for(EastWest ew: EastWest.values()) {
-					for(SouthNorth snEdge: SouthNorth.values()) {
-						for(UpDown ud: UpDown.values()) {						
+				for (EastWest ew: EastWest.values()) {
+					for (SouthNorth snEdge: SouthNorth.values()) {
+						for (UpDown ud: UpDown.values()) {						
 							p.add(maze3dMapper.mapCorner(cellX, ew, ud, snWall, snEdge));
 						}
 					}
 				}
-				scad.printPolyhedron(p, "outer wall "+cellX,  colors.getOuterWallColor());
+				scad.printPolyhedron(p, "outer wall " + cellX, colors.getOuterWallColor());
 			}
 		}
 		scad.closeUnion();

@@ -23,7 +23,7 @@ public class EggMazeTest {
 		assertEquals(16, (int)layerRoomCnt.get(0));
 		assertEquals(16, (int)layerRoomCnt.get(1));
 		assertEquals(8, (int)layerRoomCnt.get(2));
-		assertEquals(4, (int)layerRoomCnt.get(3));
+		assertEquals(8, (int)layerRoomCnt.get(3));
 
 	}
 
@@ -47,7 +47,7 @@ public class EggMazeTest {
 		Vector<Integer> layerRoomCnt = generateTestHemisphere(hemisphere, 8);
 		assertEquals(2, layerRoomCnt.size());
 		assertEquals(8, (int)layerRoomCnt.get(0));
-		assertEquals(4, (int)layerRoomCnt.get(1));
+		assertEquals(8, (int)layerRoomCnt.get(1));
 	}
 
 	@Test
@@ -55,8 +55,9 @@ public class EggMazeTest {
 	{
 		SouthNorth hemisphere = SouthNorth.south;
 		Vector<Integer> layerRoomCnt = generateTestHemisphere(hemisphere, 8);
-		assertEquals(1, layerRoomCnt.size());
+		assertEquals(2, layerRoomCnt.size());
 		assertEquals(8, (int)layerRoomCnt.get(0));
+		assertEquals(8, (int)layerRoomCnt.get(1));
 
 	}
 	
@@ -67,7 +68,6 @@ public class EggMazeTest {
 		final double baseRoomSize_mm = maze.getBaseRoomSize_mm();		
 		Vector<Double> layerXPosition = egg.divideMeridian(baseRoomSize_mm, hemisphere);
 		Vector<Integer> layerRoomCnt = maze.computeRoomCounts(layerXPosition, equatorCellCnt, baseRoomSize_mm);
-		assertEquals(layerXPosition.size(), 1+layerRoomCnt.size());
 		return layerRoomCnt;
 	}
 	
@@ -105,9 +105,9 @@ public class EggMazeTest {
 			}			
 		}
 			
-		assertEquals(4+8+8, roomCount);
-		assertEquals(4, meridianWallCount);
-		assertEquals(1+8, parallelWallCount);
+		assertEquals(4+8+8+8+4, roomCount);
+		assertEquals(16, meridianWallCount);
+		assertEquals(24, parallelWallCount);
 	}
 	
 

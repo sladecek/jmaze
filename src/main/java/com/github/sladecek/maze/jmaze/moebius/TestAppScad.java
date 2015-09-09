@@ -16,8 +16,8 @@ import com.github.sladecek.maze.jmaze.print.WinterColors;
  */
 public final class TestAppScad {
 	public static void main(final String[] args) {   	
-		final int widthCells = 8;
-		final int lengthCells = 180;
+		final int widthCells = 10;
+		final int lengthCells = 120;
 		MoebiusMaze maze = new MoebiusMaze(widthCells, lengthCells);
     	IMazeGenerator g = new DepthFirstMazeGenerator();
     	MazeRealization r = g.generateMaze(maze);

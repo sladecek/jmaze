@@ -7,6 +7,7 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import com.github.sladecek.maze.jmaze.geometry.Point;
 
@@ -92,10 +93,10 @@ public final class OpenScadWriter implements java.lang.AutoCloseable {
 		
 	}
 
-	public static String formatColor(final Color color) {
-		return String.format("[%.2lf, %.2lf, %.2lf]", color.getR(), color.getG(), color.getB());
-		
-	}
 
+	public static String formatColor(final Color color) {
+		final double r = 255.0;
+		return String.format(Locale.US, "[%.2f, %.2f, %.2f]", color.getR()/r, color.getG()/r, color.getB()/r);		
+	}
 	
 }
