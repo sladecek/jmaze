@@ -131,7 +131,7 @@ public class EggMaze extends GenericMazeSpace implements IMazeSpace,
 			log.log(Level.INFO, "generateParallesWalls("+sn+") i="+i);
 
 			if (i==13 && sn == SouthNorth.north){
-				log.log(Level.INFO, "generateParallesWalls("+sn+") i="+i);	
+				log.log(Level.INFO, "generateParallesWalls("+sn+") i=" + i);	
 			}
 			
 			// the next layer may have less rooms than this one
@@ -140,7 +140,7 @@ public class EggMaze extends GenericMazeSpace implements IMazeSpace,
 			final int gRoomThis = h.getGreenwichRoom(i-1);
 			final int gRoomNext = h.getGreenwichRoom(i);
 
-			int x = sn == SouthNorth.south ? - i : i ;
+			int x = sn == SouthNorth.south ? - i : i;
 
 			final int roomCntRatio = roomCntThis / roomCntNext;
 			for (int roomNext = 0; roomNext < roomCntNext; roomNext++) {

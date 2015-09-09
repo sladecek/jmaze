@@ -11,6 +11,7 @@ import com.github.sladecek.maze.jmaze.geometry.UpDown;
 import com.github.sladecek.maze.jmaze.print.IMazePrinter;
 import com.github.sladecek.maze.jmaze.print.IPrintableMaze;
 import com.github.sladecek.maze.jmaze.print.Maze3DSizes;
+import com.github.sladecek.maze.jmaze.print.MazeColors;
 import com.github.sladecek.maze.jmaze.print.OpenScadMazePrinter;
 import com.github.sladecek.maze.jmaze.shapes.FloorShape;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape;
@@ -22,8 +23,8 @@ import com.github.sladecek.maze.jmaze.shapes.WallShape;
  *
  */
 public class MoebiusOpenScadPrinter extends OpenScadMazePrinter implements IMazePrinter  {
-	public MoebiusOpenScadPrinter(Maze3DSizes sizes) {
-		super(sizes,1);
+	public MoebiusOpenScadPrinter(Maze3DSizes sizes, MazeColors colors) {
+		super(sizes, colors, 1);
 	}
 
 	protected void prepareShapes(IPrintableMaze maze) {
@@ -99,7 +100,7 @@ public class MoebiusOpenScadPrinter extends OpenScadMazePrinter implements IMaze
 						}
 					}
 				}
-				scad.printPolyhedron(p, "outer wall "+cellX,  outerWallColor);
+				scad.printPolyhedron(p, "outer wall "+cellX,  colors.getOuterWallColor());
 			}
 		}
 		scad.closeUnion();

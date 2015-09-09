@@ -11,27 +11,27 @@ import com.github.sladecek.maze.jmaze.generator.DepthFirstMazeGenerator;
 import com.github.sladecek.maze.jmaze.generator.IMazeGenerator;
 import com.github.sladecek.maze.jmaze.generator.MazeRealization;
 import com.github.sladecek.maze.jmaze.print.Maze3DSizes;
+import com.github.sladecek.maze.jmaze.print.MazeColors;
 import com.github.sladecek.maze.jmaze.print.SvgMazePrinter;
+import com.github.sladecek.maze.jmaze.print.WinterColors;
 
 
-public class App 
-{
-	private final static Logger log = Logger.getLogger("LOG");
+class TestAppScad {
+	private static final Logger lOGGER = Logger.getLogger("LOG");
 	
-	public static void main(String[] args)
-    {   	
+	public static void main(final String[] args) {   	
 		LogManager.getLogManager().reset();
-		log.setLevel(Level.INFO);
+		lOGGER.setLevel(Level.INFO);
 		try {
 			FileHandler fh = new FileHandler("maze.log");
-			log.addHandler(fh);
+			lOGGER.addHandler(fh);
 			fh.setFormatter(new SimpleFormatter());
 		
-			final int equator_cells = 64; // must be power of 2			
-		EggGeometry egg = new EggGeometry(5, 3, 0.2);
-	//		EggGeometry egg = new EggGeometry(5, 5, 0);
+			final int equatorCells = 64; // must be power of 2			
+			EggGeometry egg = new EggGeometry(5, 3, 0.2);
 
-			EggMaze maze = new EggMaze(egg, equator_cells);
+
+			EggMaze maze = new EggMaze(egg, equatorCells);
 	    	IMazeGenerator g = new DepthFirstMazeGenerator();
 	    	MazeRealization real = g.generateMaze(maze);
 	    	   	
@@ -41,7 +41,9 @@ public class App
 	    	sizes.setWallHeight_mm(0.3);
 	    	sizes.setInnerWallToCellRatio(0.05);
 	    	
-	    	EggOpenScadPrinter osp = new EggOpenScadPrinter(sizes, egg, equator_cells);
+	    	MazeColors colors = new WinterColors();
+	    	
+	    	EggOpenScadPrinter osp = new EggOpenScadPrinter(sizes, colors, egg, equatorCells);
 	    	osp.printMaze(maze, real, "maze-egg.scad");
 	    	
 	    	SvgMazePrinter sp = new SvgMazePrinter();
