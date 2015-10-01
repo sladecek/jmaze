@@ -10,8 +10,10 @@ import java.util.logging.SimpleFormatter;
 import com.github.sladecek.maze.jmaze.generator.DepthFirstMazeGenerator;
 import com.github.sladecek.maze.jmaze.generator.IMazeGenerator;
 import com.github.sladecek.maze.jmaze.generator.MazeRealization;
+import com.github.sladecek.maze.jmaze.moebius.MoebiusBlockMaker;
 import com.github.sladecek.maze.jmaze.print.Maze3DSizes;
 import com.github.sladecek.maze.jmaze.print.MazeColors;
+import com.github.sladecek.maze.jmaze.print.OpenScadBlockPrinter;
 import com.github.sladecek.maze.jmaze.print.SvgMazePrinter;
 import com.github.sladecek.maze.jmaze.print.WinterColors;
 
@@ -42,9 +44,10 @@ class TestAppScad {
 	    	sizes.setInnerWallToCellRatio(0.05);
 	    	
 	    	MazeColors colors = new WinterColors();
-	    	
-	    	EggOpenScadPrinter osp = new EggOpenScadPrinter(sizes, colors, egg, equatorCells);
-	    	osp.printMaze(maze, real, "maze-egg.scad");
+	    		    	
+	    	EggBlockMaker maker = new EggBlockMaker(maze, real, sizes, colors, egg, equatorCells);
+	    	OpenScadBlockPrinter printer = new OpenScadBlockPrinter(maker);
+	    	printer.printMaze("maze-egg.scad");
 	    	
 	    	SvgMazePrinter sp = new SvgMazePrinter();
 	    	sp.printMaze(maze, real, "maze-egg.svg");

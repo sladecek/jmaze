@@ -8,23 +8,27 @@ import com.github.sladecek.maze.jmaze.geometry.EastWest;
 import com.github.sladecek.maze.jmaze.geometry.Point;
 import com.github.sladecek.maze.jmaze.geometry.SouthNorth;
 import com.github.sladecek.maze.jmaze.geometry.UpDown;
-import com.github.sladecek.maze.jmaze.print.IMazePrinter;
+import com.github.sladecek.maze.jmaze.print.Block;
+import com.github.sladecek.maze.jmaze.print.BlockMakerBase;
+import com.github.sladecek.maze.jmaze.print.IBlockMaker;
 import com.github.sladecek.maze.jmaze.print.IPrintableMaze;
 import com.github.sladecek.maze.jmaze.print.Maze3DSizes;
 import com.github.sladecek.maze.jmaze.print.MazeColors;
-import com.github.sladecek.maze.jmaze.print.OpenScadMazePrinter;
 import com.github.sladecek.maze.jmaze.shapes.FloorShape;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape.ShapeType;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
 
 /**
- *  Print rooms of 3D Moebius maze as OpenScad file.
+ *  Create list of solid blocks to make a 3D Moebius maze.
  *
  */
-public class MoebiusOpenScadPrinter extends OpenScadMazePrinter implements IMazePrinter  {
-	public MoebiusOpenScadPrinter(Maze3DSizes sizes, MazeColors colors) {
-		super(sizes, colors, 1);
+public class MoebiusBlockMaker extends BlockMakerBase implements IBlockMaker  {
+	
+	private MoebiusMaze maze;
+	public MoebiusBlockMaker(MoebiusMaze maze, MazeRealization realization, Maze3DSizes sizes, MazeColors colors, double approxRoomSize_mm) {
+		super(sizes, colors, realization, approxRoomSize_mm );
+		this.maze = maze;
 	}
 
 	protected void prepareShapes(IPrintableMaze maze) {
@@ -41,33 +45,19 @@ public class MoebiusOpenScadPrinter extends OpenScadMazePrinter implements IMaze
 		}
 	}
 
-	@Override
-	protected void printShapes(final IPrintableMaze maze, final MazeRealization realization) throws IOException {
- 
-		cellHeight = maze.getPictureHeight();
-		cellWidth = maze.getPictureWidth();
-		maze3dMapper = new Moebius3dMapper(sizes, cellHeight, cellWidth);
-		scad.beginUnion();
-		printFloors();
-		fillHolesInFloors(realization);
-		printOuterWalls();
-		printInnerWalls(realization);
-		scad.closeUnion();
-	}
 
-	private void printFloors() throws IOException {
-		scad.beginUnion();
+	private void printFloors()  {
+
 		for (int cellX = 0; cellX < cellWidth; cellX++) {
 			for (int cellY = 0; cellY < cellHeight; cellY++) {
 
 				printFloorWithHoleOneRoom(cellY, cellX);				
 			}
 		}
-		scad.closeUnion();	
 	}
 
 	
-	private void fillHolesInFloors(final MazeRealization realization) throws IOException {
+	private void fillHolesInFloors(final MazeRealization realization)  {
 		for (FloorShape hs: floors) {
 			if (!hs.isOpen(realization)) {
 				fillHoleInTheFloorOneRoom(hs);
@@ -76,7 +66,7 @@ public class MoebiusOpenScadPrinter extends OpenScadMazePrinter implements IMaze
 	}
 
 	
-	private void printInnerWalls(final MazeRealization realization) throws IOException {		
+	private void printInnerWalls(final MazeRealization realization)  {		
 		final double wallThickness = sizes.getInnerWallToCellRatio() / 2;
 		
 		for (WallShape wall: walls) {
@@ -87,8 +77,7 @@ public class MoebiusOpenScadPrinter extends OpenScadMazePrinter implements IMaze
 	}
 
 
-	private void printOuterWalls() throws IOException {
-		scad.beginUnion();
+	private void printOuterWalls()  {
 		for (int cellX = 0; cellX < cellWidth; cellX++) {
 			for (SouthNorth snWall: SouthNorth.values()) {
 				ArrayList<Point> p = new ArrayList<Point>();
@@ -99,10 +88,9 @@ public class MoebiusOpenScadPrinter extends OpenScadMazePrinter implements IMaze
 						}
 					}
 				}
-				scad.printPolyhedron(p, "outer wall " + cellX, colors.getOuterWallColor());
+				printPolyhedron(p, "outer wall " + cellX, colors.getOuterWallColor());
 			}
 		}
-		scad.closeUnion();
 	}
 
 
@@ -111,6 +99,20 @@ public class MoebiusOpenScadPrinter extends OpenScadMazePrinter implements IMaze
 
 	int cellHeight;
 	int cellWidth;
+	@Override
+	public void makeBlocks() {
+		prepareShapes(maze);
+		cellHeight = maze.getPictureHeight();
+		cellWidth = maze.getPictureWidth();
+		maze3dMapper = new Moebius3dMapper(sizes, cellHeight, cellWidth);
+		blocks = new ArrayList<Block>();
+		printFloors();
+		fillHolesInFloors(realization);
+		printOuterWalls();
+		printInnerWalls(realization);
+		
+	}
+
 
 	
 }

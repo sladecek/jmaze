@@ -1,30 +1,35 @@
 package com.github.sladecek.maze.jmaze.spheric;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.github.sladecek.maze.jmaze.generator.MazeRealization;
-import com.github.sladecek.maze.jmaze.print.IMazePrinter;
+import com.github.sladecek.maze.jmaze.print.Block;
+import com.github.sladecek.maze.jmaze.print.BlockMakerBase;
+import com.github.sladecek.maze.jmaze.print.IBlockMaker;
 import com.github.sladecek.maze.jmaze.print.IPrintableMaze;
 import com.github.sladecek.maze.jmaze.print.Maze3DSizes;
 import com.github.sladecek.maze.jmaze.print.MazeColors;
-import com.github.sladecek.maze.jmaze.print.OpenScadMazePrinter;
 import com.github.sladecek.maze.jmaze.shapes.FloorShape;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape.ShapeType;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
 
-public final class EggOpenScadPrinter extends OpenScadMazePrinter implements IMazePrinter 	
+/**
+ * Create list of solid blocks to make a 3D Moebius maze.
+ */
+public final class EggBlockMaker extends BlockMakerBase implements IBlockMaker 	
 {
 	private static final Logger LOGGER = Logger.getLogger("LOG"); 
 
 	private EggGeometry egg;
+	private EggMaze maze;
 	
-	public EggOpenScadPrinter(final Maze3DSizes sizes, final MazeColors colors, final EggGeometry egg, final int equatorCellCnt) {
-		super(sizes, colors, egg.computeBaseRoomSize_mm(equatorCellCnt));
+	public EggBlockMaker(EggMaze maze, MazeRealization realization, Maze3DSizes sizes, MazeColors colors,  final EggGeometry egg, final int equatorCellCnt) {
+		super(sizes, colors, realization, egg.computeBaseRoomSize_mm(equatorCellCnt));
 		this.egg = egg;
+		this.maze = maze;
 	}
 
 	protected void prepareShapes(final IPrintableMaze maze) {
@@ -40,20 +45,10 @@ public final class EggOpenScadPrinter extends OpenScadMazePrinter implements IMa
 			}
 		}
 	}
-
-	@Override
-	protected void printShapes(final IPrintableMaze maze, final MazeRealization real) throws IOException {
- 
-		maze3dMapper = new Egg3dMapper(egg, (EggMaze) maze);
-		
-		scad.beginUnion();
-		printFloors();
-		printWalls(real);
-		scad.closeUnion();
-	}
 	
-	private void printFloors() throws IOException {
-		scad.beginUnion();
+	
+	
+	private void printFloors()  {
 		for (FloorShape hs: floor) {
 				LOGGER.log(Level.INFO, hs.toString());
 				LOGGER.log(Level.INFO, "room");
@@ -62,10 +57,9 @@ public final class EggOpenScadPrinter extends OpenScadMazePrinter implements IMa
 			fillHoleInTheFloorOneRoom(hs);	
 			LOGGER.log(Level.INFO, "end");
 		}
-		scad.closeUnion();	
 	}
 
-	private void printWalls(final MazeRealization realization) throws IOException {
+	private void printWalls(final MazeRealization realization)  {
 		
 		final double wt = sizes.getInnerWallToCellRatio() / 2;
 		
@@ -80,5 +74,15 @@ public final class EggOpenScadPrinter extends OpenScadMazePrinter implements IMa
 	
 	private ArrayList<WallShape> walls;
 	private ArrayList<FloorShape> floor;
+
+	@Override
+	public void makeBlocks() {
+	maze3dMapper = new Egg3dMapper(egg, (EggMaze) maze);
+	prepareShapes(maze);
+	blocks = new ArrayList<Block>();
+		printFloors();
+		printWalls(realization);
+		
+	}
 
 }

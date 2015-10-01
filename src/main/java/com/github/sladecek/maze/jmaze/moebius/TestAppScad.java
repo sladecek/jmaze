@@ -5,6 +5,7 @@ import com.github.sladecek.maze.jmaze.generator.IMazeGenerator;
 import com.github.sladecek.maze.jmaze.generator.MazeRealization;
 import com.github.sladecek.maze.jmaze.print.Maze3DSizes;
 import com.github.sladecek.maze.jmaze.print.MazeColors;
+import com.github.sladecek.maze.jmaze.print.OpenScadBlockPrinter;
 import com.github.sladecek.maze.jmaze.print.SvgMazePrinter;
 import com.github.sladecek.maze.jmaze.print.WinterColors;
 
@@ -30,7 +31,9 @@ public final class TestAppScad {
     	
     	MazeColors colors = new WinterColors();
     	
-    	MoebiusOpenScadPrinter osp = new MoebiusOpenScadPrinter(sizes, colors);
-    	osp.printMaze(maze, r, "maze-moebius.scad");
+    	double approxRoomSize_mm = 3;
+    	MoebiusBlockMaker maker = new MoebiusBlockMaker(maze, r, sizes, colors, approxRoomSize_mm);
+    	OpenScadBlockPrinter printer = new OpenScadBlockPrinter(maker);
+    	printer.printMaze("maze-moebius.scad");
     }
 }
