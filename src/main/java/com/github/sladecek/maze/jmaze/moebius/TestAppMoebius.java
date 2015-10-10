@@ -7,6 +7,7 @@ import com.github.sladecek.maze.jmaze.print.Maze3DSizes;
 import com.github.sladecek.maze.jmaze.print.MazeColors;
 import com.github.sladecek.maze.jmaze.print.OpenScadBlockPrinter;
 import com.github.sladecek.maze.jmaze.print.SvgMazePrinter;
+import com.github.sladecek.maze.jmaze.print.ThreeJsBlockPrinter;
 import com.github.sladecek.maze.jmaze.print.WinterColors;
 
 /***
@@ -15,9 +16,9 @@ import com.github.sladecek.maze.jmaze.print.WinterColors;
  * @author sladecek
  *
  */
-public final class TestAppScad {
+public final class TestAppMoebius {
 	public static void main(final String[] args) {   	
-		final int widthCells = 10;
+		final int widthCells = 8;
 		final int lengthCells = 120;
 		MoebiusMaze maze = new MoebiusMaze(widthCells, lengthCells);
     	IMazeGenerator g = new DepthFirstMazeGenerator();
@@ -33,7 +34,23 @@ public final class TestAppScad {
     	
     	double approxRoomSize_mm = 3;
     	MoebiusBlockMaker maker = new MoebiusBlockMaker(maze, r, sizes, colors, approxRoomSize_mm);
-    	OpenScadBlockPrinter printer = new OpenScadBlockPrinter(maker);
-    	printer.printMaze("maze-moebius.scad");
+
+    	
+    	final String fileName = "maze-moebius";
+    	
+    	final boolean printInJs = true;
+    	final boolean printInScad = true;
+    	
+    	if (printInJs) 
+    	{
+    		ThreeJsBlockPrinter printerJs = new ThreeJsBlockPrinter(maker);
+        	printerJs.printMaze(fileName+".js");	
+    	} 
+    	if (printInScad) 
+    	{
+    	 	OpenScadBlockPrinter printerScad = new OpenScadBlockPrinter(maker);
+        	printerScad.printMaze(fileName+".scad");        		
+    	}
+    	
     }
 }
