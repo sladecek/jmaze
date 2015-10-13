@@ -19,14 +19,17 @@ public final class ThreeJsWriter implements java.lang.AutoCloseable {
 	
 	private OutputStream stream;
 	private OutputStreamWriter out;
-
+	private boolean needComma = false;
+	
 	public ThreeJsWriter(final OutputStream stream) throws IOException {
 		this.stream = stream;
 		out = new OutputStreamWriter(stream, "UTF8");
+		out.write("[\n");
+		needComma = false;
 	}
 	
 	public void close() throws IOException {		
-		
+		out.write("]\n");
 		out.close();
 		stream.close();
 	}
@@ -54,15 +57,19 @@ public final class ThreeJsWriter implements java.lang.AutoCloseable {
 		if (polyhedron.size() != POLYHEDRON_VERTEX_CNT) {
 			throw new InvalidParameterException("Polyhedrons must have " + POLYHEDRON_VERTEX_CNT + " points");
 		}
-		out.write("/* " + comment + "*/\n");
-		out.write("makePolyhedron([");
+		// TODO out.write("/* " + comment + "*/\n");
+		if (needComma) {
+			out.write(",\n");
+		}
+		out.write("[");
 		for (int i = 0; i < POLYHEDRON_VERTEX_CNT; i++) {
 			printPoint(polyhedron.get(i));
 			if (i < POLYHEDRON_VERTEX_CNT - 1) {
 				out.write(", ");
 			}			
 		}
-		out.write("]); \n\n");
+		out.write("] ");
+		needComma = true;
 		
 	}
 
