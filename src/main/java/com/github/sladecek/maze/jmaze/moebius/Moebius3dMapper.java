@@ -9,12 +9,11 @@ import com.github.sladecek.maze.jmaze.geometry.UpDown;
 import com.github.sladecek.maze.jmaze.print.IMaze3DMapper;
 import com.github.sladecek.maze.jmaze.print.Maze3DSizes;
 
-public class Moebius3dMapper implements IMaze3DMapper {
+public final class Moebius3dMapper implements IMaze3DMapper {
 
-	public Moebius3dMapper(Maze3DSizes sizes, int height, int width) {
+	public Moebius3dMapper(final Maze3DSizes sizes, final int height, final int width) {
 		super();
 		this.sizes = sizes;
-		this.width = width;
 		this.height = height;
 		if (width % 2 != 0) {
 			throw new InvalidParameterException(
@@ -33,15 +32,14 @@ public class Moebius3dMapper implements IMaze3DMapper {
 
 	}
 
-	MoebiusStripGeometry geometry;
-	Maze3DSizes sizes;
-	int width;
-	int height;
-	double length_mm;
-	double height_mm;
-	double innerWallThickness_mm;
-	double outerWallThickness_mm;
-	double cellStep_mm;
+	private MoebiusStripGeometry geometry;
+	private Maze3DSizes sizes;
+	private int height;
+	private double length_mm;
+	private double height_mm;
+	private double innerWallThickness_mm;
+	private double outerWallThickness_mm;
+	private double cellStep_mm;
 
 	public double getLength_mm() {
 		return length_mm;

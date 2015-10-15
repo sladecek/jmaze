@@ -1,9 +1,9 @@
 package com.github.sladecek.maze.jmaze.geometry;
 
-public class Point {
-	double x;
-	double y;
-	double z;
+public final class Point {
+	private double x;
+	private double y;
+	private double z;
 
 	public Point(double x, double y, double z) {
 		super();
@@ -11,7 +11,6 @@ public class Point {
 		this.y = y;
 		this.z = z;
 	}
-
 
 	public double getX() {
 		return x;
@@ -44,7 +43,7 @@ public class Point {
 
 
 	public static Point midpoint(Point p1, Point p2) {
-		return new Point((p1.x+p2.x)/2,(p1.y+p2.y)/2,(p1.z+p2.z)/2);
+		return new Point((p1.x + p2.x) / 2, (p1.y + p2.y) / 2, (p1.z + p2.z) / 2);
 	}
 
 
