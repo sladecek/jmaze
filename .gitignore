@@ -9,3 +9,5 @@ maze.log.*
 maze.log
 /target/
 /.sonar
+/maze-egg.js
+/maze-moebius.js
