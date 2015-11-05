@@ -10,33 +10,33 @@ import com.github.sladecek.maze.jmaze.geometry.SouthNorth;
  * Define geometry of egg-like shape.
  *
  */
-public class EggGeometry {
+public final class EggGeometry {
 
 
-	private double ellipseMajor_mm;
-	private double ellipseMinor_mm;
+	private double ellipseMajorInmm;
+	private double ellipseMinorInmm;
 	private double eggCoef;
 	
-	public EggGeometry(double ellipseMajor_mm, double ellipseMinor_mm, double eggCoef) {
+	public EggGeometry(double ellipseMajorInmm, double ellipseMinorInmm, double eggCoef) {
 		super();
-		this.ellipseMajor_mm = ellipseMajor_mm;
-		this.ellipseMinor_mm = ellipseMinor_mm;
+		this.ellipseMajorInmm = ellipseMajorInmm;
+		this.ellipseMinorInmm = ellipseMinorInmm;
 		this.eggCoef = eggCoef;
 	}
-	public double getEllipseMajor_mm() {
-		return ellipseMajor_mm;
+	public double getEllipseMajorInmm() {
+		return ellipseMajorInmm;
 	}
-	public double getEllipseMinor_mm() {
-		return ellipseMinor_mm;
+	public double getEllipseMinorInmm() {
+		return ellipseMinorInmm;
 	}
 	public double getEggCoef() {
 		return eggCoef;
 	}
 	public double computeY(double x) {
-		final double tx = 1 / (1-this.eggCoef*x);
-		final double aa = this.ellipseMajor_mm * this.ellipseMajor_mm;
-		final double bb = this.ellipseMinor_mm * this.ellipseMinor_mm;
-		final double yy = (1-x*x/aa)*bb/tx;
+		final double tx = 1 / (1 - this.eggCoef * x);
+		final double aa = this.ellipseMajorInmm * this.ellipseMajorInmm;
+		final double bb = this.ellipseMinorInmm * this.ellipseMinorInmm;
+		final double yy = (1 - x * x / aa) * bb / tx;
 		if (yy == Double.NaN || yy < 0) {
 			return 0;
 		}
@@ -46,42 +46,55 @@ public class EggGeometry {
 	/**
 	 * Divide egg meridian into steps of required size (approximate). Keep the rest at pole.
 	 *  
-	 * @param step_mm Required step size. 
+	 * @param stepInmm Required step size. 
 	 * @param hemisphere Which hemisphere to divide.
 	 * @return Vector of x positions starting with the equator (x==0).
 	 */
-	public Vector<Double> divideMeridian(double step_mm, SouthNorth hemisphere) {
-
-		
-		final double d = hemisphere  == SouthNorth.north ? 1 : -1;
-		final double probe_mm = step_mm / 10;
+	public Vector<Double> divideMeridian(double stepInmm, SouthNorth hemisphere) {
+		final double sign = signOfHemispherePole(hemisphere);
+		final double probeInmm = stepInmm / 10;
 		Vector<Double> result = new Vector<Double>();
-		double x_mm = 0;
-		result.add(x_mm);
+		double xInmm = 0;
+		result.add(xInmm);
 		
-		while(x_mm < this.ellipseMajor_mm - 2*probe_mm)
-		{
-			double angle_rad = Math.atan2(computeY(d*(x_mm+probe_mm)) - computeY(d*x_mm), probe_mm);
-			double dx_mm = step_mm * Math.cos(angle_rad);
-			x_mm += dx_mm;
-			if (x_mm >= this.ellipseMajor_mm) {
+		while (xInmm < this.ellipseMajorInmm - 2 * probeInmm) {
+			double angleInRad = Math.atan2(computeY(sign * (xInmm + probeInmm)) - computeY(sign * xInmm), probeInmm);
+			double dxInmm = stepInmm * Math.cos(angleInRad);
+			xInmm += dxInmm;
+			if (xInmm >= this.ellipseMajorInmm) {
 				break;
 			}
-			result.add(x_mm*d);
-		}		
+			result.add(xInmm * sign);
+		}
+		
+		if (result.size() < 2) {
+			// maze must have at least one layer of rooms, place it
+			// somewhere
+			final double twoThirds = 2.0 / 3.0;
+			result.add(this.ellipseMajorInmm * twoThirds * sign);
+		}
+		
 		return result;
+	}
+	
+	private int signOfHemispherePole(SouthNorth hemisphere) {
+		if (hemisphere  == SouthNorth.north) {
+			return  1;
+		} else {
+			return -1;
+		}
 	}
 	
 	public OrientationVector2D computeNormalVector(double x) {
 		double y = computeY(x);
-		double cc = x / Math.pow(this.ellipseMajor_mm,2);
-		double ss = y / Math.pow(this.ellipseMinor_mm,2);
-		double norm = Math.sqrt(cc*cc+ss*ss);
-		return new OrientationVector2D(cc/norm, ss/norm);
+		double cc = x / Math.pow(this.ellipseMajorInmm, 2);
+		double ss = y / Math.pow(this.ellipseMinorInmm, 2);
+		double norm = Math.sqrt(cc * cc + ss * ss);
+		return new OrientationVector2D(cc / norm, ss / norm);
 	}
 	
-	public double computeBaseRoomSize_mm(int equatorCellCnt) {
-		final double equatorCircumference_mm = ellipseMinor_mm * 2 * Math.PI;
-		return equatorCircumference_mm / equatorCellCnt;
+	public double computeBaseRoomSizeInmm(int equatorCellCnt) {
+		final double equatorCircumferenceInmm = ellipseMinorInmm * 2 * Math.PI;
+		return equatorCircumferenceInmm / equatorCellCnt;
 	}
 }

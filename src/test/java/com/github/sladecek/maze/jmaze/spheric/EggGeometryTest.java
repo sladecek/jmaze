@@ -123,7 +123,7 @@ public class EggGeometryTest {
 	@Test
 	public void testComputeBaseRoomSize_mm() {
 		EggGeometry e = new EggGeometry(4, 3, 0.2);
-		assertEquals(2*Math.PI*3/100, e.computeBaseRoomSize_mm(100) , delta);
+		assertEquals(2*Math.PI*3/100, e.computeBaseRoomSizeInmm(100) , delta);
 	}
 
 }

@@ -27,7 +27,7 @@ public final class EggBlockMaker extends BlockMakerBase implements IBlockMaker
 	private EggMaze maze;
 	
 	public EggBlockMaker(EggMaze maze, MazeRealization realization, Maze3DSizes sizes, MazeColors colors,  final EggGeometry egg, final int equatorCellCnt) {
-		super(sizes, colors, realization, egg.computeBaseRoomSize_mm(equatorCellCnt));
+		super(sizes, colors, realization, egg.computeBaseRoomSizeInmm(equatorCellCnt));
 		this.egg = egg;
 		this.maze = maze;
 	}

@@ -37,9 +37,9 @@ public class EggMaze extends GenericMazeSpace implements IMazeSpace,
 	public EggMaze(EggGeometry egg, int equatorCellCnt) {
 		this.egg = egg;
 		this.equatorCellCnt = equatorCellCnt;
-		this.baseRoomSize_mm = egg.computeBaseRoomSize_mm(equatorCellCnt);
-		north = new EggMazeHemisphere(egg.getEllipseMajor_mm());
-		south = new EggMazeHemisphere(-egg.getEllipseMajor_mm());
+		this.baseRoomSize_mm = egg.computeBaseRoomSizeInmm(equatorCellCnt);
+		north = new EggMazeHemisphere(egg.getEllipseMajorInmm());
+		south = new EggMazeHemisphere(-egg.getEllipseMajorInmm());
 
 		
 		
