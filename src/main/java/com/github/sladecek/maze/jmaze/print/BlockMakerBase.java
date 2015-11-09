@@ -17,22 +17,16 @@ import com.github.sladecek.maze.jmaze.shapes.WallShape;
  * wall and floor drawing for one room.
  */
 public abstract class BlockMakerBase {
-	
-	private double approxRoomSize_mm;
-
-	private static final Logger lOG = Logger.getLogger("LOG");
-	
-	
+		
 	public BlockMakerBase(Maze3DSizes sizes, MazeColors colors, MazeRealization realization,  double approxRoomSize_mm) {
 		this.sizes = sizes;
 		this.colors = colors;
 		this.realization = realization;
 		this.approxRoomSize_mm = approxRoomSize_mm;
 	}
-
 	
 
-	protected void printWallElements(final double wallThickness, WallShape wall)
+	protected final void printWallElements(final double wallThickness, WallShape wall)
 			 {
 		
 		lOG.log(Level.INFO, wall.toString());
@@ -76,48 +70,57 @@ public abstract class BlockMakerBase {
 	}
 		
 
-	protected void printFloorWithHoleOneRoom(int cellY, int cellX)  {
-		ArrayList<Point> pe = new ArrayList<Point>();
-		for(SouthNorth sn: SouthNorth.values()) {
-			for(UpDown ud: UpDown.values()) {						
-				Point p = getBasePoint(cellY, cellX, ud, sn, EastWest.east);
-				pe.add(p);
-			}
-		}
-		for(SouthNorth sn: SouthNorth.values()) {
-			for(UpDown ud: UpDown.values()) {						
-				Point p = getHolePoint(cellY, cellX, EastWest.east, sn, ud);
-				pe.add(p);
-			}
-		}				
-		printPolyhedron(pe, "base e "+cellX+" "+cellY, colors.getBaseColor());
+	protected final void printFloorWithHoleOneRoom(int cellY, int cellX)  {
+		ArrayList<Point> pe = makeFloorSegmentEast(cellY, cellX);				
+		printPolyhedron(pe, "base e " + cellX + " " + cellY, colors.getBaseColor());
 
+		ArrayList<Point> pw = makeFloorSegmentWest(cellY, cellX);
+		printPolyhedron(pw, "base w" + cellX + " " + cellY, colors.getBaseColor());
+		
+		ArrayList<Point> pn = makeFloorSegmentNorth(pe, pw);
+		printPolyhedron(pn, "base n " + cellX + " " + cellY, colors.getBaseColor());
+		
+		ArrayList<Point> ps = makeFloorSegmentSouth(pe, pw);
+		printPolyhedron(ps, "base s " + cellX + " " + cellY, colors.getBaseColor());	
+	}
+
+	private ArrayList<Point> makeFloorSegmentWest(int cellY, int cellX) {
 		ArrayList<Point> pw = new ArrayList<Point>();
-		for(SouthNorth sn: SouthNorth.values()) {
-			for(UpDown ud: UpDown.values()) {
+		for (SouthNorth sn: SouthNorth.values()) {
+			for (UpDown ud: UpDown.values()) {
 				Point p = getHolePoint(cellY, cellX, EastWest.west, sn, ud);
 				pw.add(p);
 			}
 		}
-		for(SouthNorth sn: SouthNorth.values()) {
-			for(UpDown ud: UpDown.values()) {
-				Point p = getBasePoint(cellY, cellX, ud, sn, EastWest.west);
+		for (SouthNorth sn: SouthNorth.values()) {
+			for (UpDown ud: UpDown.values()) {
+				Point p = getFloorPoint(cellY, cellX, ud, sn, EastWest.west);
 				pw.add(p);
 			}
 		}
-		printPolyhedron(pw, "base w"+cellX+" "+cellY, colors.getBaseColor());
-		
-		ArrayList<Point> pn = new ArrayList<Point>();
-		pn.add(pw.get(0));
-		pn.add(pw.get(1));
-		pn.add(pw.get(4));
-		pn.add(pw.get(5));				
-		pn.add(pe.get(4));
-		pn.add(pe.get(5));
-		pn.add(pe.get(0));
-		pn.add(pe.get(1));
-		printPolyhedron(pn, "base n "+cellX+" "+cellY, colors.getBaseColor());
-		
+		return pw;
+	}
+
+	private ArrayList<Point> makeFloorSegmentEast(int cellY, int cellX) {
+		ArrayList<Point> pe = new ArrayList<Point>();
+		for (SouthNorth sn: SouthNorth.values()) {
+			for (UpDown ud: UpDown.values()) {						
+				Point p = getFloorPoint(cellY, cellX, ud, sn, EastWest.east);
+				pe.add(p);
+			}
+		}
+		for (SouthNorth sn: SouthNorth.values()) {
+			for (UpDown ud: UpDown.values()) {						
+				Point p = getHolePoint(cellY, cellX, EastWest.east, sn, ud);
+				pe.add(p);
+			}
+		}
+		return pe;
+	}
+
+
+	private ArrayList<Point> makeFloorSegmentSouth(ArrayList<Point> pe,
+			ArrayList<Point> pw) {
 		ArrayList<Point> ps = new ArrayList<Point>();
 		ps.add(pw.get(6));
 		ps.add(pw.get(7));				
@@ -127,11 +130,27 @@ public abstract class BlockMakerBase {
 		ps.add(pe.get(3));
 		ps.add(pe.get(6));
 		ps.add(pe.get(7));
-		printPolyhedron(ps, "base s "+cellX+" "+cellY, colors.getBaseColor());
-	
-		}
+		return ps;
+	}
 
-	protected void fillHoleInTheFloorOneRoom(FloorShape hs)  {		
+
+
+	private ArrayList<Point> makeFloorSegmentNorth(ArrayList<Point> pe,
+			ArrayList<Point> pw) {
+		ArrayList<Point> pn = new ArrayList<Point>();
+		pn.add(pw.get(0));
+		pn.add(pw.get(1));
+		pn.add(pw.get(4));
+		pn.add(pw.get(5));				
+		pn.add(pe.get(4));
+		pn.add(pe.get(5));
+		pn.add(pe.get(0));
+		pn.add(pe.get(1));
+		return pn;
+	}
+
+
+	protected final void fillHoleInTheFloorOneRoom(FloorShape hs)  {		
 		ArrayList<Point> p = new ArrayList<Point>();
 		for(EastWest ew: EastWest.values()) {
 			for(SouthNorth sn: SouthNorth.values()) {
@@ -155,7 +174,7 @@ public abstract class BlockMakerBase {
 		scad.printText(text, color, size);
 	}
 */
-	protected Point getHolePoint(int y, int x, EastWest ew, SouthNorth sn, UpDown ud) {
+	protected final Point getHolePoint(int y, int x, EastWest ew, SouthNorth sn, UpDown ud) {
 
 		final double wt = sizes.getInnerWallToCellRatio()/2*approxRoomSize_mm;
 		final double z = sizes.getBaseThickness_mm();
@@ -168,21 +187,18 @@ public abstract class BlockMakerBase {
 	
 	}
 	
-	
-	Point mapPointWithZ(int cellY, int cellX, UpDown ud, double offsetY, double offsetX) {
+	final Point mapPointWithZ(int cellY, int cellX, UpDown ud, double offsetY, double offsetX) {
 		double z = ud == UpDown.down ? 0 : sizes.getBaseThickness_mm();
 		return maze3dMapper.mapPoint(cellY, cellX,  offsetY, offsetX, z);
 	}
 	
-	
-	Point getBasePoint(int cellY, int cellX,  UpDown ud, SouthNorth sn, EastWest ew) {
+	final Point getFloorPoint(int cellY, int cellX,  UpDown ud, SouthNorth sn, EastWest ew) {
 		final int dY = (sn == SouthNorth.south) ? 0 : maze3dMapper.getStepY(cellY,cellX);
 		final int dX = (ew == EastWest.east) ? 0 : 1;	
-		return mapPointWithZ(cellY+dY, cellX+dX,  ud, 0, 0);
-		
+		return mapPointWithZ(cellY + dY, cellX + dX,  ud, 0, 0);		
 	}
 	
-	
+	private static final Logger lOG = Logger.getLogger("LOG");
 	private static final boolean debugPrintNumbers = false;
 
 	protected Maze3DSizes sizes;
@@ -190,14 +206,15 @@ public abstract class BlockMakerBase {
 	protected OpenScadWriter scad;
 	protected IMaze3DMapper maze3dMapper;
 	protected MazeRealization realization;
+	private double approxRoomSize_mm;
 	
 	protected ArrayList<Block> blocks;
 	
-	public Iterable<Block> getBlocks() {
+	public final Iterable<Block> getBlocks() {
 		return blocks;
 	}
 
-	public void printPolyhedron(final ArrayList<Point> polyhedron, final String comment, final Color color) {
+	public final void printPolyhedron(final ArrayList<Point> polyhedron, final String comment, final Color color) {
 		Block b = new Block(polyhedron, comment, color);
 		blocks.add(b);
 		

@@ -19,19 +19,25 @@ import com.github.sladecek.maze.jmaze.shapes.WallShape;
 /**
  * Create list of solid blocks to make a 3D Moebius maze.
  */
-public final class EggBlockMaker extends BlockMakerBase implements IBlockMaker 	
-{
-	private static final Logger LOGGER = Logger.getLogger("LOG"); 
-
-	private EggGeometry egg;
-	private EggMaze maze;
-	
-	public EggBlockMaker(EggMaze maze, MazeRealization realization, Maze3DSizes sizes, MazeColors colors,  final EggGeometry egg, final int equatorCellCnt) {
+public final class EggBlockMaker extends BlockMakerBase implements IBlockMaker 	{
+		
+	public EggBlockMaker(EggMaze maze, MazeRealization realization, Maze3DSizes sizes, 
+						 MazeColors colors,  final EggGeometry egg, final int equatorCellCnt) {
 		super(sizes, colors, realization, egg.computeBaseRoomSizeInmm(equatorCellCnt));
 		this.egg = egg;
 		this.maze = maze;
 	}
 
+	@Override
+	public void makeBlocks() {
+	maze3dMapper = new Egg3dMapper(egg, (EggMaze) maze);
+	prepareShapes(maze);
+	blocks = new ArrayList<Block>();
+		printFloors();
+		printWalls(realization);
+		
+	}
+	
 	protected void prepareShapes(final IPrintableMaze maze) {
 		walls = new ArrayList<WallShape>();
 		floor = new ArrayList<FloorShape>();
@@ -46,8 +52,6 @@ public final class EggBlockMaker extends BlockMakerBase implements IBlockMaker
 		}
 	}
 	
-	
-	
 	private void printFloors()  {
 		for (FloorShape hs: floor) {
 				LOGGER.log(Level.INFO, hs.toString());
@@ -59,30 +63,20 @@ public final class EggBlockMaker extends BlockMakerBase implements IBlockMaker
 		}
 	}
 
-	private void printWalls(final MazeRealization realization)  {
-		
-		final double wt = sizes.getInnerWallToCellRatio() / 2;
-		
+	private void printWalls(final MazeRealization realization)  {		
+		final double wt = sizes.getInnerWallToCellRatio() / 2;		
 		for (WallShape wall: walls) {
 			if (!wall.isOpen(realization)) {
 				LOGGER.log(Level.INFO, "wall " + wall + " is closed");
-				printWallElements(wt, wall);
-				
+				printWallElements(wt, wall);				
 			}
 		}
 	}
 	
+	private static final Logger LOGGER = Logger.getLogger("LOG");
+	private EggGeometry egg;
+	private EggMaze maze;
 	private ArrayList<WallShape> walls;
 	private ArrayList<FloorShape> floor;
-
-	@Override
-	public void makeBlocks() {
-	maze3dMapper = new Egg3dMapper(egg, (EggMaze) maze);
-	prepareShapes(maze);
-	blocks = new ArrayList<Block>();
-		printFloors();
-		printWalls(realization);
-		
-	}
 
 }
