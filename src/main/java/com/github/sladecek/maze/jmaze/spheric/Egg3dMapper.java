@@ -93,9 +93,9 @@ public final class Egg3dMapper implements IMaze3DMapper {
 		double yyy = yy + offsetH * tangent.getY() + offsetA * normal.getY();
 		
 		// (3) Rotate meridian plane by longitude angle. -------------------------------
-		double angle = 2*Math.PI*cellVertical/eqCnt;		
-		double yyyy = yyy*Math.cos(angle) - offsetV*Math.sin(angle);
-		double zzzz = -yyy*Math.sin(angle) - offsetV*Math.cos(angle);		
+		double angle = 2 * Math.PI * cellVertical / eqCnt;		
+		double yyyy = yyy * Math.cos(angle) - offsetV * Math.sin(angle);
+		double zzzz = -yyy * Math.sin(angle) - offsetV * Math.cos(angle);		
 		Point result = new Point(xxx, yyyy, zzzz);
 		
 		return result;			
