@@ -182,7 +182,7 @@ public abstract class BlockMakerBase {
 		final int dX = (ew == EastWest.east) ? 0 : 1;	
 		
 		return mapPointWithZ(y+dY, x+dX, ud, 
-				(sn == SouthNorth.south ? wt: -wt),
+				0,
 				(ew == EastWest.east ? wt: -wt));
 	
 	}
@@ -199,6 +199,7 @@ public abstract class BlockMakerBase {
 	}
 	
 	private static final Logger lOG = Logger.getLogger("LOG");
+	private static final Logger LOGGER = Logger.getLogger("LOG"); // TODO twice
 	private static final boolean debugPrintNumbers = false;
 
 	protected Maze3DSizes sizes;
@@ -215,8 +216,12 @@ public abstract class BlockMakerBase {
 	}
 
 	public final void printPolyhedron(final ArrayList<Point> polyhedron, final String comment, final Color color) {
+		LOGGER.log(Level.INFO, "printPolyhedron " + comment);
 		Block b = new Block(polyhedron, comment, color);
 		blocks.add(b);
 		
 	}
+
+
+
 }

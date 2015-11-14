@@ -57,7 +57,7 @@ public final class Egg3dMapper implements IMaze3DMapper {
 
 		// (1) Compute coordinates in meridian plane. -------------------------------------
 		double xx; // coordinate along egg main axis, from the center towards pole
-		double yy; // coordinate from the egg center towards surface 
+		double yy; // coordinate from the egg axis towards surface 
 		
 		final boolean isPolarRoom = indexH >= hem.getCircleCnt();
 		if (!isPolarRoom) { 
@@ -91,7 +91,11 @@ public final class Egg3dMapper implements IMaze3DMapper {
 		OrientationVector2D tangent = normal.getOrthogonal();
 		double xxx = xx + offsetH * tangent.getX() + offsetA * normal.getX();
 		double yyy = yy + offsetH * tangent.getY() + offsetA * normal.getY();
-		
+
+		LOGGER.log(Level.INFO, "local offsets x=" + xx + " offsetA=" + offsetA +  
+				" normal=" + normal + " tangent=" + tangent + 
+				" xxx=" + xxx + " yyy=" + yyy);
+
 		// (3) Rotate meridian plane by longitude angle. -------------------------------
 		double angle = 2 * Math.PI * cellVertical / eqCnt;		
 		double yyyy = yyy * Math.cos(angle) - offsetV * Math.sin(angle);
