@@ -51,8 +51,8 @@ public final class SvgMazePrinter implements IMazePrinter {
 
 	public void printMaze(IPrintableMaze maze, MazeRealization realization, XmlWriter x) {
 
-		final int canvasWidth = 2 * margin + maze.getPictureWidth() * cellSize;
-		final int canvasHeight = 2 * margin + maze.getPictureHeight() * cellSize;
+		canvasWidth = 2 * margin + maze.getPictureWidth() * cellSize;
+		canvasHeight = 2 * margin + maze.getPictureHeight() * cellSize;
 		
 		
 		try  {
@@ -83,6 +83,15 @@ public final class SvgMazePrinter implements IMazePrinter {
 
 	}
 
-
+	public int getCanvasWidth() {
+		return canvasWidth;
+	}
+	
+	public int getCanvasHeight() {
+		return canvasHeight;
+	}
+	
+	private int canvasWidth;
+	private int canvasHeight;
 
 }
