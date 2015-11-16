@@ -19,57 +19,57 @@ public final class Moebius3dMapper implements IMaze3DMapper {
 			throw new InvalidParameterException(
 					"GridMapper - maze width must be even");
 		}
-		innerWallThickness_mm = sizes.getCellSize_mm()	* sizes.getInnerWallToCellRatio();
-		outerWallThickness_mm = sizes.getCellSize_mm()	* sizes.getOuterWallToCellRatio();
-		height_mm = sizes.getCellSize_mm() * height + innerWallThickness_mm
-				* (height - 1) + 2 * outerWallThickness_mm;
+		innerWallThicknessInmm = sizes.getCellSizeInmm()	* sizes.getInnerWallToCellRatio();
+		outerWallThicknessInmm = sizes.getCellSizeInmm()	* sizes.getOuterWallToCellRatio();
+		heightInmm = sizes.getCellSizeInmm() * height + innerWallThicknessInmm
+				* (height - 1) + 2 * outerWallThicknessInmm;
 		
-		length_mm = sizes.getCellSize_mm() * width + innerWallThickness_mm
+		lengthInmm = sizes.getCellSizeInmm() * width + innerWallThicknessInmm
 				* width;
-		cellStep_mm = sizes.getCellSize_mm() + innerWallThickness_mm;
+		cellStepInmm = sizes.getCellSizeInmm() + innerWallThicknessInmm;
 
-		geometry = new MoebiusStripGeometry(length_mm);
+		geometry = new MoebiusStripGeometry(lengthInmm);
 
 	}
 
 	private MoebiusStripGeometry geometry;
 	private Maze3DSizes sizes;
 	private int height;
-	private double length_mm;
-	private double height_mm;
-	private double innerWallThickness_mm;
-	private double outerWallThickness_mm;
-	private double cellStep_mm;
+	private double lengthInmm;
+	private double heightInmm;
+	private double innerWallThicknessInmm;
+	private double outerWallThicknessInmm;
+	private double cellStepInmm;
 
-	public double getLength_mm() {
-		return length_mm;
+	public double getLengthInmm() {
+		return lengthInmm;
 	}
 
-	public double getHeight_mm() {
-		return height_mm;
+	public double getHeightInmm() {
+		return heightInmm;
 	}
 
 	@Override
 	public Point mapPoint(int cellY, int cellX, double offsetY, double offsetX,
 			double offsetZ) {
-		double y = (offsetY + cellY - height / 2) * cellStep_mm;
-		double x = (offsetX + cellX) * cellStep_mm;
+		double y = (offsetY + cellY - height / 2) * cellStepInmm;
+		double x = (offsetX + cellX) * cellStepInmm;
 		return geometry.transform(new Point(x, y, offsetZ));
 	}
 
 	@Override
 	public Point mapCorner(int cellX, EastWest ew, UpDown ud,
 			SouthNorth snWall, SouthNorth snEdge) {
-		double x = (((ew == EastWest.east) ? 0 : 1) + cellX) * cellStep_mm;
-		double y = height_mm / 2;
+		double x = (((ew == EastWest.east) ? 0 : 1) + cellX) * cellStepInmm;
+		double y = heightInmm / 2;
 		if (snWall == snEdge) {
-			y -= outerWallThickness_mm;
+			y -= outerWallThicknessInmm;
 		}
 		if (snWall == SouthNorth.north) {
 			y *= -1;
 		}
 
-		double z = ud == UpDown.down ? 0 : sizes.getWallHeight_mm();
+		double z = ud == UpDown.down ? 0 : sizes.getWallHeightInmm();
 
 		return geometry.transform(new Point(x, y, z));
 	}

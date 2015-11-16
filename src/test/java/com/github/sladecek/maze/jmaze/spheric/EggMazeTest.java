@@ -65,9 +65,9 @@ public class EggMazeTest {
 		EggGeometry egg = new EggGeometry(4, 3, 0.5);
 
 		EggMaze maze = new EggMaze(egg, equatorCellCnt);
-		final double baseRoomSize_mm = maze.getBaseRoomSize_mm();		
-		Vector<Double> layerXPosition = egg.divideMeridian(baseRoomSize_mm, hemisphere);
-		Vector<Integer> layerRoomCnt = maze.computeRoomCounts(layerXPosition, equatorCellCnt, baseRoomSize_mm);
+		final double baseRoomSizeInmm = maze.getBaseRoomSizeInmm();		
+		Vector<Double> layerXPosition = egg.divideMeridian(baseRoomSizeInmm, hemisphere);
+		Vector<Integer> layerRoomCnt = maze.computeRoomCounts(layerXPosition, equatorCellCnt, baseRoomSizeInmm);
 		return layerRoomCnt;
 	}
 	
@@ -115,11 +115,11 @@ public class EggMazeTest {
 	public void testMazeConstruction()
 	{
 		final int equator_cells = 32; // must be power of 2
-		final double ellipseMajor_mm = 30;
-		final double ellipseMinor_mm = 20;
+		final double ellipseMajorInmm = 30;
+		final double ellipseMinorInmm = 20;
 		final double eggCoef = 0.2;
 		
-		EggGeometry egg = new EggGeometry(ellipseMajor_mm, ellipseMinor_mm, eggCoef);
+		EggGeometry egg = new EggGeometry(ellipseMajorInmm, ellipseMinorInmm, eggCoef);
 		EggMaze maze = new EggMaze(egg, equator_cells);
 		
 

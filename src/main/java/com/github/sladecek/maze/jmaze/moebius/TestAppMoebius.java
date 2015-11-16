@@ -28,12 +28,12 @@ public final class TestAppMoebius {
     	smp.printMaze(maze, r,  "maze.svg");
     	
     	Maze3DSizes sizes = new Maze3DSizes();
-    	sizes.setCellSize_mm(2);
+    	sizes.setCellSizeInmm(2);
     	
     	MazeColors colors = new WinterColors();
     	
-    	double approxRoomSize_mm = 3;
-    	MoebiusBlockMaker maker = new MoebiusBlockMaker(maze, r, sizes, colors, approxRoomSize_mm);
+    	double approxRoomSizeInmm = 3;
+    	MoebiusBlockMaker maker = new MoebiusBlockMaker(maze, r, sizes, colors, approxRoomSizeInmm);
 
     	
     	final String fileName = "maze-moebius";

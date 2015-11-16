@@ -4,15 +4,17 @@ package com.github.sladecek.maze.jmaze.generator;
 /***
  * Interface for spaces (2D, 3D, rectangular, circular ...) that can be filled with maze.
  *
- * The space consists of rooms and walls between rooms. The maze generator obtains the list
+ * The space consists of rooms and walls between rooms. Maze generator obtains list
  * or rooms and  walls in each room and closes some of the walls to create maze.
  * 
- * Wall as well as rooms are identified by integer numbers. The room number start at 0 and
+ * Walls as well as rooms are identified by integer numbers. The room number start at 0 and
  * are continuous up to GetRoomCount(). Walls can be numbered arbitrarily.
  */
 public interface IMazeSpace {
 	
 	int getRoomCount();
+	
+	int getWallCount();
 	
 	Iterable<Integer> getWalls(int room);
 	
@@ -20,13 +22,10 @@ public interface IMazeSpace {
 	
 	int getTargetRoom();
 	
+	int getRoomBehindWall(int room, int wall);
+		
 	double getRoomDistance(int r1, int r2);
 
-	int getOtherRoom(int room, int wall);
-		
 	int getWallProbabilityWeight(int wall);
-
-	int getWallCnt();
-	
 
 }

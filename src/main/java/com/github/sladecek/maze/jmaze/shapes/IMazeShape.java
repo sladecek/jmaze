@@ -9,7 +9,7 @@ import com.github.sladecek.maze.jmaze.print.SvgMazePrinter;
  * Shapes for maze drawing.
  */
 public interface IMazeShape {
-	public enum ShapeType { innerWall, outerWall, hole, nonHole, solution, auxiliaryWall, startRoom, targetRoom };
+	enum ShapeType { innerWall, outerWall, hole, nonHole, solution, auxiliaryWall, startRoom, targetRoom };
 	
 	ShapeType getShapeType();
 	

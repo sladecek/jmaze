@@ -12,15 +12,13 @@ import com.github.sladecek.maze.jmaze.shapes.WallShape;
  * 2D rectangular maze. Both rooms and walls are numbered first by rows, then by columns. East/west walls are numbered 
  * before south/north ones.
  */
-public class Rectangular2DMaze extends RectangularMazeBase implements IMazeSpace, IPrintableMaze {
-	private int eastWestWallCount;
-	private int southNorthWallCount;
-	
+public final class Rectangular2DMaze  implements IMazeSpace, IPrintableMaze {
 	public Rectangular2DMaze(int height, int width) {	
-		super(height, width);
+		this.width = width;
+		this.height = height;
+
 		eastWestWallCount = (width - 1) * height;
-		southNorthWallCount = width * (height-1);
-	
+		southNorthWallCount = width * (height - 1);	
 	}
 
 	public double getRoomDistance(int r1, int r2) {
@@ -48,13 +46,11 @@ public class Rectangular2DMaze extends RectangularMazeBase implements IMazeSpace
 		final IMazeShape.ShapeType iw = IMazeShape.ShapeType.innerWall;
 
 		// inner walls - east/west
-		for (int y = 0; y < height; y++)
-		{
-			for (int x = 0; x < width-1; x++)
-			{
-				int wallId = x + y * (width-1);
+		for (int y = 0; y < height; y++) {
+			for (int x = 0; x < width - 1; x++) {
+				int wallId = x + y * (width - 1);
 			
-				WallShape w = new WallShape(iw, y, x+1, y+1,  x+1);
+				WallShape w = new WallShape(iw, y, x + 1, y + 1, x + 1);
 				w.setWallId(wallId);
 				result.add(w);
 			
@@ -62,12 +58,10 @@ public class Rectangular2DMaze extends RectangularMazeBase implements IMazeSpace
 		}
 		
 		// inner walls - south/north
-		for (int y = 0; y < height-1; y++)
-		{
-			for (int x = 0; x < width; x++)
-			{
+		for (int y = 0; y < height - 1; y++) {
+			for (int x = 0; x < width; x++) {
 				int wallId = x + y * width + eastWestWallCount;
-				WallShape w = new WallShape(iw, y+1, x, y+1,  x+1);
+				WallShape w = new WallShape(iw, y + 1, x, y + 1, x + 1);
 				w.setWallId(wallId);
 				result.add(w);
 			}
@@ -102,28 +96,28 @@ public class Rectangular2DMaze extends RectangularMazeBase implements IMazeSpace
 		}
 		// west
 		if (x > 0) {
-			result.add(y * (width - 1) + x-1);
+			result.add(y * (width - 1) + x - 1);
 		}
 
 		// south
 		if (y < height - 1) {
-			result.add(eastWestWallCount+y*width+x);
+			result.add(eastWestWallCount + y * width + x);
 		}
 		// north
 		if (y > 0) {
-			result.add(eastWestWallCount+(y-1)*width+x);
+			result.add(eastWestWallCount + (y - 1) * width + x);
 		}
 		return result;
 	}
 
 	@Override
-	public int getOtherRoom(int room, int wall) {
+	public int getRoomBehindWall(int room, int wall) {
 		if (wall < eastWestWallCount)
 		{
-			final int y = wall / (width-1);
-			final int x = wall % (width-1);
-			final int westRoom = y*width+x;
-			final int eastRoom = westRoom+1;
+			final int y = wall / (width - 1);
+			final int x = wall % (width - 1);
+			final int westRoom = y * width + x;
+			final int eastRoom = westRoom + 1;
 			if (!(room == westRoom || room == eastRoom))
 			{
 				throw new InvalidParameterException("Wall is not adjacent to room");
@@ -132,12 +126,11 @@ public class Rectangular2DMaze extends RectangularMazeBase implements IMazeSpace
 		}
 		else
 		{
-			final int y = (wall-eastWestWallCount) / width;
-			final int x = (wall-eastWestWallCount) % width;
-			final int northRoom = y*width+x;
-			final int southRoom = northRoom+width;
-			if (!(room == northRoom || room == southRoom))
-			{
+			final int y = (wall - eastWestWallCount) / width;
+			final int x = (wall - eastWestWallCount) % width;
+			final int northRoom = y * width + x;
+			final int southRoom = northRoom + width;
+			if (!(room == northRoom || room == southRoom)) {
 				throw new InvalidParameterException("Wall is not adjacent to room");
 			}
 			return room == northRoom ? southRoom : northRoom;
@@ -151,9 +144,35 @@ public class Rectangular2DMaze extends RectangularMazeBase implements IMazeSpace
 	}
 
 	@Override
-	public int getWallCnt() {
+	public int getWallCount() {
 		return eastWestWallCount + southNorthWallCount;
 		
 	}
+
+	public int getRoomCount() {
+		return width * height;
+	}
+
+	public int getStartRoom() {
+		return 0;
+	}
+
+	public int getTargetRoom() {
+		return getRoomCount() - 1;
+	}
+
+	public int getPictureHeight() {
+		return height;
+	}
+
+	public int getPictureWidth() {
+		return width;
+	}
+
+	private int height;
+	private int width;
+
+	private int eastWestWallCount;
+	private int southNorthWallCount;
 
 }

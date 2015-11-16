@@ -11,9 +11,9 @@ public class ThreeJsBlockPrinter {
 	public final String printMazeToString() {
 		blockMaker.makeBlocks();
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
-		ThreeJsWriter tjs;
+		ThreeJsComposer tjs;
 		try {
-			tjs = new ThreeJsWriter(os);
+			tjs = new ThreeJsComposer(os);
 			printBlocks(tjs);	
 			tjs.close();
 		} catch (IOException e) {
@@ -26,7 +26,7 @@ public class ThreeJsBlockPrinter {
 	
 	public final void printMaze(final String fileName) {		
 		blockMaker.makeBlocks();
-		try (ThreeJsWriter tjs = new ThreeJsWriter(fileName)) {
+		try (ThreeJsComposer tjs = new ThreeJsComposer(fileName)) {
 			
 			printBlocks(tjs);
 			
@@ -36,7 +36,7 @@ public class ThreeJsBlockPrinter {
 		}
 	}
 
-	private void printBlocks(ThreeJsWriter tjs) throws IOException {
+	private void printBlocks(ThreeJsComposer tjs) throws IOException {
 		for (Block b: blockMaker.getBlocks()) {
 			tjs.printPolyhedron(b.getPolyhedron(), b.getComment(), b.getColor());
 		}

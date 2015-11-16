@@ -15,13 +15,13 @@ import com.github.sladecek.maze.jmaze.geometry.Point;
  * @author sladecek
  *
  */
-public final class ThreeJsWriter implements java.lang.AutoCloseable {
+public final class ThreeJsComposer implements java.lang.AutoCloseable {
 	
 	private OutputStream stream;
 	private OutputStreamWriter out;
 	private boolean needComma = false;
 	
-	public ThreeJsWriter(final OutputStream stream) throws IOException {
+	public ThreeJsComposer(final OutputStream stream) throws IOException {
 		this.stream = stream;
 		out = new OutputStreamWriter(stream, "UTF8");
 		out.write("[\n");
@@ -34,7 +34,7 @@ public final class ThreeJsWriter implements java.lang.AutoCloseable {
 		stream.close();
 	}
 
-	public ThreeJsWriter(final String fileName) throws IOException {
+	public ThreeJsComposer(final String fileName) throws IOException {
 		stream = new FileOutputStream(fileName);
 		out = new OutputStreamWriter(stream, "UTF8");
 	}

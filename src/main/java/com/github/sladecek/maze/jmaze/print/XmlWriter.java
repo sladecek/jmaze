@@ -6,17 +6,7 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.Stack;
 
-public class XmlWriter implements java.lang.AutoCloseable {
-
-	private static final String indentString = "  ";
-
-	private boolean isStartElementFinished = true;
-
-	private Stack<String> nestedElements = new Stack<String>();
-
-	private Writer out;
-
-	private FileOutputStream stream;
+public final class XmlWriter implements java.lang.AutoCloseable {
 
 	public XmlWriter(String fileName) throws IOException {
 		stream = new FileOutputStream(fileName);
@@ -55,7 +45,7 @@ public class XmlWriter implements java.lang.AutoCloseable {
 	private void printIndentation() throws IOException {
 		int indent = nestedElements.size();
 		for (int i = 0; i < indent; i++) {
-			out.write(indentString);
+			out.write(INDENT_STEP);
 		}
 	}
 
@@ -70,4 +60,15 @@ public class XmlWriter implements java.lang.AutoCloseable {
 		isStartElementFinished = false;
 		nestedElements.push(name);
 	}
+
+	private static final String INDENT_STEP = "  ";
+
+	private boolean isStartElementFinished = true;
+
+	private Stack<String> nestedElements = new Stack<String>();
+
+	private Writer out;
+
+	private FileOutputStream stream;
+
 }

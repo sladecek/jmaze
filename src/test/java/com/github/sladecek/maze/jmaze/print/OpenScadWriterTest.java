@@ -9,7 +9,7 @@ public class OpenScadWriterTest {
 	@Test
 	public void testColorIsWrittenInProperFormat() {
 		Color c = new Color(0, 255, 128, 0);
-		assertEquals("[0.00, 1.00, 0.50]", OpenScadWriter.formatColor(c));
+		assertEquals("[0.00, 1.00, 0.50]", OpenScadComposer.formatColor(c));
 	}
 
 }

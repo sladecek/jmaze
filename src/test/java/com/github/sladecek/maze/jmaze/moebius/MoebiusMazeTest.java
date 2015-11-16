@@ -98,55 +98,55 @@ public class MoebiusMazeTest {
 
 	@Test(expected=InvalidParameterException.class)
 	public final void testGetOtherRoom_invalid() {
-		assertEquals(1, maze.getOtherRoom(0, 2));
+		assertEquals(1, maze.getRoomBehindWall(0, 2));
 	}
 
 	@Test
 	public final void testGetOtherRoom_0() {
-		assertEquals(1, maze.getOtherRoom(0, 0));
-		assertEquals(0, maze.getOtherRoom(1, 0));
+		assertEquals(1, maze.getRoomBehindWall(0, 0));
+		assertEquals(0, maze.getRoomBehindWall(1, 0));
 	}
 
 	@Test
 	public final void testGetOtherRoom_5() {
-		assertEquals(5, maze.getOtherRoom(0, 5));
-		assertEquals(0, maze.getOtherRoom(5, 5));
+		assertEquals(5, maze.getRoomBehindWall(0, 5));
+		assertEquals(0, maze.getRoomBehindWall(5, 5));
 	}
 
 	@Test
 	public final void testGetOtherRoom_24() {
-		assertEquals(6, maze.getOtherRoom(0, 24));
-		assertEquals(0, maze.getOtherRoom(6, 24));
+		assertEquals(6, maze.getRoomBehindWall(0, 24));
+		assertEquals(0, maze.getRoomBehindWall(6, 24));
 	}
 
 	@Test
 	public void testGetOtherRoom_22() {
-		assertEquals(23, maze.getOtherRoom(22, 22));
-		assertEquals(22, maze.getOtherRoom(23, 22));
+		assertEquals(23, maze.getRoomBehindWall(22, 22));
+		assertEquals(22, maze.getRoomBehindWall(23, 22));
 	}
 
 	@Test
 	public final void testGetOtherRoom_23() {
-		assertEquals(23, maze.getOtherRoom(18, 23));
-		assertEquals(18, maze.getOtherRoom(23, 23));
+		assertEquals(23, maze.getRoomBehindWall(18, 23));
+		assertEquals(18, maze.getRoomBehindWall(23, 23));
 	}
 	
 	@Test
 	public final void testGetOtherRoom_41() {
-		assertEquals(17, maze.getOtherRoom(23, 41));
-		assertEquals(23, maze.getOtherRoom(17, 41));
+		assertEquals(17, maze.getRoomBehindWall(23, 41));
+		assertEquals(23, maze.getRoomBehindWall(17, 41));
 	}
 
 	@Test
 	public final void testGetOtherRoom_42() {
-		assertEquals(21, maze.getOtherRoom(0, 42));
-		assertEquals(0, maze.getOtherRoom(21, 42));
+		assertEquals(21, maze.getRoomBehindWall(0, 42));
+		assertEquals(0, maze.getRoomBehindWall(21, 42));
 	}
 
 	@Test
 	public final void testGetOtherRoom_51() {
-		assertEquals(12, maze.getOtherRoom(9, 51));
-		assertEquals(9, maze.getOtherRoom(12, 51));
+		assertEquals(12, maze.getRoomBehindWall(9, 51));
+		assertEquals(9, maze.getRoomBehindWall(12, 51));
 	}
 	
 	

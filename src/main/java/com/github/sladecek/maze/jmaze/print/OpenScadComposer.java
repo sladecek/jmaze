@@ -11,18 +11,17 @@ import java.util.Locale;
 
 import com.github.sladecek.maze.jmaze.geometry.Point;
 
-public final class OpenScadWriter implements java.lang.AutoCloseable {
+/*
+ * Compose content of Open Scad file.
+ */
+public final class OpenScadComposer implements java.lang.AutoCloseable {
 
-	private Writer out;
-
-	private OutputStream stream;
-
-	public OpenScadWriter(final String fileName) throws IOException {
+	public OpenScadComposer(final String fileName) throws IOException {
 		stream = new FileOutputStream(fileName);
 		out = new OutputStreamWriter(stream, "UTF8");
 	}
 	
-	public OpenScadWriter(final OutputStream stream) throws IOException {
+	public OpenScadComposer(final OutputStream stream) throws IOException {
 		this.stream = stream;
 		out = new OutputStreamWriter(stream, "UTF8");
 	}
@@ -98,5 +97,11 @@ public final class OpenScadWriter implements java.lang.AutoCloseable {
 		final double r = 255.0;
 		return String.format(Locale.US, "[%.2f, %.2f, %.2f]", color.getR()/r, color.getG()/r, color.getB()/r);		
 	}
+
+	private Writer out;
+
+	private OutputStream stream;
+
+
 	
 }

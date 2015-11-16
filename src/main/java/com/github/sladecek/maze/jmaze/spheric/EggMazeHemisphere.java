@@ -2,95 +2,82 @@ package com.github.sladecek.maze.jmaze.spheric;
 
 import java.util.Vector;
 
-/*
- * 
+/* 
  * One half of egg maze. An egg consist of two halfeggs - north and south.
- *
  */
 class EggMazeHemisphere {
-	
+
 	/**
 	 * 
 	 * @return Number of circles parallel to the equator.
 	 */
 	public int getCircleCnt() {
-		return  layerRoomCnt.size();
+		return layerRoomCnt.size();
 	}
 
-
-/**
- * 
- * @param circle Ordinal number of the circle starting from equator.
- * @return Number of rooms in the layer that follows i-th circle. The last circle (polar)
-	 * circle may contain several walls but is followed by only one polar room. 
- */
+	/**
+	 * 
+	 * @param circle
+	 *            Ordinal number of the circle starting from equator.
+	 * @return Number of rooms in the layer that follows i-th circle. The last
+	 *         circle (polar) circle may contain several walls but is followed
+	 *         by only one polar room.
+	 */
 	public int getRoomCntAfterCircle(int circle) {
 		// polar room has only one room
-		if (circle >= getCircleCnt()-1) {
-						return 1;
-					} else {
-						return layerRoomCnt.get(circle+1);
-					}
-	}
-	
-
-
-		/**
-	 * 
-	 * @param circle Ordinal number of the circle starting from equator.
-	 * @return Number of rooms in the layer that precedes i-th circle. 
-	 */
-		public int getRoomCntBeforeCircle(int circle) {
-			return getRoomCntAfterCircle(circle-1);
-		}
-		
-	/*
-	
-	public int getLogicalRoomCntInLayer(int layer) {
-		// polar room has only one room
-		if (isPolarLayer(layer)) {
+		if (circle >= getCircleCnt() - 1) {
 			return 1;
 		} else {
-			return getGeometricalRoomCntInLayer(layer);
+			return layerRoomCnt.get(circle + 1);
 		}
 	}
-	
-	public int getGeometricalRoomCntInNextLayer(int layer) {
-		if (isPolarLayer(layer)) {
-			return getGeometricalRoomCntInLayer(layer);
-		} else {
-			return getGeometricalRoomCntInLayer(layer+1);
-		}
+
+	/**
+	 * 
+	 * @param circle
+	 *            Ordinal number of the circle starting from equator.
+	 * @return Number of rooms in the layer that precedes i-th circle.
+	 */
+	public int getRoomCntBeforeCircle(int circle) {
+		return getRoomCntAfterCircle(circle - 1);
 	}
-	
-*/
-	
+
+	/*
+	 * 
+	 * public int getLogicalRoomCntInLayer(int layer) { // polar room has only
+	 * one room if (isPolarLayer(layer)) { return 1; } else { return
+	 * getGeometricalRoomCntInLayer(layer); } }
+	 * 
+	 * public int getGeometricalRoomCntInNextLayer(int layer) { if
+	 * (isPolarLayer(layer)) { return getGeometricalRoomCntInLayer(layer); }
+	 * else { return getGeometricalRoomCntInLayer(layer+1); } }
+	 */
+
 	public boolean isPolarLayer(int layer) {
-		return layer == getCircleCnt()-1;
+		return layer == getCircleCnt() - 1;
 	}
 
 	/***
-	 * Number of rooms in egg layer. Zero index contains number of rooms on the equator.
+	 * Number of rooms in egg layer. Zero index contains number of rooms on the
+	 * equator.
 	 */
 	private Vector<Integer> layerRoomCnt = new Vector<Integer>();
-	
+
 	/***
 	 * Id of the first room (Greenwich room) in the layer.
 	 */
 	private Vector<Integer> greenwichRoom = new Vector<Integer>();
 
-	
 	/*
-	 * Axial (x) coordinate of egg layer. Zero index contains zero value - the equator.
+	 * Axial (x) coordinate of egg layer. Zero index contains zero value - the
+	 * equator.
 	 */
 	private Vector<Double> layerXPosition = new Vector<Double>();
-
 
 	public EggMazeHemisphere(double poleXPosition) {
 		super();
 		this.poleXPosition = poleXPosition;
 	}
-
 
 	public int getGreenwichRoom(int layer) {
 		return greenwichRoom.get(layer);
@@ -113,10 +100,9 @@ class EggMazeHemisphere {
 	}
 
 	public double getLastLayerXPosition() {
-		return getLayerXPosition(getCircleCnt()-1);
-		
-	}
+		return getLayerXPosition(getCircleCnt() - 1);
 
+	}
 
 	/**
 	 * 
@@ -130,14 +116,10 @@ class EggMazeHemisphere {
 		return layerRoomCnt.get(circle);
 	}
 
-
 	public double getPoleXPosition() {
 		return poleXPosition;
 	}
-	
-	protected double poleXPosition;
-	
-	
 
+	private double poleXPosition;
 
 }

@@ -10,6 +10,9 @@ import com.github.sladecek.maze.jmaze.geometry.SouthNorth;
 import com.github.sladecek.maze.jmaze.geometry.UpDown;
 import com.github.sladecek.maze.jmaze.print.IMaze3DMapper;
 
+/*
+ * Map integer room cordinates do 3D coordinates in the egg.
+ */
 public final class Egg3dMapper implements IMaze3DMapper {
 	private static final double SMALL_Y_MM = 0.001;
 	
@@ -38,7 +41,7 @@ public final class Egg3dMapper implements IMaze3DMapper {
 	public Point mapPoint(int cellVertical, int cellHorizontal, double offsetV,
 			double offsetH, double offsetA) {
 		
-		LOGGER.log(Level.INFO, "mapPoint v=" + cellVertical + " h=" + cellHorizontal 
+		LOG.log(Level.INFO, "mapPoint v=" + cellVertical + " h=" + cellHorizontal 
 				+ " ov=" + offsetV + " oh=" + offsetH);
 		final int eqCnt = maze.getEquatorCellCnt();
 		
@@ -92,7 +95,7 @@ public final class Egg3dMapper implements IMaze3DMapper {
 		double xxx = xx + offsetH * tangent.getX() + offsetA * normal.getX();
 		double yyy = yy + offsetH * tangent.getY() + offsetA * normal.getY();
 
-		LOGGER.log(Level.INFO, "local offsets x=" + xx + " offsetA=" + offsetA +  
+		LOG.log(Level.INFO, "local offsets x=" + xx + " offsetA=" + offsetA +  
 				" normal=" + normal + " tangent=" + tangent + 
 				" xxx=" + xxx + " yyy=" + yyy);
 
@@ -135,12 +138,16 @@ public final class Egg3dMapper implements IMaze3DMapper {
 			return 1;
 		} else {
 			// polar circle uses room count from last normal layer to form polar cups			
-			int roomCntThis = hem.getWallCntOnCircle(isPolarCircle ? indexH-1 : indexH);
+			int where = indexH;
+			if (isPolarCircle) {
+				where = indexH - 1;
+			}
+			int roomCntThis = hem.getWallCntOnCircle(where);
 			return eqCnt / roomCntThis;
 		}
 	}
 	
-	private static final Logger LOGGER = Logger.getLogger("LOG");
+	private static final Logger LOG = Logger.getLogger("LOG");
 	private EggGeometry egg;
 	private EggMaze maze;
 

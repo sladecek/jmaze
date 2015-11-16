@@ -11,26 +11,16 @@ import java.util.logging.Logger;
  */
 public class GenericMazeSpace  implements IMazeSpace {
 	
-	private static final Logger lOGGER = Logger.getLogger("LOG");
-
-	private int startRoom;
-	private int targetRoom;
-	
-	private Vector<Vector<Integer>> rooms = new Vector<Vector<Integer>>();
-	private Vector<Integer> wallRoom1  = new Vector<Integer>();
-	private Vector<Integer> wallRoom2  = new Vector<Integer>();
-	
 	public final int addRoom() {
 		int id = rooms.size();
 		rooms.add(new Vector<Integer>());
-		lOGGER.log(Level.INFO, "add room id=" + id);
-		return id;
-		
+		LOGGER.log(Level.INFO, "add room id=" + id);
+		return id;		
 	}
 	
 	public final int addWall(final int room1, final int room2) {
 		if (rooms.size() <= room1 || rooms.size() <= room2) {
-			lOGGER.log(Level.SEVERE, "cannot add wall room1=" + room1 + " room2=" + room2);
+			LOGGER.log(Level.SEVERE, "cannot add wall room1=" + room1 + " room2=" + room2);
 			return 0; 
 		}
 		int id = wallRoom1.size();	
@@ -38,61 +28,71 @@ public class GenericMazeSpace  implements IMazeSpace {
 		rooms.elementAt(room1).add(id);
 		wallRoom2.add(room2);		
 		rooms.elementAt(room2).add(id);
-		lOGGER.log(Level.INFO, "add wall id=" + id + " room1=" + room1 + " room2=" + room2);
+		LOGGER.log(Level.INFO, "add wall id=" + id + " room1=" + room1 + " room2=" + room2);
 		return id;
 	}
 
 	@Override
-	public int getRoomCount() {
+	public final int getRoomCount() {
 		return rooms.size();
 	}
 
 	@Override
-	public Iterable<Integer> getWalls(final int room) {
+	public final int getWallCount() {
+		return wallRoom1.size();
+	}
+		
+	@Override
+	public final Iterable<Integer> getWalls(final int room) {
 		return rooms.elementAt(room);
 	}
 
 	@Override
-	public int getStartRoom() {
+	public final int getStartRoom() {
 		return startRoom;
 	}
 
 	@Override  
-	public int getTargetRoom() {		
+	public final int getTargetRoom() {		
 		return targetRoom;
 	}
 
-	public void setStartRoom(final int startRoom) {
+	public final void setStartRoom(final int startRoom) {
 		this.startRoom = startRoom;
 	}
 
-	public void setTargetRoom(final int targetRoom) {
+	public final void setTargetRoom(final int targetRoom) {
 		this.targetRoom = targetRoom;
 	}
 
-
 	@Override
-	public double getRoomDistance(final int r1, final int r2) {
+	public final double getRoomDistance(final int r1, final int r2) {
 		return 0;
 	}
 
 	@Override
-	public int getOtherRoom(final int room, final int wall) {
+	public final int getRoomBehindWall(final int room, final int wall) {
 		int r1 = wallRoom1.elementAt(wall);
 		int r2 = wallRoom2.elementAt(wall);
-		return r1 == room ? r2 : r1;
+		if (r1 == room) {
+			return r2;
+		} else {
+			return r1;
+		}
 	}
 
-
 	@Override
-	public int getWallProbabilityWeight(int wall) {
+	public final int getWallProbabilityWeight(int wall) {
 		return 1;
 	}
 
-	@Override
-	public int getWallCnt() {
-		return wallRoom1.size();
-	}
+	private static final Logger LOGGER = Logger.getLogger("LOG");
 
+	private int startRoom;
+	private int targetRoom;
+	
+	private Vector<Vector<Integer>> rooms = new Vector<Vector<Integer>>();
+	private Vector<Integer> wallRoom1  = new Vector<Integer>();
+	private Vector<Integer> wallRoom2  = new Vector<Integer>();
 	
 }

@@ -16,7 +16,6 @@ public class Block {
 		this.comment = comment;
 		this.color = color;
 	}
-
 	
 	public final ArrayList<Point> getPolyhedron() {
 		return polyhedron;

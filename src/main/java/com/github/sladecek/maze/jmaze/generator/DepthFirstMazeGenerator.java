@@ -15,8 +15,7 @@ public final class DepthFirstMazeGenerator implements IMazeGenerator {
 	
 	@Override
 	public MazeRealization generateMaze(final IMazeSpace maze) {
-		MazeRealization result = new MazeRealization();
-		result.allocateWalls(maze.getWallCnt());
+		MazeRealization result = new MazeRealization(maze.getWallCount());
 		Vector<Integer> solution = null;
 		visitedRooms = new BitSet(maze.getRoomCount());
 		stack = new Stack<Integer>();
@@ -55,7 +54,7 @@ public final class DepthFirstMazeGenerator implements IMazeGenerator {
 			int wall = candidates.elementAt(choice);
 			LOGGER.log(Level.INFO, " opening wall " + wall);
 			result.setWallClosed(wall, false);
-			int otherRoom = maze.getOtherRoom(room, wall);
+			int otherRoom = maze.getRoomBehindWall(room, wall);
 			visitRoom(otherRoom);			
 		}
 		return result;		
@@ -66,7 +65,7 @@ public final class DepthFirstMazeGenerator implements IMazeGenerator {
 		Vector<Integer> candidates = new Vector<Integer>();
 		for (int wall: maze.getWalls(room)) {
 			if (real.isWallClosed(wall)) {
-				int otherRoom = maze.getOtherRoom(room, wall);
+				int otherRoom = maze.getRoomBehindWall(room, wall);
 				if (!visitedRooms.get(otherRoom)) {
 					candidates.add(wall);
 				}						

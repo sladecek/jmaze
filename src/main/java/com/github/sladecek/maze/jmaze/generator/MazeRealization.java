@@ -1,8 +1,9 @@
 package com.github.sladecek.maze.jmaze.generator;
 
+import java.util.BitSet;
 import java.util.Vector;
 
-import com.github.sladecek.maze.jmaze.util.BitSetWithPrint;
+import com.github.sladecek.maze.jmaze.util.BitSetIntervalPrinter;
 
 /**
  * 
@@ -10,17 +11,12 @@ import com.github.sladecek.maze.jmaze.util.BitSetWithPrint;
  * on the maze. Also contains solution.
  *
  */
-public class MazeRealization {
+public final class MazeRealization {
 	
-	protected BitSetWithPrint isWallClosed;
-	protected Vector<Integer> solution = new Vector<Integer>();
-
 	
-	protected void allocateWalls(int wallCount) {
-		isWallClosed = new BitSetWithPrint(wallCount);
-		isWallClosed.set(0, isWallClosed.size(), true);
+	public MazeRealization(int wallCount) {
+		allocateWalls(wallCount);
 	}
-
 
 	public boolean isWallClosed(int wall) {
 		return isWallClosed.get(wall);
@@ -30,15 +26,25 @@ public class MazeRealization {
 		isWallClosed.set(wall, value);
 	}
 
+	public Vector<Integer> getSolution() {
+		return solution;
+	}
+
 	public void setSolution(Vector<Integer> solution) {
 		this.solution = solution;
-
 	}
 
-	public String printClosedWalls()
-	{
-		return isWallClosed.printAsIntervals();
+	public String printClosedWalls() {
+		return new BitSetIntervalPrinter(isWallClosed).printAsIntervals();
+	}	
+
+	private void allocateWalls(int wallCount) {
+		isWallClosed = new BitSet(wallCount);
+		isWallClosed.set(0, isWallClosed.size(), true);
 	}
 	
-	
+	private BitSet isWallClosed;
+
+	private Vector<Integer> solution = new Vector<Integer>();
+
 }

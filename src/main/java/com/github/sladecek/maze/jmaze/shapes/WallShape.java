@@ -7,11 +7,7 @@ import java.util.logging.Logger;
 import com.github.sladecek.maze.jmaze.generator.MazeRealization;
 import com.github.sladecek.maze.jmaze.print.SvgMazePrinter;
 
-public class WallShape implements IMazeShape {
-	
-	private ShapeType shapeType;
-
-	private final static Logger log = Logger.getLogger("LOG");
+public final class WallShape implements IMazeShape {
 	
 	public WallShape(ShapeType type, int y1, int x1, int y2, int x2) {
 		this.shapeType = type;
@@ -28,7 +24,7 @@ public class WallShape implements IMazeShape {
 
 	public void setWallId(int value) {
 		this.wallId = value;
-		log.log(Level.INFO, "WallShape id="+wallId+" x1="+x1+" y1="+y1+" x2="+x2+" y2="+y2);
+		LOG.log(Level.INFO, "WallShape id=" + wallId + " x1=" + x1 + " y1=" + y1 + " x2=" + x2 + " y2=" + y2);
 	}
 
 	public ShapeType getShapeType() {
@@ -38,8 +34,7 @@ public class WallShape implements IMazeShape {
 	public void printToSvg(SvgMazePrinter svg) throws IOException  {		
 		String style = "";
 		boolean center = false;
-		switch (shapeType)
-		{
+		switch (shapeType) {		
 		case outerWall:
 			style = "stroke:rgb(0,0,0);stroke-width:2";
 			break;
@@ -53,17 +48,14 @@ public class WallShape implements IMazeShape {
 		case auxiliaryWall:
 			style = "stroke:rgb(240,240,240);stroke-width:1";
 			break;
+		default:
+			break;
 			
 		}
 		svg.printLine(y1, x1, y2, x2, style, center);		
 	}
 
-	private int x1;
-	private int x2;
-	private int y1;
-	private int y2;
-	private int wallId;
-
+	
 	public int getX1() {
 		return x1;
 	}
@@ -80,16 +72,10 @@ public class WallShape implements IMazeShape {
 		return y2;
 	}
 
-	@Override
-	public String toString() {
-		return "WallShape [id="+wallId+" shapeType=" + shapeType + ", x1=" + x1 + ", x2="
-				+ x2 + ", y1=" + y1 + ", y2=" + y2 + "]";
-	}
 
 	@Override
 	public boolean isOpen(MazeRealization real) {
-		if (shapeType != ShapeType.innerWall)
-		{
+		if (shapeType != ShapeType.innerWall) {		
 			return false;
 		}
 		if (this.wallId < 0) {
@@ -100,7 +86,24 @@ public class WallShape implements IMazeShape {
 	
 	@Override
 	public String getId() {
-		return "w"+Integer.toString(wallId);
+		return "w" + Integer.toString(wallId);
 	}
 
+	@Override
+	public String toString() {
+		return "WallShape [id=" + wallId + " shapeType=" + shapeType + ", x1=" + x1 + ", x2="
+				+ x2 + ", y1=" + y1 + ", y2=" + y2 + "]";
+	}
+
+	private static final Logger LOG = Logger.getLogger("LOG");
+	private int x1;
+	private int x2;
+	private int y1;
+	private int y2;
+
+	private ShapeType shapeType;
+
+	private int wallId;
+	
+	
 }

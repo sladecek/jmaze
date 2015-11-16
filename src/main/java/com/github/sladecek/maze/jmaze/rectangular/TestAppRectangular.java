@@ -1,6 +1,5 @@
 package com.github.sladecek.maze.jmaze.rectangular;
 
-
 import java.io.IOException;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
@@ -13,31 +12,34 @@ import com.github.sladecek.maze.jmaze.generator.IMazeGenerator;
 import com.github.sladecek.maze.jmaze.generator.MazeRealization;
 import com.github.sladecek.maze.jmaze.print.SvgMazePrinter;
 
+public final class TestAppRectangular {
 
-public class App 
-{
-	private final static Logger log = Logger.getLogger("LOG");
+	private TestAppRectangular() {
+	}
 	
-	public static void main(String[] args)
-    {   	
+	public static void main(String[] args) {
+   	
 		LogManager.getLogManager().reset();
-		log.setLevel(Level.INFO);
+		LOG.setLevel(Level.INFO);
 		try {
 			FileHandler fh = new FileHandler("maze.log");
-			log.addHandler(fh);
+			LOG.addHandler(fh);
 			fh.setFormatter(new SimpleFormatter());
 		
-
-			Rectangular2DMaze maze = new Rectangular2DMaze(27, 27);
+			final int defaultSize = 27;
+			Rectangular2DMaze maze = new Rectangular2DMaze(defaultSize, defaultSize);
 	    	IMazeGenerator g = new DepthFirstMazeGenerator();
 	    	MazeRealization real = g.generateMaze(maze);
-	    	log.log(Level.INFO, "realization " + real.printClosedWalls());
+	    	LOG.log(Level.INFO, "realization " + real.printClosedWalls());
 	    	   		    	
 	    	SvgMazePrinter sp = new SvgMazePrinter();
 	    	sp.printMaze(maze, real, "maze-rect.svg");
 		} catch (SecurityException | IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     }
+
+	private static final Logger LOG = Logger.getLogger("LOG");
+	
+
 }

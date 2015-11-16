@@ -1,25 +1,19 @@
 package com.github.sladecek.maze.jmaze.print;
 
-public class Maze3DSizes {
+public final class Maze3DSizes {
 
-	double cellSize_mm = 4;
-	double baseThickness_mm = 1;
-	double innerWallToCellRatio = 0.2;
-	double outerWallToCellRatio = 0.4;
-	double wallHeight_mm = 5;
-
-	public double getCellSize_mm() {
-		return cellSize_mm;
+	public double getCellSizeInmm() {
+		return cellSizeInmm;
 	}
-	public void setCellSize_mm(double cellSize_mm) {
-		this.cellSize_mm = cellSize_mm;
+	public void setCellSizeInmm(double cellSizeInmm) {
+		this.cellSizeInmm = cellSizeInmm;
 	}
 	
-	public double getBaseThickness_mm() {
-		return baseThickness_mm;
+	public double getBaseThicknessInmm() {
+		return baseThicknessInmm;
 	}
-	public void setBaseThickness_mm(double baseThickness_mm) {
-		this.baseThickness_mm = baseThickness_mm;
+	public void setBaseThicknessInmm(double baseThicknessInmm) {
+		this.baseThicknessInmm = baseThicknessInmm;
 	}
 	public double getInnerWallToCellRatio() {
 		return innerWallToCellRatio;
@@ -33,12 +27,18 @@ public class Maze3DSizes {
 	public void setOuterWallToCellRatio(double outerWallToCellRatio) {
 		this.outerWallToCellRatio = outerWallToCellRatio;
 	}
-	public double getWallHeight_mm() {
-		return wallHeight_mm;
+	public double getWallHeightInmm() {
+		return wallHeightInmm;
 	}
-	public void setWallHeight_mm(double wallHeight_mm) {
-		this.wallHeight_mm = wallHeight_mm;
+	public void setWallHeightInmm(double wallHeightInmm) {
+		this.wallHeightInmm = wallHeightInmm;
 	}
 
+
+	private double cellSizeInmm = 4;
+	private double baseThicknessInmm = 1;
+	private double innerWallToCellRatio = 0.2;
+	private double outerWallToCellRatio = 0.4;
+	private double wallHeightInmm = 5;
 
 }

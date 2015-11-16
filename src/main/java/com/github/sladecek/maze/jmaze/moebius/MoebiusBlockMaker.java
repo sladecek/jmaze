@@ -23,29 +23,29 @@ import com.github.sladecek.maze.jmaze.shapes.WallShape;
  *  Create list of solid blocks to make a 3D Moebius maze.
  *
  */
-public class MoebiusBlockMaker extends BlockMakerBase implements IBlockMaker  {
+public final class MoebiusBlockMaker extends BlockMakerBase implements IBlockMaker  {
 	
 	private MoebiusMaze maze;
-	public MoebiusBlockMaker(MoebiusMaze maze, MazeRealization realization, Maze3DSizes sizes, MazeColors colors, double approxRoomSize_mm) {
-		super(sizes, colors, realization, approxRoomSize_mm );
+	public MoebiusBlockMaker(MoebiusMaze maze, MazeRealization realization, Maze3DSizes sizes, 
+			MazeColors colors, double approxRoomSizeInmm) {
+		super(sizes, colors, realization, approxRoomSizeInmm);
 		this.maze = maze;
 	}
 
 	protected void prepareShapes(IPrintableMaze maze) {
 		walls = new ArrayList<WallShape>();
 		floors = new ArrayList<FloorShape>();
-		for(IMazeShape shape: maze.getShapes()) {
-			if (shape.getShapeType() == ShapeType.hole ) {
-				floors.add((FloorShape)shape);
+		for (IMazeShape shape: maze.getShapes()) {
+			if (shape.getShapeType() == ShapeType.hole) {
+				floors.add((FloorShape) shape);
 			} else {
 				if (shape.getShapeType() == ShapeType.innerWall) {
-					walls.add((WallShape)shape);
+					walls.add((WallShape) shape);
 				}
 			}
 		}
 	}
-
-
+	
 	private void printFloors()  {
 
 		for (int cellX = 0; cellX < cellWidth; cellX++) {
@@ -55,7 +55,6 @@ public class MoebiusBlockMaker extends BlockMakerBase implements IBlockMaker  {
 			}
 		}
 	}
-
 	
 	private void fillHolesInFloors(final MazeRealization realization)  {
 		for (FloorShape hs: floors) {
@@ -64,7 +63,6 @@ public class MoebiusBlockMaker extends BlockMakerBase implements IBlockMaker  {
 			}
 		}
 	}
-
 	
 	private void printInnerWalls(final MazeRealization realization)  {		
 		final double wallThickness = sizes.getInnerWallToCellRatio() / 2;
@@ -93,12 +91,6 @@ public class MoebiusBlockMaker extends BlockMakerBase implements IBlockMaker  {
 		}
 	}
 
-
-	private ArrayList<WallShape> walls;
-	private ArrayList<FloorShape> floors;
-
-	int cellHeight;
-	int cellWidth;
 	@Override
 	public void makeBlocks() {
 		prepareShapes(maze);
@@ -114,5 +106,10 @@ public class MoebiusBlockMaker extends BlockMakerBase implements IBlockMaker  {
 	}
 
 
+	private ArrayList<WallShape> walls;
+	private ArrayList<FloorShape> floors;
+
+	private int cellHeight;
+	private int cellWidth;
 	
 }

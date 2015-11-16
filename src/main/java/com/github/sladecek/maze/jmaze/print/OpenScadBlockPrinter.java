@@ -7,15 +7,13 @@ import java.io.IOException;
  */
 public class OpenScadBlockPrinter {
 	
-
-	
 	public OpenScadBlockPrinter(final IBlockMaker blockMaker) {
 		this.blockMaker = blockMaker;
 	}
 	
 	public final void printMaze(final String fileName) {		
 		blockMaker.makeBlocks();
-		try (OpenScadWriter scad = new OpenScadWriter(fileName)) {
+		try (OpenScadComposer scad = new OpenScadComposer(fileName)) {
 			
 			scad.beginUnion();
 			for (Block b: blockMaker.getBlocks()) {

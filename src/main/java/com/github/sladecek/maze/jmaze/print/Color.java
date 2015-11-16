@@ -3,15 +3,9 @@ package com.github.sladecek.maze.jmaze.print;
 /**
  * Represents color in maze printout.
  * 
- * @author sladecek
  *
  */
-public final class Color {
-	private int r;
-	private int g;
-	private int b;
-	private int a;
-	
+public final class Color {	
 	/**
 	 * Create new color.
 	 * 
@@ -66,5 +60,11 @@ public final class Color {
 	public String toString() {
 		return "Color [r=" + r + ", g=" + g + ", b=" + b + ", a=" + a + "]";
 	}
+
+	private int r;
+	private int g;
+	private int b;
+	private int a;
+
 	
 }

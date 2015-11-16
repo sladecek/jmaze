@@ -1,9 +1,9 @@
 package com.github.sladecek.maze.jmaze.geometry;
 
+/*
+ * Two dimensional vector.
+ */
 public final class OrientationVector2D {
-
-	private double x;
-	private double y;
 	
 	public double getX() {
 		return x;
@@ -27,5 +27,7 @@ public final class OrientationVector2D {
 	public OrientationVector2D getOrthogonal() {
 		return new OrientationVector2D(y, -x);
 	}
-	
+
+	private double x;
+	private double y;
 }
