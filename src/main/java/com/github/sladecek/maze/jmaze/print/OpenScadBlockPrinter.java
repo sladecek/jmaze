@@ -17,7 +17,10 @@ public class OpenScadBlockPrinter {
 			
 			scad.beginUnion();
 			for (Block b: blockMaker.getBlocks()) {
-				scad.printPolyhedron(b.getPolyhedron(), b.getComment(), b.getColor());
+				// no marks in scad
+				if (!b.isMark()) {
+					scad.printPolyhedron(b.getPolyhedron(), b.getComment(), b.getColor());
+				}
 			}
 			
 			scad.closeUnion();

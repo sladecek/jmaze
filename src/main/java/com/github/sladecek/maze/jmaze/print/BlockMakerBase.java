@@ -215,7 +215,7 @@ public abstract class BlockMakerBase {
 	public final void printPolyhedron(final ArrayList<Point> polyhedron,
 			final String comment, final Color color) {
 		LOG.log(Level.INFO, "printPolyhedron " + comment);
-		Block b = new Block(polyhedron, comment, color);
+		Block b = Block.newPolyhedron(polyhedron, comment, color);
 		blocks.add(b);
 
 	}

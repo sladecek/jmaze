@@ -38,6 +38,7 @@ public final class MoebiusMaze implements IMazeSpace, IShapeMaker {
 
 	@Override
 	public ShapeContainer makeShapes(MazeRealization realization) {
+
 		ShapeContainer result = new ShapeContainer();
 		result.setPictureHeight(height);
 		result.setPictureWidth(width);
@@ -52,12 +53,12 @@ public final class MoebiusMaze implements IMazeSpace, IShapeMaker {
 
 		final IMazeShape.ShapeType iw = IMazeShape.ShapeType.innerWall;
 
-		// start- stop rooms
-		result.add(new MarkShape(IMazeShape.ShapeType.startRoom, getStartRoom()
-				/ width, getStartRoom() % width, "start"));
-		result.add(new MarkShape(IMazeShape.ShapeType.targetRoom,
-				getTargetRoom() / width, getTargetRoom() % width, "stop"));
-
+		// start stop rooms
+		final int start = getStartRoom();
+		final int target = getTargetRoom();		
+		result.add(new MarkShape(IMazeShape.ShapeType.startRoom, start / width, start % width, "start"));		
+		result.add(new MarkShape(IMazeShape.ShapeType.targetRoom, target / width, target % width, "stop"));
+		
 		// inner walls - east/west
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
@@ -95,49 +96,20 @@ public final class MoebiusMaze implements IMazeSpace, IShapeMaker {
 					String floorId = "f" + Integer.toString(wall);
 					final boolean isHole = true; // TODO !isWallClosed(wall);
 					FloorShape fs1 = new FloorShape(y, x, isHole, floorId);
-					fs1.setWallId(wall);
 					result.add(fs1);
 					int hy = getTheOtherSideOfHoleY(y, x);
 					int hx = getTheOtherSideOfHoleX(y, x);
 					FloorShape fs2 = new FloorShape(hy, hx, isHole, floorId);
-					fs2.setWallId(wall);
 					result.add(fs2);
 				}
 			}
 		}
 
 		// solution
-		final IMazeShape.ShapeType is = IMazeShape.ShapeType.solution;
-		Vector<Integer> solution = realization.getSolution();
-		for (int i = 0; i < solution.size() - 1; i++) {
-			int room1 = solution.get(i);
-			int room2 = solution.get(i + 1);
-			int y1 = room1 / width;
-			int x1 = room1 % width;
-			int y2 = room2 / width;
-			int x2 = room2 % width;
-
-			// detect wrap around vertical border
-			boolean wrapAround = false;
-			if (y1 == y2) {
-				if (x1 == 0 && x2 == width - 1) {
-					wrapAround = true;
-				} else if (x2 == 0 && x1 == width - 1) {
-					wrapAround = true;
-					// swap
-					x1 = 0;
-					x2 = width - 1;
-				}
-			}
-
-			if (wrapAround) {
-				result.add(new WallShape(is, y1, -1, y2, 0));
-				result.add(new WallShape(is, y1, width - 1, y2, width));
-			} else {
-				result.add(new WallShape(is, y1, x1, y2, x2));
-			}
-
+		for (int i: realization.getSolution()) {
+			result.add(new MarkShape(IMazeShape.ShapeType.solution, i / width, i % width, "start"));
 		}
+
 		return result;
 	}
 

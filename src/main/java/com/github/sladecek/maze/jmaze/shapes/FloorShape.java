@@ -44,23 +44,11 @@ public final class FloorShape implements IMazeShape {
 		return id;
 	}
 
-	public void setWallId(int wallId) {
-		this.wallId = wallId;
-	}
 
 	public boolean isHole() {
 		return isHole;
 	}
 
-/*
- *  TODO
-	public boolean isOpen(MazeRealization real) {
-		if (this.wallId < 0) {
-			return true;
-		}
-		return !real.isWallClosed(this.wallId);
-	}
-*/
 
 	@Override
 	public void printToSvg(SvgMazePrinter svg) throws IOException {
@@ -82,7 +70,11 @@ public final class FloorShape implements IMazeShape {
 	private int x;
 	private boolean isHole;
 	private String id;
-	private int wallId = -1;
+	
+	
+	public MarkShape CreateMarkInThisRoom(ShapeType type, String id) {
+		return new MarkShape(type, y, x, id);
+	}
 	
 
 
