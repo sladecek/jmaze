@@ -57,7 +57,6 @@ public final class Rectangular2DMaze  implements IMazeSpace, IShapeMaker {
 			
 				if (realization.isWallClosed(wallId)) {
 					WallShape w = new WallShape(iw, y, x + 1, y + 1, x + 1);
-// TODO smazat					w.setWallId(wallId);
 					result.add(w);
 				}			
 			}
@@ -69,7 +68,6 @@ public final class Rectangular2DMaze  implements IMazeSpace, IShapeMaker {
 				int wallId = x + y * width + eastWestWallCount;
 				if (realization.isWallClosed(wallId)) {
 				WallShape w = new WallShape(iw, y + 1, x, y + 1, x + 1);
-// TODO smazat				w.setWallId(wallId);
 				result.add(w);
 				}
 			}
@@ -77,8 +75,7 @@ public final class Rectangular2DMaze  implements IMazeSpace, IShapeMaker {
 				
 		// start stop rooms
 		final int start = getStartRoom();
-		final int target = getTargetRoom();
-		
+		final int target = getTargetRoom();		
 		result.add(new MarkShape(IMazeShape.ShapeType.startRoom, start / width, start % width, "start"));		
 		result.add(new MarkShape(IMazeShape.ShapeType.targetRoom, target / width, target % width, "stop"));
 		

@@ -23,13 +23,13 @@ public final class SvgMazePrinter implements IMazePrinter {
 	}
 
 	
-	public void printMark(int y, int x, String fill) throws IOException {
+	public void printMark(int y, int x, String fill, int sizePercent) throws IOException {
 		//  <circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="red" />
 		int offs = cellSize / 2;
 		xml.startElement("circle");
 		xml.addAttribute("cx", toUnits(x) + offs);
 		xml.addAttribute("cy", toUnits(y) + offs);
-		xml.addAttribute("r", cellSize / 4);
+		xml.addAttribute("r", cellSize * sizePercent / 100);
 		xml.addAttribute("fill", fill);
 		xml.closeElement();
 	}
@@ -40,17 +40,17 @@ public final class SvgMazePrinter implements IMazePrinter {
 
 	private XmlWriter xml;
 
-	public void printShapes(ShapeContainer maze, String fileName) {
+	public void printShapes(ShapeContainer maze, String fileName, boolean showSolution) {
 		
 		try (XmlWriter x = new XmlWriter(fileName)) {
-			printShapes(maze,  x);
+			printShapes(maze,  x, showSolution);
 		} catch (IOException ioe) {
 			System.out.println(ioe.getMessage());
 		}
 
 	}
 
-	public void printShapes(ShapeContainer maze, XmlWriter x) {
+	public void printShapes(ShapeContainer maze, XmlWriter x, boolean showSolution) {
 
 		canvasWidth = 2 * margin + maze.getPictureWidth() * cellSize;
 		canvasHeight = 2 * margin + maze.getPictureHeight() * cellSize;
@@ -65,7 +65,9 @@ public final class SvgMazePrinter implements IMazePrinter {
 			
 	
 			for (IMazeShape shape: maze.getShapes()) {
-				shape.printToSvg(this);
+				if (showSolution || shape.getShapeType() != IMazeShape.ShapeType.solution) {
+					shape.printToSvg(this);
+				}
 			}
 						
 			xml.closeElement(); // svg

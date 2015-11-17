@@ -35,10 +35,13 @@ public final class MarkShape implements IMazeShape {
 	public void printToSvg(SvgMazePrinter svg) throws IOException  {
 		switch (shapeType) {
 		case startRoom:
-			svg.printMark(y, x, "red");		
+			svg.printMark(y, x, "red", 25);		
 			break;
 		case targetRoom:
-			svg.printMark(y, x, "green");
+			svg.printMark(y, x, "green", 25);
+			break;
+		case solution:
+			svg.printMark(y, x, "gray", 15);
 			break;
 		default:
 			break;			

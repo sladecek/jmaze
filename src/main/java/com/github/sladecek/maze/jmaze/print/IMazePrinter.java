@@ -9,5 +9,5 @@ import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
  *
  */
 public interface IMazePrinter {
-	void printShapes(ShapeContainer maze, String fileName);
+	void printShapes(ShapeContainer maze, String fileName, boolean showSolution);
 }

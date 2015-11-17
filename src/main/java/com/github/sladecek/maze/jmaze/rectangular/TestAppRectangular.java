@@ -34,7 +34,8 @@ public final class TestAppRectangular {
 	    	MazeRealization realization = g.generateMaze(maze);	    		    	
 	    	ShapeContainer shapes = maze.makeShapes(realization);	    	
 	    	SvgMazePrinter printer = new SvgMazePrinter();
-	    	printer.printShapes(shapes,  "maze-rect.svg");
+	    	final boolean showSolution = true;
+	    	printer.printShapes(shapes,  "maze-rect.svg", showSolution);
 	    	
 		} catch (SecurityException | IOException e) {
 			e.printStackTrace();
