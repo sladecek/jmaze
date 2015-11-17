@@ -1,6 +1,5 @@
 package com.github.sladecek.maze.jmaze.moebius;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import com.github.sladecek.maze.jmaze.generator.MazeRealization;
@@ -11,11 +10,12 @@ import com.github.sladecek.maze.jmaze.geometry.UpDown;
 import com.github.sladecek.maze.jmaze.print.Block;
 import com.github.sladecek.maze.jmaze.print.BlockMakerBase;
 import com.github.sladecek.maze.jmaze.print.IBlockMaker;
-import com.github.sladecek.maze.jmaze.print.IPrintableMaze;
 import com.github.sladecek.maze.jmaze.print.Maze3DSizes;
 import com.github.sladecek.maze.jmaze.print.MazeColors;
 import com.github.sladecek.maze.jmaze.shapes.FloorShape;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape;
+import com.github.sladecek.maze.jmaze.shapes.IShapeMaker;
+import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape.ShapeType;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
 
@@ -32,10 +32,15 @@ public final class MoebiusBlockMaker extends BlockMakerBase implements IBlockMak
 		this.maze = maze;
 	}
 
-	protected void prepareShapes(IPrintableMaze maze) {
+	protected void prepareShapes(IShapeMaker maze) {		
 		walls = new ArrayList<WallShape>();
 		floors = new ArrayList<FloorShape>();
-		for (IMazeShape shape: maze.getShapes()) {
+
+		ShapeContainer shapes = maze.makeShapes(realization);
+		cellHeight = shapes.getPictureHeight();
+		cellWidth = shapes.getPictureWidth();
+
+		for (IMazeShape shape: shapes.getShapes()) {
 			if (shape.getShapeType() == ShapeType.hole) {
 				floors.add((FloorShape) shape);
 			} else {
@@ -58,20 +63,20 @@ public final class MoebiusBlockMaker extends BlockMakerBase implements IBlockMak
 	
 	private void fillHolesInFloors(final MazeRealization realization)  {
 		for (FloorShape hs: floors) {
-			if (!hs.isOpen(realization)) {
+// TODO smazat			if (!hs.isOpen(realization)) {
 				fillHoleInTheFloorOneRoom(hs);
 			}
-		}
+		
 	}
 	
 	private void printInnerWalls(final MazeRealization realization)  {		
 		final double wallThickness = sizes.getInnerWallToCellRatio() / 2;
 		
 		for (WallShape wall: walls) {
-			if (!wall.isOpen(realization)) {
+// TODO smazat			if (!wall.isOpen(realization)) {
 				printWallElements(wallThickness, wall);
 			}
-		}
+		
 	}
 
 
@@ -94,8 +99,6 @@ public final class MoebiusBlockMaker extends BlockMakerBase implements IBlockMak
 	@Override
 	public void makeBlocks() {
 		prepareShapes(maze);
-		cellHeight = maze.getPictureHeight();
-		cellWidth = maze.getPictureWidth();
 		maze3dMapper = new Moebius3dMapper(sizes, cellHeight, cellWidth);
 		blocks = new ArrayList<Block>();
 		printFloors();

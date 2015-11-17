@@ -4,15 +4,18 @@ import java.security.InvalidParameterException;
 import java.util.Vector;
 
 import com.github.sladecek.maze.jmaze.generator.IMazeSpace;
-import com.github.sladecek.maze.jmaze.print.IPrintableMaze;
+import com.github.sladecek.maze.jmaze.generator.MazeRealization;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape;
+import com.github.sladecek.maze.jmaze.shapes.IShapeMaker;
+import com.github.sladecek.maze.jmaze.shapes.MarkShape;
+import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
 
 /**
  * 2D rectangular maze. Both rooms and walls are numbered first by rows, then by columns. East/west walls are numbered 
  * before south/north ones.
  */
-public final class Rectangular2DMaze  implements IMazeSpace, IPrintableMaze {
+public final class Rectangular2DMaze  implements IMazeSpace, IShapeMaker {
 	public Rectangular2DMaze(int height, int width) {	
 		this.width = width;
 		this.height = height;
@@ -33,8 +36,10 @@ public final class Rectangular2DMaze  implements IMazeSpace, IPrintableMaze {
 	/**
 	 * Get all geometric shapes needed to print this maze.
 	 */
-	public Iterable<IMazeShape> getShapes() {
-		Vector<IMazeShape> result = new Vector<IMazeShape>();
+	public ShapeContainer makeShapes(MazeRealization realization) {
+		ShapeContainer result = new ShapeContainer();
+		result.setPictureHeight(height);
+		result.setPictureWidth(width);	
 		
 		// outer walls
 		final IMazeShape.ShapeType ow = IMazeShape.ShapeType.outerWall;
@@ -50,10 +55,11 @@ public final class Rectangular2DMaze  implements IMazeSpace, IPrintableMaze {
 			for (int x = 0; x < width - 1; x++) {
 				int wallId = x + y * (width - 1);
 			
-				WallShape w = new WallShape(iw, y, x + 1, y + 1, x + 1);
-				w.setWallId(wallId);
-				result.add(w);
-			
+				if (realization.isWallClosed(wallId)) {
+					WallShape w = new WallShape(iw, y, x + 1, y + 1, x + 1);
+// TODO smazat					w.setWallId(wallId);
+					result.add(w);
+				}			
 			}
 		}
 		
@@ -61,24 +67,26 @@ public final class Rectangular2DMaze  implements IMazeSpace, IPrintableMaze {
 		for (int y = 0; y < height - 1; y++) {
 			for (int x = 0; x < width; x++) {
 				int wallId = x + y * width + eastWestWallCount;
+				if (realization.isWallClosed(wallId)) {
 				WallShape w = new WallShape(iw, y + 1, x, y + 1, x + 1);
-				w.setWallId(wallId);
+// TODO smazat				w.setWallId(wallId);
 				result.add(w);
+				}
 			}
 		}
-		/*
+				
+		// start stop rooms
+		final int start = getStartRoom();
+		final int target = getTargetRoom();
+		
+		result.add(new MarkShape(IMazeShape.ShapeType.startRoom, start / width, start % width, "start"));		
+		result.add(new MarkShape(IMazeShape.ShapeType.targetRoom, target / width, target % width, "stop"));
+		
 		// solution
-		final IMazeShape.ShapeType is = IMazeShape.ShapeType.solution;
-		for (int i = 0; i < solution.size()-1; i++) {
-			int room1 = solution.get(i);
-			int room2 = solution.get(i+1);
-			int y1 = room1/width;
-			int x1 = room1%width;
-			int y2 = room2/width;
-			int x2 = room2%width;
-			result.add(new WallShape(is, y1, x1, y2, x2));
+		for (int i: realization.getSolution()) {
+			result.add(new MarkShape(IMazeShape.ShapeType.solution, i / width, i % width, "start"));
 		}
-		*/
+		
 		return result;
 	}
 
@@ -88,7 +96,6 @@ public final class Rectangular2DMaze  implements IMazeSpace, IPrintableMaze {
 		int x = room % width;
 
 		Vector<Integer> result = new Vector<Integer>();
-
 	
 		// east
 		if (x < width - 1) {
@@ -112,20 +119,16 @@ public final class Rectangular2DMaze  implements IMazeSpace, IPrintableMaze {
 
 	@Override
 	public int getRoomBehindWall(int room, int wall) {
-		if (wall < eastWestWallCount)
-		{
+		if (wall < eastWestWallCount) {		
 			final int y = wall / (width - 1);
 			final int x = wall % (width - 1);
 			final int westRoom = y * width + x;
 			final int eastRoom = westRoom + 1;
-			if (!(room == westRoom || room == eastRoom))
-			{
+			if (!(room == westRoom || room == eastRoom)) {
 				throw new InvalidParameterException("Wall is not adjacent to room");
 			}
 			return room == westRoom ? eastRoom : westRoom;
-		}
-		else
-		{
+		} else {
 			final int y = (wall - eastWestWallCount) / width;
 			final int x = (wall - eastWestWallCount) % width;
 			final int northRoom = y * width + x;
@@ -159,14 +162,6 @@ public final class Rectangular2DMaze  implements IMazeSpace, IPrintableMaze {
 
 	public int getTargetRoom() {
 		return getRoomCount() - 1;
-	}
-
-	public int getPictureHeight() {
-		return height;
-	}
-
-	public int getPictureWidth() {
-		return width;
 	}
 
 	private int height;

@@ -6,11 +6,12 @@ import java.util.logging.Logger;
 
 import com.github.sladecek.maze.jmaze.generator.GenericMazeSpace;
 import com.github.sladecek.maze.jmaze.generator.IMazeSpace;
+import com.github.sladecek.maze.jmaze.generator.MazeRealization;
 import com.github.sladecek.maze.jmaze.geometry.SouthNorth;
-import com.github.sladecek.maze.jmaze.print.IPrintableMaze;
 import com.github.sladecek.maze.jmaze.shapes.FloorShape;
-import com.github.sladecek.maze.jmaze.shapes.IMazeShape;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape.ShapeType;
+import com.github.sladecek.maze.jmaze.shapes.IShapeMaker;
+import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
 /**
  * 
@@ -18,12 +19,8 @@ import com.github.sladecek.maze.jmaze.shapes.WallShape;
  *
  */
 public final class EggMaze extends GenericMazeSpace implements IMazeSpace,
-		IPrintableMaze {
+		IShapeMaker {
 
-
-	public EggMazeHemisphere getHemisphere(SouthNorth sn) {
-		return sn == SouthNorth.north ? north : south;
-	}
 
 	public EggMaze(EggGeometry egg, int equatorCellCnt) {
 		this.egg = egg;
@@ -42,18 +39,11 @@ public final class EggMaze extends GenericMazeSpace implements IMazeSpace,
 					"Cell number must be power of 2.");
 		}
 
-		// generate both hemispheres
-		for (SouthNorth sn : SouthNorth.values()) {
-			divideSpace(sn);
-			LOG.log(Level.INFO, "generate hemisphere " + sn + " cnt=" + getHemisphere(sn).getCircleCnt());
-			generateRooms(sn);
+	}
 
-			generateParallelWalls(sn);
-			generateMeridianWalls(sn);
-		}
-		generateParallelWallsOnEquator();
-		assignStartAndTragetRooms();
 
+	public EggMazeHemisphere getHemisphere(SouthNorth sn) {
+		return sn == SouthNorth.north ? north : south;
 	}
 
 	private void assignStartAndTragetRooms() {
@@ -164,8 +154,9 @@ public final class EggMaze extends GenericMazeSpace implements IMazeSpace,
 		final int y1 = (yr1 * roomMapRatio) % equatorCellCnt;
 		final int y2 = (yr2 * roomMapRatio) % equatorCellCnt;
 		WallShape ws = new WallShape(ShapeType.innerWall, y1, x1, y2, x2);
-		ws.setWallId(id);
-		shapes.add(ws);
+		if (realization.isWallClosed(id)) {
+			shapes.add(ws);
+		}
 	}
 
 	public Vector<Integer> computeRoomCounts(Vector<Double> layerXPosition,
@@ -238,22 +229,7 @@ public final class EggMaze extends GenericMazeSpace implements IMazeSpace,
 		}
 	}
 
-	@Override
-	public Iterable<IMazeShape> getShapes() {
-		return shapes;
-	}
 
-	@Override
-	public int getPictureHeight() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int getPictureWidth() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
 	public double getBaseRoomSizeInmm() {
 		return this.baseRoomSizeInmm;
@@ -266,9 +242,34 @@ public final class EggMaze extends GenericMazeSpace implements IMazeSpace,
 
 	private EggMazeHemisphere north;
 	private EggMazeHemisphere south;
-	private Vector<IMazeShape> shapes = new Vector<IMazeShape>();
+
 	private double baseRoomSizeInmm;
 
 	private static final int MINIMAL_ROOM_COUNT_ON_EGG_MAZE_EQUATOR = 4;
+
+	private ShapeContainer shapes;
+	
+	private MazeRealization realization;
+	
+	@Override
+	public ShapeContainer makeShapes(MazeRealization realization) {
+		
+		shapes = new ShapeContainer();
+		this.realization = realization;
+		
+		// generate both hemispheres
+		for (SouthNorth sn : SouthNorth.values()) {
+			divideSpace(sn);
+			LOG.log(Level.INFO, "generate hemisphere " + sn + " cnt=" + getHemisphere(sn).getCircleCnt());
+			generateRooms(sn);
+
+			generateParallelWalls(sn);
+			generateMeridianWalls(sn);
+		}
+		generateParallelWallsOnEquator();
+		assignStartAndTragetRooms();
+		
+		return shapes;
+	}
 	
 }

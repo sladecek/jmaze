@@ -80,7 +80,7 @@ public class EggMazeTest {
 		int roomCount = 0;
 		int meridianWallCount = 0;
 		int parallelWallCount = 0;
-		
+		/* TODO
 		for (IMazeShape s: maze.getShapes()) {
 			System.out.println(s);
 			if (s.getShapeType() == ShapeType.nonHole) {
@@ -104,12 +104,12 @@ public class EggMazeTest {
 				assert(ws.getY2() < 8);
 			}			
 		}
-			
+			*/
 		assertEquals(4+8+8+8+4, roomCount);
 		assertEquals(16, meridianWallCount);
 		assertEquals(24, parallelWallCount);
 	}
-	
+	/* TODO
 
 	@Test
 	public void testMazeConstruction()
@@ -144,5 +144,5 @@ public class EggMazeTest {
 	
 	}
 	}
-	
+	*/
 }

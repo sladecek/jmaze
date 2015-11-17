@@ -8,12 +8,13 @@ import com.github.sladecek.maze.jmaze.generator.MazeRealization;
 import com.github.sladecek.maze.jmaze.print.Block;
 import com.github.sladecek.maze.jmaze.print.BlockMakerBase;
 import com.github.sladecek.maze.jmaze.print.IBlockMaker;
-import com.github.sladecek.maze.jmaze.print.IPrintableMaze;
 import com.github.sladecek.maze.jmaze.print.Maze3DSizes;
 import com.github.sladecek.maze.jmaze.print.MazeColors;
 import com.github.sladecek.maze.jmaze.shapes.FloorShape;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape;
+import com.github.sladecek.maze.jmaze.shapes.IShapeMaker;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape.ShapeType;
+import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
 
 /**
@@ -38,14 +39,15 @@ public final class EggBlockMaker extends BlockMakerBase implements IBlockMaker 	
 		
 	}
 	
-	protected void prepareShapes(final IPrintableMaze maze) {
+	protected void prepareShapes(final IShapeMaker maze) {
+		ShapeContainer shapes = maze.makeShapes(realization);
 		walls = new ArrayList<WallShape>();
 		floor = new ArrayList<FloorShape>();
-		for (IMazeShape shape: maze.getShapes()) {
+		for (IMazeShape shape: shapes.getShapes()) {
 			if (shape.getShapeType() == ShapeType.nonHole) {
 				floor.add((FloorShape) shape);
 			} else {
-				if (shape.getShapeType() == ShapeType.innerWall) {
+				if (shape.getShapeType() == ShapeType.innerWall) {					
 					walls.add((WallShape) shape);
 				}
 			}
@@ -66,10 +68,7 @@ public final class EggBlockMaker extends BlockMakerBase implements IBlockMaker 	
 	private void printWalls(final MazeRealization realization)  {		
 		final double wt = sizes.getInnerWallToCellRatio() / 2;		
 		for (WallShape wall: walls) {
-			if (!wall.isOpen(realization)) {
-				LOGGER.log(Level.INFO, "wall " + wall + " is closed");
 				printWallElements(wt, wall);				
-			}
 		}
 	}
 	

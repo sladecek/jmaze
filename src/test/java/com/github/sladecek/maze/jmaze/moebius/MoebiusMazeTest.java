@@ -86,16 +86,6 @@ public class MoebiusMazeTest {
 	}
 
 
-	@Test
-	public final void testGetPictureHeight() {
-		assertEquals(4, maze.getPictureHeight());
-	}
-
-	@Test
-	public final void testGetPictureWidth() {
-		assertEquals(6, maze.getPictureWidth());
-	}
-
 	@Test(expected=InvalidParameterException.class)
 	public final void testGetOtherRoom_invalid() {
 		assertEquals(1, maze.getRoomBehindWall(0, 2));

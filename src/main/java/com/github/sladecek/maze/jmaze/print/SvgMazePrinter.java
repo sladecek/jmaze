@@ -1,9 +1,9 @@
-package com.github.sladecek.maze.jmaze.print;
+package 	com.github.sladecek.maze.jmaze.print;
 
 import java.io.IOException;
 
-import com.github.sladecek.maze.jmaze.generator.MazeRealization;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape;
+import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
 
 public final class SvgMazePrinter implements IMazePrinter {
 	
@@ -22,6 +22,7 @@ public final class SvgMazePrinter implements IMazePrinter {
 		
 	}
 
+	
 	public void printMark(int y, int x, String fill) throws IOException {
 		//  <circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="red" />
 		int offs = cellSize / 2;
@@ -39,17 +40,17 @@ public final class SvgMazePrinter implements IMazePrinter {
 
 	private XmlWriter xml;
 
-	public void printMaze(IPrintableMaze maze, MazeRealization realization, String fileName) {
+	public void printShapes(ShapeContainer maze, String fileName) {
 		
 		try (XmlWriter x = new XmlWriter(fileName)) {
-			printMaze(maze, realization, x);
+			printShapes(maze,  x);
 		} catch (IOException ioe) {
 			System.out.println(ioe.getMessage());
 		}
 
 	}
 
-	public void printMaze(IPrintableMaze maze, MazeRealization realization, XmlWriter x) {
+	public void printShapes(ShapeContainer maze, XmlWriter x) {
 
 		canvasWidth = 2 * margin + maze.getPictureWidth() * cellSize;
 		canvasHeight = 2 * margin + maze.getPictureHeight() * cellSize;
@@ -59,22 +60,14 @@ public final class SvgMazePrinter implements IMazePrinter {
 			xml = x;
 			xml.startElement("svg");
 			xml.addAttribute("xmlns", "http://www.w3.org/2000/svg");
-			xml.addAttribute("width", canvasWidth );
+			xml.addAttribute("width", canvasWidth);
 			xml.addAttribute("height", canvasHeight);
 			
-/*			// background
-			xml.startElement("rect");
-			xml.addAttribute("width", canvasWidth );
-			xml.addAttribute("height", canvasHeight);
-			xml.addAttribute("style", "fill:rgb(255,255,0)");
-	*/		
-			for (IMazeShape shape: maze.getShapes()){
-				if (!shape.isOpen(realization)) {
-					shape.printToSvg(this);
-				}
+	
+			for (IMazeShape shape: maze.getShapes()) {
+				shape.printToSvg(this);
 			}
-			
-		//	xml.closeElement(); // rect
+						
 			xml.closeElement(); // svg
 			xml = null;
 		} catch (IOException ioe) {

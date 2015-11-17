@@ -14,7 +14,7 @@ import com.github.sladecek.maze.jmaze.shapes.IMazeShape.ShapeType;
 
 public class EggMazeAllRoomsTest {
 
-	
+	/* TODO
 	@Test
 	public void testMazeConstruction()
 	{
@@ -42,7 +42,7 @@ public class EggMazeAllRoomsTest {
 		}
 		
 	}
-	
+	*/
 
 	
 }

@@ -18,14 +18,17 @@ public final class WallShape implements IMazeShape {
 		this.wallId = -1;
 	}
 
+	/* TODO smazat
 	public int getWallId() {
 		return wallId;
 	}
-
+*/
+	/* TODO smazat
 	public void setWallId(int value) {
 		this.wallId = value;
 		LOG.log(Level.INFO, "WallShape id=" + wallId + " x1=" + x1 + " y1=" + y1 + " x2=" + x2 + " y2=" + y2);
 	}
+	*/
 
 	public ShapeType getShapeType() {
 		return this.shapeType;
@@ -71,7 +74,7 @@ public final class WallShape implements IMazeShape {
 	public int getY2() {
 		return y2;
 	}
-
+/*TODO 
 
 	@Override
 	public boolean isOpen(MazeRealization real) {
@@ -83,7 +86,7 @@ public final class WallShape implements IMazeShape {
 		}
 		return !real.isWallClosed(this.wallId);
 	}
-	
+	*/
 	@Override
 	public String getId() {
 		return "w" + Integer.toString(wallId);
@@ -103,6 +106,7 @@ public final class WallShape implements IMazeShape {
 
 	private ShapeType shapeType;
 
+	/* TODO smazat */
 	private int wallId;
 	
 	

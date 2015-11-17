@@ -1,6 +1,7 @@
 package com.github.sladecek.maze.jmaze.print;
 
-import com.github.sladecek.maze.jmaze.generator.MazeRealization;
+import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
+
 
 /**
  * 
@@ -8,5 +9,5 @@ import com.github.sladecek.maze.jmaze.generator.MazeRealization;
  *
  */
 public interface IMazePrinter {
-	void printMaze(IPrintableMaze maze, MazeRealization realization, String fileName);
+	void printShapes(ShapeContainer maze, String fileName);
 }

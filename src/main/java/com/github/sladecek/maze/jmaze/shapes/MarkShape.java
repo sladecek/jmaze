@@ -22,11 +22,6 @@ public final class MarkShape implements IMazeShape {
 
 
 	@Override
-	public boolean isOpen(MazeRealization real) {
-		return true;
-	}
-
-	@Override
 	public String getId() {
 		return id;
 	}

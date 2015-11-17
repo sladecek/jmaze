@@ -52,14 +52,15 @@ public final class FloorShape implements IMazeShape {
 		return isHole;
 	}
 
-	@Override
+/*
+ *  TODO
 	public boolean isOpen(MazeRealization real) {
 		if (this.wallId < 0) {
 			return true;
 		}
 		return !real.isWallClosed(this.wallId);
 	}
-
+*/
 
 	@Override
 	public void printToSvg(SvgMazePrinter svg) throws IOException {

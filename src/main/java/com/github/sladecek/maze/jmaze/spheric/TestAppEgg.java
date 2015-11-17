@@ -61,10 +61,10 @@ final class TestAppEgg {
 						maker);
 				printerScad.printMaze(fileName + ".scad");
 			}
-
+/*
 			SvgMazePrinter sp = new SvgMazePrinter();
-			sp.printMaze(maze, real, "maze-egg.svg");
-
+			sp.printMaze(maze, "maze-egg.svg");
+*/
 		} catch (SecurityException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

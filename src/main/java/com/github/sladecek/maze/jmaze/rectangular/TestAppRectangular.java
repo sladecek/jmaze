@@ -11,6 +11,7 @@ import com.github.sladecek.maze.jmaze.generator.DepthFirstMazeGenerator;
 import com.github.sladecek.maze.jmaze.generator.IMazeGenerator;
 import com.github.sladecek.maze.jmaze.generator.MazeRealization;
 import com.github.sladecek.maze.jmaze.print.SvgMazePrinter;
+import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
 
 public final class TestAppRectangular {
 
@@ -27,13 +28,14 @@ public final class TestAppRectangular {
 			fh.setFormatter(new SimpleFormatter());
 		
 			final int defaultSize = 27;
+			
 			Rectangular2DMaze maze = new Rectangular2DMaze(defaultSize, defaultSize);
 	    	IMazeGenerator g = new DepthFirstMazeGenerator();
-	    	MazeRealization real = g.generateMaze(maze);
-	    	LOG.log(Level.INFO, "realization " + real.printClosedWalls());
-	    	   		    	
-	    	SvgMazePrinter sp = new SvgMazePrinter();
-	    	sp.printMaze(maze, real, "maze-rect.svg");
+	    	MazeRealization realization = g.generateMaze(maze);	    		    	
+	    	ShapeContainer shapes = maze.makeShapes(realization);	    	
+	    	SvgMazePrinter printer = new SvgMazePrinter();
+	    	printer.printShapes(shapes,  "maze-rect.svg");
+	    	
 		} catch (SecurityException | IOException e) {
 			e.printStackTrace();
 		}

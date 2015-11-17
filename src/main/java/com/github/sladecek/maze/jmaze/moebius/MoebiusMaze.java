@@ -4,38 +4,44 @@ import java.security.InvalidParameterException;
 import java.util.Vector;
 
 import com.github.sladecek.maze.jmaze.generator.IMazeSpace;
-import com.github.sladecek.maze.jmaze.print.IPrintableMaze;
+import com.github.sladecek.maze.jmaze.generator.MazeRealization;
 import com.github.sladecek.maze.jmaze.shapes.FloorShape;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape;
+import com.github.sladecek.maze.jmaze.shapes.IShapeMaker;
 import com.github.sladecek.maze.jmaze.shapes.MarkShape;
+import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
 
 /**
- * 2D rectangular maze on Moebius strip. Rooms and walls (including holes) are numbered first by rows, then by columns. East/west walls are numbered 
- * before south/north ones. Holes are numbered after south/north walls. 
+ * 2D rectangular maze on Moebius strip. Rooms and walls (including holes) are
+ * numbered first by rows, then by columns. East/west walls are numbered before
+ * south/north ones. Holes are numbered after south/north walls.
  */
-public final class MoebiusMaze implements IMazeSpace,
-		IPrintableMaze {
+public final class MoebiusMaze implements IMazeSpace, IShapeMaker {
 
 	public MoebiusMaze(final int height, final int width) {
 		this.width = width;
 		this.height = height;
 
 		if (width % 2 != 0) {
-			throw new InvalidParameterException("Moebius maze must have even width");
+			throw new InvalidParameterException(
+					"Moebius maze must have even width");
 		}
 		if (height % 2 != 0) {
-			throw new InvalidParameterException("Moebius maze must have even height");
+			throw new InvalidParameterException(
+					"Moebius maze must have even height");
 		}
 		eastWestWallCount = width * height;
 		southNorthWallCount = width * (height - 1);
-		holeCount = width * height / 2;		
+		holeCount = width * height / 2;
 	}
 
 	@Override
-	public Iterable<IMazeShape> getShapes() {
-		Vector<IMazeShape> result = new Vector<IMazeShape>();
-		
+	public ShapeContainer makeShapes(MazeRealization realization) {
+		ShapeContainer result = new ShapeContainer();
+		result.setPictureHeight(height);
+		result.setPictureWidth(width);
+
 		// outer walls
 		final IMazeShape.ShapeType ow = IMazeShape.ShapeType.outerWall;
 		result.add(new WallShape(ow, 0, 0, 0, width));
@@ -43,127 +49,129 @@ public final class MoebiusMaze implements IMazeSpace,
 		final IMazeShape.ShapeType aw = IMazeShape.ShapeType.auxiliaryWall;
 		result.add(new WallShape(aw, 0, 0, height, 0));
 		result.add(new WallShape(aw, 0, width, height, width));
-		
+
 		final IMazeShape.ShapeType iw = IMazeShape.ShapeType.innerWall;
 
-		
-		result.add(new MarkShape(IMazeShape.ShapeType.startRoom, 
-				getStartRoom() / width, getStartRoom() % width, "start"));
-		result.add(new MarkShape(IMazeShape.ShapeType.targetRoom, 
+		// start- stop rooms
+		result.add(new MarkShape(IMazeShape.ShapeType.startRoom, getStartRoom()
+				/ width, getStartRoom() % width, "start"));
+		result.add(new MarkShape(IMazeShape.ShapeType.targetRoom,
 				getTargetRoom() / width, getTargetRoom() % width, "stop"));
-		
+
 		// inner walls - east/west
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
 				int wall = x + y * width;
-				WallShape ws1 = new WallShape(iw, y, x + 1, y + 1, x + 1);
-				ws1.setWallId(wall);
-				result.add(ws1);
-				if (x == width - 1) {
-					// repeat wrapped east border
-					WallShape ws2 = new WallShape(iw, y, 0, y + 1,  0);
-					ws2.setWallId(wall);
-					result.add(ws2);
+				if (realization.isWallClosed(wall)) {
+					WallShape ws1 = new WallShape(iw, y, x + 1, y + 1, x + 1);
+					result.add(ws1);
+					if (x == width - 1) {
+						// repeat wrapped east border
+						WallShape ws2 = new WallShape(iw, y, 0, y + 1, 0);
+						result.add(ws2);
+					}
 				}
 			}
 		}
-		
+
 		// inner walls - south/north
 		for (int y = 0; y < height - 1; y++) {
 			for (int x = 0; x < width; x++) {
 				int wall = x + y * width + eastWestWallCount;
-				WallShape ws = new WallShape(iw, y + 1, x, y + 1, x + 1);
-				ws.setWallId(wall);
-				result.add(ws);
-			}
-		}
-		
-		// holes and their dual (non holes) - up down
-		// the user will use either holes or non-holes
-		for (int y = 0; y < height/2; y++) {
-			for (int x = 0; x < width; x++) {
-				int wall = x + y * width + eastWestWallCount + southNorthWallCount;
-				String floorId = "f" + Integer.toString(wall);
-				final boolean isHole = true; // TODO !isWallClosed(wall);
-				FloorShape fs1 = new FloorShape(y, x, isHole, floorId);
-				fs1.setWallId(wall);
-				result.add(fs1);
-				int hy = getTheOtherSideOfHoleY(y,x);
-				int hx = getTheOtherSideOfHoleX(y,x);
-				FloorShape fs2 = new FloorShape(hy, hx, isHole, floorId);	
-				fs2.setWallId(wall);
-				result.add(fs2);
+				if (realization.isWallClosed(wall)) {
+					WallShape ws = new WallShape(iw, y + 1, x, y + 1, x + 1);
+					result.add(ws);
+				}
 			}
 		}
 
-	/* TODO 
+		// holes and their dual (non holes) - up down
+		// the user will use either holes or non-holes
+		for (int y = 0; y < height / 2; y++) {
+			for (int x = 0; x < width; x++) {
+				int wall = x + y * width + eastWestWallCount
+						+ southNorthWallCount;
+				if (realization.isWallClosed(wall)) {
+					String floorId = "f" + Integer.toString(wall);
+					final boolean isHole = true; // TODO !isWallClosed(wall);
+					FloorShape fs1 = new FloorShape(y, x, isHole, floorId);
+					fs1.setWallId(wall);
+					result.add(fs1);
+					int hy = getTheOtherSideOfHoleY(y, x);
+					int hx = getTheOtherSideOfHoleX(y, x);
+					FloorShape fs2 = new FloorShape(hy, hx, isHole, floorId);
+					fs2.setWallId(wall);
+					result.add(fs2);
+				}
+			}
+		}
+
 		// solution
 		final IMazeShape.ShapeType is = IMazeShape.ShapeType.solution;
-		for (int i = 0; i < solution.size()-1; i++) {
+		Vector<Integer> solution = realization.getSolution();
+		for (int i = 0; i < solution.size() - 1; i++) {
 			int room1 = solution.get(i);
-			int room2 = solution.get(i+1);
-			int y1 = room1/width;
-			int x1 = room1%width;
-			int y2 = room2/width;
-			int x2 = room2%width;
-			
+			int room2 = solution.get(i + 1);
+			int y1 = room1 / width;
+			int x1 = room1 % width;
+			int y2 = room2 / width;
+			int x2 = room2 % width;
+
 			// detect wrap around vertical border
 			boolean wrapAround = false;
-			if (y1 == y2) {				
-				if (x1 == 0 && x2 == width-1) {
+			if (y1 == y2) {
+				if (x1 == 0 && x2 == width - 1) {
 					wrapAround = true;
-				} else if (x2 == 0 && x1 == width-1) {
+				} else if (x2 == 0 && x1 == width - 1) {
 					wrapAround = true;
 					// swap
 					x1 = 0;
-					x2 = width-1;
-				}							
+					x2 = width - 1;
+				}
 			}
-			
+
 			if (wrapAround) {
 				result.add(new WallShape(is, y1, -1, y2, 0));
-				result.add(new WallShape(is, y1, width-1, y2, width));
+				result.add(new WallShape(is, y1, width - 1, y2, width));
 			} else {
 				result.add(new WallShape(is, y1, x1, y2, x2));
 			}
-			*/
-		
-		return result;	
-		}
 
+		}
+		return result;
+	}
 
 	@Override
 	public Iterable<Integer> getWalls(int room) {
 
 		int y = room / width;
 		int x = room % width;
-		
+
 		Vector<Integer> result = new Vector<Integer>();
 
 		// east
 		result.add(room);
 
 		// west
-		result.add(y * width + (x + width - 1) % width) ;
-	
+		result.add(y * width + (x + width - 1) % width);
+
 		// south
 		if (y < height - 1) {
-			result.add(eastWestWallCount+y * width + x);
+			result.add(eastWestWallCount + y * width + x);
 		}
 		// north
 		if (y > 0) {
 			result.add(eastWestWallCount + (y - 1) * width + x);
 		}
-		
+
 		// hole
 		int h = room;
-		if (y >= height / 2) 
-		{
+		if (y >= height / 2) {
 			h = getTheOtherSideOfHole(room);
 		}
 		result.add(eastWestWallCount + southNorthWallCount + h);
-		
-		return result;	
+
+		return result;
 	}
 
 	protected int getTheOtherSideOfHole(int room) {
@@ -177,14 +185,14 @@ public final class MoebiusMaze implements IMazeSpace,
 	protected int getTheOtherSideOfHoleY(int y, int x) {
 		return height - 1 - y;
 	}
-	
+
 	protected int getTheOtherSideOfHoleX(int y, int x) {
 		return (x + width / 2) % width;
 	}
-	
+
 	@Override
 	public int getTargetRoom() {
-		return width / 4 + (height - 1) * width;		
+		return width / 4 + (height - 1) * width;
 	}
 
 	@Override
@@ -200,8 +208,9 @@ public final class MoebiusMaze implements IMazeSpace,
 			final int x = wall % width;
 			final int westRoom = wall;
 			final int eastRoom = y * width + (x + 1) % width;
-			if (!(room == westRoom || room == eastRoom)) {			
-				throw new InvalidParameterException("Wall is not adjacent to room");
+			if (!(room == westRoom || room == eastRoom)) {
+				throw new InvalidParameterException(
+						"Wall is not adjacent to room");
 			}
 			return room == westRoom ? eastRoom : westRoom;
 		} else if (wall < eastWestWallCount + southNorthWallCount) {
@@ -210,12 +219,13 @@ public final class MoebiusMaze implements IMazeSpace,
 			final int northRoom = y * width + x;
 			final int southRoom = northRoom + width;
 			if (!(room == northRoom || room == southRoom)) {
-				throw new InvalidParameterException("Wall is not adjacent to room");
+				throw new InvalidParameterException(
+						"Wall is not adjacent to room");
 			}
 			return room == northRoom ? southRoom : northRoom;
-		} else 	{
+		} else {
 			// hole
-			return getTheOtherSideOfHole(room);			
+			return getTheOtherSideOfHole(room);
 		}
 	}
 
@@ -224,13 +234,13 @@ public final class MoebiusMaze implements IMazeSpace,
 		if (wall < eastWestWallCount) {
 			// horizontal
 			return 30;
-		} else if (wall < eastWestWallCount+southNorthWallCount) {
+		} else if (wall < eastWestWallCount + southNorthWallCount) {
 			// vertical
 			return 3;
-		}  else {
+		} else {
 			// hole
 			return 1;
-			
+
 		}
 	}
 
@@ -247,20 +257,12 @@ public final class MoebiusMaze implements IMazeSpace,
 		return 0;
 	}
 
-	public int getPictureHeight() {
-		return height;
-	}
-
-	public int getPictureWidth() {
-		return width;
-	}
 
 	private int height;
 	private int width;
-	
+
 	private int eastWestWallCount;
 	private int southNorthWallCount;
 	private int holeCount;
 
-	
 }

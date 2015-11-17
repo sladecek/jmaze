@@ -55,6 +55,7 @@ public class Rectangular2DMazeTest {
 		assertEquals(2.0, maze.getRoomDistance(6, 12), 1e-6);		
 	}
 
+	/* TODO
 	@Test
 	public void testGetShapes() {
 		int cnt = 0;
@@ -64,6 +65,7 @@ public class Rectangular2DMazeTest {
 		}
 		assertEquals(4+12+10, cnt);
 	}
+	*/
 
 	@Test
 	public void testGetStartRoom() {
@@ -126,28 +128,6 @@ public class Rectangular2DMazeTest {
 		for (int i = 0; i < cnt; i++) {
 			assertEquals(walls[i], (int)v.get(i));
 		}
-	}
-/*
-	@Test
-	public void testIsWallClosed_initial() {
-		assertEquals(true, maze.isWallClosed(0));
-		assertEquals(true, maze.isWallClosed(14));
-	}
-
-	@Test
-	public void testSetWallClosed() {
-		maze.setWallClosed(0, false);
-		assertEquals(false, maze.isWallClosed(0));
-	}
-*/
-	@Test
-	public void testGetPictureHeight() {
-		assertEquals(3, maze.getPictureHeight());
-	}
-
-	@Test
-	public void testGetPictureWidth() {
-		assertEquals(5, maze.getPictureWidth());
 	}
 
 	@Test(expected=InvalidParameterException.class)
