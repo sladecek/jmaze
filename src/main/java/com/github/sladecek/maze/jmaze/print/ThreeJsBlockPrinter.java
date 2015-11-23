@@ -15,6 +15,7 @@ public class ThreeJsBlockPrinter {
 		try {
 			tjs = new ThreeJsComposer(os);
 			printBlocks(tjs);	
+			printMarks(tjs);	
 			tjs.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -37,9 +38,26 @@ public class ThreeJsBlockPrinter {
 	}
 
 	private void printBlocks(ThreeJsComposer tjs) throws IOException {
+		tjs.beginList("blocks");
 		for (Block b: blockMaker.getBlocks()) {
-			tjs.printPolyhedron(b.getPolyhedron(), b.getComment(), b.getColor());
-		}
+			if (!b.isMark()) {
+				tjs.printPolyhedron(b.getPolyhedron(), b.getComment(), b.getColor());	
+			}			
+		}		
+		final boolean insertComma = true;
+		tjs.closeList(insertComma);
+	}
+
+	private void printMarks(ThreeJsComposer tjs) throws IOException {
+		tjs.beginList("marks");
+		for (Block b: blockMaker.getBlocks()) {
+			if (b.isMark()) {
+				assert b.getPolyhedron().size() == 1 : "mark blocks must have exactly one point";
+				tjs.printMark(b.getPolyhedron().get(0), b.getComment(), b.getColor());	
+			}			
+		}		
+		final boolean insertComma = false;
+		tjs.closeList(insertComma);
 	}
 
 	private IBlockMaker blockMaker;

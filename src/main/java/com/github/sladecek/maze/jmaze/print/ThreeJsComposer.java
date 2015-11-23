@@ -24,12 +24,26 @@ public final class ThreeJsComposer implements java.lang.AutoCloseable {
 	public ThreeJsComposer(final OutputStream stream) throws IOException {
 		this.stream = stream;
 		out = new OutputStreamWriter(stream, "UTF8");
-		out.write("[\n");
-		needComma = false;
+		out.write("{\n");
+
 	}
+
+	public void beginList(String name) throws IOException {
+		out.write("\"" + name + "\":[\n");
+		needComma = false;
+
+	}
+
+	public void closeList(boolean insertComma) throws IOException {
+		out.write("]\n");
+		if (insertComma) {
+			out.write(",\n");
+		}
+	}
+
 	
 	public void close() throws IOException {		
-		out.write("]\n");
+		out.write("}\n");
 		out.close();
 		stream.close();
 	}
@@ -73,5 +87,12 @@ public final class ThreeJsComposer implements java.lang.AutoCloseable {
 		
 	}
 
+	public void printMark(Point point, String comment, Color color) throws IOException {
+		if (needComma) {
+			out.write(",\n");
+		}
+		printPoint(point);
+		needComma = true;
+	}
 	
 }
