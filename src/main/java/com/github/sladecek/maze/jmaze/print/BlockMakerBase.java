@@ -166,8 +166,6 @@ public abstract class BlockMakerBase {
 
 	/*
 	 * protected void printText(Point p, String text, Color color) {
-	 * scad.printTranslate(p); final double size = 0.05; scad.printText(text,
-	 * color, size); }
 	 */
 	protected final Point getHolePoint(int y, int x, EastWest ew,
 			SouthNorth sn, UpDown ud) {
@@ -220,4 +218,34 @@ public abstract class BlockMakerBase {
 
 	}
 
+	
+	protected void printMark(int y, int x, Color color) {
+
+		double z = 3*sizes.getBaseThicknessInmm();
+		double avgX = 0;
+		double avgY = 0;
+		double avgZ = 0;
+		for (EastWest ew : EastWest.values()) {
+			for (SouthNorth sn : SouthNorth.values()) {
+				final int dY = (sn == SouthNorth.south) ? 0 : maze3dMapper.getStepY(y,
+				x);
+				final int dX = (ew == EastWest.east) ? 0 : 1;
+
+
+				Point p0 = maze3dMapper.mapPoint(y + dY, x + dX, 0, 0,  z);
+				avgX += p0.getX();
+				avgY += p0.getY();
+				avgZ += p0.getZ();
+			}
+		}
+		
+		final Point center = new Point(avgX/4, avgY/4, avgZ/4);
+		final double radius = 1*sizes.getBaseThicknessInmm();
+		
+		Block b = Block.newMark(center, radius, "", color);
+		blocks.add(b);
+		
+	}
+
+	
 }
