@@ -25,13 +25,12 @@ public class ThreeJsBlockPrinter {
 		return os.toString();
 	}
 	
+	// TODO sloucit s predchozi metodou
 	public final void printMaze(final String fileName) {		
 		blockMaker.makeBlocks();
-		try (ThreeJsComposer tjs = new ThreeJsComposer(fileName)) {
-			
+		try (ThreeJsComposer tjs = new ThreeJsComposer(fileName)) {			
 			printBlocks(tjs);
-			
-	
+			printMarks(tjs);	
 		} catch (IOException ioe) {
 			System.out.println(ioe.getMessage());
 		}
