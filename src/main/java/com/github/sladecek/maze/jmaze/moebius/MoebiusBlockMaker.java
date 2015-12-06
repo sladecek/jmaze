@@ -114,5 +114,5 @@ public final class MoebiusBlockMaker extends BlockMakerBase implements IBlockMak
 
 	private int cellHeight;
 	private int cellWidth;
-	
+
 }

@@ -46,17 +46,16 @@ public final class EggBlockMaker extends BlockMakerBase implements IBlockMaker {
 
 	private void printMarks() {
 		for (MarkShape ms : marks) {
-			Color c = new Color(0,120,120,120);
+			Color c = new Color(0, 120, 120, 120);
 			if (ms.getShapeType() == ShapeType.startRoom) {
-				c = new Color(120,0,0,120);
+				c = new Color(120, 0, 0, 120);
 			} else if (ms.getShapeType() == ShapeType.targetRoom) {
-				c = new Color(0,120,0,120);
+				c = new Color(0, 120, 0, 120);
 			}
 			printMark(ms.getY(), ms.getX(), c);
 		}
-		
-	}
 
+	}
 
 	protected void prepareShapes(final IShapeMaker maze) {
 		ShapeContainer shapes = maze.makeShapes(realization);
@@ -68,10 +67,11 @@ public final class EggBlockMaker extends BlockMakerBase implements IBlockMaker {
 			if (shape.getShapeType() == ShapeType.nonHole) {
 				floor.add((FloorShape) shape);
 			} else if (shape.getShapeType() == ShapeType.innerWall) {
-				walls.add((WallShape) shape);			
+				walls.add((WallShape) shape);
 			} else {
 				ShapeType sp = shape.getShapeType();
-				if (sp == ShapeType.startRoom || sp == ShapeType.targetRoom || sp == ShapeType.solution) {
+				if (sp == ShapeType.startRoom || sp == ShapeType.targetRoom
+						|| sp == ShapeType.solution) {
 					marks.add((MarkShape) shape);
 				}
 			}

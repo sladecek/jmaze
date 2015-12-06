@@ -2,6 +2,7 @@ package com.github.sladecek.maze.jmaze.print;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.function.Consumer;
 
 public class ThreeJsBlockPrinter {
 	public ThreeJsBlockPrinter(final IBlockMaker blockMaker) {
@@ -41,7 +42,8 @@ public class ThreeJsBlockPrinter {
 		for (Block b: blockMaker.getBlocks()) {
 			if (!b.isMark()) {
 				tjs.printPolyhedron(b.getPolyhedron(), b.getComment(), b.getColor());	
-			}			
+			}		
+			
 		}		
 		final boolean insertComma = true;
 		tjs.closeList(insertComma);

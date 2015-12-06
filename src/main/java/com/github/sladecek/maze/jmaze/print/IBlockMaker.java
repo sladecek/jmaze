@@ -9,5 +9,4 @@ package com.github.sladecek.maze.jmaze.print;
 public interface IBlockMaker {
 	void makeBlocks();
 	Iterable<Block> getBlocks();
-
 }

@@ -17,10 +17,13 @@ public final class DepthFirstMazeGenerator implements IMazeGenerator {
 	public MazeRealization generateMaze(final IMazeSpace maze) {
 		MazeRealization result = new MazeRealization(maze.getWallCount());
 		Vector<Integer> solution = null;
-		visitedRooms = new BitSet(maze.getRoomCount());
+		int allRoomsCnt = maze.getRoomCount();
+		visitedRooms = new BitSet(allRoomsCnt);
+
 		stack = new Stack<Integer>();
 		visitRoom(maze.getStartRoom());
 		while (!stack.isEmpty()) {
+
 			int room = stack.peek();
 			LOGGER.log(Level.INFO, " observing room: " + room);
 			if (room == maze.getTargetRoom()) {
@@ -55,7 +58,8 @@ public final class DepthFirstMazeGenerator implements IMazeGenerator {
 			LOGGER.log(Level.INFO, " opening wall " + wall);
 			result.setWallClosed(wall, false);
 			int otherRoom = maze.getRoomBehindWall(room, wall);
-			visitRoom(otherRoom);			
+			visitRoom(otherRoom);
+			
 		}
 		return result;		
 	}
