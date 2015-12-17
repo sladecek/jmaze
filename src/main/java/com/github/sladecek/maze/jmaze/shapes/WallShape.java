@@ -1,10 +1,7 @@
 package com.github.sladecek.maze.jmaze.shapes;
 
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-import com.github.sladecek.maze.jmaze.generator.MazeRealization;
 import com.github.sladecek.maze.jmaze.print.SvgMazePrinter;
 
 public final class WallShape implements IMazeShape {
@@ -98,7 +95,7 @@ public final class WallShape implements IMazeShape {
 				+ x2 + ", y1=" + y1 + ", y2=" + y2 + "]";
 	}
 
-	private static final Logger LOG = Logger.getLogger("LOG");
+// TODO 	private static final Logger LOG = Logger.getLogger("LOG");
 	private int x1;
 	private int x2;
 	private int y1;

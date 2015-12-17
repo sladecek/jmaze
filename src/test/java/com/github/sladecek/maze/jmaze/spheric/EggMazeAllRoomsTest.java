@@ -1,16 +1,5 @@
 package com.github.sladecek.maze.jmaze.spheric;
 
-import static org.junit.Assert.assertEquals;
-
-import java.nio.MappedByteBuffer;
-import java.util.Vector;
-
-import org.junit.Test;
-
-import com.github.sladecek.maze.jmaze.geometry.SouthNorth;
-import com.github.sladecek.maze.jmaze.shapes.IMazeShape;
-import com.github.sladecek.maze.jmaze.shapes.WallShape;
-import com.github.sladecek.maze.jmaze.shapes.IMazeShape.ShapeType;
 
 public class EggMazeAllRoomsTest {
 

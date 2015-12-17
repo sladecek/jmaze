@@ -2,7 +2,6 @@ package com.github.sladecek.maze.jmaze.print;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.function.Consumer;
 
 public class ThreeJsBlockPrinter {
 	public ThreeJsBlockPrinter(final IBlockMaker blockMaker) {
