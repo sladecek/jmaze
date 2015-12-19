@@ -63,7 +63,7 @@ public final class FloorShape implements IMazeShape {
 		return "FloorShape [id=" + id + " y=" + y + ", x=" + x + ", isHole=" + isHole + "]";
 	}
 
-	private static final Logger LOG = Logger.getLogger("LOG");
+	private static final Logger LOG =  Logger.getLogger("maze.jmaze");
 
 	private int y;
 	private int x;

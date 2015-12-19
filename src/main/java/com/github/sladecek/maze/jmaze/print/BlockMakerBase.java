@@ -195,7 +195,7 @@ public abstract class BlockMakerBase {
 		return mapPointWithZ(cellY + dY, cellX + dX, ud, 0, 0);
 	}
 
-	private static final Logger LOG = Logger.getLogger("LOG");
+	private static final Logger LOG =  Logger.getLogger("maze.jmaze");
 
 	protected Maze3DSizes sizes;
 	protected MazeColors colors;

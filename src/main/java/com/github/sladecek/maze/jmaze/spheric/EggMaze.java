@@ -261,7 +261,7 @@ public final class EggMaze extends GenericMazeSpace implements IMazeSpace,
 		return this.baseRoomSizeInmm;
 	}
 
-	private static final Logger LOG = Logger.getLogger("LOG");
+	private static final Logger LOG =  Logger.getLogger("maze.jmaze");
 	
 	private EggGeometry egg;
 	private int equatorCellCnt;

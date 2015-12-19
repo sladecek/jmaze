@@ -147,7 +147,7 @@ public final class Egg3dMapper implements IMaze3DMapper {
 		}
 	}
 	
-	private static final Logger LOG = Logger.getLogger("LOG");
+	private static final Logger LOG =  Logger.getLogger("maze.jmaze");
 	private EggGeometry egg;
 	private EggMaze maze;
 

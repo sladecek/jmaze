@@ -20,7 +20,7 @@ final class TestAppEgg {
 	private TestAppEgg() {		
 	}
 	
-	private static final Logger LOG = Logger.getLogger("LOG");
+	private static final Logger LOG =  Logger.getLogger("maze.jmaze");
 
 	public static void main(final String[] args) {
 		LogManager.getLogManager().reset();

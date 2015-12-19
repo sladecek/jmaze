@@ -96,7 +96,7 @@ public final class EggBlockMaker extends BlockMakerBase implements IBlockMaker {
 		}
 	}
 
-	private static final Logger LOGGER = Logger.getLogger("LOG");
+	private static final Logger LOGGER =  Logger.getLogger("maze.jmaze");
 	private EggGeometry egg;
 	private EggMaze maze;
 	private ArrayList<WallShape> walls;

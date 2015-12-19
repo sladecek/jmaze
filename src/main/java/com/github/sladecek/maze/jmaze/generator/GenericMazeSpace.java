@@ -86,7 +86,7 @@ public class GenericMazeSpace  implements IMazeSpace {
 		return 1;
 	}
 
-	private static final Logger LOGGER = Logger.getLogger("LOG");
+	private static final Logger LOGGER =  Logger.getLogger("maze.jmaze");
 
 	private int startRoom;
 	private int targetRoom;

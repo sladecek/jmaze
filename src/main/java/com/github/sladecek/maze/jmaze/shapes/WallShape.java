@@ -95,7 +95,7 @@ public final class WallShape implements IMazeShape {
 				+ x2 + ", y1=" + y1 + ", y2=" + y2 + "]";
 	}
 
-// TODO 	private static final Logger LOG = Logger.getLogger("LOG");
+// TODO 	private static final Logger LOG =  Logger.getLogger("maze.jmaze");
 	private int x1;
 	private int x2;
 	private int y1;

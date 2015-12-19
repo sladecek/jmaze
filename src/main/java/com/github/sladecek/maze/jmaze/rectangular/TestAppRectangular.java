@@ -42,7 +42,7 @@ public final class TestAppRectangular {
 		}
     }
 
-	private static final Logger LOG = Logger.getLogger("LOG");
+	private static final Logger LOG =  Logger.getLogger("maze.jmaze");
 	
 
 }

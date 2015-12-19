@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 
 public final class DepthFirstMazeGenerator implements IMazeGenerator {
 	
-	private static final Logger LOGGER = Logger.getLogger("LOG"); 
+	private static final Logger LOGGER =  Logger.getLogger("maze.jmaze"); 
 	
 	private Random randomGenerator = new Random();
 	
