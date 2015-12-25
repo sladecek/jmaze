@@ -50,7 +50,7 @@ public final class FloorShape implements IMazeShape {
 
 
 	@Override
-	public void printToSvg(SvgMazePrinter svg) throws IOException {
+	public void printToSvg(SvgMazePrinter svg)  {
 		if (isHole) {
 			String style = "stroke:rgb(222,222,222);stroke-width:1";
 			svg.printLine(y, x, y + 1, x + 1, style, false);

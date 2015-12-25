@@ -1,7 +1,5 @@
 package com.github.sladecek.maze.jmaze.shapes;
 
-import java.io.IOException;
-
 import com.github.sladecek.maze.jmaze.print.SvgMazePrinter;
 
 public final class WallShape implements IMazeShape {
@@ -15,23 +13,12 @@ public final class WallShape implements IMazeShape {
 		this.wallId = -1;
 	}
 
-	/* TODO smazat
-	public int getWallId() {
-		return wallId;
-	}
-*/
-	/* TODO smazat
-	public void setWallId(int value) {
-		this.wallId = value;
-		LOG.log(Level.INFO, "WallShape id=" + wallId + " x1=" + x1 + " y1=" + y1 + " x2=" + x2 + " y2=" + y2);
-	}
-	*/
-
+	
 	public ShapeType getShapeType() {
 		return this.shapeType;
 	}
 
-	public void printToSvg(SvgMazePrinter svg) throws IOException  {		
+	public void printToSvg(SvgMazePrinter svg) {		
 		String style = "";
 		boolean center = false;
 		switch (shapeType) {		
@@ -71,19 +58,7 @@ public final class WallShape implements IMazeShape {
 	public int getY2() {
 		return y2;
 	}
-/*TODO 
 
-	@Override
-	public boolean isOpen(MazeRealization real) {
-		if (shapeType != ShapeType.innerWall) {		
-			return false;
-		}
-		if (this.wallId < 0) {
-			return true;
-		}
-		return !real.isWallClosed(this.wallId);
-	}
-	*/
 	@Override
 	public String getId() {
 		return "w" + Integer.toString(wallId);
@@ -95,7 +70,6 @@ public final class WallShape implements IMazeShape {
 				+ x2 + ", y1=" + y1 + ", y2=" + y2 + "]";
 	}
 
-// TODO 	private static final Logger LOG =  Logger.getLogger("maze.jmaze");
 	private int x1;
 	private int x2;
 	private int y1;

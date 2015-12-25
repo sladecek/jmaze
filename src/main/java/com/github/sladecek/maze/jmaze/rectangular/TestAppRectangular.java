@@ -1,5 +1,6 @@
 package com.github.sladecek.maze.jmaze.rectangular;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
@@ -10,6 +11,7 @@ import java.util.logging.SimpleFormatter;
 import com.github.sladecek.maze.jmaze.generator.DepthFirstMazeGenerator;
 import com.github.sladecek.maze.jmaze.generator.IMazeGenerator;
 import com.github.sladecek.maze.jmaze.generator.MazeRealization;
+import com.github.sladecek.maze.jmaze.print.MazeOutputFormat;
 import com.github.sladecek.maze.jmaze.print.SvgMazePrinter;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
 
@@ -35,7 +37,13 @@ public final class TestAppRectangular {
 	    	ShapeContainer shapes = maze.makeShapes(realization);	    	
 	    	SvgMazePrinter printer = new SvgMazePrinter();
 	    	final boolean showSolution = true;
-	    	printer.printShapes(shapes,  "maze-rect.svg", showSolution);
+	    	
+			SvgMazePrinter sp = new SvgMazePrinter();
+			FileOutputStream f = new FileOutputStream("maze-rect.svg");
+			printer.printShapes(shapes, MazeOutputFormat.svg, f, showSolution);
+			FileOutputStream fp = new FileOutputStream("maze-rect.pdf");
+			printer.printShapes(shapes, MazeOutputFormat.pdf, fp, showSolution);
+
 	    	
 		} catch (SecurityException | IOException e) {
 			e.printStackTrace();

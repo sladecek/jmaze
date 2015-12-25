@@ -14,6 +14,6 @@ public interface IMazeShape {
 	
 	String getId();
 	
-	void printToSvg(SvgMazePrinter printer) throws IOException;
+	void printToSvg(SvgMazePrinter printer) ;
 
 }

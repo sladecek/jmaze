@@ -1,7 +1,5 @@
 package com.github.sladecek.maze.jmaze.shapes;
 
-import java.io.IOException;
-
 import com.github.sladecek.maze.jmaze.print.SvgMazePrinter;
 
 public final class MarkShape implements IMazeShape {
@@ -39,7 +37,7 @@ public final class MarkShape implements IMazeShape {
 				+ "]";
 	}
 
-	public void printToSvg(SvgMazePrinter svg) throws IOException  {
+	public void printToSvg(SvgMazePrinter svg)   {
 		switch (shapeType) {
 		case startRoom:
 			svg.printMark(y, x, "red", 25);		
