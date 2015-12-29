@@ -4,6 +4,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import com.github.sladecek.maze.jmaze.colors.Color;
+
 public class ColorTest {
 
 	@Test

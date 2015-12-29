@@ -1,7 +1,8 @@
-package com.github.sladecek.maze.jmaze.print;
+package com.github.sladecek.maze.jmaze.print3d;
 
 import java.util.ArrayList;
 
+import com.github.sladecek.maze.jmaze.colors.Color;
 import com.github.sladecek.maze.jmaze.geometry.Point;
 
 /**

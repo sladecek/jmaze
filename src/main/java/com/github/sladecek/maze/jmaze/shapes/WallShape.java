@@ -1,6 +1,6 @@
 package com.github.sladecek.maze.jmaze.shapes;
 
-import com.github.sladecek.maze.jmaze.print.SvgMazePrinter;
+import com.github.sladecek.maze.jmaze.print2d.SvgMazePrinter;
 
 public final class WallShape implements IMazeShape {
 	

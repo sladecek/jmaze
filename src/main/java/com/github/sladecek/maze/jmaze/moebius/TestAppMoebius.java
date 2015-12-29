@@ -1,13 +1,16 @@
 package com.github.sladecek.maze.jmaze.moebius;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+
+import com.github.sladecek.maze.jmaze.colors.MazeColors;
+import com.github.sladecek.maze.jmaze.colors.WinterColors;
 import com.github.sladecek.maze.jmaze.generator.DepthFirstMazeGenerator;
 import com.github.sladecek.maze.jmaze.generator.IMazeGenerator;
 import com.github.sladecek.maze.jmaze.generator.MazeRealization;
-import com.github.sladecek.maze.jmaze.print.Maze3DSizes;
-import com.github.sladecek.maze.jmaze.print.MazeColors;
-import com.github.sladecek.maze.jmaze.print.OpenScadBlockPrinter;
-import com.github.sladecek.maze.jmaze.print.ThreeJsBlockPrinter;
-import com.github.sladecek.maze.jmaze.print.WinterColors;
+import com.github.sladecek.maze.jmaze.print3d.Maze3DSizes;
+import com.github.sladecek.maze.jmaze.print3d.OpenScad3DPrinter;
+import com.github.sladecek.maze.jmaze.print3d.ThreeJs3DPrinter;
 
 /***
  * Command line application generating a Moebius maze into OpenScad file.
@@ -22,10 +25,7 @@ public final class TestAppMoebius {
 		MoebiusMaze maze = new MoebiusMaze(widthCells, lengthCells);
 		IMazeGenerator g = new DepthFirstMazeGenerator();
 		MazeRealization r = g.generateMaze(maze);
-		/*
-		 * TODO SvgMazePrinter smp = new SvgMazePrinter();
-		 * smp.printMaze(maze,"maze.svg");
-		 */
+
 		Maze3DSizes sizes = new Maze3DSizes();
 		sizes.setCellSizeInmm(2);
 
@@ -35,18 +35,24 @@ public final class TestAppMoebius {
 		MoebiusBlockMaker maker = new MoebiusBlockMaker(maze, r, sizes, colors,
 				approxRoomSizeInmm);
 
-		final String fileName = "maze-moebius";
-
 		final boolean printInJs = true;
 		final boolean printInScad = true;
 
-		if (printInJs) {
-			ThreeJsBlockPrinter printerJs = new ThreeJsBlockPrinter(maker);
-			printerJs.printMaze(fileName + ".js");
-		}
-		if (printInScad) {
-			OpenScadBlockPrinter printerScad = new OpenScadBlockPrinter(maker);
-			printerScad.printMaze(fileName + ".scad");
+		try {
+
+			if (printInJs) {
+				FileOutputStream f;
+				f = new FileOutputStream("maze-moebius.js");
+				new ThreeJs3DPrinter().printBlocks(maker, f);
+			}
+			if (printInScad) {
+				FileOutputStream f = new FileOutputStream("maze-moebius.scad");
+				new OpenScad3DPrinter().printBlocks(maker, f);
+			}
+
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
 	}

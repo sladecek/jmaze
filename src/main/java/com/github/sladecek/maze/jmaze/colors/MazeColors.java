@@ -1,4 +1,4 @@
-package com.github.sladecek.maze.jmaze.print;
+package com.github.sladecek.maze.jmaze.colors;
 
 public interface MazeColors {
 	Color getBaseColor();

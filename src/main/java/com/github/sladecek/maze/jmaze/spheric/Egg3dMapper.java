@@ -8,7 +8,7 @@ import com.github.sladecek.maze.jmaze.geometry.OrientationVector2D;
 import com.github.sladecek.maze.jmaze.geometry.Point;
 import com.github.sladecek.maze.jmaze.geometry.SouthNorth;
 import com.github.sladecek.maze.jmaze.geometry.UpDown;
-import com.github.sladecek.maze.jmaze.print.IMaze3DMapper;
+import com.github.sladecek.maze.jmaze.print3d.IMaze3DMapper;
 
 /*
  * Map integer room cordinates do 3D coordinates in the egg.

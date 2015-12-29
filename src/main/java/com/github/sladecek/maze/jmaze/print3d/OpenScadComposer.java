@@ -1,4 +1,4 @@
-package com.github.sladecek.maze.jmaze.print;
+package com.github.sladecek.maze.jmaze.print3d;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -9,6 +9,7 @@ import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Locale;
 
+import com.github.sladecek.maze.jmaze.colors.Color;
 import com.github.sladecek.maze.jmaze.geometry.Point;
 
 /*
@@ -16,10 +17,11 @@ import com.github.sladecek.maze.jmaze.geometry.Point;
  */
 public final class OpenScadComposer implements java.lang.AutoCloseable {
 
-	public OpenScadComposer(final String fileName) throws IOException {
+	/* TODO smazat public OpenScadComposer(final String fileName) throws IOException {
 		stream = new FileOutputStream(fileName);
 		out = new OutputStreamWriter(stream, "UTF8");
 	}
+	*/
 	
 	public OpenScadComposer(final OutputStream stream) throws IOException {
 		this.stream = stream;

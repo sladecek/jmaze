@@ -11,8 +11,8 @@ import java.util.logging.SimpleFormatter;
 import com.github.sladecek.maze.jmaze.generator.DepthFirstMazeGenerator;
 import com.github.sladecek.maze.jmaze.generator.IMazeGenerator;
 import com.github.sladecek.maze.jmaze.generator.MazeRealization;
-import com.github.sladecek.maze.jmaze.print.MazeOutputFormat;
-import com.github.sladecek.maze.jmaze.print.SvgMazePrinter;
+import com.github.sladecek.maze.jmaze.print2d.MazeOutputFormat;
+import com.github.sladecek.maze.jmaze.print2d.SvgMazePrinter;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
 
 public final class TestAppRectangular {

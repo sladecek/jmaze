@@ -1,4 +1,4 @@
-package com.github.sladecek.maze.jmaze.print;
+package com.github.sladecek.maze.jmaze.print3d;
 
 import com.github.sladecek.maze.jmaze.geometry.EastWest;
 import com.github.sladecek.maze.jmaze.geometry.Point;

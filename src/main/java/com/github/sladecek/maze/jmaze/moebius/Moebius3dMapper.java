@@ -6,8 +6,8 @@ import com.github.sladecek.maze.jmaze.geometry.EastWest;
 import com.github.sladecek.maze.jmaze.geometry.Point;
 import com.github.sladecek.maze.jmaze.geometry.SouthNorth;
 import com.github.sladecek.maze.jmaze.geometry.UpDown;
-import com.github.sladecek.maze.jmaze.print.IMaze3DMapper;
-import com.github.sladecek.maze.jmaze.print.Maze3DSizes;
+import com.github.sladecek.maze.jmaze.print3d.IMaze3DMapper;
+import com.github.sladecek.maze.jmaze.print3d.Maze3DSizes;
 
 public final class Moebius3dMapper implements IMaze3DMapper {
 

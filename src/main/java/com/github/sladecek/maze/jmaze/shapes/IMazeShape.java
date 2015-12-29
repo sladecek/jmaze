@@ -2,7 +2,7 @@ package com.github.sladecek.maze.jmaze.shapes;
 
 import java.io.IOException;
 
-import com.github.sladecek.maze.jmaze.print.SvgMazePrinter;
+import com.github.sladecek.maze.jmaze.print2d.SvgMazePrinter;
 
 /**
  * Shapes for maze drawing.

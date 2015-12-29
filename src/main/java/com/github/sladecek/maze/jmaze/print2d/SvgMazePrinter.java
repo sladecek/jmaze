@@ -1,4 +1,4 @@
-package com.github.sladecek.maze.jmaze.print;
+package com.github.sladecek.maze.jmaze.print2d;
 
 import java.io.OutputStream;
 
@@ -24,7 +24,7 @@ import org.w3c.dom.Element;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
 
-public final class SvgMazePrinter implements IMazePrinter {
+public final class SvgMazePrinter implements IMaze2DPrinter {
 	final int cellSize = 10;
 	final int margin = cellSize / 2;
 

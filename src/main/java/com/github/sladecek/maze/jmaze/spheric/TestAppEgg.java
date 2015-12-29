@@ -1,5 +1,6 @@
 package com.github.sladecek.maze.jmaze.spheric;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
@@ -7,14 +8,15 @@ import java.util.logging.LogManager;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
+import com.github.sladecek.maze.jmaze.colors.MazeColors;
+import com.github.sladecek.maze.jmaze.colors.WinterColors;
 import com.github.sladecek.maze.jmaze.generator.DepthFirstMazeGenerator;
 import com.github.sladecek.maze.jmaze.generator.IMazeGenerator;
 import com.github.sladecek.maze.jmaze.generator.MazeRealization;
-import com.github.sladecek.maze.jmaze.print.Maze3DSizes;
-import com.github.sladecek.maze.jmaze.print.MazeColors;
-import com.github.sladecek.maze.jmaze.print.OpenScadBlockPrinter;
-import com.github.sladecek.maze.jmaze.print.ThreeJsBlockPrinter;
-import com.github.sladecek.maze.jmaze.print.WinterColors;
+import com.github.sladecek.maze.jmaze.print3d.IMaze3DPrinter;
+import com.github.sladecek.maze.jmaze.print3d.Maze3DSizes;
+import com.github.sladecek.maze.jmaze.print3d.OpenScad3DPrinter;
+import com.github.sladecek.maze.jmaze.print3d.ThreeJs3DPrinter;
 
 final class TestAppEgg {
 	private TestAppEgg() {		
@@ -50,18 +52,15 @@ final class TestAppEgg {
 
 			final boolean printInJs = true;
 			final boolean printInScad = true;
-			final String fileName = "maze-egg";
 			if (printInJs) {
-				ThreeJsBlockPrinter printerJs = new ThreeJsBlockPrinter(maker);
-				printerJs.printMaze(fileName + ".js");
+				FileOutputStream f = new FileOutputStream("maze-egg.js");
+				new ThreeJs3DPrinter().printBlocks(maker, f);
 			}
 			if (printInScad) {
-				OpenScadBlockPrinter printerScad = new OpenScadBlockPrinter(
-						maker);
-				printerScad.printMaze(fileName + ".scad");
+				FileOutputStream f = new FileOutputStream("maze-egg.scad");
+				new OpenScad3DPrinter().printBlocks(maker, f);
 			}
-
-			
+		
 
 		} catch (SecurityException | IOException e) {
 			// TODO Auto-generated catch block

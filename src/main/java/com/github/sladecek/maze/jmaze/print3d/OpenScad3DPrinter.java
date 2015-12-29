@@ -1,19 +1,17 @@
-package com.github.sladecek.maze.jmaze.print;
+package com.github.sladecek.maze.jmaze.print3d;
 
 import java.io.IOException;
+import java.io.OutputStream;
 
 /**
  * Save maze blocks in open scad file format.
  */
-public class OpenScadBlockPrinter {
+public class OpenScad3DPrinter implements IMaze3DPrinter {
 	
-	public OpenScadBlockPrinter(final IBlockMaker blockMaker) {
-		this.blockMaker = blockMaker;
-	}
-	
-	public final void printMaze(final String fileName) {		
+
+	public final void printBlocks(final IBlockMaker blockMaker, final OutputStream stream) {		
 		blockMaker.makeBlocks();
-		try (OpenScadComposer scad = new OpenScadComposer(fileName)) {
+		try (OpenScadComposer scad = new OpenScadComposer(stream)) {
 			
 			scad.beginUnion();
 			for (Block b: blockMaker.getBlocks()) {
@@ -30,5 +28,5 @@ public class OpenScadBlockPrinter {
 		}
 	}
 
-	private IBlockMaker blockMaker;
+
 }

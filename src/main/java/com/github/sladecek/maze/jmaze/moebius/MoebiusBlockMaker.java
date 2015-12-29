@@ -2,16 +2,16 @@ package com.github.sladecek.maze.jmaze.moebius;
 
 import java.util.ArrayList;
 
+import com.github.sladecek.maze.jmaze.colors.MazeColors;
 import com.github.sladecek.maze.jmaze.generator.MazeRealization;
 import com.github.sladecek.maze.jmaze.geometry.EastWest;
 import com.github.sladecek.maze.jmaze.geometry.Point;
 import com.github.sladecek.maze.jmaze.geometry.SouthNorth;
 import com.github.sladecek.maze.jmaze.geometry.UpDown;
-import com.github.sladecek.maze.jmaze.print.Block;
-import com.github.sladecek.maze.jmaze.print.BlockMakerBase;
-import com.github.sladecek.maze.jmaze.print.IBlockMaker;
-import com.github.sladecek.maze.jmaze.print.Maze3DSizes;
-import com.github.sladecek.maze.jmaze.print.MazeColors;
+import com.github.sladecek.maze.jmaze.print3d.Block;
+import com.github.sladecek.maze.jmaze.print3d.BlockMakerBase;
+import com.github.sladecek.maze.jmaze.print3d.IBlockMaker;
+import com.github.sladecek.maze.jmaze.print3d.Maze3DSizes;
 import com.github.sladecek.maze.jmaze.shapes.FloorShape;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape;
 import com.github.sladecek.maze.jmaze.shapes.IShapeMaker;

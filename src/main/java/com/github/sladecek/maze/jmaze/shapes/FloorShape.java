@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.github.sladecek.maze.jmaze.print.SvgMazePrinter;
+import com.github.sladecek.maze.jmaze.print2d.SvgMazePrinter;
 
 /// Represents hole in the ground of the maze or the lack of thereof.
 /// The user usually prints either holes or non-holes depending on output
