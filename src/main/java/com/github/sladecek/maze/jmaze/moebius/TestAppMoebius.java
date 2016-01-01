@@ -14,9 +14,6 @@ import com.github.sladecek.maze.jmaze.print3d.ThreeJs3DPrinter;
 
 /***
  * Command line application generating a Moebius maze into OpenScad file.
- * 
- * @author sladecek
- *
  */
 public final class TestAppMoebius {
 	public static void main(final String[] args) {
@@ -39,7 +36,6 @@ public final class TestAppMoebius {
 		final boolean printInScad = true;
 
 		try {
-
 			if (printInJs) {
 				FileOutputStream f;
 				f = new FileOutputStream("maze-moebius.js");

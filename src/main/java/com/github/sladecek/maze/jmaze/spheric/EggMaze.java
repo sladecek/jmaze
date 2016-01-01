@@ -1,6 +1,5 @@
 package com.github.sladecek.maze.jmaze.spheric;
 
-import java.util.HashMap;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -10,7 +9,7 @@ import com.github.sladecek.maze.jmaze.generator.IMazeSpace;
 import com.github.sladecek.maze.jmaze.generator.MazeRealization;
 import com.github.sladecek.maze.jmaze.geometry.SouthNorth;
 import com.github.sladecek.maze.jmaze.shapes.FloorShape;
-import com.github.sladecek.maze.jmaze.shapes.IMazeShape;
+import com.github.sladecek.maze.jmaze.shapes.GenericShapeMaker;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape.ShapeType;
 import com.github.sladecek.maze.jmaze.shapes.IShapeMaker;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
@@ -42,40 +41,18 @@ public final class EggMaze extends GenericMazeSpace implements IMazeSpace,
 		}
 		
 		// Build topological structure of the maze and maze shapes at the same time.
-		// all wall will be generated
+		// all walls will be generated
 		buildMaze();
 
 	}
 
-
 	@Override
 	public ShapeContainer makeShapes(MazeRealization realization) {
-		
-		ShapeContainer result = new ShapeContainer();
-		result.setPictureHeight(shapes.getPictureHeight());
-		result.setPictureWidth(shapes.getPictureWidth());
-		
-		// copy only closed walls to the result
-		for (IMazeShape s: shapes.getShapes()) {
-			if (!shape2id.containsKey(s) || realization.isWallClosed(shape2id.get(s))) {
-				result.add(s);
-			}
-		}
-		
-		// start/stop
-		result.add(room2floor.get(getStartRoom()).CreateMarkInThisRoom(IMazeShape.ShapeType.startRoom, "start"));
-		result.add(room2floor.get(getTargetRoom()).CreateMarkInThisRoom(IMazeShape.ShapeType.targetRoom, "target"));
-		
-		// solution
-		for (int i: realization.getSolution()) {
-			result.add(room2floor.get(i).CreateMarkInThisRoom(IMazeShape.ShapeType.targetRoom, "solution " + i));
-		}
-
-		
-		return result;
+		return shapeMaker.makeShapes(realization, getStartRoom(), getTargetRoom());
 	}
 	
-	
+
+
 	public EggMazeHemisphere getHemisphere(SouthNorth sn) {
 		return sn == SouthNorth.north ? north : south;
 	}
@@ -129,8 +106,9 @@ public final class EggMaze extends GenericMazeSpace implements IMazeSpace,
 			}
 			String floorId = "r" + Integer.toString(r);
 			final FloorShape floor = new FloorShape(iy * roomMapRatio, ix, false, floorId);
-			room2floor.put(r, floor);
-			shapes.add(floor);
+			shapeMaker.linkRoomToFloor(r, floor);
+			shapeMaker.addShape(floor);
+			
 		}
 
 	}
@@ -181,8 +159,8 @@ public final class EggMaze extends GenericMazeSpace implements IMazeSpace,
 		final int y1 = (yr1 * roomMapRatio) % equatorCellCnt;
 		final int y2 = (yr2 * roomMapRatio) % equatorCellCnt;
 		WallShape ws = new WallShape(ShapeType.innerWall, y1, x1, y2, x2);
-		shapes.add(ws);
-		shape2id.put(ws, id);
+		shapeMaker.addShape(ws);
+		shapeMaker.linkShapeToId(ws, id);
 	}
 
 	public Vector<Integer> computeRoomCounts(Vector<Double> layerXPosition,
@@ -273,18 +251,13 @@ public final class EggMaze extends GenericMazeSpace implements IMazeSpace,
 
 	private static final int MINIMAL_ROOM_COUNT_ON_EGG_MAZE_EQUATOR = 4;
 
-	private ShapeContainer shapes;
 	
-	private HashMap<IMazeShape, Integer> shape2id;;
 	
-	private HashMap<Integer, FloorShape> room2floor;
+	private GenericShapeMaker shapeMaker;
 	
 	private void buildMaze() {
 
-		shapes = new ShapeContainer();
-		shape2id = new HashMap<IMazeShape, Integer>();
-		room2floor = new HashMap<Integer, FloorShape>();
-		
+		shapeMaker = new GenericShapeMaker();
 		// generate both hemispheres
 		for (SouthNorth sn : SouthNorth.values()) {
 			divideSpace(sn);
@@ -298,6 +271,7 @@ public final class EggMaze extends GenericMazeSpace implements IMazeSpace,
 		assignStartAndTragetRooms();
 
 	}
-	
+
+
 
 }
