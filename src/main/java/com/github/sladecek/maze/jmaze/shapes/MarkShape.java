@@ -36,17 +36,28 @@ public final class MarkShape implements IMazeShape {
 		return "MarkShape [shapeType=" + shapeType + ", x=" + x + ", y=" + y
 				+ "]";
 	}
+	
+	
+
+	public void setOffsetXPercent(int offsetXPercent) {
+		this.offsetXPercent = offsetXPercent;
+	}
+
+	public void setOffsetYPercent(int offsetYPercent) {
+		this.offsetYPercent = offsetYPercent;
+	}
 
 	public void printToSvg(SvgMazePrinter svg)   {
+		
 		switch (shapeType) {
 		case startRoom:
-			svg.printMark(y, x, "red", 25);		
+			svg.printMark(y, x, "red", 25, offsetXPercent, offsetYPercent);		
 			break;
 		case targetRoom:
-			svg.printMark(y, x, "green", 25);
+			svg.printMark(y, x, "green", 25, offsetXPercent, offsetYPercent);
 			break;
 		case solution:
-			svg.printMark(y, x, "gray", 15);
+			svg.printMark(y, x, "gray", 15, offsetXPercent, offsetYPercent);
 			break;
 		default:
 			break;			
@@ -57,4 +68,6 @@ public final class MarkShape implements IMazeShape {
 	private int y;
 	private String id;
 
+	private int offsetXPercent = 50;
+	private int offsetYPercent = 50;
 }

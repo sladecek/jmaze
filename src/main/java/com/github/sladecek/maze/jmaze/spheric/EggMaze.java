@@ -48,7 +48,7 @@ public final class EggMaze extends GenericMazeSpace implements IMazeSpace,
 
 	@Override
 	public ShapeContainer makeShapes(MazeRealization realization) {
-		return shapeMaker.makeShapes(realization, getStartRoom(), getTargetRoom());
+		return shapeMaker.makeShapes(realization, getStartRoom(), getTargetRoom(), 50, 50);
 	}
 	
 

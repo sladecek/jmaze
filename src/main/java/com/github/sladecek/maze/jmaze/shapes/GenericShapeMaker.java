@@ -22,7 +22,7 @@ public class GenericShapeMaker  {
 	private HashMap<IMazeShape, Integer> shape2id;
 	private HashMap<Integer, FloorShape> room2floor;
 	
-	public ShapeContainer makeShapes(MazeRealization realization, int startRoom, int targetRoom) {
+	public ShapeContainer makeShapes(MazeRealization realization, int startRoom, int targetRoom, int offsetXPercent, int offsetYPercent) {
 		
 		ShapeContainer result = new ShapeContainer();
 		result.setPictureHeight(shapes.getPictureHeight());
@@ -38,16 +38,33 @@ public class GenericShapeMaker  {
 		// start/stop
 		FloorShape startFloor = room2floor.get(startRoom);
 		if (startFloor != null) {
-			result.add(startFloor.CreateMarkInThisRoom(IMazeShape.ShapeType.startRoom, "start"));
+			final MarkShape mark = startFloor.CreateMarkInThisRoom(IMazeShape.ShapeType.startRoom, "start");
+			mark.setOffsetXPercent(offsetXPercent);
+			mark.setOffsetYPercent(offsetYPercent);
+			result.add(mark);			
 		}
 		FloorShape targetFloor = room2floor.get(targetRoom);
 		if (targetFloor != null) {
-			result.add(targetFloor.CreateMarkInThisRoom(IMazeShape.ShapeType.targetRoom, "target"));
+			final MarkShape mark = targetFloor.CreateMarkInThisRoom(IMazeShape.ShapeType.targetRoom, "target");
+			mark.setOffsetXPercent(offsetXPercent);
+			mark.setOffsetYPercent(offsetYPercent);
+			result.add(mark);
+			
 		}
 		
 		// solution
 		for (int i: realization.getSolution()) {
-			result.add(room2floor.get(i).CreateMarkInThisRoom(IMazeShape.ShapeType.targetRoom, "solution " + i));
+			if (i == startRoom) {
+				continue;
+			}
+			if (i == targetRoom) {
+				continue;
+			}
+			final MarkShape mark = room2floor.get(i).CreateMarkInThisRoom(IMazeShape.ShapeType.solution, "solution " + i);
+			mark.setOffsetXPercent(offsetXPercent);
+			mark.setOffsetYPercent(offsetYPercent);
+			result.add(mark);
+			
 		}	
 		return result;
 	}

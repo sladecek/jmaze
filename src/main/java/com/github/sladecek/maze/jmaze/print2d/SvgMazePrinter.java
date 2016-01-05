@@ -47,7 +47,8 @@ public final class SvgMazePrinter implements IMaze2DPrinter {
 
 	}
 
-	public void printMark(int y, int x, String fill, int sizePercent) {
+	public void printMark(int y, int x, String fill, int sizePercent,
+			int offsXPercent, int offsYPercent) {
 		// <circle cx="50" cy="50" r="40" stroke="black" stroke-width="3"
 		// fill="red" />
 
@@ -58,10 +59,11 @@ public final class SvgMazePrinter implements IMaze2DPrinter {
 		Element svgRoot = doc.getDocumentElement();
 		svgRoot.appendChild(circle);
 
-		int offs = cellSize / 2;
+		int offsX = (offsXPercent * cellSize) / 100;
+		int offsY = (offsYPercent * cellSize) / 100;
 
-		circle.setAttributeNS(null, "cx", String.valueOf(toUnits(x) + offs));
-		circle.setAttributeNS(null, "cy", String.valueOf(toUnits(y) + offs));
+		circle.setAttributeNS(null, "cx", String.valueOf(toUnits(x) + offsX));
+		circle.setAttributeNS(null, "cy", String.valueOf(toUnits(y) + offsY));
 		circle.setAttributeNS(null, "r",
 				String.valueOf(cellSize * sizePercent / 100));
 		circle.setAttributeNS(null, "fill", fill);
@@ -86,42 +88,40 @@ public final class SvgMazePrinter implements IMaze2DPrinter {
 	@Override
 	public void printShapes(ShapeContainer maze, MazeOutputFormat format,
 			OutputStream output, boolean showSolution) {
-		 try {
-			 	Document doc = createSvgDom(maze, showSolution);
-		
-			 	switch (format) {
-			 	case svg:
-		            Source source = new DOMSource(doc);
-		            //StringWriter stringWriter = new StringWriter();
-		            Result result = new StreamResult(output);
-		            TransformerFactory factory = TransformerFactory.newInstance();
-		            Transformer transformer = factory.newTransformer();
-		            transformer.transform(source, result);
-		            break;
-			 	case pdf:
-			            Transcoder transcoder = new PDFTranscoder();
-	            TranscoderInput transcoderInput = new TranscoderInput(doc);
-	            TranscoderOutput transcoderOutput = new TranscoderOutput(output);
-	    			transcoder.transcode(transcoderInput, transcoderOutput);
-	    			break;
-	    			default:
-	    				throw new IllegalArgumentException();
-			 	}
-	            
-	            
-	        } catch (TransformerConfigurationException e) {
-	            e.printStackTrace();
-	        } catch (TransformerException e) {
-	            e.printStackTrace();
-	    	} catch (TranscoderException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		try {
+			Document doc = createSvgDom(maze, showSolution);
+
+			switch (format) {
+			case svg:
+				Source source = new DOMSource(doc);
+				// StringWriter stringWriter = new StringWriter();
+				Result result = new StreamResult(output);
+				TransformerFactory factory = TransformerFactory.newInstance();
+				Transformer transformer = factory.newTransformer();
+				transformer.transform(source, result);
+				break;
+			case pdf:
+				Transcoder transcoder = new PDFTranscoder();
+				TranscoderInput transcoderInput = new TranscoderInput(doc);
+				TranscoderOutput transcoderOutput = new TranscoderOutput(output);
+				transcoder.transcode(transcoderInput, transcoderOutput);
+				break;
+			default:
+				throw new IllegalArgumentException();
 			}
-        	
+
+		} catch (TransformerConfigurationException e) {
+			e.printStackTrace();
+		} catch (TransformerException e) {
+			e.printStackTrace();
+		} catch (TranscoderException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 
 	private Document doc;
-
 
 	private Document createSvgDom(ShapeContainer maze, boolean showSolution) {
 		DOMImplementation impl = SVGDOMImplementation.getDOMImplementation();
@@ -134,7 +134,6 @@ public final class SvgMazePrinter implements IMaze2DPrinter {
 				shape.printToSvg(this);
 			}
 		}
-
 
 		// Set the width and height attributes on the root 'svg' element.
 		canvasWidth = 2 * margin + maze.getPictureWidth() * cellSize;
