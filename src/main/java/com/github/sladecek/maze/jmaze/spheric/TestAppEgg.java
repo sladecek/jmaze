@@ -13,7 +13,6 @@ import com.github.sladecek.maze.jmaze.colors.WinterColors;
 import com.github.sladecek.maze.jmaze.generator.DepthFirstMazeGenerator;
 import com.github.sladecek.maze.jmaze.generator.IMazeGenerator;
 import com.github.sladecek.maze.jmaze.generator.MazeRealization;
-import com.github.sladecek.maze.jmaze.print3d.IMaze3DPrinter;
 import com.github.sladecek.maze.jmaze.print3d.Maze3DSizes;
 import com.github.sladecek.maze.jmaze.print3d.OpenScad3DPrinter;
 import com.github.sladecek.maze.jmaze.print3d.ThreeJs3DPrinter;

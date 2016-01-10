@@ -8,10 +8,10 @@ import com.github.sladecek.maze.jmaze.generator.MazeRealization;
 import com.github.sladecek.maze.jmaze.shapes.FloorShape;
 import com.github.sladecek.maze.jmaze.shapes.GenericShapeMaker;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape;
+import com.github.sladecek.maze.jmaze.shapes.IMazeShape.ShapeType;
 import com.github.sladecek.maze.jmaze.shapes.IShapeMaker;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
-import com.github.sladecek.maze.jmaze.shapes.IMazeShape.ShapeType;
 
 public class Triangular2DMaze extends GenericMazeSpace implements IMazeSpace, IShapeMaker {
 

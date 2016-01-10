@@ -3,6 +3,7 @@
 	<name>jmaze</name>
 	<comment></comment>
 	<projects>
+		<project>simplevoronoi</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
