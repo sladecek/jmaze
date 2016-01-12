@@ -2,6 +2,7 @@ package com.github.sladecek.maze.jmaze.spheric;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Random;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.LogManager;
@@ -35,7 +36,10 @@ final class TestAppEgg {
 			EggGeometry egg = new EggGeometry(5, 5, 0);
 
 			EggMaze maze = new EggMaze(egg, equatorCells);
-			IMazeGenerator g = new DepthFirstMazeGenerator();
+			final Random randomGenerator = new Random();
+			randomGenerator.setSeed(0);
+			IMazeGenerator g = new DepthFirstMazeGenerator(randomGenerator);
+
 			MazeRealization real = g.generateMaze(maze);
 
 			Maze3DSizes sizes = new Maze3DSizes();

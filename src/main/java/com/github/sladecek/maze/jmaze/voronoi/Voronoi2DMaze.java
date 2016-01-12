@@ -21,14 +21,16 @@ import com.github.sladecek.maze.jmaze.shapes.WallShape;
 public class Voronoi2DMaze extends GenericMazeSpace implements IMazeSpace, IShapeMaker {
 
 
-	public Voronoi2DMaze(int width, int height, int roomCount) {
+	public Voronoi2DMaze(int width, int height, int roomCount, Random randomGenerator) {
 		super();
 		this.width = width;
 		this.height = height;
 		this.roomCount = roomCount;
+		this.randomGenerator = randomGenerator;
 		buildMaze();
 	}
 
+	
 	private int width;
 	private int height;
 	private int roomCount;
@@ -38,7 +40,7 @@ public class Voronoi2DMaze extends GenericMazeSpace implements IMazeSpace, IShap
 
 	private GenericShapeMaker shapeMaker;
 
-	private Random randomGenerator = new Random();
+	private Random randomGenerator;
 
 	private static int flr(double r) {
 		return (int)Math.floor(r);
@@ -100,6 +102,9 @@ public class Voronoi2DMaze extends GenericMazeSpace implements IMazeSpace, IShap
 		setTargetRoom(roomCount-1);
 	}
 
+	public void setRandomSeed(final long seed) {
+		randomGenerator.setSeed(seed);		
+	}
 	
 	private static final Logger LOGGER =  Logger.getLogger("maze.jmaze");
 }

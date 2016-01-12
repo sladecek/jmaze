@@ -11,8 +11,15 @@ public final class DepthFirstMazeGenerator implements IMazeGenerator {
 	
 	private static final Logger LOGGER =  Logger.getLogger("maze.jmaze"); 
 	
-	private Random randomGenerator = new Random();
+	private Random randomGenerator ;
 	
+	
+	
+	public DepthFirstMazeGenerator(Random randomGenerator) {
+		super();
+		this.randomGenerator = randomGenerator;
+	}
+
 	@Override
 	public MazeRealization generateMaze(final IMazeSpace maze) {
 		MazeRealization result = new MazeRealization(maze.getWallCount());
@@ -98,9 +105,5 @@ public final class DepthFirstMazeGenerator implements IMazeGenerator {
 	private BitSet visitedRooms;
 	private Stack<Integer> stack;
 
-	@Override
-	public void setRandomSeed(final long seed) {
-		randomGenerator.setSeed(seed);		
-	}
 
 }

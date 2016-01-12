@@ -2,6 +2,7 @@ package com.github.sladecek.maze.jmaze.moebius;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.util.Random;
 
 import com.github.sladecek.maze.jmaze.colors.MazeColors;
 import com.github.sladecek.maze.jmaze.colors.WinterColors;
@@ -20,7 +21,9 @@ public final class TestAppMoebius {
 		final int widthCells = 8;
 		final int lengthCells = 120;
 		MoebiusMaze maze = new MoebiusMaze(widthCells, lengthCells);
-		IMazeGenerator g = new DepthFirstMazeGenerator();
+		final Random randomGenerator = new Random();
+		randomGenerator.setSeed(0);
+		IMazeGenerator g = new DepthFirstMazeGenerator(randomGenerator);
 		MazeRealization r = g.generateMaze(maze);
 
 		Maze3DSizes sizes = new Maze3DSizes();

@@ -1,5 +1,7 @@
 package com.github.sladecek.maze.jmaze.triangular;
 
+import java.util.Random;
+
 import com.github.sladecek.maze.jmaze.generator.DepthFirstMazeGenerator;
 import com.github.sladecek.maze.jmaze.generator.IMazeGenerator;
 import com.github.sladecek.maze.jmaze.generator.MazeRealization;
@@ -12,7 +14,10 @@ public class TestAppTriangular extends TestApp2DBase {
 		new TestAppTriangular().printTestMaze("maze-triangular", () -> {
 			final int defaultSize = 60	;			
 			Triangular2DMaze maze = new Triangular2DMaze(defaultSize);
-	    	IMazeGenerator g = new DepthFirstMazeGenerator();
+			final Random randomGenerator = new Random();
+			randomGenerator.setSeed(0);
+			IMazeGenerator g = new DepthFirstMazeGenerator(randomGenerator);
+
 	    	MazeRealization realization = g.generateMaze(maze);	    		    	
 	    	return  maze.makeShapes(realization);	    			
 		});

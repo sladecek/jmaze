@@ -1,5 +1,7 @@
 package com.github.sladecek.maze.jmaze.circular;
 
+import java.util.Random;
+
 import com.github.sladecek.maze.jmaze.generator.DepthFirstMazeGenerator;
 import com.github.sladecek.maze.jmaze.generator.IMazeGenerator;
 import com.github.sladecek.maze.jmaze.generator.MazeRealization;
@@ -12,7 +14,11 @@ public class TestAppCircular extends TestApp2DBase {
 		new TestAppCircular().printTestMaze("maze-circular", () -> {
 			final int defaultSize = 60	;			
 			Triangular2DMaze maze = new Triangular2DMaze(defaultSize);
-	    	IMazeGenerator g = new DepthFirstMazeGenerator();
+			final Random randomGenerator = new Random();
+			randomGenerator.setSeed(0);
+			IMazeGenerator g = new DepthFirstMazeGenerator(randomGenerator);
+
+	
 	    	MazeRealization realization = g.generateMaze(maze);	    		    	
 	    	return  maze.makeShapes(realization);	    			
 		});
