@@ -1,5 +1,6 @@
 package com.github.sladecek.maze.jmaze.voronoi;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.logging.Logger;
@@ -18,10 +19,11 @@ import com.github.sladecek.maze.jmaze.shapes.IShapeMaker;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
 
-public class Voronoi2DMaze extends GenericMazeSpace implements IMazeSpace, IShapeMaker {
+public class Voronoi2DMaze extends GenericMazeSpace implements IMazeSpace,
+		IShapeMaker {
 
-
-	public Voronoi2DMaze(int width, int height, int roomCount, Random randomGenerator) {
+	public Voronoi2DMaze(int width, int height, int roomCount,
+			Random randomGenerator) {
 		super();
 		this.width = width;
 		this.height = height;
@@ -30,12 +32,11 @@ public class Voronoi2DMaze extends GenericMazeSpace implements IMazeSpace, IShap
 		buildMaze();
 	}
 
-	
 	private int width;
 	private int height;
 	private int roomCount;
 
-    private double[] roomCenterY;
+	private double[] roomCenterY;
 	private double[] roomCenterX;
 
 	private GenericShapeMaker shapeMaker;
@@ -43,15 +44,16 @@ public class Voronoi2DMaze extends GenericMazeSpace implements IMazeSpace, IShap
 	private Random randomGenerator;
 
 	private static int flr(double r) {
-		return (int)Math.floor(r);
+		return (int) Math.floor(r);
 	}
-	
+
 	@Override
 	public ShapeContainer makeShapes(MazeRealization realization) {
-		ShapeContainer result = shapeMaker.makeShapes(realization, getStartRoom(), getTargetRoom(), 0, 50); 
+		ShapeContainer result = shapeMaker.makeShapes(realization,
+				getStartRoom(), getTargetRoom(), 0, 50);
 		result.setPictureHeight(width);
-		result.setPictureWidth(2*width);
-		
+		result.setPictureWidth(2 * width);
+
 		// outer walls
 		final IMazeShape.ShapeType ow = IMazeShape.ShapeType.outerWall;
 		result.add(new WallShape(ow, 0, 0, 0, width));
@@ -59,23 +61,22 @@ public class Voronoi2DMaze extends GenericMazeSpace implements IMazeSpace, IShap
 		result.add(new WallShape(ow, 0, width, height, width));
 		result.add(new WallShape(ow, height, 0, height, width));
 
-		
 		return result;
 	}
 
-	
 	private void buildMaze() {
 		shapeMaker = new GenericShapeMaker();
-			
-	    roomCenterY = new double[roomCount];
+
+		roomCenterY = new double[roomCount];
 		roomCenterX = new double[roomCount];
 		for (int i = 0; i < roomCount; i++) {
-			roomCenterY[i] = randomGenerator.nextDouble()*height;
-			roomCenterX[i] = randomGenerator.nextDouble()*width;
+			roomCenterY[i] = randomGenerator.nextDouble() * height;
+			roomCenterX[i] = randomGenerator.nextDouble() * width;
+			LOGGER.info("room center [" + i + "]=" + roomCenterX[i] + ","
+					+ roomCenterY[i]);
 		}
 
-
-		for (int i = 0; i < roomCount; i++) {			
+		for (int i = 0; i < roomCount; i++) {
 			int x = flr(roomCenterX[i]);
 			int y = flr(roomCenterY[i]);
 			int r = addRoom();
@@ -84,27 +85,39 @@ public class Voronoi2DMaze extends GenericMazeSpace implements IMazeSpace, IShap
 			shapeMaker.linkRoomToFloor(r, floor);
 			shapeMaker.addShape(floor);
 		}
-		
+
+		HashSet<Long> set = new HashSet();
 		Voronoi v = new Voronoi(0.00001f);
-		List<GraphEdge> allEdges = v.generateVoronoi(roomCenterY, roomCenterX, 0, height-1, 0, width-1);
-		
-		for (GraphEdge ge: allEdges) {
+		List<GraphEdge> allEdges = v.generateVoronoi(roomCenterX, roomCenterY,
+				0, height - 1, 0, width - 1);
+
+		for (GraphEdge ge : allEdges) {
+			Long k = ge.site1 * 1000000l + ge.site2;
+			if (ge.site1 < ge.site2) {
+				k = ge.site2 * 1000000l + ge.site1;
+			}
+			if (set.contains(k))
+				continue;
+			set.add(k);
+
 			int id = addWall(ge.site1, ge.site2);
-			LOGGER.info("voronoi edge "+ge);
-			WallShape ws = new WallShape(ShapeType.innerWall, flr(ge.x1), flr(ge.y1), flr(ge.x2), flr(ge.y2));
+			LOGGER.info("voronoi edge room1=" + ge.site1 + " room2=" + ge.site2
+					+ " x1=" + ge.x1 + " y1=" + ge.y1 + " x2=" + ge.x2 + " y2="
+					+ ge.y2);
+			WallShape ws = new WallShape(ShapeType.innerWall, flr(ge.y1),
+					flr(ge.x1), flr(ge.y2), flr(ge.x2));
 			shapeMaker.addShape(ws);
 			shapeMaker.linkShapeToId(ws, id);
-			
 		}
-		
+
 		// TODO
 		setStartRoom(0);
-		setTargetRoom(roomCount-1);
+		setTargetRoom(roomCount - 1);
 	}
 
 	public void setRandomSeed(final long seed) {
-		randomGenerator.setSeed(seed);		
+		randomGenerator.setSeed(seed);
 	}
-	
-	private static final Logger LOGGER =  Logger.getLogger("maze.jmaze");
+
+	private static final Logger LOGGER = Logger.getLogger("maze.jmaze");
 }
