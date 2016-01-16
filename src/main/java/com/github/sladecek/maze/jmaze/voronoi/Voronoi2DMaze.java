@@ -1,4 +1,4 @@
-package com.github.sladecek.maze.jmaze.voronoi;
+/*package com.github.sladecek.maze.jmaze.voronoi;
 
 import java.util.HashSet;
 import java.util.List;
@@ -121,3 +121,4 @@ public class Voronoi2DMaze extends GenericMazeSpace implements IMazeSpace,
 
 	private static final Logger LOGGER = Logger.getLogger("maze.jmaze");
 }
+*/

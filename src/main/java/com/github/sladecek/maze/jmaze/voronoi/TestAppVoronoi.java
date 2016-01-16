@@ -8,7 +8,7 @@ import com.github.sladecek.maze.jmaze.generator.MazeRealization;
 import com.github.sladecek.maze.jmaze.print2d.TestApp2DBase;
 
 public class TestAppVoronoi extends TestApp2DBase {
-
+/* TODO
 	
 	public static void main(String[] args) {
 		new TestAppVoronoi().printTestMaze("maze-voronoi", () -> {
@@ -24,7 +24,7 @@ public class TestAppVoronoi extends TestApp2DBase {
 		}, false);
     }
 
-
+*/
 	
 
 }
