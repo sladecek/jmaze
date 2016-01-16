@@ -10,7 +10,7 @@ public final class WallShape implements IMazeShape {
 		this.y2 = y2;
 		this.x1 = x1;
 		this.x2 = x2;
-		this.wallId = -1;
+
 	}
 
 	
@@ -18,7 +18,8 @@ public final class WallShape implements IMazeShape {
 		return this.shapeType;
 	}
 
-	public void printToSvg(SvgMazePrinter svg) {		
+	@Override
+	public void printToSvg(SvgMazePrinter svg, boolean polarCoordinates) {		
 		String style = "";
 		boolean center = false;
 		switch (shapeType) {		
@@ -59,14 +60,11 @@ public final class WallShape implements IMazeShape {
 		return y2;
 	}
 
-	@Override
-	public String getId() {
-		return "w" + Integer.toString(wallId);
-	}
+
 
 	@Override
 	public String toString() {
-		return "WallShape [id=" + wallId + " shapeType=" + shapeType + ", x1=" + x1 + ", x2="
+		return "WallShape [ shapeType=" + shapeType + ", x1=" + x1 + ", x2="
 				+ x2 + ", y1=" + y1 + ", y2=" + y2 + "]";
 	}
 
@@ -77,8 +75,6 @@ public final class WallShape implements IMazeShape {
 
 	private ShapeType shapeType;
 
-	/* TODO smazat */
-	private int wallId;
-	
+
 	
 }

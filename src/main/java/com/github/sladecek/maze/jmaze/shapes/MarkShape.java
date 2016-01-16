@@ -14,21 +14,15 @@ public final class MarkShape implements IMazeShape {
 
 	private ShapeType shapeType;
 
-	public MarkShape(ShapeType type, int y, int x, String id) {
+	public MarkShape(ShapeType type, int y, int x) {
 		this.shapeType = type;
 		this.y = y;
 		this.x = x;
-		this.id = id;
+
 	}
 
 	public ShapeType getShapeType() {
 		return this.shapeType;
-	}
-
-
-	@Override
-	public String getId() {
-		return id;
 	}
 
 	@Override
@@ -47,7 +41,8 @@ public final class MarkShape implements IMazeShape {
 		this.offsetYPercent = offsetYPercent;
 	}
 
-	public void printToSvg(SvgMazePrinter svg)   {
+	@Override
+	public void printToSvg(SvgMazePrinter svg, boolean polarCoordinates)   {
 		
 		switch (shapeType) {
 		case startRoom:
@@ -66,7 +61,7 @@ public final class MarkShape implements IMazeShape {
 
 	private int x;
 	private int y;
-	private String id;
+	
 
 	private int offsetXPercent = 50;
 	private int offsetYPercent = 50;

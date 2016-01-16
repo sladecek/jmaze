@@ -39,14 +39,14 @@ public class GenericShapeMaker  {
 		// start/stop
 		FloorShape startFloor = room2floor.get(startRoom);
 		if (startFloor != null) {
-			final MarkShape mark = startFloor.CreateMarkInThisRoom(IMazeShape.ShapeType.startRoom, "start");
+			final MarkShape mark = startFloor.CreateMarkInThisRoom(IMazeShape.ShapeType.startRoom);
 			mark.setOffsetXPercent(offsetXPercent);
 			mark.setOffsetYPercent(offsetYPercent);
 			result.add(mark);			
 		}
 		FloorShape targetFloor = room2floor.get(targetRoom);
 		if (targetFloor != null) {
-			final MarkShape mark = targetFloor.CreateMarkInThisRoom(IMazeShape.ShapeType.targetRoom, "target");
+			final MarkShape mark = targetFloor.CreateMarkInThisRoom(IMazeShape.ShapeType.targetRoom);
 			mark.setOffsetXPercent(offsetXPercent);
 			mark.setOffsetYPercent(offsetYPercent);
 			result.add(mark);
@@ -61,7 +61,7 @@ public class GenericShapeMaker  {
 			if (i == targetRoom) {
 				continue;
 			}
-			final MarkShape mark = room2floor.get(i).CreateMarkInThisRoom(IMazeShape.ShapeType.solution, "solution " + i);
+			final MarkShape mark = room2floor.get(i).CreateMarkInThisRoom(IMazeShape.ShapeType.solution);
 			mark.setOffsetXPercent(offsetXPercent);
 			mark.setOffsetYPercent(offsetYPercent);
 			result.add(mark);

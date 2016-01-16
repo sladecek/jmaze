@@ -37,10 +37,6 @@ public final class FloorShape implements IMazeShape {
 		return x;
 	}
 	
-	@Override
-	public String getId() {
-		return id;
-	}
 
 
 	public boolean isHole() {
@@ -49,7 +45,7 @@ public final class FloorShape implements IMazeShape {
 
 
 	@Override
-	public void printToSvg(SvgMazePrinter svg)  {
+	public void printToSvg(SvgMazePrinter svg, boolean polarCoordinates)  {
 		if (isHole) {
 			String style = "stroke:rgb(222,222,222);stroke-width:1";
 			svg.printLine(y, x, y + 1, x + 1, style, false);
@@ -70,8 +66,8 @@ public final class FloorShape implements IMazeShape {
 	private String id;
 	
 	
-	public MarkShape CreateMarkInThisRoom(ShapeType type, String id) {
-		return new MarkShape(type, y, x, id);
+	public MarkShape CreateMarkInThisRoom(ShapeType type) {
+		return new MarkShape(type, y, x);
 	}
 	
 

@@ -37,31 +37,31 @@ public abstract class BlockMakerBase {
 		int x1 = wall.getX1();
 		int x2 = wall.getX2();
 
-		String id = wall.getId();
+
 		// There is an overlap in the corner between walls. Overlaps are not
 		// nice, they make
 		// ramparts. Therefore the wall must be rendered from three parts - the
 		// corners must be rendered separately.
 		printInnerWallElement(y1, y1, x1, x1, wallThickness, wallThickness,
-				null, "inner wall corner " + wall.toString(),
+				 "inner wall corner " + wall.toString(),
 				colors.getInnerWallColor());
 		printInnerWallElement(y2, y2, x2, x2, wallThickness, wallThickness,
-				null, "inner wall corner " + wall.toString(),
+				 "inner wall corner " + wall.toString(),
 				colors.getInnerWallColor());
 		if (x1 == x2) {
 			printInnerWallElement(y1, y2, x1, x2, -wallThickness,
-					wallThickness, id, "inner wall along y " + wall.toString(),
+					wallThickness,  "inner wall along y " + wall.toString(),
 					colors.getCornerColor());
 		} else {
 			printInnerWallElement(y1, y2, x1, x2, wallThickness,
-					-wallThickness, id,
+					-wallThickness, 
 					"inner wall along x " + wall.toString(),
 					colors.getCornerColor());
 		}
 	}
 
 	private void printInnerWallElement(int y1, int y2, int x1, int x2,
-			double wy, double wx, String id, String comment, Color color) {
+			double wy, double wx,  String comment, Color color) {
 
 		final double z = sizes.getWallHeightInmm();
 		ArrayList<Point> p = new ArrayList<Point>();

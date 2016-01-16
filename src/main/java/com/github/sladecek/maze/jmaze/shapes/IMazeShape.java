@@ -9,9 +9,7 @@ public interface IMazeShape {
 	enum ShapeType { innerWall, outerWall, hole, nonHole, solution, auxiliaryWall, startRoom, targetRoom };
 	
 	ShapeType getShapeType();
-	
-	String getId();
-	
-	void printToSvg(SvgMazePrinter printer) ;
+
+	void printToSvg(SvgMazePrinter printer, boolean polarCoordinates) ;
 
 }

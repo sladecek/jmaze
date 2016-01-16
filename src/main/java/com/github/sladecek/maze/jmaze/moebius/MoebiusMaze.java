@@ -56,8 +56,8 @@ public final class MoebiusMaze implements IMazeSpace, IShapeMaker {
 		// start stop rooms
 		final int start = getStartRoom();
 		final int target = getTargetRoom();		
-		result.add(new MarkShape(IMazeShape.ShapeType.startRoom, start / width, start % width, "start"));		
-		result.add(new MarkShape(IMazeShape.ShapeType.targetRoom, target / width, target % width, "stop"));
+		result.add(new MarkShape(IMazeShape.ShapeType.startRoom, start / width, start % width));		
+		result.add(new MarkShape(IMazeShape.ShapeType.targetRoom, target / width, target % width));
 		
 		// inner walls - east/west
 		for (int y = 0; y < height; y++) {
@@ -107,7 +107,7 @@ public final class MoebiusMaze implements IMazeSpace, IShapeMaker {
 
 		// solution
 		for (int i: realization.getSolution()) {
-			result.add(new MarkShape(IMazeShape.ShapeType.solution, i / width, i % width, "start"));
+			result.add(new MarkShape(IMazeShape.ShapeType.solution, i / width, i % width));
 		}
 
 		return result;

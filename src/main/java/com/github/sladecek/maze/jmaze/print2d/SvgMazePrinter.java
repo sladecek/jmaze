@@ -27,6 +27,12 @@ import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
 public final class SvgMazePrinter implements IMaze2DPrinter {
 	final int cellSize = 10;
 	final int margin = cellSize / 2;
+	boolean polarCoordinates;
+
+	public SvgMazePrinter(boolean polarCoordinates) {
+		super();
+		this.polarCoordinates = polarCoordinates;
+	}
 
 	public void printLine(int y1, int x1, int y2, int x2, String style,
 			boolean center) {
@@ -131,7 +137,7 @@ public final class SvgMazePrinter implements IMaze2DPrinter {
 		for (IMazeShape shape : maze.getShapes()) {
 			if (showSolution
 					|| shape.getShapeType() != IMazeShape.ShapeType.solution) {
-				shape.printToSvg(this);
+				shape.printToSvg(this, polarCoordinates);
 			}
 		}
 

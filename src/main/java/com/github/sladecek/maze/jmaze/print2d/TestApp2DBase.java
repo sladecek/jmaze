@@ -18,7 +18,7 @@ import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
 public class TestApp2DBase {
 
 	public void printTestMaze(String fileName,
-			Supplier<ShapeContainer> mazeProvider) {
+			Supplier<ShapeContainer> mazeProvider, boolean polarCoordinates) {
 		LogManager.getLogManager().reset();
 		LOG.setLevel(Level.INFO);
 		try {
@@ -27,7 +27,7 @@ public class TestApp2DBase {
 			fh.setFormatter(new SimpleFormatter());
 
 			ShapeContainer shapes = mazeProvider.get();
-			SvgMazePrinter printer = new SvgMazePrinter();
+			SvgMazePrinter printer = new SvgMazePrinter(polarCoordinates);
 			final boolean showSolution = true;			
 			FileOutputStream f = new FileOutputStream(fileName + ".svg");
 			printer.printShapes(shapes, MazeOutputFormat.svg, f, showSolution);
