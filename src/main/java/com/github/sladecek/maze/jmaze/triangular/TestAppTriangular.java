@@ -20,7 +20,7 @@ public class TestAppTriangular extends TestApp2DBase {
 
 	    	MazeRealization realization = g.generateMaze(maze);	    		    	
 	    	return  maze.makeShapes(realization);	    			
-		}, false);
+		});
     }
 
 

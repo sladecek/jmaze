@@ -39,7 +39,14 @@ public final class WallShape implements IMazeShape {
 			break;
 			
 		}
-		svg.printLine(getY1(), getX1(), getY2(), getX2(), style, center);		
+		if (polarCoordinates && p1.getY() == p2.getY()) 
+		{
+			svg.printArcSegment(p1, p2, style);
+		}
+		else
+		{
+			svg.printLine(p1, p2, style, center);
+		}
 	}
 
 	

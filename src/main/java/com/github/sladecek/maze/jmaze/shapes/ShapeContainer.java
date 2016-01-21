@@ -11,6 +11,7 @@ public final class ShapeContainer {
 
 	public ShapeContainer() {
 		shapes = new Vector<IMazeShape>();
+		isPolarCoordinates = false;
 	}
 
 	public int getPictureHeight() {
@@ -35,8 +36,18 @@ public final class ShapeContainer {
 	public void add(IMazeShape s) {
 		shapes.add(s);
 	}
+
+	public boolean isPolarCoordinates() {
+		return isPolarCoordinates;
+	}
+
+	public void setPolarCoordinates(boolean usePolarCoordinates) {
+		this.isPolarCoordinates = usePolarCoordinates;
+	}
+
 	
 	private Vector<IMazeShape> shapes;
+	private boolean isPolarCoordinates;
 	private int pictureHeight;
 	private int pictureWidth;
 

@@ -21,39 +21,66 @@ import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import com.github.sladecek.maze.jmaze.geometry.Point2D;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
 
 public final class SvgMazePrinter implements IMaze2DPrinter {
 	final int cellSize = 10;
 	final int margin = cellSize / 2;
-	boolean polarCoordinates;
+	IMaze2DMapper mapper;
 
-	public SvgMazePrinter(boolean polarCoordinates) {
-		super();
-		this.polarCoordinates = polarCoordinates;
+	public IMaze2DMapper getMapper() {
+		return mapper;
 	}
 
-	public void printLine(int y1, int x1, int y2, int x2, String style,
+	public SvgMazePrinter() {
+		super();
+	}
+
+	public void printLine(Point2D p1, Point2D p2, String style,
 			boolean center) {
 		int offs = center ? cellSize / 2 : 0;
 
 		String svgNS = SVGDOMImplementation.SVG_NAMESPACE_URI;
-
 		Element line = doc.createElementNS(svgNS, "line");
-
 		Element svgRoot = doc.getDocumentElement();
 		svgRoot.appendChild(line);
 
-		line.setAttributeNS(null, "x1", String.valueOf(toUnits(x1) + offs));
-		line.setAttributeNS(null, "y1", String.valueOf(toUnits(y1) + offs));
-		line.setAttributeNS(null, "x2", String.valueOf(toUnits(x2) + offs));
-		line.setAttributeNS(null, "y2", String.valueOf(toUnits(y2) + offs));
+		Point2D mp1 = mapper.mapPoint(p1);
+		Point2D mp2 = mapper.mapPoint(p2);
+		
+		line.setAttributeNS(null, "x1", String.valueOf(mp1.getX() + offs));
+		line.setAttributeNS(null, "y1", String.valueOf(mp1.getY() + offs));
+		line.setAttributeNS(null, "x2", String.valueOf(mp2.getX() + offs));
+		line.setAttributeNS(null, "y2", String.valueOf(mp2.getY() + offs));
 		line.setAttributeNS(null, "style", style);
 
 	}
 
-	public void printMark(int y, int x, String fill, int sizePercent,
+	public void printArcSegment(Point2D p1, Point2D p2, String style) {
+
+		assert p1.getY() == p2.getY(): "arc segment must be defined on the same diameter";
+		String svgNS = SVGDOMImplementation.SVG_NAMESPACE_URI;
+		Element path = doc.createElementNS(svgNS, "path");
+		Element svgRoot = doc.getDocumentElement();
+		svgRoot.appendChild(path);
+
+		Point2D mp1 = mapper.mapPoint(p1);
+		Point2D mp2 = mapper.mapPoint(p2);
+		int r = mapper.mapLength(p1.getY());
+		
+		
+		String pth = "M" + mp1.getX() + " " + mp1.getY() + " A"+r+" "+r+" 0 0 0 "+mp2.getX() + " " + mp2.getY();
+		
+		
+		path.setAttributeNS(null, "d", pth);
+		path.setAttributeNS(null, "style", style);
+		path.setAttributeNS(null, "fill", "none");
+
+	}
+
+	public void printMark(Point2D center, String fill, int sizePercent,
 			int offsXPercent, int offsYPercent) {
 		// <circle cx="50" cy="50" r="40" stroke="black" stroke-width="3"
 		// fill="red" />
@@ -65,21 +92,23 @@ public final class SvgMazePrinter implements IMaze2DPrinter {
 		Element svgRoot = doc.getDocumentElement();
 		svgRoot.appendChild(circle);
 
+		Point2D mc = mapper.mapPoint(center);
+		
 		int offsX = (offsXPercent * cellSize) / 100;
 		int offsY = (offsYPercent * cellSize) / 100;
 
-		circle.setAttributeNS(null, "cx", String.valueOf(toUnits(x) + offsX));
-		circle.setAttributeNS(null, "cy", String.valueOf(toUnits(y) + offsY));
+		circle.setAttributeNS(null, "cx", String.valueOf(mc.getX() + offsX));
+		circle.setAttributeNS(null, "cy", String.valueOf(mc.getY() + offsY));
 		circle.setAttributeNS(null, "r",
 				String.valueOf(cellSize * sizePercent / 100));
 		circle.setAttributeNS(null, "fill", fill);
 
 	}
 
-	private int toUnits(int xy) {
+/*	private int toUnits(int xy) {
 		return margin + xy * cellSize;
 	}
-
+*/
 	public int getCanvasWidth() {
 		return canvasWidth;
 	}
@@ -100,7 +129,6 @@ public final class SvgMazePrinter implements IMaze2DPrinter {
 			switch (format) {
 			case svg:
 				Source source = new DOMSource(doc);
-				// StringWriter stringWriter = new StringWriter();
 				Result result = new StreamResult(output);
 				TransformerFactory factory = TransformerFactory.newInstance();
 				Transformer transformer = factory.newTransformer();
@@ -130,6 +158,21 @@ public final class SvgMazePrinter implements IMaze2DPrinter {
 	private Document doc;
 
 	private Document createSvgDom(ShapeContainer maze, boolean showSolution) {
+		final boolean usePolarCoordinates = maze.isPolarCoordinates();
+		
+		if (usePolarCoordinates) {
+			canvasWidth = 2 * margin + maze.getPictureWidth() * cellSize;
+			canvasHeight = 2 * margin + maze.getPictureHeight() * cellSize;
+			Point2D zeroPoint = new Point2D(margin + canvasWidth/2, margin + canvasHeight/2);
+			mapper = new Polar2DMapper(zeroPoint, cellSize);
+		} else {
+			canvasWidth = 2 * margin + maze.getPictureWidth() * cellSize;
+			canvasHeight = 2 * margin + maze.getPictureHeight() * cellSize;
+			Point2D zeroPoint = new Point2D(margin, margin);
+			mapper = new Cartesian2DMapper(zeroPoint, cellSize);
+			
+		}
+		
 		DOMImplementation impl = SVGDOMImplementation.getDOMImplementation();
 		String svgNS = SVGDOMImplementation.SVG_NAMESPACE_URI;
 		doc = impl.createDocument(svgNS, "svg", null);
@@ -137,13 +180,12 @@ public final class SvgMazePrinter implements IMaze2DPrinter {
 		for (IMazeShape shape : maze.getShapes()) {
 			if (showSolution
 					|| shape.getShapeType() != IMazeShape.ShapeType.solution) {
-				shape.printToSvg(this, polarCoordinates);
+				
+				shape.printToSvg(this, usePolarCoordinates);
 			}
 		}
 
 		// Set the width and height attributes on the root 'svg' element.
-		canvasWidth = 2 * margin + maze.getPictureWidth() * cellSize;
-		canvasHeight = 2 * margin + maze.getPictureHeight() * cellSize;
 		Element svgRoot = doc.getDocumentElement();
 		svgRoot.setAttributeNS(null, "width", Integer.toString(canvasWidth));
 		svgRoot.setAttributeNS(null, "height", Integer.toString(canvasHeight));

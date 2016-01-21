@@ -31,5 +31,5 @@ public class Point2D {
 
 	private int x;
 	private int y;
-	public final int ANGLE_2PI = 0x1000000;
+	public static final int ANGLE_2PI = 0x1000000;
 }

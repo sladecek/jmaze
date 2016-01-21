@@ -19,6 +19,6 @@ public final class TestAppRectangular extends TestApp2DBase {
 			IMazeGenerator g = new DepthFirstMazeGenerator(randomGenerator);
 	    	MazeRealization realization = g.generateMaze(maze);	    		    	
 	    	return  maze.makeShapes(realization);	    			
-		}, false);
+		});
     }
 }

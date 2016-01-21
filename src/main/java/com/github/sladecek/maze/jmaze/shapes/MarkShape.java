@@ -46,13 +46,13 @@ public final class MarkShape implements IMazeShape {
 		
 		switch (shapeType) {
 		case startRoom:
-			svg.printMark(getY(), getX(), "red", 25, offsetXPercent, offsetYPercent);		
+			svg.printMark(center, "red", 25, offsetXPercent, offsetYPercent);		
 			break;
 		case targetRoom:
-			svg.printMark(getY(), getX(), "green", 25, offsetXPercent, offsetYPercent);
+			svg.printMark(center, "green", 25, offsetXPercent, offsetYPercent);
 			break;
 		case solution:
-			svg.printMark(getY(), getX(), "gray", 15, offsetXPercent, offsetYPercent);
+			svg.printMark(center, "gray", 15, offsetXPercent, offsetYPercent);
 			break;
 		default:
 			break;			
