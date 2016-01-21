@@ -1,6 +1,6 @@
 package com.github.sladecek.maze.jmaze.moebius;
 
-import com.github.sladecek.maze.jmaze.geometry.Point;
+import com.github.sladecek.maze.jmaze.geometry.Point3D;
 
 /**
  * 
@@ -16,7 +16,7 @@ public final class MoebiusStripGeometry {
 
 	/** Transform point in planar maze into point on Moebius list.
 	 */
-	Point transform(Point p) {
+	Point3D transform(Point3D p) {
 		final double theta = computeTheta(p.getX());
 		final double phi = theta / 2;
 		
@@ -26,7 +26,7 @@ public final class MoebiusStripGeometry {
 		
 		// rotate along global axis 
 		final double rInmm = radiusInmm + z2;
-		final Point result = new Point(rInmm * Math.cos(theta), rInmm * Math.sin(theta), y2);
+		final Point3D result = new Point3D(rInmm * Math.cos(theta), rInmm * Math.sin(theta), y2);
 		
 		return result;
 	}

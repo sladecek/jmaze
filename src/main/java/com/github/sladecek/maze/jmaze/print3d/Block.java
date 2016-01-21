@@ -3,7 +3,7 @@ package com.github.sladecek.maze.jmaze.print3d;
 import java.util.ArrayList;
 
 import com.github.sladecek.maze.jmaze.colors.Color;
-import com.github.sladecek.maze.jmaze.geometry.Point;
+import com.github.sladecek.maze.jmaze.geometry.Point3D;
 
 /**
  * Piece of 3D maze - solid irregular polyhedron or a spherical mark.
@@ -15,7 +15,7 @@ public final class Block {
 	private Block() {	
 	}
 	
-	public static Block newPolyhedron(final ArrayList<Point> polyhedron, final String comment, final Color color) {
+	public static Block newPolyhedron(final ArrayList<Point3D> polyhedron, final String comment, final Color color) {
 		Block result = new Block();
 		result.polyhedron = polyhedron;
 		result.comment = comment;
@@ -24,9 +24,9 @@ public final class Block {
 		return result;
 	}
 	
-	public static Block newMark(final Point center, double radius, final String comment, final Color color) {
+	public static Block newMark(final Point3D center, double radius, final String comment, final Color color) {
 		Block result = new Block();
-		result.polyhedron = new ArrayList<Point>();
+		result.polyhedron = new ArrayList<Point3D>();
 		result.polyhedron.add(center);
 		result.comment = comment;
 		result.color = color;
@@ -35,7 +35,7 @@ public final class Block {
 		return result;
 	}
 
-	public ArrayList<Point> getPolyhedron() {
+	public ArrayList<Point3D> getPolyhedron() {
 		return polyhedron;
 	}
 	public String getComment() {
@@ -52,7 +52,7 @@ public final class Block {
 		return radius;
 	}
 
-	private ArrayList<Point> polyhedron;
+	private ArrayList<Point3D> polyhedron;
 	private String comment;
 	private Color color;
 	private double radius;

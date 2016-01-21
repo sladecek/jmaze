@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import com.github.sladecek.maze.jmaze.colors.Color;
-import com.github.sladecek.maze.jmaze.geometry.Point;
+import com.github.sladecek.maze.jmaze.geometry.Point3D;
 
 /*
  * Compose content of Open Scad file.
@@ -51,7 +51,7 @@ public final class OpenScadComposer implements java.lang.AutoCloseable {
 		
 	}
 
-	public void printTranslate(final Point p0) throws IOException {
+	public void printTranslate(final Point3D p0) throws IOException {
 		out.write("translate(");
 		printPoint(p0);
 		out.write(")");
@@ -63,7 +63,7 @@ public final class OpenScadComposer implements java.lang.AutoCloseable {
 		out.write("}\n");
 	}
 	
-	private void printPoint(final Point p0) throws IOException {
+	private void printPoint(final Point3D p0) throws IOException {
 		out.write(" [ " + p0.getX() + "," + p0.getY() + "," + p0.getZ() + "] ");
 	}
 
@@ -73,7 +73,7 @@ public final class OpenScadComposer implements java.lang.AutoCloseable {
 	 * @param polyhedron
 	 * @throws IOException
 	 */
-	public void printPolyhedron(final ArrayList<Point> polyhedron, final String comment, final Color color) 
+	public void printPolyhedron(final ArrayList<Point3D> polyhedron, final String comment, final Color color) 
 			throws IOException {
 		final int POLYHEDRON_VERTEX_CNT = 8;
 		if (polyhedron.size() != POLYHEDRON_VERTEX_CNT) {

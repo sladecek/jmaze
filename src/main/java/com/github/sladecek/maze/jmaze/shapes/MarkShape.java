@@ -1,23 +1,23 @@
 package com.github.sladecek.maze.jmaze.shapes;
 
+import com.github.sladecek.maze.jmaze.geometry.Point2D;
 import com.github.sladecek.maze.jmaze.print2d.SvgMazePrinter;
 
 public final class MarkShape implements IMazeShape {
 	
 	public int getX() {
-		return x;
+		return center.getX();
 	}
 
 	public int getY() {
-		return y;
+		return center.getY();
 	}
 
 	private ShapeType shapeType;
 
 	public MarkShape(ShapeType type, int y, int x) {
 		this.shapeType = type;
-		this.y = y;
-		this.x = x;
+		this.center = new Point2D(x, y);
 
 	}
 
@@ -27,7 +27,7 @@ public final class MarkShape implements IMazeShape {
 
 	@Override
 	public String toString() {
-		return "MarkShape [shapeType=" + shapeType + ", x=" + x + ", y=" + y
+		return "MarkShape [shapeType=" + shapeType + ", x=" + getX() + ", y=" + getY()
 				+ "]";
 	}
 	
@@ -46,21 +46,20 @@ public final class MarkShape implements IMazeShape {
 		
 		switch (shapeType) {
 		case startRoom:
-			svg.printMark(y, x, "red", 25, offsetXPercent, offsetYPercent);		
+			svg.printMark(getY(), getX(), "red", 25, offsetXPercent, offsetYPercent);		
 			break;
 		case targetRoom:
-			svg.printMark(y, x, "green", 25, offsetXPercent, offsetYPercent);
+			svg.printMark(getY(), getX(), "green", 25, offsetXPercent, offsetYPercent);
 			break;
 		case solution:
-			svg.printMark(y, x, "gray", 15, offsetXPercent, offsetYPercent);
+			svg.printMark(getY(), getX(), "gray", 15, offsetXPercent, offsetYPercent);
 			break;
 		default:
 			break;			
 		}
 	}
 
-	private int x;
-	private int y;
+	private Point2D center;
 	
 
 	private int offsetXPercent = 50;

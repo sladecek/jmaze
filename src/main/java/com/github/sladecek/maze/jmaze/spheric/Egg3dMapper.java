@@ -5,7 +5,7 @@ import java.util.logging.Logger;
 
 import com.github.sladecek.maze.jmaze.geometry.EastWest;
 import com.github.sladecek.maze.jmaze.geometry.OrientationVector2D;
-import com.github.sladecek.maze.jmaze.geometry.Point;
+import com.github.sladecek.maze.jmaze.geometry.Point3D;
 import com.github.sladecek.maze.jmaze.geometry.SouthNorth;
 import com.github.sladecek.maze.jmaze.geometry.UpDown;
 import com.github.sladecek.maze.jmaze.print3d.IMaze3DMapper;
@@ -38,7 +38,7 @@ public final class Egg3dMapper implements IMaze3DMapper {
 	 * 
 	 */
 	@Override	
-	public Point mapPoint(int cellVertical, int cellHorizontal, double offsetV,
+	public Point3D mapPoint(int cellVertical, int cellHorizontal, double offsetV,
 			double offsetH, double offsetA) {
 		
 		LOG.log(Level.INFO, "mapPoint v=" + cellVertical + " h=" + cellHorizontal 
@@ -103,14 +103,14 @@ public final class Egg3dMapper implements IMaze3DMapper {
 		double angle = 2 * Math.PI * cellVertical / eqCnt;		
 		double yyyy = yyy * Math.cos(angle) - offsetV * Math.sin(angle);
 		double zzzz = -yyy * Math.sin(angle) - offsetV * Math.cos(angle);		
-		Point result = new Point(xxx, yyyy, zzzz);
+		Point3D result = new Point3D(xxx, yyyy, zzzz);
 		
 		return result;			
 	}
 	
 	
 	@Override
-	public Point mapCorner(int cellX, EastWest ew, UpDown ud,
+	public Point3D mapCorner(int cellX, EastWest ew, UpDown ud,
 			SouthNorth snWall, SouthNorth snEdge) {
 		throw new IllegalArgumentException("Egg has no corners");
 	}

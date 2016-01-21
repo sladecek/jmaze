@@ -8,7 +8,7 @@ import java.security.InvalidParameterException;
 import java.util.ArrayList;
 
 import com.github.sladecek.maze.jmaze.colors.Color;
-import com.github.sladecek.maze.jmaze.geometry.Point;
+import com.github.sladecek.maze.jmaze.geometry.Point3D;
 
 /***
  * Write 3D maze shapes as ThreeJS javascript file format.
@@ -55,7 +55,7 @@ public final class ThreeJsComposer implements java.lang.AutoCloseable {
 	}
 	
 	
-	private void printPoint(final Point p0) throws IOException {
+	private void printPoint(final Point3D p0) throws IOException {
 		out.write(" [ " + p0.getX() + "," + p0.getY() + "," + p0.getZ() + "] ");
 	}
 
@@ -66,7 +66,7 @@ public final class ThreeJsComposer implements java.lang.AutoCloseable {
 	 * @param polyhedron
 	 * @throws IOException
 	 */
-	public void printPolyhedron(final ArrayList<Point> polyhedron, final String comment, final Color color) 
+	public void printPolyhedron(final ArrayList<Point3D> polyhedron, final String comment, final Color color) 
 			throws IOException {
 		final int POLYHEDRON_VERTEX_CNT = 8;
 		if (polyhedron.size() != POLYHEDRON_VERTEX_CNT) {
@@ -88,7 +88,7 @@ public final class ThreeJsComposer implements java.lang.AutoCloseable {
 		
 	}
 
-	public void printMark(Point point, String comment, Color color) throws IOException {
+	public void printMark(Point3D point, String comment, Color color) throws IOException {
 		if (needComma) {
 			out.write(",\n");
 		}

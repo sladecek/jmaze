@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import com.github.sladecek.maze.jmaze.colors.MazeColors;
 import com.github.sladecek.maze.jmaze.generator.MazeRealization;
 import com.github.sladecek.maze.jmaze.geometry.EastWest;
-import com.github.sladecek.maze.jmaze.geometry.Point;
+import com.github.sladecek.maze.jmaze.geometry.Point3D;
 import com.github.sladecek.maze.jmaze.geometry.SouthNorth;
 import com.github.sladecek.maze.jmaze.geometry.UpDown;
 import com.github.sladecek.maze.jmaze.print3d.Block;
@@ -83,7 +83,7 @@ public final class MoebiusBlockMaker extends BlockMakerBase implements IBlockMak
 	private void printOuterWalls()  {
 		for (int cellX = 0; cellX < cellWidth; cellX++) {
 			for (SouthNorth snWall: SouthNorth.values()) {
-				ArrayList<Point> p = new ArrayList<Point>();
+				ArrayList<Point3D> p = new ArrayList<Point3D>();
 				for (EastWest ew: EastWest.values()) {
 					for (SouthNorth snEdge: SouthNorth.values()) {
 						for (UpDown ud: UpDown.values()) {						

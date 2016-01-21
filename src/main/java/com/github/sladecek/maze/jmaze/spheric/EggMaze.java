@@ -104,6 +104,7 @@ public final class EggMaze extends GenericMazeSpace implements IMazeSpace,
 				// polar layers have only one room
 				r = addRoom();
 			}
+			// TODO r je poizita mnohokrat ???
 			String floorId = "r" + Integer.toString(r);
 			final FloorShape floor = new FloorShape(iy * roomMapRatio, ix, false, floorId);
 			shapeMaker.linkRoomToFloor(r, floor);

@@ -3,6 +3,7 @@ package com.github.sladecek.maze.jmaze.shapes;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.github.sladecek.maze.jmaze.geometry.Point2D;
 import com.github.sladecek.maze.jmaze.print2d.SvgMazePrinter;
 
 /// Represents hole in the ground of the maze or the lack of thereof.
@@ -13,8 +14,8 @@ public final class FloorShape implements IMazeShape {
 
 	public FloorShape(int y, int x, boolean isHole, String id) {
 		super();
-		this.y = y;
-		this.x = x;
+		this.center = new Point2D(x,y);
+
 		this.isHole = isHole;
 		this.id = id;
 		LOG.log(Level.INFO, "FloorShape id=" + id + " x=" + x + " y=" + y);
@@ -30,11 +31,11 @@ public final class FloorShape implements IMazeShape {
 	}
 
 	public int getY() {
-		return y;
+		return center.getY();
 	}
 
 	public int getX() {
-		return x;
+		return center.getX();
 	}
 	
 
@@ -48,26 +49,25 @@ public final class FloorShape implements IMazeShape {
 	public void printToSvg(SvgMazePrinter svg, boolean polarCoordinates)  {
 		if (isHole) {
 			String style = "stroke:rgb(222,222,222);stroke-width:1";
-			svg.printLine(y, x, y + 1, x + 1, style, false);
-			svg.printLine(y + 1, x, y, x + 1, style, false);
+			svg.printLine(getY(), getX(), getY() + 1, getX() + 1, style, false);
+			svg.printLine(getY() + 1, getX(), getY(), getX() + 1, style, false);
 		}
 	}
 	
 	@Override
 	public String toString() {
-		return "FloorShape [id=" + id + " y=" + y + ", x=" + x + ", isHole=" + isHole + "]";
+		return "FloorShape [id=" + id + " y=" + getY() + ", x=" + getX() + ", isHole=" + isHole + "]";
 	}
 
 	private static final Logger LOG =  Logger.getLogger("maze.jmaze");
 
-	private int y;
-	private int x;
-	private boolean isHole;
+	private Point2D center; 
+private boolean isHole;
 	private String id;
 	
 	
 	public MarkShape CreateMarkInThisRoom(ShapeType type) {
-		return new MarkShape(type, y, x);
+		return new MarkShape(type, getY(), getX());
 	}
 	
 

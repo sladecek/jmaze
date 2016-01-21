@@ -28,138 +28,134 @@ public class Circular2DMaze extends GenericMazeSpace implements IMazeSpace,
 	private GenericShapeMaker shapeMaker;
 
 	private Vector<Integer> roomCounts;
-
+	private Vector<Integer> firstRoomInLayer;
 
 	@Override
 	public ShapeContainer makeShapes(MazeRealization realization) {
 		ShapeContainer result = shapeMaker.makeShapes(realization,
 				getStartRoom(), getTargetRoom(), 0, 50);
-/* TODO		result.setPictureHeight(width);
-		result.setPictureWidth(2 * width);
-*/
+		/*
+		 * TODO result.setPictureHeight(width); result.setPictureWidth(2 *
+		 * width);
+		 */
 		// outer walls
-	/*	final IMazeShape.ShapeType ow = IMazeShape.ShapeType.outerWall;
-		result.add(new WallShape(ow, 0, 0, 0, width));
-		result.add(new WallShape(ow, 0, 0, layerCount, 0));
-		result.add(new WallShape(ow, 0, width, layerCount, width));
-		result.add(new WallShape(ow, layerCount, 0, layerCount, width));
-*/
+		/*
+		 * final IMazeShape.ShapeType ow = IMazeShape.ShapeType.outerWall;
+		 * result.add(new WallShape(ow, 0, 0, 0, width)); result.add(new
+		 * WallShape(ow, 0, 0, layerCount, 0)); result.add(new WallShape(ow, 0,
+		 * width, layerCount, width)); result.add(new WallShape(ow, layerCount,
+		 * 0, layerCount, width));
+		 */
 		return result;
 	}
 
 	private void buildMaze() {
 		shapeMaker = new GenericShapeMaker();
-
-
-		shapeMaker = new GenericShapeMaker();
-			divideS4pace();
-			generateRooms();
-
-			generateParallelWalls();
-			generateMeridianWalls();
-		
-
-
-		// TODO
-/*		setStartRoom(0);
-		setTargetRoom(roomCount - 1);*/
+		roomCounts = computeRoomCounts();
+		firstRoomInLayer = new Vector<Integer>();
+		firstRoomInLayer.setSize(layerCount);
+		generateRooms();
+		generateConcentricWalls();
+		generateRadialWalls();
+		setStartAndTaretRooms();
 	}
 
-
-	private void divideS4pace() {
-		roomCounts = computeRoomCounts();		
+	private void setStartAndTaretRooms() {
+		setStartRoom(0);
+		setTargetRoom(getRoomCount()-1);
 	}
 
 	private void generateRooms() {
-
-
-		for (int ix = 0; ix < layerCount; ix++) {
-			int x = ix;
-			final int cntThis = getRoomCntBeforeCircle(ix);
-			final int cntNext = getRoomCntAfterCircle(ix);
-			LOGGER.log(Level.INFO, "generate row of rooms ix="+ix+" x="+x+" ctnThis="+cntThis+" cntNext="+cntNext);
-			generateRowOfRooms(x, cntThis, cntNext, isPolarLayer(ix));
+		for (int r = 0; r < layerCount; r++) {
+			final int cntThis = getRoomCntInLayer(r);
+			int thisNextRatio = computeRoomRatio(r);
+			generateRowOfRooms(r, cntThis, thisNextRatio);
 		}
 	}
 
-	private void generateRowOfRooms(int ix,
-			int cntThis, int cntNext, boolean isPolarLayer) {
-		final int thisNextRatio = cntThis / cntNext;
-		final int equatorCellCnt = roomCounts.get(0); 
-		final int roomMapRatio = equatorCellCnt / cntThis;
-		for (int iy = 0; iy < cntThis; iy++) {
-			int r = 0;
-			if (iy == 0) {
-				r = addRoom();
-//				hemisphere.addGreenwichRoom(r);
-			} else if (!isPolarLayer && iy % thisNextRatio == 0) {
-				// polar layers have only one room
-				r = addRoom();
+	private int computeRoomRatio(int r) {
+		final int cntThis = getRoomCntInLayer(r);
+		final int cntNext = getRoomCntInNextLayer(r);
+		int thisNextRatio = 1;
+		if (cntNext > 0) {
+			thisNextRatio = cntThis / cntNext;
+		}
+
+		LOGGER.log(Level.INFO, "computeRoomRatio r=" + r + " ctnThis="
+				+ cntThis + " cntNext=" + cntNext);
+		return thisNextRatio;
+	}
+
+	private void generateRowOfRooms(int r, int cntThis, int thisNextRatio) {
+		final int cntMax = roomCounts.get(0);
+		final int roomRatio = cntMax / cntThis;
+		for (int phi = 0; phi < cntThis; phi++) {
+			int room = 0;
+			if (phi % thisNextRatio == 0) {
+				room = addRoom();
+				if (phi == 0) {
+					firstRoomInLayer.set(r, room);
+				}
 			}
-			String floorId = "r" + Integer.toString(r);
-			final FloorShape floor = new FloorShape(iy * roomMapRatio, ix, false, floorId);
-			shapeMaker.linkRoomToFloor(r, floor);
+
+			String floorId = "r" + Integer.toString(room);
+			final FloorShape floor = new FloorShape(layerCount - r - 1, phi
+					* roomRatio, false, floorId);
+			shapeMaker.linkRoomToFloor(room, floor);
 			shapeMaker.addShape(floor);
-			
 		}
 
 	}
 
-	private void generateParallelWalls() {
+	private void generateConcentricWalls() {
 
-		for (int i = 1; i < layerCount; i++) {
-			LOGGER.log(Level.INFO, "generateParallesWalls i="+i);
-			
+		for (int r = 1; r < layerCount; r++) {
+			LOGGER.log(Level.INFO, "generateConcentricWalls r=" + r);
+
 			// the next layer may have less rooms than this one
-			final int roomCntThis = getRoomCntBeforeCircle(i);
-			final int roomCntNext = getRoomCntAfterCircle(i);
-			final int gRoomThis = getGreenwichRoom(i-1);
-			final int gRoomNext = getGreenwichRoom(i);
+			final int roomCntThis = getRoomCntInLayer(r);
+			final int roomCntNext = getRoomCntInNextLayer(r);
+			final int gRoomThis = firstRoomInLayer.get(r - 1);
+			final int gRoomNext = firstRoomInLayer.get(r);
 
-			int x =  i;
-
-			final int roomCntRatio = roomCntThis / roomCntNext;
+			final int roomCntRatio = computeRoomRatio(r);
 			for (int roomNext = 0; roomNext < roomCntNext; roomNext++) {
 				for (int j = 0; j < roomCntRatio; j++) {
 					int roomThis = roomNext * roomCntRatio + j;
 					int id = addWall(gRoomThis + roomThis, gRoomNext + roomNext);
-					addWallShape(roomCntThis, roomThis, roomThis + 1, x, x, id);
+					addWallShape(roomCntThis, r, r, roomThis, roomThis + 1, id);
 				}
 			}
 		}
 
 	}
 
-	private void addWallShape(int roomCntThisLayer, int yr1, int yr2, int x1,
-			int x2, int id) {
+	private void addWallShape(int roomCntThisLayer, int r1, int r2, int phi1,
+			int phi2, int id) {
 		final int equatorCellCnt = roomCounts.get(0);
 		final int roomMapRatio = equatorCellCnt / roomCntThisLayer;
-		final int y1 = (yr1 * roomMapRatio) % equatorCellCnt;
-		final int y2 = (yr2 * roomMapRatio) % equatorCellCnt;
-		WallShape ws = new WallShape(ShapeType.innerWall, y1, x1, y2, x2);
+		final int rr1 = (r1 * roomMapRatio) % equatorCellCnt;
+		final int rr2 = (r2 * roomMapRatio) % equatorCellCnt;
+		WallShape ws = new WallShape(ShapeType.innerWall, rr1, phi1, rr2, phi2);
 		shapeMaker.addShape(ws);
 		shapeMaker.linkShapeToId(ws, id);
 	}
 
 	public Vector<Integer> computeRoomCounts() {
 		// number of rooms in the equator layer
-		double circumference = 2*Math.PI*(layerCount+1);
+		double circumference = 2 * Math.PI * (layerCount + 1);
 		int cnt = 1;
-		while ( cnt * 2 < circumference) {
-			cnt*= 2;
+		while (cnt * 2 < circumference) {
+			cnt *= 2;
 		}
-		
+
 		Vector<Integer> result = new Vector<Integer>();
-		// equator
 		result.add(cnt);
-		
-		
-		// all layers except the polar layer
-		for (int i = 1; i < layerCount - 1 ; i++) { 
 
-			double currentRoomSizeInmm = 2 * Math.PI * (layerCount-i) / cnt;
-
-			if (currentRoomSizeInmm < 1 / 2) {
+		// all layers except the central layer
+		for (int i = 1; i < layerCount - 1; i++) {
+			double currentRoomSize = 2 * Math.PI * (layerCount - i) / cnt;
+			if (currentRoomSize < 0.5) {
 				// cell becoming too narrow, join two cells together
 				if (cnt >= 4) {
 					cnt /= 2;
@@ -167,58 +163,43 @@ public class Circular2DMaze extends GenericMazeSpace implements IMazeSpace,
 			}
 			result.add(cnt);
 		}
-		
-		// polar layer
+
+		// central layer
 		result.add(1);
-		
+
 		return result;
 	}
 
-	private void generateMeridianWalls() {
+	private void generateRadialWalls() {
 		for (int i = 0; i < layerCount; i++) {
-			LOGGER.log(Level.INFO, "generateMeridianWalls i=" + i);
+			LOGGER.log(Level.INFO, "generateRadialWalls i=" + i);
 
-			final int cnt = getRoomCntAfterCircle(i);
+			final int cnt = getRoomCntInNextLayer(i);
 			if (cnt <= 1) {
 				continue;
 			}
 
-			final int gr = getGreenwichRoom(i);
+			final int gr = firstRoomInLayer.get(i);
 			for (int j = 0; j < cnt; j++) {
 				int id = addWall(gr + j, gr + (j + 1) % cnt);
-				// strange wall naming convention - wall 0 is between room 0 and 1
-				int jj = (j + 1) % cnt; 
-					addWallShape(cnt, jj, jj, i, i + 1, id);
-		
+				// strange wall naming convention - wall 0 is between room 0 and
+				// 1
+				int jj = (j + 1) % cnt;
+				addWallShape(cnt, jj, jj, i, i + 1, id);
 			}
-
 		}
-
 	}
 
-
-	private int getRoomCntBeforeCircle(int ix) {
-		// TODO Auto-generated method stub
-		return 0;
+	private int getRoomCntInLayer(int r) {
+		return roomCounts.get(r);
 	}
 
-	private int getRoomCntAfterCircle(int i) {
-		// TODO Auto-generated method stub
-		return 0;
+	private int getRoomCntInNextLayer(int r) {
+		if (r + 1 >= roomCounts.size()) {
+			return 0;
+		}
+		return roomCounts.get(r + 1);
 	}
 
-
-	private int getGreenwichRoom(int i) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-
-	private boolean isPolarLayer(int ix) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	
 	private static final Logger LOGGER = Logger.getLogger("maze.jmaze");
 }

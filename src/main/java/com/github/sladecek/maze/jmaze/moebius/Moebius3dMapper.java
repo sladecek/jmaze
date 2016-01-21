@@ -3,7 +3,7 @@ package com.github.sladecek.maze.jmaze.moebius;
 import java.security.InvalidParameterException;
 
 import com.github.sladecek.maze.jmaze.geometry.EastWest;
-import com.github.sladecek.maze.jmaze.geometry.Point;
+import com.github.sladecek.maze.jmaze.geometry.Point3D;
 import com.github.sladecek.maze.jmaze.geometry.SouthNorth;
 import com.github.sladecek.maze.jmaze.geometry.UpDown;
 import com.github.sladecek.maze.jmaze.print3d.IMaze3DMapper;
@@ -50,15 +50,15 @@ public final class Moebius3dMapper implements IMaze3DMapper {
 	}
 
 	@Override
-	public Point mapPoint(int cellY, int cellX, double offsetY, double offsetX,
+	public Point3D mapPoint(int cellY, int cellX, double offsetY, double offsetX,
 			double offsetZ) {
 		double y = (offsetY + cellY - height / 2) * cellStepInmm;
 		double x = (offsetX + cellX) * cellStepInmm;
-		return geometry.transform(new Point(x, y, offsetZ));
+		return geometry.transform(new Point3D(x, y, offsetZ));
 	}
 
 	@Override
-	public Point mapCorner(int cellX, EastWest ew, UpDown ud,
+	public Point3D mapCorner(int cellX, EastWest ew, UpDown ud,
 			SouthNorth snWall, SouthNorth snEdge) {
 		double x = (((ew == EastWest.east) ? 0 : 1) + cellX) * cellStepInmm;
 		double y = heightInmm / 2;
@@ -71,7 +71,7 @@ public final class Moebius3dMapper implements IMaze3DMapper {
 
 		double z = ud == UpDown.down ? 0 : sizes.getWallHeightInmm();
 
-		return geometry.transform(new Point(x, y, z));
+		return geometry.transform(new Point3D(x, y, z));
 	}
 
 	@Override
