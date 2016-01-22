@@ -71,7 +71,7 @@ public final class SvgMazePrinter implements IMaze2DPrinter {
 		int r = mapper.mapLength(p1.getY());
 		
 		
-		String pth = "M" + mp1.getX() + " " + mp1.getY() + " A"+r+" "+r+" 0 0 0 "+mp2.getX() + " " + mp2.getY();
+		String pth = "M" + mp1.getX() + " " + mp1.getY() + " A"+r+" "+r+" 0 0 1 "+mp2.getX() + " " + mp2.getY();
 		
 		
 		path.setAttributeNS(null, "d", pth);
@@ -79,12 +79,19 @@ public final class SvgMazePrinter implements IMaze2DPrinter {
 		path.setAttributeNS(null, "fill", "none");
 
 	}
-
+	
 	public void printMark(Point2D center, String fill, int sizePercent,
 			int offsXPercent, int offsYPercent) {
 		// <circle cx="50" cy="50" r="40" stroke="black" stroke-width="3"
 		// fill="red" />
 
+		final int perimeter = cellSize * sizePercent / 100;		
+		printCircle(center, fill, offsXPercent, offsYPercent, perimeter, true, new String());
+
+	}
+
+	public void printCircle(Point2D center, String fill, int offsXPercent,
+			int offsYPercent, final int perimeter, boolean isPerimeterAbsolute, String style) {
 		String svgNS = SVGDOMImplementation.SVG_NAMESPACE_URI;
 
 		Element circle = doc.createElementNS(svgNS, "circle");
@@ -94,21 +101,21 @@ public final class SvgMazePrinter implements IMaze2DPrinter {
 
 		Point2D mc = mapper.mapPoint(center);
 		
-		int offsX = (offsXPercent * cellSize) / 100;
-		int offsY = (offsYPercent * cellSize) / 100;
+		int offsX = mapper.mapLength((offsXPercent * cellSize) / 100);
+		int offsY = mapper.mapLength((offsYPercent * cellSize) / 100);
 
 		circle.setAttributeNS(null, "cx", String.valueOf(mc.getX() + offsX));
 		circle.setAttributeNS(null, "cy", String.valueOf(mc.getY() + offsY));
+		
+		int perimeterAbsolute = isPerimeterAbsolute ? perimeter : mapper.mapLength(perimeter);
 		circle.setAttributeNS(null, "r",
-				String.valueOf(cellSize * sizePercent / 100));
+				String.valueOf(perimeterAbsolute));
 		circle.setAttributeNS(null, "fill", fill);
-
+		if (!style.isEmpty()) {
+			circle.setAttributeNS(null, "style", style);
+		}
 	}
 
-/*	private int toUnits(int xy) {
-		return margin + xy * cellSize;
-	}
-*/
 	public int getCanvasWidth() {
 		return canvasWidth;
 	}

@@ -10,6 +10,7 @@ import com.github.sladecek.maze.jmaze.generator.MazeRealization;
 import com.github.sladecek.maze.jmaze.geometry.Point2D;
 import com.github.sladecek.maze.jmaze.shapes.FloorShape;
 import com.github.sladecek.maze.jmaze.shapes.GenericShapeMaker;
+import com.github.sladecek.maze.jmaze.shapes.IMazeShape;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape.ShapeType;
 import com.github.sladecek.maze.jmaze.shapes.IShapeMaker;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
@@ -18,9 +19,12 @@ import com.github.sladecek.maze.jmaze.shapes.WallShape;
 public class Circular2DMaze extends GenericMazeSpace implements IMazeSpace,
 		IShapeMaker {
 
-	public Circular2DMaze(int layerCount) {
+	private int cellsPerLayer;
+
+	public Circular2DMaze(int layerCount, int cellsPerLayer) {
 		super();
 		this.layerCount = layerCount;
+		this.cellsPerLayer = cellsPerLayer;
 		buildMaze();
 	}
 
@@ -36,18 +40,14 @@ public class Circular2DMaze extends GenericMazeSpace implements IMazeSpace,
 		ShapeContainer result = shapeMaker.makeShapes(realization,
 				getStartRoom(), getTargetRoom(), 0, 50);
 
-		result.setPictureHeight(2 * layerCount);
-		result.setPictureWidth(2 * layerCount);
+		result.setPictureHeight(2 * layerCount* cellsPerLayer);
+		result.setPictureWidth(2 * layerCount* cellsPerLayer);
 		result.setPolarCoordinates(true);
-		// outer walls
-		/*
-		 * TODO
-		 * final IMazeShape.ShapeType ow = IMazeShape.ShapeType.outerWall;
-		 * result.add(new WallShape(ow, 0, 0, 0, width)); result.add(new
-		 * WallShape(ow, 0, 0, layerCount, 0)); result.add(new WallShape(ow, 0,
-		 * width, layerCount, width)); result.add(new WallShape(ow, layerCount,
-		 * 0, layerCount, width));
-		 */
+
+		// outer walls		
+		final IMazeShape.ShapeType ow = IMazeShape.ShapeType.outerWall;
+		result.add(new WallShape(ow, layerCount*cellsPerLayer, 0, layerCount*cellsPerLayer, 0));
+
 		return result;
 	}
 
@@ -101,7 +101,7 @@ public class Circular2DMaze extends GenericMazeSpace implements IMazeSpace,
 			}
 
 			String floorId = "r" + Integer.toString(room);
-			final FloorShape floor = new FloorShape(layerCount - r - 1, mapPhi(phi
+			final FloorShape floor = new FloorShape((layerCount - r - 1)*cellsPerLayer, mapPhi(phi
 					* roomRatio), false, floorId);
 			shapeMaker.linkRoomToFloor(room, floor);
 			shapeMaker.addShape(floor);
@@ -133,7 +133,7 @@ public class Circular2DMaze extends GenericMazeSpace implements IMazeSpace,
 				for (int j = 0; j < roomCntRatio; j++) {
 					int roomThis = roomNext * roomCntRatio + j;
 					int id = addWall(gRoomThis + roomThis, gRoomNext + roomNext);
-					addWallShape(roomCntThis, r, r, roomThis, roomThis + 1, id);
+					addWallShape(roomCntThis, layerCount-r, layerCount-r, roomThis, roomThis + 1, id);
 				}
 			}
 		}
@@ -146,7 +146,7 @@ public class Circular2DMaze extends GenericMazeSpace implements IMazeSpace,
 		final int roomMapRatio = equatorCellCnt / roomCntThisLayer;
 		final int rphi1 = (phi1 * roomMapRatio) % equatorCellCnt;
 		final int rphi2 = (phi2 * roomMapRatio) % equatorCellCnt;
-		WallShape ws = new WallShape(ShapeType.innerWall, r1, mapPhi(rphi1), r2, mapPhi(rphi2));
+		WallShape ws = new WallShape(ShapeType.innerWall, r1*cellsPerLayer, mapPhi(rphi1), r2*cellsPerLayer, mapPhi(rphi2));
 		shapeMaker.addShape(ws);
 		shapeMaker.linkShapeToId(ws, id);
 	}

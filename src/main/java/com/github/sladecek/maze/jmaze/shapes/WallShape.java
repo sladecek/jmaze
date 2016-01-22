@@ -41,7 +41,11 @@ public final class WallShape implements IMazeShape {
 		}
 		if (polarCoordinates && p1.getY() == p2.getY()) 
 		{
-			svg.printArcSegment(p1, p2, style);
+			if (p1.getX() == 0 && p2.getX()==0) {
+				svg.printCircle(new Point2D(0,0), "none", 0,  0, p1.getY(), false, style);
+			} else {
+				svg.printArcSegment(p1, p2, style);
+			}
 		}
 		else
 		{

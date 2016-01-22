@@ -11,8 +11,8 @@ public class TestAppCircular extends TestApp2DBase {
 	
 	public static void main(String[] args) {
 		new TestAppCircular().printTestMaze("maze-circular", () -> {
-			final int defaultSize = 20	;			
-			Circular2DMaze maze = new Circular2DMaze(defaultSize);
+			final int defaultSize = 50	;			
+			Circular2DMaze maze = new Circular2DMaze(defaultSize, 5);
 			final Random randomGenerator = new Random();
 			randomGenerator.setSeed(0);
 			IMazeGenerator g = new DepthFirstMazeGenerator(randomGenerator);
