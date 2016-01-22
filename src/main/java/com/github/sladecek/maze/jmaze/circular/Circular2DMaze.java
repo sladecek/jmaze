@@ -144,9 +144,9 @@ public class Circular2DMaze extends GenericMazeSpace implements IMazeSpace,
 			int phi2, int id) {
 		final int equatorCellCnt = roomCntInOuterLayer();
 		final int roomMapRatio = equatorCellCnt / roomCntThisLayer;
-		final int rr1 = (r1 * roomMapRatio) % equatorCellCnt;
-		final int rr2 = (r2 * roomMapRatio) % equatorCellCnt;
-		WallShape ws = new WallShape(ShapeType.innerWall, rr1, mapPhi(phi1), rr2, mapPhi(phi2));
+		final int rphi1 = (phi1 * roomMapRatio) % equatorCellCnt;
+		final int rphi2 = (phi2 * roomMapRatio) % equatorCellCnt;
+		WallShape ws = new WallShape(ShapeType.innerWall, r1, mapPhi(rphi1), r2, mapPhi(rphi2));
 		shapeMaker.addShape(ws);
 		shapeMaker.linkShapeToId(ws, id);
 	}
@@ -181,21 +181,21 @@ public class Circular2DMaze extends GenericMazeSpace implements IMazeSpace,
 	}
 
 	private void generateRadialWalls() {
-		for (int i = 0; i < layerCount; i++) {
-			LOGGER.log(Level.INFO, "generateRadialWalls i=" + i);
+		for (int r = 0; r < layerCount; r++) {
+			LOGGER.log(Level.INFO, "generateRadialWalls i=" + r);
 
-			final int cnt = getRoomCntInNextLayer(i);
+			final int cnt = getRoomCntInNextLayer(r);
 			if (cnt <= 1) {
 				continue;
 			}
 
-			final int gr = firstRoomInLayer.get(i);
+			final int gr = firstRoomInLayer.get(r);
 			for (int j = 0; j < cnt; j++) {
 				int id = addWall(gr + j, gr + (j + 1) % cnt);
 				// strange wall naming convention - wall 0 is between room 0 and
 				// 1
-				int jj = (j + 1) % cnt;
-				addWallShape(cnt, jj, jj, i, i + 1, id);
+				int phi = (j + 1) % cnt;
+				addWallShape(cnt, layerCount - r - 1, layerCount - r, phi, phi,  id);
 			}
 		}
 	}

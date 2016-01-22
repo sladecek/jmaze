@@ -19,7 +19,7 @@ public class Point2D {
 	}
 
 	public double getAngleRad() {
-		return getAngle() / (double)ANGLE_2PI;
+		return 2* Math.PI * getAngle() / (double)ANGLE_2PI;
 	}
 
 	public Point2D(int x, int y) {
