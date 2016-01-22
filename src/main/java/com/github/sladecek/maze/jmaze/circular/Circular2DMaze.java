@@ -146,7 +146,7 @@ public class Circular2DMaze extends GenericMazeSpace implements IMazeSpace,
 		final int roomMapRatio = equatorCellCnt / roomCntThisLayer;
 		final int rr1 = (r1 * roomMapRatio) % equatorCellCnt;
 		final int rr2 = (r2 * roomMapRatio) % equatorCellCnt;
-		WallShape ws = new WallShape(ShapeType.innerWall, rr1, phi1, rr2, phi2);
+		WallShape ws = new WallShape(ShapeType.innerWall, rr1, mapPhi(phi1), rr2, mapPhi(phi2));
 		shapeMaker.addShape(ws);
 		shapeMaker.linkShapeToId(ws, id);
 	}

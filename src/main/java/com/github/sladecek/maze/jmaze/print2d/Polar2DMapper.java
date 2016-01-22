@@ -11,8 +11,9 @@ public class Polar2DMapper implements IMaze2DMapper {
 
 	@Override
 	public Point2D mapPoint(Point2D p) {
-		double x = cellSize*Math.cos(p.getAngleRad()) + zeroPoint.getX();
-		double y = cellSize*Math.sin(p.getAngleRad()) +  zeroPoint.getY();
+		int r = mapLength(p.getY());
+		double x = r*Math.cos(p.getAngleRad()) + zeroPoint.getX();
+		double y = r*Math.sin(p.getAngleRad()) +  zeroPoint.getY();
 		return new Point2D((int)Math.floor(x), (int)Math.floor(y));
 	}
 
