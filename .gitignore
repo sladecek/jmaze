@@ -13,3 +13,7 @@ maze.log
 /maze-moebius.js
 /maze-rect.pdf
 /maze-triangular.pdf
+/maze-circular.pdf
+/maze-hexagonal.pdf
+/maze-voronoi.pdf
+/#maze-hexagonal.svg#
