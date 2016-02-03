@@ -30,8 +30,6 @@ import com.github.sladecek.maze.jmaze.shapes.ShapeContext;
  * Print 2D maze to SVG or PDF. 
  */
 public final class SvgMazePrinter implements IMaze2DPrinter {
-	final int cellSize = 10;
-	final int margin = cellSize / 2;
 	IMaze2DMapper mapper;
 
 	public IMaze2DMapper getMapper() {
@@ -43,8 +41,8 @@ public final class SvgMazePrinter implements IMaze2DPrinter {
 	}
 
 	public void printLine(Point2D p1, Point2D p2, String style,
-			boolean center) {
-		int offs = center ? cellSize / 2 : 0;
+			boolean center, ShapeContext context) {
+		int offs = center ? context.getResolution() / 2 : 0;
 
 		String svgNS = SVGDOMImplementation.SVG_NAMESPACE_URI;
 		Element line = doc.createElementNS(svgNS, "line");
@@ -62,7 +60,7 @@ public final class SvgMazePrinter implements IMaze2DPrinter {
 
 	}
 
-	public void printArcSegment(Point2D p1, Point2D p2, String style) {
+	public void printArcSegment(Point2D p1, Point2D p2, String style, ShapeContext context) {
 
 		assert p1.getY() == p2.getY(): "arc segment must be defined on the same diameter";
 		String svgNS = SVGDOMImplementation.SVG_NAMESPACE_URI;
@@ -85,17 +83,17 @@ public final class SvgMazePrinter implements IMaze2DPrinter {
 	}
 	
 	public void printMark(Point2D center, String fill, int sizePercent,
-			int offsXPercent, int offsYPercent) {
+			int offsXPercent, int offsYPercent, ShapeContext context) {
 		// <circle cx="50" cy="50" r="40" stroke="black" stroke-width="3"
 		// fill="red" />
 
-		final int perimeter = cellSize * sizePercent / 100;		
-		printCircle(center, fill, offsXPercent, offsYPercent, perimeter, true, new String());
+		final int perimeter = context.getResolution() * sizePercent / 100;		
+		printCircle(center, fill, offsXPercent, offsYPercent, perimeter, true, new String(), context);
 
 	}
 
 	public void printCircle(Point2D center, String fill, int offsXPercent,
-			int offsYPercent, final int perimeter, boolean isPerimeterAbsolute, String style) {
+			int offsYPercent, final int perimeter, boolean isPerimeterAbsolute, String style, ShapeContext context) {
 		String svgNS = SVGDOMImplementation.SVG_NAMESPACE_URI;
 
 		Element circle = doc.createElementNS(svgNS, "circle");
@@ -105,6 +103,9 @@ public final class SvgMazePrinter implements IMaze2DPrinter {
 
 		Point2D mc = mapper.mapPoint(center);
 		
+		final int cellSize = context.getResolution();
+	    final int margin = cellSize / 2;
+
 		int offsX = mapper.mapLength((offsXPercent * cellSize) / 100);
 		int offsY = mapper.mapLength((offsYPercent * cellSize) / 100);
 
@@ -169,7 +170,14 @@ public final class SvgMazePrinter implements IMaze2DPrinter {
 	private Document doc;
 
 	private Document createSvgDom(ShapeContainer shapes, boolean showSolution) {
+	    
+	    
 		ShapeContext context = shapes.getContext();
+		
+        final int cellSize = context.getResolution();
+        final int margin = cellSize / 2;
+
+		
 		if (context.isPolarCoordinates()) {
 			canvasWidth = 2 * margin + context.getPictureWidth() * cellSize;
 			canvasHeight = 2 * margin + context.getPictureHeight() * cellSize;

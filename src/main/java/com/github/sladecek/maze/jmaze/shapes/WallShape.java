@@ -42,14 +42,14 @@ public final class WallShape implements IMazeShape {
 		if (context.isPolarCoordinates() && p1.getY() == p2.getY()) 
 		{
 			if (p1.getX() == 0 && p2.getX()==0) {
-				svg.printCircle(new Point2D(0,0), "none", 0,  0, p1.getY(), false, style);
+				svg.printCircle(new Point2D(0,0), "none", 0,  0, p1.getY(), false, style, context);
 			} else {
-				svg.printArcSegment(p1, p2, style);
+				svg.printArcSegment(p1, p2, style, context);
 			}
 		}
 		else
 		{
-			svg.printLine(p1, p2, style, center);
+			svg.printLine(p1, p2, style, center, context);
 		}
 	}
 
