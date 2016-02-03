@@ -9,26 +9,23 @@ import java.util.Vector;
 public final class ShapeContainer {
 	
 
-	public ShapeContainer() {
+	private ShapeContext context;
+
+
+    public ShapeContainer(ShapeContext context) {
 		shapes = new Vector<IMazeShape>();
-		isPolarCoordinates = false;
+		this.context = context;
 	}
 
 	public int getPictureHeight() {
-		return pictureHeight;
+		return context.getPictureHeight();
 	}
 	
-	public void setPictureHeight(int pictureHeight) {
-		this.pictureHeight = pictureHeight;
-	}
 	
 	public int getPictureWidth() {
-		return pictureWidth;
+		return this.context.getPictureWidth();		
 	}
-	public void setPictureWidth(int pictureWidth) {
-		this.pictureWidth = pictureWidth;
-	}
-	
+		
 	public Vector<IMazeShape> getShapes() {
 		return shapes;
 	}
@@ -38,18 +35,11 @@ public final class ShapeContainer {
 	}
 
 	public boolean isPolarCoordinates() {
-		return isPolarCoordinates;
+		return this.context.isPolarCoordinates();
 	}
-
-	public void setPolarCoordinates(boolean usePolarCoordinates) {
-		this.isPolarCoordinates = usePolarCoordinates;
-	}
-
 	
 	private Vector<IMazeShape> shapes;
-	private boolean isPolarCoordinates;
-	private int pictureHeight;
-	private int pictureWidth;
+	
 
 
 }

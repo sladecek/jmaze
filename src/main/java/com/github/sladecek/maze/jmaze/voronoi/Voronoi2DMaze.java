@@ -1,6 +1,5 @@
 package com.github.sladecek.maze.jmaze.voronoi;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.logging.Logger;
@@ -14,6 +13,7 @@ import com.github.sladecek.maze.jmaze.shapes.IMazeShape;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape.ShapeType;
 import com.github.sladecek.maze.jmaze.shapes.IShapeMaker;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
+import com.github.sladecek.maze.jmaze.shapes.ShapeContext;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
 import com.github.sladecek.maze.jmaze.topology.GenericMazeTopology;
 import com.github.sladecek.maze.jmaze.topology.IMazeTopology;
@@ -39,6 +39,7 @@ public class Voronoi2DMaze extends GenericMazeTopology implements IMazeTopology,
 	private double[] roomCenterY;
 	private double[] roomCenterX;
 
+	private ShapeContext context;
 	private GenericShapeMaker shapeMaker;
 
 	private Random randomGenerator;
@@ -49,10 +50,12 @@ public class Voronoi2DMaze extends GenericMazeTopology implements IMazeTopology,
 
 	@Override
 	public ShapeContainer makeShapes(MazeRealization realization) {
-		ShapeContainer result = shapeMaker.makeShapes(realization,
+	    final int height = 2*width;
+        final boolean isPolar = false;
+        this.context = new ShapeContext(isPolar, height, width, 1);
+
+		ShapeContainer result = shapeMaker.makeShapes(context, realization,
 				getStartRoom(), getTargetRoom(), 0, 50);
-		result.setPictureHeight(width);
-		result.setPictureWidth(2 * width);
 
 		// outer walls
 		final IMazeShape.ShapeType ow = IMazeShape.ShapeType.outerWall;

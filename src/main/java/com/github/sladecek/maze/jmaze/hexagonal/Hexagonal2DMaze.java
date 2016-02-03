@@ -8,6 +8,7 @@ import com.github.sladecek.maze.jmaze.shapes.GenericShapeMaker;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape.ShapeType;
 import com.github.sladecek.maze.jmaze.shapes.IShapeMaker;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
+import com.github.sladecek.maze.jmaze.shapes.ShapeContext;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
 import com.github.sladecek.maze.jmaze.topology.GenericMazeTopology;
 import com.github.sladecek.maze.jmaze.topology.IMazeTopology;
@@ -17,7 +18,7 @@ public class Hexagonal2DMaze extends GenericMazeTopology implements IMazeTopolog
 		IShapeMaker {
 
 	    private int size;
-	    
+	    private ShapeContext context;	    
 	    private GenericShapeMaker shapeMaker;
 	    
 	    public Hexagonal2DMaze(int size) {
@@ -35,9 +36,15 @@ public class Hexagonal2DMaze extends GenericMazeTopology implements IMazeTopolog
 	    
 	    @Override
 	    public ShapeContainer makeShapes(MazeRealization realization) {
-	        ShapeContainer result = shapeMaker.makeShapes(realization, getStartRoom(), getTargetRoom(), 0, 50); 
-	        result.setPictureWidth(hP*(3*size-1));
-	        result.setPictureHeight(hH*(2*size+1));
+	        
+	        
+	        final int height = hH*(2*size+1);
+	        final int width = hP*(3*size-1);
+	        final boolean isPolar = false;
+	        this.context = new ShapeContext(isPolar, height, width, 1);
+	        
+	        
+	        ShapeContainer result = shapeMaker.makeShapes(context, realization, getStartRoom(), getTargetRoom(), 0, 50); 
 	        return result;
 	    }
 

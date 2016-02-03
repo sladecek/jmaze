@@ -11,6 +11,7 @@ import com.github.sladecek.maze.jmaze.shapes.IMazeShape;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape.ShapeType;
 import com.github.sladecek.maze.jmaze.shapes.IShapeMaker;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
+import com.github.sladecek.maze.jmaze.shapes.ShapeContext;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
 import com.github.sladecek.maze.jmaze.topology.GenericMazeTopology;
 import com.github.sladecek.maze.jmaze.topology.IMazeTopology;
@@ -35,14 +36,18 @@ public class Circular2DMaze extends GenericMazeTopology implements IMazeTopology
 	private Vector<Integer> roomCounts;
 	private Vector<Integer> firstRoomInLayer;
 
+	private ShapeContext context;
+	
 	@Override
 	public ShapeContainer makeShapes(MazeRealization realization) {
-		ShapeContainer result = shapeMaker.makeShapes(realization,
+		
+        final int height = 2 * layerCount* cellsPerLayer;
+        final int width = 2 * layerCount* cellsPerLayer;
+        final boolean isPolar = true;
+	    this.context = new ShapeContext(isPolar, height, width, 1);
+	    
+		ShapeContainer result = shapeMaker.makeShapes(context, realization,
 				getStartRoom(), getTargetRoom(), 0, 50);
-
-		result.setPictureHeight(2 * layerCount* cellsPerLayer);
-		result.setPictureWidth(2 * layerCount* cellsPerLayer);
-		result.setPolarCoordinates(true);
 
 		// outer walls		
 		final IMazeShape.ShapeType ow = IMazeShape.ShapeType.outerWall;

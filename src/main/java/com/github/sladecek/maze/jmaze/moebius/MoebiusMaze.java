@@ -8,6 +8,7 @@ import com.github.sladecek.maze.jmaze.shapes.IMazeShape;
 import com.github.sladecek.maze.jmaze.shapes.IShapeMaker;
 import com.github.sladecek.maze.jmaze.shapes.MarkShape;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
+import com.github.sladecek.maze.jmaze.shapes.ShapeContext;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
 import com.github.sladecek.maze.jmaze.topology.IMazeTopology;
 import com.github.sladecek.maze.jmaze.topology.MazeRealization;
@@ -38,10 +39,10 @@ public final class MoebiusMaze implements IMazeTopology, IShapeMaker {
 
 	@Override
 	public ShapeContainer makeShapes(MazeRealization realization) {
-
-		ShapeContainer result = new ShapeContainer();
-		result.setPictureHeight(height);
-		result.setPictureWidth(width);
+        final boolean isPolar = false;
+        this.context = new ShapeContext(isPolar, height, width, 1);
+	       
+		ShapeContainer result = new ShapeContainer(context);
 
 		// outer walls
 		final IMazeShape.ShapeType ow = IMazeShape.ShapeType.outerWall;
@@ -232,6 +233,7 @@ public final class MoebiusMaze implements IMazeTopology, IShapeMaker {
 
 	private int height;
 	private int width;
+	private ShapeContext context;
 
 	private int eastWestWallCount;
 	private int southNorthWallCount;

@@ -10,6 +10,7 @@ import com.github.sladecek.maze.jmaze.shapes.GenericShapeMaker;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape.ShapeType;
 import com.github.sladecek.maze.jmaze.shapes.IShapeMaker;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
+import com.github.sladecek.maze.jmaze.shapes.ShapeContext;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
 import com.github.sladecek.maze.jmaze.topology.GenericMazeTopology;
 import com.github.sladecek.maze.jmaze.topology.IMazeTopology;
@@ -48,7 +49,11 @@ public final class EggMaze extends GenericMazeTopology implements IMazeTopology,
 
 	@Override
 	public ShapeContainer makeShapes(MazeRealization realization) {
-		return shapeMaker.makeShapes(realization, getStartRoom(), getTargetRoom(), 50, 50);
+        final boolean isPolar = false;
+        int width = 0;
+        int height = 0;
+        this.context = new ShapeContext(isPolar, height, width, 1);
+		return shapeMaker.makeShapes(context, realization, getStartRoom(), getTargetRoom(), 50, 50);
 	}
 	
 
@@ -247,7 +252,7 @@ public final class EggMaze extends GenericMazeTopology implements IMazeTopology,
 
 	private EggMazeHemisphere north;
 	private EggMazeHemisphere south;
-
+    private ShapeContext context;
 	private double baseRoomSizeInmm;
 
 	private static final int MINIMAL_ROOM_COUNT_ON_EGG_MAZE_EQUATOR = 4;

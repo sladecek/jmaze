@@ -13,7 +13,6 @@ import com.github.sladecek.maze.jmaze.topology.MazeRealization;
 public class GenericShapeMaker  {
 
 	public GenericShapeMaker() {
-		shapes = new ShapeContainer();
 		shape2id = new HashMap<IMazeShape, Integer>();
 		room2floor = new HashMap<Integer, FloorShape>();		
 	}	
@@ -22,11 +21,9 @@ public class GenericShapeMaker  {
 	private HashMap<IMazeShape, Integer> shape2id;
 	private HashMap<Integer, FloorShape> room2floor;
 	
-	public ShapeContainer makeShapes(MazeRealization realization, int startRoom, int targetRoom, int offsetXPercent, int offsetYPercent) {
+	public ShapeContainer makeShapes(ShapeContext context, MazeRealization realization, int startRoom, int targetRoom, int offsetXPercent, int offsetYPercent) {
 		
-		ShapeContainer result = new ShapeContainer();
-		result.setPictureHeight(shapes.getPictureHeight());
-		result.setPictureWidth(shapes.getPictureWidth());
+		ShapeContainer result = new ShapeContainer(context);
 		
 		// copy only closed walls to the result
 		for (IMazeShape s: shapes.getShapes()) {

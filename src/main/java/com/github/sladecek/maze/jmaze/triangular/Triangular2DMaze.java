@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 import com.github.sladecek.maze.jmaze.shapes.FloorShape;
 import com.github.sladecek.maze.jmaze.shapes.GenericShapeMaker;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape;
+import com.github.sladecek.maze.jmaze.shapes.ShapeContext;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape.ShapeType;
 import com.github.sladecek.maze.jmaze.shapes.IShapeMaker;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
@@ -20,6 +21,7 @@ public class Triangular2DMaze extends GenericMazeTopology implements IMazeTopolo
 	private int size;
 	
 	private GenericShapeMaker shapeMaker;
+	private ShapeContext context;
 	
 	public Triangular2DMaze(int size) {
 		super();
@@ -29,9 +31,13 @@ public class Triangular2DMaze extends GenericMazeTopology implements IMazeTopolo
 
 	@Override
 	public ShapeContainer makeShapes(MazeRealization realization) {
-		ShapeContainer result = shapeMaker.makeShapes(realization, getStartRoom(), getTargetRoom(), 0, 50); 
-		result.setPictureHeight(size);
-		result.setPictureWidth(2*size);
+		
+	    final int height = size;
+	    final int width = 2*size;
+	    final boolean isPolar = false;
+        this.context = new ShapeContext(isPolar, height, width, 1);
+
+	    ShapeContainer result = shapeMaker.makeShapes(context, realization, getStartRoom(), getTargetRoom(), 0, 50); 
 		
 		// outer walls
 		final IMazeShape.ShapeType ow = IMazeShape.ShapeType.outerWall;
