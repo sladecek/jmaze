@@ -6,9 +6,7 @@ import com.github.sladecek.maze.jmaze.topology.MazeRealization;
 
 
 /**
- * 
  * Implements methods needed to implement generic shape maker (generic method makeShapes).
- *
  */
 public class GenericShapeMaker  {
 

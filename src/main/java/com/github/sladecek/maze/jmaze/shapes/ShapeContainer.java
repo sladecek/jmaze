@@ -17,15 +17,7 @@ public final class ShapeContainer {
 		this.context = context;
 	}
 
-	public int getPictureHeight() {
-		return context.getPictureHeight();
-	}
 	
-	
-	public int getPictureWidth() {
-		return this.context.getPictureWidth();		
-	}
-		
 	public Vector<IMazeShape> getShapes() {
 		return shapes;
 	}
@@ -34,11 +26,13 @@ public final class ShapeContainer {
 		shapes.add(s);
 	}
 
-	public boolean isPolarCoordinates() {
-		return this.context.isPolarCoordinates();
-	}
-	
+
 	private Vector<IMazeShape> shapes;
+
+
+    public ShapeContext getContext() {
+        return context;
+    }
 	
 
 

@@ -33,8 +33,8 @@ public final class MoebiusBlockMaker extends BlockMakerBase implements IBlockMak
 		walls = new ArrayList<WallShape>();
 		floors = new ArrayList<FloorShape>();
 
-		cellHeight = shapes.getPictureHeight();
-		cellWidth = shapes.getPictureWidth();
+		cellHeight = shapes.getContext().getPictureHeight();
+		cellWidth = shapes.getContext().getPictureWidth();
 
 		for (IMazeShape shape: shapes.getShapes()) {
 			if (shape.getShapeType() == ShapeType.hole) {

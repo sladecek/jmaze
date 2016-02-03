@@ -46,13 +46,7 @@ public final class FloorShape implements IMazeShape {
 
 
 	@Override
-	public void printToSvg(SvgMazePrinter svg, boolean polarCoordinates)  {
-	/* TODO	if (isHole) {
-			String style = "stroke:rgb(222,222,222);stroke-width:1";
-			svg.printLine(getY(), getX(), getY() + 1, getX() + 1, style, false);
-			svg.printLine(getY() + 1, getX(), getY(), getX() + 1, style, false);
-		}
-		*/
+	public void printToSvg(SvgMazePrinter svg, ShapeContext context)  {
 	}
 	
 	@Override

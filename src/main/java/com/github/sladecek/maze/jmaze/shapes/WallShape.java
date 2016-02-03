@@ -18,7 +18,7 @@ public final class WallShape implements IMazeShape {
 	}
 
 	@Override
-	public void printToSvg(SvgMazePrinter svg, boolean polarCoordinates) {		
+	public void printToSvg(SvgMazePrinter svg, ShapeContext context) {		
 		String style = "";
 		boolean center = false;
 		switch (shapeType) {		
@@ -39,7 +39,7 @@ public final class WallShape implements IMazeShape {
 			break;
 			
 		}
-		if (polarCoordinates && p1.getY() == p2.getY()) 
+		if (context.isPolarCoordinates() && p1.getY() == p2.getY()) 
 		{
 			if (p1.getX() == 0 && p2.getX()==0) {
 				svg.printCircle(new Point2D(0,0), "none", 0,  0, p1.getY(), false, style);
