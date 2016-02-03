@@ -24,6 +24,7 @@ import org.w3c.dom.Element;
 import com.github.sladecek.maze.jmaze.geometry.Point2D;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
+import com.github.sladecek.maze.jmaze.shapes.ShapeContext;
 
 /*
  * Print 2D maze to SVG or PDF. 
@@ -131,10 +132,10 @@ public final class SvgMazePrinter implements IMaze2DPrinter {
 	private int canvasHeight;
 
 	@Override
-	public void printShapes(ShapeContainer maze, MazeOutputFormat format,
+	public void printShapes(ShapeContainer shapes, MazeOutputFormat format,
 			OutputStream output, boolean showSolution) {
 		try {
-			Document doc = createSvgDom(maze, showSolution);
+			Document doc = createSvgDom(shapes, showSolution);
 
 			switch (format) {
 			case svg:
@@ -167,17 +168,16 @@ public final class SvgMazePrinter implements IMaze2DPrinter {
 
 	private Document doc;
 
-	private Document createSvgDom(ShapeContainer maze, boolean showSolution) {
-		final boolean usePolarCoordinates = maze.isPolarCoordinates();
-		
-		if (usePolarCoordinates) {
-			canvasWidth = 2 * margin + maze.getPictureWidth() * cellSize;
-			canvasHeight = 2 * margin + maze.getPictureHeight() * cellSize;
+	private Document createSvgDom(ShapeContainer shapes, boolean showSolution) {
+		ShapeContext context = shapes.getContext();
+		if (context.isPolarCoordinates()) {
+			canvasWidth = 2 * margin + shapes.getPictureWidth() * cellSize;
+			canvasHeight = 2 * margin + shapes.getPictureHeight() * cellSize;
 			Point2D zeroPoint = new Point2D(margin + canvasWidth/2, margin + canvasHeight/2);
 			mapper = new Polar2DMapper(zeroPoint, cellSize);
 		} else {
-			canvasWidth = 2 * margin + maze.getPictureWidth() * cellSize;
-			canvasHeight = 2 * margin + maze.getPictureHeight() * cellSize;
+			canvasWidth = 2 * margin + shapes.getPictureWidth() * cellSize;
+			canvasHeight = 2 * margin + shapes.getPictureHeight() * cellSize;
 			Point2D zeroPoint = new Point2D(margin, margin);
 			mapper = new Cartesian2DMapper(zeroPoint, cellSize);
 			
@@ -187,11 +187,11 @@ public final class SvgMazePrinter implements IMaze2DPrinter {
 		String svgNS = SVGDOMImplementation.SVG_NAMESPACE_URI;
 		doc = impl.createDocument(svgNS, "svg", null);
 
-		for (IMazeShape shape : maze.getShapes()) {
+		for (IMazeShape shape : shapes.getShapes()) {
 			if (showSolution
 					|| shape.getShapeType() != IMazeShape.ShapeType.solution) {
 				
-				shape.printToSvg(this, usePolarCoordinates);
+				shape.printToSvg(this,context);
 			}
 		}
 

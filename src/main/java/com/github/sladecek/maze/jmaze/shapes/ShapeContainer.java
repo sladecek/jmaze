@@ -34,11 +34,13 @@ public final class ShapeContainer {
 		shapes.add(s);
 	}
 
-	public boolean isPolarCoordinates() {
-		return this.context.isPolarCoordinates();
-	}
-	
+
 	private Vector<IMazeShape> shapes;
+
+
+    public ShapeContext getContext() {
+        return context;
+    }
 	
 
 

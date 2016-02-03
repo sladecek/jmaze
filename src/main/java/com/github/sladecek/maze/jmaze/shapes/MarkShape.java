@@ -42,7 +42,7 @@ public final class MarkShape implements IMazeShape {
 	}
 
 	@Override
-	public void printToSvg(SvgMazePrinter svg, boolean polarCoordinates)   {
+	public void printToSvg(SvgMazePrinter svg, ShapeContext context)   {
 		
 		switch (shapeType) {
 		case startRoom:

@@ -10,6 +10,6 @@ public interface IMazeShape {
 	
 	ShapeType getShapeType();
 
-	void printToSvg(SvgMazePrinter printer, boolean polarCoordinates) ;
+	void printToSvg(SvgMazePrinter printer, ShapeContext context) ;
 
 }
