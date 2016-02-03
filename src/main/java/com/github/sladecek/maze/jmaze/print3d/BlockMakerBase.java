@@ -6,12 +6,12 @@ import java.util.logging.Logger;
 
 import com.github.sladecek.maze.jmaze.colors.Color;
 import com.github.sladecek.maze.jmaze.colors.MazeColors;
-import com.github.sladecek.maze.jmaze.generator.MazeRealization;
 import com.github.sladecek.maze.jmaze.geometry.EastWest;
 import com.github.sladecek.maze.jmaze.geometry.Point3D;
 import com.github.sladecek.maze.jmaze.geometry.SouthNorth;
 import com.github.sladecek.maze.jmaze.geometry.UpDown;
 import com.github.sladecek.maze.jmaze.shapes.FloorShape;
+import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
 
 /**
@@ -20,11 +20,13 @@ import com.github.sladecek.maze.jmaze.shapes.WallShape;
  */
 public abstract class BlockMakerBase {
 
-	public BlockMakerBase(Maze3DSizes sizes, MazeColors colors,
-			MazeRealization realization, double approxRoomSizeInmm) {
+    protected ShapeContainer shapes;
+    
+	public BlockMakerBase(ShapeContainer shapes, Maze3DSizes sizes, MazeColors colors,
+			double approxRoomSizeInmm) {
+	    this.shapes=shapes;
 		this.sizes = sizes;
 		this.colors = colors;
-		this.realization = realization;
 		this.approxRoomSizeInmm = approxRoomSizeInmm;
 	}
 
@@ -203,7 +205,7 @@ public abstract class BlockMakerBase {
 	protected MazeColors colors;
 	protected OpenScadComposer scad;
 	protected IMaze3DMapper maze3dMapper;
-	protected MazeRealization realization;
+
 	private double approxRoomSizeInmm;
 
 	protected ArrayList<Block> blocks;

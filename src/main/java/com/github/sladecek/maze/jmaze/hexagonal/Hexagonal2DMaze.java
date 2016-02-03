@@ -3,17 +3,17 @@ package com.github.sladecek.maze.jmaze.hexagonal;
 import java.util.Vector;
 import java.util.logging.Logger;
 
-import com.github.sladecek.maze.jmaze.generator.GenericMazeSpace;
-import com.github.sladecek.maze.jmaze.generator.IMazeSpace;
-import com.github.sladecek.maze.jmaze.generator.MazeRealization;
 import com.github.sladecek.maze.jmaze.shapes.FloorShape;
 import com.github.sladecek.maze.jmaze.shapes.GenericShapeMaker;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape.ShapeType;
 import com.github.sladecek.maze.jmaze.shapes.IShapeMaker;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
+import com.github.sladecek.maze.jmaze.topology.GenericMazeTopology;
+import com.github.sladecek.maze.jmaze.topology.IMazeTopology;
+import com.github.sladecek.maze.jmaze.topology.MazeRealization;
 
-public class Hexagonal2DMaze extends GenericMazeSpace implements IMazeSpace,
+public class Hexagonal2DMaze extends GenericMazeTopology implements IMazeTopology,
 		IShapeMaker {
 
 	    private int size;

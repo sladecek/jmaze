@@ -1,4 +1,4 @@
-package com.github.sladecek.maze.jmaze.generator;
+package com.github.sladecek.maze.jmaze.topology;
 
 import java.util.BitSet;
 import java.util.Random;
@@ -21,7 +21,7 @@ public final class DepthFirstMazeGenerator implements IMazeGenerator {
 	}
 
 	@Override
-	public MazeRealization generateMaze(final IMazeSpace maze) {
+	public MazeRealization generateMaze(final IMazeTopology maze) {
 		MazeRealization result = new MazeRealization(maze.getWallCount());
 		Vector<Integer> solution = null;
 		int allRoomsCnt = maze.getRoomCount();
@@ -72,7 +72,7 @@ public final class DepthFirstMazeGenerator implements IMazeGenerator {
 	}
 	
 	private Vector<Integer> findAllPossibleNextRooms(
-			final IMazeSpace maze, final MazeRealization real, final int room) {
+			final IMazeTopology maze, final MazeRealization real, final int room) {
 		Vector<Integer> candidates = new Vector<Integer>();
 		for (int wall: maze.getWalls(room)) {
 			if (real.isWallClosed(wall)) {

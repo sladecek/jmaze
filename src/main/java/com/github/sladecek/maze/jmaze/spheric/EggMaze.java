@@ -4,9 +4,6 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.github.sladecek.maze.jmaze.generator.GenericMazeSpace;
-import com.github.sladecek.maze.jmaze.generator.IMazeSpace;
-import com.github.sladecek.maze.jmaze.generator.MazeRealization;
 import com.github.sladecek.maze.jmaze.geometry.SouthNorth;
 import com.github.sladecek.maze.jmaze.shapes.FloorShape;
 import com.github.sladecek.maze.jmaze.shapes.GenericShapeMaker;
@@ -14,12 +11,15 @@ import com.github.sladecek.maze.jmaze.shapes.IMazeShape.ShapeType;
 import com.github.sladecek.maze.jmaze.shapes.IShapeMaker;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
+import com.github.sladecek.maze.jmaze.topology.GenericMazeTopology;
+import com.github.sladecek.maze.jmaze.topology.IMazeTopology;
+import com.github.sladecek.maze.jmaze.topology.MazeRealization;
 /**
  * 
  * Rooms and walls of a maze on an egg-like shape.
  *
  */
-public final class EggMaze extends GenericMazeSpace implements IMazeSpace,
+public final class EggMaze extends GenericMazeTopology implements IMazeTopology,
 		IShapeMaker {
 
 

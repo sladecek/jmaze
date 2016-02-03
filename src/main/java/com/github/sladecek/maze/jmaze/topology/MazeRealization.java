@@ -1,4 +1,4 @@
-package com.github.sladecek.maze.jmaze.generator;
+package com.github.sladecek.maze.jmaze.topology;
 
 import java.util.BitSet;
 import java.util.Vector;

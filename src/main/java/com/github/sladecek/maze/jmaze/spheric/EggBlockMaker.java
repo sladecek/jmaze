@@ -6,7 +6,6 @@ import java.util.logging.Logger;
 
 import com.github.sladecek.maze.jmaze.colors.Color;
 import com.github.sladecek.maze.jmaze.colors.MazeColors;
-import com.github.sladecek.maze.jmaze.generator.MazeRealization;
 import com.github.sladecek.maze.jmaze.print3d.Block;
 import com.github.sladecek.maze.jmaze.print3d.BlockMakerBase;
 import com.github.sladecek.maze.jmaze.print3d.IBlockMaker;
@@ -24,13 +23,12 @@ import com.github.sladecek.maze.jmaze.shapes.WallShape;
  */
 public final class EggBlockMaker extends BlockMakerBase implements IBlockMaker {
 
-	public EggBlockMaker(EggMaze maze, MazeRealization realization,
+	public EggBlockMaker(ShapeContainer shapes,
 			Maze3DSizes sizes, MazeColors colors, final EggGeometry egg,
 			final int equatorCellCnt) {
-		super(sizes, colors, realization, egg
+		super(shapes, sizes, colors, egg
 				.computeBaseRoomSizeInmm(equatorCellCnt));
 		this.egg = egg;
-		this.maze = maze;
 	}
 
 	@Override
@@ -39,7 +37,7 @@ public final class EggBlockMaker extends BlockMakerBase implements IBlockMaker {
 		prepareShapes(maze);
 		blocks = new ArrayList<Block>();
 		printFloors();
-		printWalls(realization);
+		printWalls();
 		printMarks();
 
 	}
@@ -58,7 +56,7 @@ public final class EggBlockMaker extends BlockMakerBase implements IBlockMaker {
 	}
 
 	protected void prepareShapes(final IShapeMaker maze) {
-		ShapeContainer shapes = maze.makeShapes(realization);
+
 		walls = new ArrayList<WallShape>();
 		floor = new ArrayList<FloorShape>();
 		marks = new ArrayList<MarkShape>();
@@ -89,7 +87,7 @@ public final class EggBlockMaker extends BlockMakerBase implements IBlockMaker {
 		}
 	}
 
-	private void printWalls(final MazeRealization realization) {
+	private void printWalls() {
 		final double wt = sizes.getInnerWallToCellRatio() / 2;
 		for (WallShape wall : walls) {
 			printWallElements(wt, wall);

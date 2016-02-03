@@ -1,4 +1,4 @@
-package com.github.sladecek.maze.jmaze.generator;
+package com.github.sladecek.maze.jmaze.topology;
 
 
 /***
@@ -10,7 +10,7 @@ package com.github.sladecek.maze.jmaze.generator;
  * Walls as well as rooms are identified by integer numbers. The room number start at 0 and
  * are continuous up to GetRoomCount(). Walls can be numbered arbitrarily.
  */
-public interface IMazeSpace {
+public interface IMazeTopology {
 	
 	int getRoomCount();
 	

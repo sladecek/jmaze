@@ -1,6 +1,6 @@
 package com.github.sladecek.maze.jmaze.shapes;
 
-import com.github.sladecek.maze.jmaze.generator.MazeRealization;
+import com.github.sladecek.maze.jmaze.topology.MazeRealization;
 
 /***
  * Makes 2D printable maze shapes.

@@ -1,4 +1,4 @@
-package com.github.sladecek.maze.jmaze.generator;
+package com.github.sladecek.maze.jmaze.topology;
 
 import java.util.Vector;
 import java.util.logging.Level;
@@ -9,7 +9,7 @@ import java.util.logging.Logger;
  * of rooms and walls. The rooms and wall must be added to lists one by one
  * during maze construction.
  */
-public class GenericMazeSpace  implements IMazeSpace {
+public class GenericMazeTopology  implements IMazeTopology {
 	
 	public final int addRoom() {
 		int id = rooms.size();

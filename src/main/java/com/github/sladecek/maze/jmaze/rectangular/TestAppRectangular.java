@@ -2,10 +2,10 @@ package com.github.sladecek.maze.jmaze.rectangular;
 
 import java.util.Random;
 
-import com.github.sladecek.maze.jmaze.generator.DepthFirstMazeGenerator;
-import com.github.sladecek.maze.jmaze.generator.IMazeGenerator;
-import com.github.sladecek.maze.jmaze.generator.MazeRealization;
 import com.github.sladecek.maze.jmaze.print2d.TestApp2DBase;
+import com.github.sladecek.maze.jmaze.topology.DepthFirstMazeGenerator;
+import com.github.sladecek.maze.jmaze.topology.IMazeGenerator;
+import com.github.sladecek.maze.jmaze.topology.MazeRealization;
 
 public final class TestAppRectangular extends TestApp2DBase {
 

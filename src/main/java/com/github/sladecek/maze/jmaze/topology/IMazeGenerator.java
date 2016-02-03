@@ -1,4 +1,4 @@
-package com.github.sladecek.maze.jmaze.generator;
+package com.github.sladecek.maze.jmaze.topology;
 
 
 /**
@@ -8,6 +8,6 @@ package com.github.sladecek.maze.jmaze.generator;
  */
 public interface IMazeGenerator {
 	
-	MazeRealization generateMaze(IMazeSpace maze);
+	MazeRealization generateMaze(IMazeTopology maze);
 
 }

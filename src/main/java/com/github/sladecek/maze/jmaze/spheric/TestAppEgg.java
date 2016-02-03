@@ -11,12 +11,13 @@ import java.util.logging.SimpleFormatter;
 
 import com.github.sladecek.maze.jmaze.colors.MazeColors;
 import com.github.sladecek.maze.jmaze.colors.WinterColors;
-import com.github.sladecek.maze.jmaze.generator.DepthFirstMazeGenerator;
-import com.github.sladecek.maze.jmaze.generator.IMazeGenerator;
-import com.github.sladecek.maze.jmaze.generator.MazeRealization;
 import com.github.sladecek.maze.jmaze.print3d.Maze3DSizes;
 import com.github.sladecek.maze.jmaze.print3d.OpenScad3DPrinter;
 import com.github.sladecek.maze.jmaze.print3d.ThreeJs3DPrinter;
+import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
+import com.github.sladecek.maze.jmaze.topology.DepthFirstMazeGenerator;
+import com.github.sladecek.maze.jmaze.topology.IMazeGenerator;
+import com.github.sladecek.maze.jmaze.topology.MazeRealization;
 
 final class TestAppEgg {
 	private TestAppEgg() {		
@@ -49,8 +50,11 @@ final class TestAppEgg {
 			sizes.setInnerWallToCellRatio(0.05);
 
 			MazeColors colors = new WinterColors();
+			
+			 ShapeContainer shapes =  maze.makeShapes(real);
+			    
 
-			EggBlockMaker maker = new EggBlockMaker(maze, real, sizes, colors,
+			EggBlockMaker maker = new EggBlockMaker(shapes, sizes, colors,
 					egg, equatorCells);
 
 			final boolean printInJs = true;

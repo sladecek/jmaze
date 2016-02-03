@@ -25,6 +25,9 @@ import com.github.sladecek.maze.jmaze.geometry.Point2D;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
 
+/*
+ * Print 2D maze to SVG or PDF. 
+ */
 public final class SvgMazePrinter implements IMaze2DPrinter {
 	final int cellSize = 10;
 	final int margin = cellSize / 2;

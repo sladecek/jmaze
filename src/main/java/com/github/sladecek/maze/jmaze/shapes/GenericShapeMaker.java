@@ -2,7 +2,7 @@ package com.github.sladecek.maze.jmaze.shapes;
 
 import java.util.HashMap;
 
-import com.github.sladecek.maze.jmaze.generator.MazeRealization;
+import com.github.sladecek.maze.jmaze.topology.MazeRealization;
 
 
 /**

@@ -9,7 +9,7 @@ public class ThreeJs3DPrinter implements IMaze3DPrinter {
 	 * @see com.github.sladecek.maze.jmaze.print3d.IMaze3DPrinter#printBlocks(com.github.sladecek.maze.jmaze.print3d.IBlockMaker, java.io.OutputStream)
 	 */
 	@Override
-	public final void printBlocks(final IBlockMaker blockMaker, final OutputStream stream) {		
+	public final void printBlocks( final IBlockMaker blockMaker, final OutputStream stream) {		
 		blockMaker.makeBlocks();
 		try (ThreeJsComposer tjs = new ThreeJsComposer(stream)) {			
 			printPureBlocks(tjs, blockMaker);
