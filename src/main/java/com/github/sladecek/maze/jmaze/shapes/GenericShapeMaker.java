@@ -6,11 +6,13 @@ import com.github.sladecek.maze.jmaze.topology.MazeRealization;
 
 
 /**
- * Implements methods needed to implement generic shape maker (generic method makeShapes).
+ * Generic way to make maze. Maze geometry (shapes) is created at startup, together with topology.
+ * After random generation only closed walls get copied to the output. 
  */
 public class GenericShapeMaker  {
 
 	public GenericShapeMaker() {
+	    shapes =  new ShapeContainer(null);
 		shape2id = new HashMap<IMazeShape, Integer>();
 		room2floor = new HashMap<Integer, FloorShape>();		
 	}	

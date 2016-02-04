@@ -35,7 +35,7 @@ public class Triangular2DMaze extends GenericMazeTopology implements IMazeTopolo
 	    final int height = size;
 	    final int width = 2*size;
 	    final boolean isPolar = false;
-        this.context = new ShapeContext(isPolar, height, width, 1);
+        this.context = new ShapeContext(isPolar, height, width, 10);
 
 	    ShapeContainer result = shapeMaker.makeShapes(context, realization, getStartRoom(), getTargetRoom(), 0, 50); 
 		
