@@ -1,4 +1,4 @@
-package com.github.sladecek.maze.jmaze.topology;
+package com.github.sladecek.maze.jmaze.generator;
 
 
 /***

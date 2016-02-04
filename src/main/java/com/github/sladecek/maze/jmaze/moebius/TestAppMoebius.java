@@ -6,13 +6,13 @@ import java.util.Random;
 
 import com.github.sladecek.maze.jmaze.colors.MazeColors;
 import com.github.sladecek.maze.jmaze.colors.WinterColors;
+import com.github.sladecek.maze.jmaze.generator.DepthFirstMazeGenerator;
+import com.github.sladecek.maze.jmaze.generator.IMazeGenerator;
+import com.github.sladecek.maze.jmaze.generator.MazeRealization;
 import com.github.sladecek.maze.jmaze.print3d.Maze3DSizes;
 import com.github.sladecek.maze.jmaze.print3d.OpenScad3DPrinter;
 import com.github.sladecek.maze.jmaze.print3d.ThreeJs3DPrinter;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
-import com.github.sladecek.maze.jmaze.topology.DepthFirstMazeGenerator;
-import com.github.sladecek.maze.jmaze.topology.IMazeGenerator;
-import com.github.sladecek.maze.jmaze.topology.MazeRealization;
 
 /***
  * Command line application generating a Moebius maze into OpenScad file.

@@ -3,6 +3,8 @@ package com.github.sladecek.maze.jmaze.moebius;
 import java.security.InvalidParameterException;
 import java.util.Vector;
 
+import com.github.sladecek.maze.jmaze.generator.IMazeTopology;
+import com.github.sladecek.maze.jmaze.generator.MazeRealization;
 import com.github.sladecek.maze.jmaze.shapes.FloorShape;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape;
 import com.github.sladecek.maze.jmaze.shapes.IShapeMaker;
@@ -10,8 +12,6 @@ import com.github.sladecek.maze.jmaze.shapes.MarkShape;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContext;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
-import com.github.sladecek.maze.jmaze.topology.IMazeTopology;
-import com.github.sladecek.maze.jmaze.topology.MazeRealization;
 
 /**
  * 2D rectangular maze on Moebius strip. Rooms and walls (including holes) are
