@@ -3,23 +3,16 @@ package com.github.sladecek.maze.jmaze.hexagonal;
 import java.util.Vector;
 import java.util.logging.Logger;
 
-import com.github.sladecek.maze.jmaze.generator.GenericMazeTopology;
-import com.github.sladecek.maze.jmaze.generator.IMazeTopology;
-import com.github.sladecek.maze.jmaze.generator.MazeRealization;
+import com.github.sladecek.maze.jmaze.maze.Maze;
+import com.github.sladecek.maze.jmaze.maze.IMazeTopology;
 import com.github.sladecek.maze.jmaze.shapes.FloorShape;
-import com.github.sladecek.maze.jmaze.shapes.GenericShapeMaker;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape.ShapeType;
-import com.github.sladecek.maze.jmaze.shapes.IShapeMaker;
-import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContext;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
 
-public class Hexagonal2DMaze extends GenericMazeTopology implements IMazeTopology,
-		IShapeMaker {
+public class Hexagonal2DMaze extends Maze implements IMazeTopology {
 
 	    private int size;
-	    private ShapeContext context;	    
-	    private GenericShapeMaker shapeMaker;
 	    
 	    public Hexagonal2DMaze(int size) {
 	        super();
@@ -34,19 +27,6 @@ public class Hexagonal2DMaze extends GenericMazeTopology implements IMazeTopolog
         static final int hH = (int)Math.floor(hP*Math.sqrt(3f)/2f);
 
 	    
-	    @Override
-	    public ShapeContainer makeShapes(MazeRealization realization) {
-	        
-	        
-	        final int height = hH*(2*size+1);
-	        final int width = hP*(3*size-1);
-	        final boolean isPolar = false;
-	        this.context = new ShapeContext(isPolar, height, width, 1);
-	        
-	        
-	        ShapeContainer result = shapeMaker.makeShapes(context, realization, getStartRoom(), getTargetRoom(), 0, 50); 
-	        return result;
-	    }
 
 	    // parameters of six walls of a hexagon
 	    static final int[] walllXOffs = { hP/2, -hP/2, -hP, -hP/2, hP/2, hP  };      
@@ -56,7 +36,12 @@ public class Hexagonal2DMaze extends GenericMazeTopology implements IMazeTopolog
 	    static final int[] neigbourRoomYEven = { -1, -1, 0, 1, 0, -1  };
 	        	    
 	    private void buildMaze() {
-	        shapeMaker = new GenericShapeMaker();
+
+            final int height = hH*(2*size+1);
+            final int width = hP*(3*size-1);
+            final boolean isPolar = false;
+            setContext(new ShapeContext(isPolar, height, width, 1, 0, 50));
+            
 	        
 	        final int roomsPerRow = 2 * size - 1;
 
@@ -82,8 +67,8 @@ public class Hexagonal2DMaze extends GenericMazeTopology implements IMazeTopolog
 	                
 	                String floorId = "r" + Integer.toString(r);
 	                final FloorShape floor = new FloorShape(yc, xc, false, floorId);
-	                shapeMaker.linkRoomToFloor(r, floor);
-	                shapeMaker.addShape(floor);
+	                linkRoomToFloor(r, floor);
+	                addShape(floor);
 	                
 	                // make walls
 	                for (int w = 0; w < 6; w++) {
@@ -106,14 +91,14 @@ public class Hexagonal2DMaze extends GenericMazeTopology implements IMazeTopolog
                         
                         // if the other room does not exist then this is a border wall
                         if (ox < 0 || ox >= roomsPerRow || oy < 0 || oy >= size) {                            
-                            shapeMaker.addShape(new WallShape(ShapeType.outerWall,  y1, x1, y2, x2));
+                            addShape(new WallShape(ShapeType.outerWall,  y1, x1, y2, x2));
                         } else if (w < 3) {
                             int r2 = mapXY2room.get(ox*size+oy);
                             int id = addWall(r, r2);
                             WallShape ws = new WallShape(ShapeType.innerWall, y1, x1, y2, x2);
                             LOGGER.info("addWallAndShape room1="+r+" room2="+r2+" y1="+y1+" y2="+y2+" x1="+x1+" x2="+x2);
-                            shapeMaker.addShape(ws);
-                            shapeMaker.linkShapeToId(ws, id);
+                            addShape(ws);
+                            linkShapeToId(ws, id);
                         }
 	                    
 	                }

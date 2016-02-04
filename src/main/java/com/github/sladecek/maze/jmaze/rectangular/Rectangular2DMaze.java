@@ -1,171 +1,81 @@
-package com.github.sladecek.maze.jmaze.rectangular;	
+package com.github.sladecek.maze.jmaze.rectangular;
 
-import java.security.InvalidParameterException;
-import java.util.Vector;
-
-import com.github.sladecek.maze.jmaze.generator.IMazeTopology;
-import com.github.sladecek.maze.jmaze.generator.MazeRealization;
+import com.github.sladecek.maze.jmaze.maze.Maze;
+import com.github.sladecek.maze.jmaze.maze.IMazeTopology;
+import com.github.sladecek.maze.jmaze.shapes.FloorShape;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape;
-import com.github.sladecek.maze.jmaze.shapes.IShapeMaker;
-import com.github.sladecek.maze.jmaze.shapes.MarkShape;
-import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContext;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
 
 /**
- * 2D rectangular maze. Both rooms and walls are numbered first by rows, then by columns. East/west walls are numbered 
- * before south/north ones.
+ * 2D rectangular maze. Both rooms and walls are numbered first by rows, then by
+ * columns. East/west walls are numbered before south/north ones.
  */
-public final class Rectangular2DMaze  implements IMazeTopology, IShapeMaker {
-	public Rectangular2DMaze(int height, int width) {	
-		this.width = width;
-		this.height = height;
+public final class Rectangular2DMaze extends Maze implements
+        IMazeTopology {
+    public Rectangular2DMaze(int height, int width) {
+        this.width = width;
+        this.height = height;
 
-		eastWestWallCount = (width - 1) * height;
-		southNorthWallCount = width * (height - 1);	
-	}
+        buildMaze();
+    }
 
-	public double getRoomDistance(int r1, int r2) {
-		int y1 = r1 / width;
-		int x1 = r1 % width;
-		int y2 = r2 / width;
-		int x2 = r2 % width;
-		// Manhattan (l1) distance
-		return Math.abs(y1 - y2) + Math.abs(x1 - x2);
-	}
-
-	/**
-	 * Get all geometric shapes needed to print this maze.
-	 */
-	public ShapeContainer makeShapes(MazeRealization realization) {
+    /**
+     * Get all geometric shapes needed to print this maze.
+     */
+    public void buildMaze() {
         final boolean isPolar = false;
-        this.context = new ShapeContext(isPolar, height, width, 1);
-		ShapeContainer result = new ShapeContainer(context);
-		
-		// outer walls
-		final IMazeShape.ShapeType ow = IMazeShape.ShapeType.outerWall;
-		result.add(new WallShape(ow, 0, 0, 0, width));
-		result.add(new WallShape(ow, 0, 0, height, 0));
-		result.add(new WallShape(ow, 0, width, height, width));
-		result.add(new WallShape(ow, height, 0, height, width));
-		
-		final IMazeShape.ShapeType iw = IMazeShape.ShapeType.innerWall;
+        setContext(new ShapeContext(isPolar, height, width, 1, 0, 0));
 
-		// inner walls - east/west
-		for (int y = 0; y < height; y++) {
-			for (int x = 0; x < width - 1; x++) {
-				int wallId = x + y * (width - 1);
-			
-				if (realization.isWallClosed(wallId)) {
-					WallShape w = new WallShape(iw, y, x + 1, y + 1, x + 1);
-					result.add(w);
-				}			
-			}
-		}
-		
-		// inner walls - south/north
-		for (int y = 0; y < height - 1; y++) {
-			for (int x = 0; x < width; x++) {
-				int wallId = x + y * width + eastWestWallCount;
-				if (realization.isWallClosed(wallId)) {
-				WallShape w = new WallShape(iw, y + 1, x, y + 1, x + 1);
-				result.add(w);
-				}
-			}
-		}
-				
-		// start stop rooms
-		final int start = getStartRoom();
-		final int target = getTargetRoom();		
-		result.add(new MarkShape(IMazeShape.ShapeType.startRoom, start / width, start % width));		
-		result.add(new MarkShape(IMazeShape.ShapeType.targetRoom, target / width, target % width));
-		
-		// solution
-		for (int i: realization.getSolution()) {
-			result.add(new MarkShape(IMazeShape.ShapeType.solution, i / width, i % width));
-		}
-		
-		return result;
-	}
+        // outer walls
+        final IMazeShape.ShapeType ow = IMazeShape.ShapeType.outerWall;
+        addShape(new WallShape(ow, 0, 0, 0, width));
+        addShape(new WallShape(ow, 0, 0, height, 0));
+        addShape(new WallShape(ow, 0, width, height, width));
+        addShape(new WallShape(ow, height, 0, height, width));
 
-	public Iterable<Integer> getWalls(int room) {
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width - 1; x++) {
+                int id = addRoom();
+                assert id == y * width + x : "Inconsistent room numbering";
+                
+                String floorId = "r" + Integer.toString(id);
+                final FloorShape floor = new FloorShape(y, x, false, floorId);
+                linkRoomToFloor(id, floor);
+                addShape(floor);
+            }
+        }
 
-		int y = room / width;
-		int x = room % width;
+        final IMazeShape.ShapeType iw = IMazeShape.ShapeType.innerWall;
 
-		Vector<Integer> result = new Vector<Integer>();
-	
-		// east
-		if (x < width - 1) {
-			result.add(y * (width - 1) + x);
-		}
-		// west
-		if (x > 0) {
-			result.add(y * (width - 1) + x - 1);
-		}
+        // inner walls - east/west
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width - 1; x++) {
+                int roomEast = y * width + x;
+                int roomWest = roomEast + 1;
+                int id = addWall(roomEast, roomWest);
+                
+                WallShape w = new WallShape(iw, y, x + 1, y + 1, x + 1);
+                addShape(w);
+                linkShapeToId(w, id);
+            }
+        }
 
-		// south
-		if (y < height - 1) {
-			result.add(eastWestWallCount + y * width + x);
-		}
-		// north
-		if (y > 0) {
-			result.add(eastWestWallCount + (y - 1) * width + x);
-		}
-		return result;
-	}
+        // inner walls - south/north
+        for (int y = 0; y < height - 1; y++) {
+            for (int x = 0; x < width; x++) {
+                int roomNorth = y * width + x;
+                int roomSouth = roomNorth + width;
+                int id = addWall(roomNorth, roomSouth);
+                WallShape w = new WallShape(iw, y + 1, x, y + 1, x + 1);
+                addShape(w);
+                linkShapeToId(w, id);
+            }
+        }
 
-	@Override
-	public int getRoomBehindWall(int room, int wall) {
-		if (wall < eastWestWallCount) {		
-			final int y = wall / (width - 1);
-			final int x = wall % (width - 1);
-			final int westRoom = y * width + x;
-			final int eastRoom = westRoom + 1;
-			if (!(room == westRoom || room == eastRoom)) {
-				throw new InvalidParameterException("Wall is not adjacent to room");
-			}
-			return room == westRoom ? eastRoom : westRoom;
-		} else {
-			final int y = (wall - eastWestWallCount) / width;
-			final int x = (wall - eastWestWallCount) % width;
-			final int northRoom = y * width + x;
-			final int southRoom = northRoom + width;
-			if (!(room == northRoom || room == southRoom)) {
-				throw new InvalidParameterException("Wall is not adjacent to room");
-			}
-			return room == northRoom ? southRoom : northRoom;
-		}
-		
-	}
+    }
 
-	@Override
-	public int getWallProbabilityWeight(int wall) {
-		return 1;
-	}
-
-	@Override
-	public int getWallCount() {
-		return eastWestWallCount + southNorthWallCount;
-		
-	}
-
-	public int getRoomCount() {
-		return width * height;
-	}
-
-	public int getStartRoom() {
-		return 0;
-	}
-
-	public int getTargetRoom() {
-		return getRoomCount() - 1;
-	}
-
-	private int height;
-	private int width;
-    private ShapeContext context;
-	private int eastWestWallCount;
-	private int southNorthWallCount;
+    private int height;
+    private int width;
 
 }

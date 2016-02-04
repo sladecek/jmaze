@@ -20,58 +20,56 @@ import com.github.sladecek.maze.jmaze.print3d.ThreeJs3DPrinter;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
 
 final class TestAppEgg {
-	private TestAppEgg() {		
-	}
-	
-	private static final Logger LOG =  Logger.getLogger("maze.jmaze");
+    private TestAppEgg() {
+    }
 
-	public static void main(final String[] args) {
-		LogManager.getLogManager().reset();
-		LOG.setLevel(Level.INFO);
-		try {
-			FileHandler fh = new FileHandler("maze.log");
-			LOG.addHandler(fh);
-			fh.setFormatter(new SimpleFormatter());
+    private static final Logger LOG = Logger.getLogger("maze.jmaze");
 
-			final int equatorCells = 32; // must be power of 2
-			EggGeometry egg = new EggGeometry(5, 5, 0);
+    public static void main(final String[] args) {
+        LogManager.getLogManager().reset();
+        LOG.setLevel(Level.INFO);
+        try {
+            FileHandler fh = new FileHandler("maze.log");
+            LOG.addHandler(fh);
+            fh.setFormatter(new SimpleFormatter());
 
-			EggMaze maze = new EggMaze(egg, equatorCells);
-			final Random randomGenerator = new Random();
-			randomGenerator.setSeed(0);
-			IMazeGenerator g = new DepthFirstMazeGenerator(randomGenerator);
+            final int equatorCells = 32; // must be power of 2
+            EggGeometry egg = new EggGeometry(5, 5, 0);
 
-			MazeRealization real = g.generateMaze(maze);
+            EggMaze maze = new EggMaze(egg, equatorCells);
+            final Random randomGenerator = new Random();
+            randomGenerator.setSeed(0);
+            IMazeGenerator g = new DepthFirstMazeGenerator(randomGenerator);
 
-			Maze3DSizes sizes = new Maze3DSizes();
-			sizes.setCellSizeInmm(0.1);
-			sizes.setBaseThicknessInmm(0.03);
-			sizes.setWallHeightInmm(0.3);
-			sizes.setInnerWallToCellRatio(0.05);
+            MazeRealization real = g.generateMaze(maze);
 
-			MazeColors colors = new WinterColors();
-			
-			 ShapeContainer shapes =  maze.makeShapes(real);
-			    
+            Maze3DSizes sizes = new Maze3DSizes();
+            sizes.setCellSizeInmm(0.1);
+            sizes.setBaseThicknessInmm(0.03);
+            sizes.setWallHeightInmm(0.3);
+            sizes.setInnerWallToCellRatio(0.05);
 
-			EggBlockMaker maker = new EggBlockMaker(shapes, sizes, colors,
-					egg, equatorCells);
+            MazeColors colors = new WinterColors();
 
-			final boolean printInJs = true;
-			final boolean printInScad = true;
-			if (printInJs) {
-				FileOutputStream f = new FileOutputStream("maze-egg.js");
-				new ThreeJs3DPrinter().printBlocks(maker, f);
-			}
-			if (printInScad) {
-				FileOutputStream f = new FileOutputStream("maze-egg.scad");
-				new OpenScad3DPrinter().printBlocks(maker, f);
-			}
-		
+            ShapeContainer shapes = maze.applyRealization(real);
 
-		} catch (SecurityException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+            EggBlockMaker maker = new EggBlockMaker(shapes, sizes, colors, egg,
+                    equatorCells);
+
+            final boolean printInJs = true;
+            final boolean printInScad = true;
+            if (printInJs) {
+                FileOutputStream f = new FileOutputStream("maze-egg.js");
+                new ThreeJs3DPrinter().printBlocks(maker, f);
+            }
+            if (printInScad) {
+                FileOutputStream f = new FileOutputStream("maze-egg.scad");
+                new OpenScad3DPrinter().printBlocks(maker, f);
+            }
+
+        } catch (SecurityException | IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
 }

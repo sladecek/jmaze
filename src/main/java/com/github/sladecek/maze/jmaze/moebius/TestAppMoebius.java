@@ -32,7 +32,7 @@ public final class TestAppMoebius {
 
 		MazeColors colors = new WinterColors();
 
-		ShapeContainer shapes =  maze.makeShapes(r);
+		ShapeContainer shapes =  maze.applyRealization(r);
 		
 		double approxRoomSizeInmm = 3;
 		MoebiusBlockMaker maker = new MoebiusBlockMaker(shapes, sizes, colors,

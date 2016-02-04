@@ -7,20 +7,15 @@ import java.util.logging.Logger;
 import be.humphreys.simplevoronoi.GraphEdge;
 import be.humphreys.simplevoronoi.Voronoi;
 
-import com.github.sladecek.maze.jmaze.generator.GenericMazeTopology;
-import com.github.sladecek.maze.jmaze.generator.IMazeTopology;
-import com.github.sladecek.maze.jmaze.generator.MazeRealization;
+import com.github.sladecek.maze.jmaze.maze.Maze;
+import com.github.sladecek.maze.jmaze.maze.IMazeTopology;
 import com.github.sladecek.maze.jmaze.shapes.FloorShape;
-import com.github.sladecek.maze.jmaze.shapes.GenericShapeMaker;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape.ShapeType;
-import com.github.sladecek.maze.jmaze.shapes.IShapeMaker;
-import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContext;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
 
-public class Voronoi2DMaze extends GenericMazeTopology implements IMazeTopology,
-		IShapeMaker {
+public class Voronoi2DMaze extends Maze implements IMazeTopology {
 
 	public Voronoi2DMaze(int width, int height, int roomCount,
 			Random randomGenerator) {
@@ -39,8 +34,7 @@ public class Voronoi2DMaze extends GenericMazeTopology implements IMazeTopology,
 	private double[] roomCenterY;
 	private double[] roomCenterX;
 
-	private ShapeContext context;
-	private GenericShapeMaker shapeMaker;
+
 
 	private Random randomGenerator;
 
@@ -48,28 +42,18 @@ public class Voronoi2DMaze extends GenericMazeTopology implements IMazeTopology,
 		return (int) Math.floor(r);
 	}
 
-	@Override
-	public ShapeContainer makeShapes(MazeRealization realization) {
+	private void buildMaze() {
 	    final int height = 2*width;
         final boolean isPolar = false;
-        this.context = new ShapeContext(isPolar, height, width, 1);
+        setContext(new ShapeContext(isPolar, height, width, 10, 0, 50));
 
-		ShapeContainer result = shapeMaker.makeShapes(context, realization,
-				getStartRoom(), getTargetRoom(), 0, 50);
-
-		// outer walls
-		final IMazeShape.ShapeType ow = IMazeShape.ShapeType.outerWall;
-		result.add(new WallShape(ow, 0, 0, 0, width));
-		result.add(new WallShape(ow, 0, 0, height, 0));
-		result.add(new WallShape(ow, 0, width, height, width));
-		result.add(new WallShape(ow, height, 0, height, width));
-
-		return result;
-	}
-
-	private void buildMaze() {
-		shapeMaker = new GenericShapeMaker();
-
+        // outer walls
+        final IMazeShape.ShapeType ow = IMazeShape.ShapeType.outerWall;
+        addShape(new WallShape(ow, 0, 0, 0, width));
+        addShape(new WallShape(ow, 0, 0, height, 0));
+        addShape(new WallShape(ow, 0, width, height, width));
+        addShape(new WallShape(ow, height, 0, height, width));
+        
 		roomCenterY = new double[roomCount];
 		roomCenterX = new double[roomCount];
 		for (int i = 0; i < roomCount; i++) {
@@ -85,8 +69,8 @@ public class Voronoi2DMaze extends GenericMazeTopology implements IMazeTopology,
 			int r = addRoom();
 			String floorId = "r" + Integer.toString(r);
 			final FloorShape floor = new FloorShape(y, x, false, floorId);
-			shapeMaker.linkRoomToFloor(r, floor);
-			shapeMaker.addShape(floor);
+			linkRoomToFloor(r, floor);
+			addShape(floor);
 		}
 
 	// TODO smazat	HashSet<Long> set = new HashSet();
@@ -112,8 +96,8 @@ public class Voronoi2DMaze extends GenericMazeTopology implements IMazeTopology,
 					+ ge.y2);
 			WallShape ws = new WallShape(ShapeType.innerWall, flr(ge.y1),
 					flr(ge.x1), flr(ge.y2), flr(ge.x2));
-			shapeMaker.addShape(ws);
-			shapeMaker.linkShapeToId(ws, id);
+			addShape(ws);
+			linkShapeToId(ws, id);
 		}
 
 		// TODO

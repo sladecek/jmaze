@@ -29,29 +29,6 @@ public class Rectangular2DMazeTest {
 		assertEquals(15, maze.getRoomCount());
 	}
 
-	@Test
-	public void testGetRoomDistance_theSameRoom() {
-		assertEquals(0.0, maze.getRoomDistance(0, 0), 1e-6);
-		assertEquals(0.0, maze.getRoomDistance(14, 14), 1e-6);
-	}
-
-	@Test
-	public void testGetRoomDistance_neighbour() {
-		assertEquals(1.0, maze.getRoomDistance(6, 1), 1e-6);
-		assertEquals(1.0, maze.getRoomDistance(1, 6), 1e-6);
-		assertEquals(1.0, maze.getRoomDistance(6, 11), 1e-6);
-		assertEquals(1.0, maze.getRoomDistance(6, 5), 1e-6);
-		assertEquals(1.0, maze.getRoomDistance(6, 7), 1e-6);		
-	}
-
-	@Test
-	public void testGetRoomDistance_corner() {
-		assertEquals(2.0, maze.getRoomDistance(6, 0), 1e-6);
-		assertEquals(2.0, maze.getRoomDistance(0, 6), 1e-6);
-		assertEquals(2.0, maze.getRoomDistance(6, 2), 1e-6);
-		assertEquals(2.0, maze.getRoomDistance(6, 10), 1e-6);
-		assertEquals(2.0, maze.getRoomDistance(6, 12), 1e-6);		
-	}
 
 	/* TODO
 	@Test

@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 
 import com.github.sladecek.maze.jmaze.colors.Color;
 import com.github.sladecek.maze.jmaze.colors.MazeColors;
+import com.github.sladecek.maze.jmaze.maze.Maze;
 import com.github.sladecek.maze.jmaze.print3d.Block;
 import com.github.sladecek.maze.jmaze.print3d.BlockMakerBase;
 import com.github.sladecek.maze.jmaze.print3d.IBlockMaker;
@@ -13,7 +14,6 @@ import com.github.sladecek.maze.jmaze.print3d.Maze3DSizes;
 import com.github.sladecek.maze.jmaze.shapes.FloorShape;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape.ShapeType;
-import com.github.sladecek.maze.jmaze.shapes.IShapeMaker;
 import com.github.sladecek.maze.jmaze.shapes.MarkShape;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
@@ -55,7 +55,7 @@ public final class EggBlockMaker extends BlockMakerBase implements IBlockMaker {
 
 	}
 
-	protected void prepareShapes(final IShapeMaker maze) {
+	protected void prepareShapes(final Maze maze) {
 
 		walls = new ArrayList<WallShape>();
 		floor = new ArrayList<FloorShape>();

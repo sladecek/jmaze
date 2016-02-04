@@ -4,14 +4,12 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.github.sladecek.maze.jmaze.generator.GenericMazeTopology;
-import com.github.sladecek.maze.jmaze.generator.IMazeTopology;
 import com.github.sladecek.maze.jmaze.generator.MazeRealization;
 import com.github.sladecek.maze.jmaze.geometry.SouthNorth;
+import com.github.sladecek.maze.jmaze.maze.Maze;
+import com.github.sladecek.maze.jmaze.maze.IMazeTopology;
 import com.github.sladecek.maze.jmaze.shapes.FloorShape;
-import com.github.sladecek.maze.jmaze.shapes.GenericShapeMaker;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape.ShapeType;
-import com.github.sladecek.maze.jmaze.shapes.IShapeMaker;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContext;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
@@ -20,8 +18,7 @@ import com.github.sladecek.maze.jmaze.shapes.WallShape;
  * Rooms and walls of a maze on an egg-like shape.
  *
  */
-public final class EggMaze extends GenericMazeTopology implements IMazeTopology,
-		IShapeMaker {
+public final class EggMaze extends Maze implements IMazeTopology {
 
 
 	public EggMaze(EggGeometry egg, int equatorCellCnt) {
@@ -46,17 +43,6 @@ public final class EggMaze extends GenericMazeTopology implements IMazeTopology,
 		buildMaze();
 
 	}
-
-	@Override
-	public ShapeContainer makeShapes(MazeRealization realization) {
-        final boolean isPolar = false;
-        int width = 0;
-        int height = 0;
-        this.context = new ShapeContext(isPolar, height, width, 1);
-		return shapeMaker.makeShapes(context, realization, getStartRoom(), getTargetRoom(), 50, 50);
-	}
-	
-
 
 	public EggMazeHemisphere getHemisphere(SouthNorth sn) {
 		return sn == SouthNorth.north ? north : south;
@@ -112,8 +98,8 @@ public final class EggMaze extends GenericMazeTopology implements IMazeTopology,
 			// TODO r je poizita mnohokrat ???
 			String floorId = "r" + Integer.toString(r);
 			final FloorShape floor = new FloorShape(iy * roomMapRatio, ix, false, floorId);
-			shapeMaker.linkRoomToFloor(r, floor);
-			shapeMaker.addShape(floor);
+			linkRoomToFloor(r, floor);
+			addShape(floor);
 			
 		}
 
@@ -165,8 +151,8 @@ public final class EggMaze extends GenericMazeTopology implements IMazeTopology,
 		final int y1 = (yr1 * roomMapRatio) % equatorCellCnt;
 		final int y2 = (yr2 * roomMapRatio) % equatorCellCnt;
 		WallShape ws = new WallShape(ShapeType.innerWall, y1, x1, y2, x2);
-		shapeMaker.addShape(ws);
-		shapeMaker.linkShapeToId(ws, id);
+		addShape(ws);
+		linkShapeToId(ws, id);
 	}
 
 	public Vector<Integer> computeRoomCounts(Vector<Double> layerXPosition,
@@ -252,18 +238,18 @@ public final class EggMaze extends GenericMazeTopology implements IMazeTopology,
 
 	private EggMazeHemisphere north;
 	private EggMazeHemisphere south;
-    private ShapeContext context;
+
 	private double baseRoomSizeInmm;
 
 	private static final int MINIMAL_ROOM_COUNT_ON_EGG_MAZE_EQUATOR = 4;
-
-	
-	
-	private GenericShapeMaker shapeMaker;
 	
 	private void buildMaze() {
 
-		shapeMaker = new GenericShapeMaker();
+	    final boolean isPolar = false;
+        int width = 0;
+        int height = 0;
+        setContext(new ShapeContext(isPolar, height, width, 1, 50, 50));
+        
 		// generate both hemispheres
 		for (SouthNorth sn : SouthNorth.values()) {
 			divideSpace(sn);

@@ -1,5 +1,7 @@
 package com.github.sladecek.maze.jmaze.generator;
 
+import com.github.sladecek.maze.jmaze.maze.IMazeTopology;
+
 
 /**
  * 

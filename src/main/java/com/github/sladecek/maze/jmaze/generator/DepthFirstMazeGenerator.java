@@ -7,6 +7,8 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.github.sladecek.maze.jmaze.maze.IMazeTopology;
+
 public final class DepthFirstMazeGenerator implements IMazeGenerator {
 	
 	private static final Logger LOGGER =  Logger.getLogger("maze.jmaze"); 

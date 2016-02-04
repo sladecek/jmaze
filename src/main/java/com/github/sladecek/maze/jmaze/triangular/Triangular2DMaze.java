@@ -2,26 +2,23 @@ package com.github.sladecek.maze.jmaze.triangular;
 
 import java.util.logging.Logger;
 
-import com.github.sladecek.maze.jmaze.generator.GenericMazeTopology;
-import com.github.sladecek.maze.jmaze.generator.IMazeTopology;
 import com.github.sladecek.maze.jmaze.generator.MazeRealization;
+import com.github.sladecek.maze.jmaze.maze.Maze;
+import com.github.sladecek.maze.jmaze.maze.GenericMazeTopology;
+import com.github.sladecek.maze.jmaze.maze.IMazeTopology;
 import com.github.sladecek.maze.jmaze.shapes.FloorShape;
-import com.github.sladecek.maze.jmaze.shapes.GenericShapeMaker;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape;
-import com.github.sladecek.maze.jmaze.shapes.ShapeContext;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape.ShapeType;
-import com.github.sladecek.maze.jmaze.shapes.IShapeMaker;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
+import com.github.sladecek.maze.jmaze.shapes.ShapeContext;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
 
-public class Triangular2DMaze extends GenericMazeTopology implements IMazeTopology, IShapeMaker {
+public class Triangular2DMaze extends Maze implements IMazeTopology {
 
 
 
 	private int size;
-	
-	private GenericShapeMaker shapeMaker;
-	private ShapeContext context;
+
 	
 	public Triangular2DMaze(int size) {
 		super();
@@ -29,29 +26,19 @@ public class Triangular2DMaze extends GenericMazeTopology implements IMazeTopolo
 		buildMaze();
 	}
 
-	@Override
-	public ShapeContainer makeShapes(MazeRealization realization) {
-		
-	    final int height = size;
-	    final int width = 2*size;
-	    final boolean isPolar = false;
-        this.context = new ShapeContext(isPolar, height, width, 10);
-
-	    ShapeContainer result = shapeMaker.makeShapes(context, realization, getStartRoom(), getTargetRoom(), 0, 50); 
-		
-		// outer walls
-		final IMazeShape.ShapeType ow = IMazeShape.ShapeType.outerWall;
-		result.add(new WallShape(ow, 0, size, size, 0));
-		result.add(new WallShape(ow, size, 0, size, 2*size));
-		result.add(new WallShape(ow, size, 2*size, 0, size));
-
-		
-		return result;
-	}
-
 	
 	private void buildMaze() {
-		shapeMaker = new GenericShapeMaker();
+        final int height = size;
+        final int width = 2*size;
+        final boolean isPolar = false;
+        setContext(new ShapeContext(isPolar, height, width, 10, 0, 50));
+
+        
+        // outer walls
+        final IMazeShape.ShapeType ow = IMazeShape.ShapeType.outerWall;
+        addShape(new WallShape(ow, 0, size, size, 0));
+        addShape(new WallShape(ow, size, 0, size, 2*size));
+        addShape(new WallShape(ow, size, 2*size, 0, size));
 		
 		int prevFirst = -1;
 		int lastRoom = -1;
@@ -83,8 +70,8 @@ public class Triangular2DMaze extends GenericMazeTopology implements IMazeTopolo
 				
 				String floorId = "r" + Integer.toString(r);
 				final FloorShape floor = new FloorShape(y, x2, false, floorId);
-				shapeMaker.linkRoomToFloor(r, floor);
-				shapeMaker.addShape(floor);
+				linkRoomToFloor(r, floor);
+				addShape(floor);
 				
 				if (prevRoom > 0) {
 					addWallAndShape(prevRoom, r, x1, x2, y1, y2);
@@ -113,8 +100,8 @@ public class Triangular2DMaze extends GenericMazeTopology implements IMazeTopolo
 		int id = addWall(prevRoom, room);
 		WallShape ws = new WallShape(ShapeType.innerWall, y1, x1, y2, x2);
 		LOGGER.info("addWallAndShape room1="+prevRoom+" room2="+room+" y1="+y1+" y2="+y2+" x1="+x1+" x2="+x2);
-		shapeMaker.addShape(ws);
-		shapeMaker.linkShapeToId(ws, id);
+		addShape(ws);
+		linkShapeToId(ws, id);
 	}
 
 	public int getSize() {
