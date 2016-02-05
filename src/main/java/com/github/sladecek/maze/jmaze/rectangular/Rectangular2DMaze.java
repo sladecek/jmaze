@@ -25,7 +25,7 @@ public final class Rectangular2DMaze extends Maze implements
      */
     public void buildMaze() {
         final boolean isPolar = false;
-        setContext(new ShapeContext(isPolar, height, width, 1, 0, 0));
+        setContext(new ShapeContext(isPolar, height, width, 10, 50, 50));
 
         // outer walls
         final IMazeShape.ShapeType ow = IMazeShape.ShapeType.outerWall;
@@ -35,7 +35,7 @@ public final class Rectangular2DMaze extends Maze implements
         addShape(new WallShape(ow, height, 0, height, width));
 
         for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width - 1; x++) {
+            for (int x = 0; x < width; x++) {
                 int id = addRoom();
                 assert id == y * width + x : "Inconsistent room numbering";
                 
@@ -73,6 +73,9 @@ public final class Rectangular2DMaze extends Maze implements
             }
         }
 
+        setStartRoom(0);
+        setTargetRoom(width*height-1);
+        
     }
 
     private int height;

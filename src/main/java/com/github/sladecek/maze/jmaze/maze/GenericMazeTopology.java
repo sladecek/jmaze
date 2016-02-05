@@ -1,5 +1,6 @@
 package com.github.sladecek.maze.jmaze.maze;
 
+
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -67,12 +68,17 @@ public class GenericMazeTopology  implements IMazeTopology {
 
 	@Override
 	public final int getRoomBehindWall(final int room, final int wall) {
+	    if (wall < 0 || wall >= wallRoom1.size() || wall >= wallRoom2.size()) {
+	        throw new IllegalArgumentException("unknown wall");
+	    }
 		int r1 = wallRoom1.elementAt(wall);
 		int r2 = wallRoom2.elementAt(wall);
 		if (r1 == room) {
 			return r2;
-		} else {
+		} else if (r2 == room) {
 			return r1;
+		} else {
+		    throw new IllegalArgumentException("unknown wall");
 		}
 	}
 

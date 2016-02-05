@@ -106,8 +106,8 @@ public final class SvgMazePrinter implements IMaze2DPrinter {
 		final int cellSize = context.getResolution();
 	    final int margin = cellSize / 2;
 
-		int offsX = mapper.mapLength((offsXPercent * cellSize) / 100);
-		int offsY = mapper.mapLength((offsYPercent * cellSize) / 100);
+		int offsX = mapper.mapLength(offsXPercent ) / 100;
+		int offsY = mapper.mapLength(offsYPercent ) / 100;
 
 		circle.setAttributeNS(null, "cx", String.valueOf(mc.getX() + offsX));
 		circle.setAttributeNS(null, "cy", String.valueOf(mc.getY() + offsY));

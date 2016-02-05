@@ -2,7 +2,7 @@ package com.github.sladecek.maze.jmaze.rectangular;
 
 import static org.junit.Assert.assertEquals;
 
-import java.security.InvalidParameterException;
+
 import java.util.Collections;
 import java.util.Vector;
 
@@ -105,7 +105,7 @@ public class Rectangular2DMazeTest {
 		}
 	}
 
-	@Test(expected=InvalidParameterException.class)
+	@Test(expected=IllegalArgumentException.class)
 	public void testGetOtherRoom_invalid() {
 		assertEquals(1, maze.getRoomBehindWall(0, 2));
 	}
