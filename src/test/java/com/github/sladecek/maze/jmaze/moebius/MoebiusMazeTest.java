@@ -2,7 +2,6 @@ package com.github.sladecek.maze.jmaze.moebius;
 
 import static org.junit.Assert.assertEquals;
 
-import java.security.InvalidParameterException;
 import java.util.Collections;
 import java.util.Vector;
 
@@ -86,7 +85,7 @@ public class MoebiusMazeTest {
 	}
 
 
-	@Test(expected=InvalidParameterException.class)
+	@Test(expected=IllegalArgumentException.class)
 	public final void testGetOtherRoom_invalid() {
 		assertEquals(1, maze.getRoomBehindWall(0, 2));
 	}

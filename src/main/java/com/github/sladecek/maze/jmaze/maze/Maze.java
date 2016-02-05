@@ -86,6 +86,11 @@ public class Maze extends GenericMazeTopology  {
 		shape2id.put(ws, id);		
 	}
 
+	
+	protected IMazeShape getFloorFromRoom(int room) {
+	    return room2floor.get(room);
+	}
+	
     public ShapeContext getContext() {
         return context;
     }
