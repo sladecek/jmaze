@@ -1,35 +1,40 @@
 package com.github.sladecek.maze.jmaze.geometry;
 
 /*
- * 2D point either in rectangular or polar coordinates. In case of polar coordinates, x is used for angle, y for diameter.
+ * 2D point either in rectangular or polar coordinates. In case of polar coordinates, x is used for 
+ * angle, y for diameter.
  */
-public class Point2D {
-	public int getX() {
-		return x;
-	}
-	public int getY() {
-		return y;
-	}
+public final class Point2D {
+    public Point2D(int x, int y) {
+        super();
+        this.x = x;
+        this.y = y;
+    }
 
-	public int getAngle() {
-		return x;
-	}
-	public int getDiameter() {
-		return y;
-	}
+    public static final int ANGLE_2PI = 0x1000000;
 
-	public double getAngleRad() {
-		return 2* Math.PI * getAngle() / (double)ANGLE_2PI;
-	}
+    public int getX() {
+        return x;
+    }
 
-	public Point2D(int x, int y) {
-		super();
-		this.x = x;
-		this.y = y;
-	}
+    public int getY() {
+        return y;
+    }
 
+    public int getAngle() {
+        return x;
+    }
 
-	private int x;
-	private int y;
-	public static final int ANGLE_2PI = 0x1000000;
+    public double getAngleRad() {
+        return 2 * Math.PI * getAngle() / (double) ANGLE_2PI;
+    }
+
+    public int getDiameter() {
+        return y;
+    }
+
+    private int x;
+
+    private int y;
+
 }
