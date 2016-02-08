@@ -24,12 +24,10 @@ public final class OrientationVector2D {
         return "OrientationVector2D [x=" + x + ", y=" + y + "]";
     }
 
-
     public OrientationVector2D getOrthogonal() {
         return new OrientationVector2D(y, -x);
     }
- 
-    
+
     private double x;
     private double y;
 }

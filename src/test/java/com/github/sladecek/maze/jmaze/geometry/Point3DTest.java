@@ -1,5 +1,6 @@
 package com.github.sladecek.maze.jmaze.geometry;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
@@ -20,6 +21,32 @@ public class Point3DTest {
         assertEquals(8, p3.getZ(), delta);
     }
     
- 
+
+    @Test
+    public void testSetX() {
+        Point3D p = new Point3D(0, 1, 2);
+        p.setX(4d);
+        assertEquals(4d, p.getX(), delta);
+    }
+
+    @Test
+    public void testSetY() {
+        Point3D p = new Point3D(0, 1, 2);
+        p.setY(4d);
+        assertEquals(4d, p.getY(), delta);
+    }
+
+    @Test
+    public void testSetZ() {
+        Point3D p = new Point3D(0, 1, 2);
+        p.setZ(4d);
+        assertEquals(4d, p.getZ(), delta);
+    }
+
+    @Test
+    public void testToString() {
+        Point3D p = new Point3D(0, 1, 2);
+        assertEquals("Point [x=0.0, y=1.0, z=2.0]", p.toString());
+    }
 
 }
