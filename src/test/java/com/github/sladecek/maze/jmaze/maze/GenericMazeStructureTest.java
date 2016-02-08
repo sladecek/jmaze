@@ -2,6 +2,8 @@ package com.github.sladecek.maze.jmaze.maze;
 
 import static org.junit.Assert.*;
 
+import java.util.Iterator;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -32,29 +34,35 @@ public class GenericMazeStructureTest {
 
     @Test
     public void testGetWalls() {
-        assertEquals(0, (int)s.getWalls(1).iterator().next());
-        assertEquals(1, (int)s.getWalls(1).iterator().next());
-        assertEquals(false, s.getWalls(1).iterator().next());
+        Iterator<Integer> it = s.getWalls(1).iterator();
+        assertEquals(0, (int)it.next());
+        assertEquals(1, (int)it.next());
+        assertEquals(false, it.hasNext());
     }
 
     @Test
     public void testAddRoom() {
-        fail("Not yet implemented");
+        int rn = s.addRoom();
+        assertEquals(3, rn);
     }
 
     @Test
     public void testAddWall() {
-        fail("Not yet implemented");
-    }
+        int rw = s.addWall(0, 2);
+        assertEquals(2, rw);    }
 
     @Test
     public void testGetRoomBehindWall() {
-        fail("Not yet implemented");
+        int r2 = s.getRoomBehindWall(0, 0);
+        assertEquals(1, r2);
+        int r1 = s.getRoomBehindWall(1, 0);
+        assertEquals(0, r1);
     }
 
     @Test
     public void testGetWallProbabilityWeight() {
-        fail("Not yet implemented");
+        assertEquals(1, s.getWallProbabilityWeight(0));
+        assertEquals(1, s.getWallProbabilityWeight(1));
     }
 
 }

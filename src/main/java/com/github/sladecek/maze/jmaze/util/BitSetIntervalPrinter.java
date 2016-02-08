@@ -24,7 +24,7 @@ public final class BitSetIntervalPrinter {
 		        break;
 		    }
 		    int i2 = bitSet.nextClearBit(i1);
-		    if (i2 < 0)  {
+		    if (i2 < 0 || i2 >= bitCount)  {
 		            i2 =  bitCount;
 		    }
 		    if (spc) {

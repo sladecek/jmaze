@@ -28,7 +28,7 @@ public class MazeRealizationTest {
     public void testPrintClosedWalls() {
         MazeRealization r = new MazeRealization(3);
         r.setWallClosed(1, false);
-        assertEquals("[0 2]", r.printClosedWalls());
+        assertEquals("0 2", r.printClosedWalls());
     }
 
 }
