@@ -13,7 +13,7 @@ import com.github.sladecek.maze.jmaze.shapes.ShapeContext;
 /**
  * Base class for all mazes. 
  */
-public class Maze extends GenericMazeTopology  {
+public class Maze extends GenericMazeStructure  {
 
 	public Maze() {
 	    shapes =  new ShapeContainer(null);

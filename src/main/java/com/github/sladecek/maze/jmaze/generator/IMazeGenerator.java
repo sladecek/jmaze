@@ -1,15 +1,13 @@
 package com.github.sladecek.maze.jmaze.generator;
 
-import com.github.sladecek.maze.jmaze.maze.IMazeTopology;
+import com.github.sladecek.maze.jmaze.maze.IMazeStructure;
 
 
-/**
- * 
- * Maze generator generates maze in maze space.
- *
+/** 
+ * Generates randomly concrete realization of a maze by opening walls between rooms in maze structure. 
  */
 public interface IMazeGenerator {
 	
-	MazeRealization generateMaze(IMazeTopology maze);
+	MazeRealization generateMaze(IMazeStructure maze);
 
 }

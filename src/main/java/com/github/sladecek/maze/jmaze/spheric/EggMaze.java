@@ -7,7 +7,7 @@ import java.util.logging.Logger;
 import com.github.sladecek.maze.jmaze.generator.MazeRealization;
 import com.github.sladecek.maze.jmaze.geometry.SouthNorth;
 import com.github.sladecek.maze.jmaze.maze.Maze;
-import com.github.sladecek.maze.jmaze.maze.IMazeTopology;
+import com.github.sladecek.maze.jmaze.maze.IMazeStructure;
 import com.github.sladecek.maze.jmaze.shapes.FloorShape;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape.ShapeType;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
@@ -18,7 +18,7 @@ import com.github.sladecek.maze.jmaze.shapes.WallShape;
  * Rooms and walls of a maze on an egg-like shape.
  *
  */
-public final class EggMaze extends Maze implements IMazeTopology {
+public final class EggMaze extends Maze implements IMazeStructure {
 
 
 	public EggMaze(EggGeometry egg, int equatorCellCnt) {

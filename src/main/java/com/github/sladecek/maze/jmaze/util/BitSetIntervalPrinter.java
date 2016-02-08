@@ -8,38 +8,40 @@ import java.util.BitSet;
  */
 public final class BitSetIntervalPrinter {
 
-	public BitSetIntervalPrinter(BitSet b) {
-		this.b = b;
+    public BitSetIntervalPrinter(BitSet b, int bitCount) {
+		this.bitSet = b;
+		this.bitCount = bitCount;
 	}
 	
 	public String printAsIntervals() {
 		String result = new String();
-		int start = -1;
-		for (int i = 0; i < b.size(); i++) {
-			if (b.get(i)) {
-				if (start < 0) {
-					start = i;
-				} else {
-					if (start >= 0) {
-						result += Integer.toString(start);
-						if (start < i - 1) {
-							result += "-" + Integer.toString(i - 1);
-						}
-						result += " ";
-					}					
-					start = -1;
-				}				
-			}
+		int start = 0;
+
+		boolean spc = false;
+		while (start < bitCount) {
+		    int i1 = bitSet.nextSetBit(start);
+		    if (i1 < 0) {
+		        break;
+		    }
+		    int i2 = bitSet.nextClearBit(i1);
+		    if (i2 < 0)  {
+		            i2 =  bitCount;
+		    }
+		    if (spc) {
+		        result += " ";
+		    }
+            result += Integer.toString(i1);
+            if (i1 != i2-1) {
+                result += "-" + Integer.toString(i2-1);
+            }
+            spc = true;
+		    start = i2;
 		}
-		if (start >= 0) {
-			result += Integer.toString(start);
-			if (start < b.size() - 1) {
-				result += "-" + Integer.toString(b.size() - 1);
-			}
-		}					
 		return result;
 	}
 
-	private BitSet b;
-	
+	private BitSet bitSet;
+    private int bitCount;
+
+
 }

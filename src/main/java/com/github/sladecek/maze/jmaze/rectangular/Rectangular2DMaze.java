@@ -1,7 +1,7 @@
 package com.github.sladecek.maze.jmaze.rectangular;
 
 import com.github.sladecek.maze.jmaze.maze.Maze;
-import com.github.sladecek.maze.jmaze.maze.IMazeTopology;
+import com.github.sladecek.maze.jmaze.maze.IMazeStructure;
 import com.github.sladecek.maze.jmaze.shapes.FloorShape;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContext;
@@ -12,7 +12,7 @@ import com.github.sladecek.maze.jmaze.shapes.WallShape;
  * columns. East/west walls are numbered before south/north ones.
  */
 public final class Rectangular2DMaze extends Maze implements
-        IMazeTopology {
+        IMazeStructure {
     public Rectangular2DMaze(int height, int width) {
         this.width = width;
         this.height = height;

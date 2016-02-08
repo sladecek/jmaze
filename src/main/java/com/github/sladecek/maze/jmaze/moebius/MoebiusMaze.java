@@ -3,7 +3,7 @@ package com.github.sladecek.maze.jmaze.moebius;
 import java.security.InvalidParameterException;
 
 import com.github.sladecek.maze.jmaze.maze.Maze;
-import com.github.sladecek.maze.jmaze.maze.IMazeTopology;
+import com.github.sladecek.maze.jmaze.maze.IMazeStructure;
 import com.github.sladecek.maze.jmaze.shapes.FloorShape;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
@@ -15,7 +15,7 @@ import com.github.sladecek.maze.jmaze.shapes.WallShape;
  * numbered first by rows, then by columns. East/west walls are numbered before
  * south/north ones. Holes are numbered after south/north walls.
  */
-public final class MoebiusMaze extends Maze implements IMazeTopology {
+public final class MoebiusMaze extends Maze implements IMazeStructure {
 
     public MoebiusMaze(final int height, final int width) {
         this.width = width;

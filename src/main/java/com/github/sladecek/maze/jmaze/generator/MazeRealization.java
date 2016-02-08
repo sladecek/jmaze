@@ -16,6 +16,7 @@ public final class MazeRealization {
 	
 	public MazeRealization(int wallCount) {
 		allocateWalls(wallCount);
+		this.wallCount = wallCount;
 	}
 
 	public boolean isWallClosed(int wall) {
@@ -35,7 +36,7 @@ public final class MazeRealization {
 	}
 
 	public String printClosedWalls() {
-		return new BitSetIntervalPrinter(isWallClosed).printAsIntervals();
+		return new BitSetIntervalPrinter(isWallClosed, wallCount).printAsIntervals();
 	}	
 
 	private void allocateWalls(int wallCount) {
@@ -44,6 +45,7 @@ public final class MazeRealization {
 	}
 	
 	private BitSet isWallClosed;
+	private int wallCount;
 
 	private Vector<Integer> solution = new Vector<Integer>();
 

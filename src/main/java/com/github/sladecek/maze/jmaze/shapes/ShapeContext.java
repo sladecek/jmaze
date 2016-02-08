@@ -1,5 +1,8 @@
 package com.github.sladecek.maze.jmaze.shapes;
 
+/*
+ * Contextual information for a collection of shapes.
+ */
 public class ShapeContext {
     
     public ShapeContext(boolean isPolarCoordinates, int pictureHeight,
