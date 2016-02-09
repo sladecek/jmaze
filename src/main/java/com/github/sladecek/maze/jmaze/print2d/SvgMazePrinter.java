@@ -20,6 +20,7 @@ import org.apache.fop.svg.PDFTranscoder;
 
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
+import com.github.sladecek.maze.jmaze.util.MazeGenerationException;
 
 /*
  * Print 2D maze to SVG or PDF. 
@@ -31,13 +32,13 @@ public final class SvgMazePrinter  {
     }
 
     public void printShapes(ShapeContainer shapes, MazeOutputFormat format,
-            OutputStream output, boolean showSolution) {
+            OutputStream output, boolean showSolution) throws MazeGenerationException {
         SvgDocument sd = createSvgDocument(shapes, showSolution);
         printSvgDocument(format, output, sd);
     }
 
     public void printSvgDocument(MazeOutputFormat format, OutputStream output,
-            SvgDocument sd) throws TransformerFactoryConfigurationError {
+            SvgDocument sd) throws  MazeGenerationException {
         try {
             
 
@@ -60,13 +61,8 @@ public final class SvgMazePrinter  {
                 throw new IllegalArgumentException();
             }
 
-        } catch (TransformerConfigurationException e) {
-            e.printStackTrace();
-        } catch (TransformerException e) {
-            e.printStackTrace();
-        } catch (TranscoderException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+        } catch ( TransformerException | TranscoderException e) {
+            throw new MazeGenerationException("Printing SVG",e);
         }
     }
 

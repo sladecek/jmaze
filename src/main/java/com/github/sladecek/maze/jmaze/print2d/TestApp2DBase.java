@@ -15,6 +15,7 @@ import com.github.sladecek.maze.jmaze.generator.IMazeGenerator;
 import com.github.sladecek.maze.jmaze.generator.MazeRealization;
 import com.github.sladecek.maze.jmaze.maze.Maze;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
+import com.github.sladecek.maze.jmaze.util.MazeGenerationException;
 
 /**
  * Base class for 2D test applications
@@ -45,7 +46,7 @@ public class TestApp2DBase {
             FileOutputStream fp = new FileOutputStream(fileName + ".pdf");
             printer.printShapes(shapes, MazeOutputFormat.pdf, fp, showSolution);
 
-        } catch (SecurityException | IOException e) {
+        } catch (SecurityException | IOException | MazeGenerationException e) {
             e.printStackTrace();
         }
     }
