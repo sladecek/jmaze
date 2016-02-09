@@ -94,9 +94,8 @@ public class Circular2DMaze extends Maze implements IMazeStructure {
 				}
 			}
 
-			String floorId = "r" + Integer.toString(room);
 			final FloorShape floor = new FloorShape((layerCount - r - 1)*cellsPerLayer, mapPhi(phi
-					* roomRatio), false, floorId);
+					* roomRatio), false);
 			linkRoomToFloor(room, floor);
 			addShape(floor);
 		}

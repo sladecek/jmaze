@@ -38,9 +38,8 @@ public final class Rectangular2DMaze extends Maze implements
             for (int x = 0; x < width; x++) {
                 int id = addRoom();
                 assert id == y * width + x : "Inconsistent room numbering";
-                
-                String floorId = "r" + Integer.toString(id);
-                final FloorShape floor = new FloorShape(y, x, false, floorId);
+                                
+                final FloorShape floor = new FloorShape(y, x, false);
                 linkRoomToFloor(id, floor);
                 addShape(floor);
             }

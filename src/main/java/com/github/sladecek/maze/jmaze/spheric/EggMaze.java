@@ -93,9 +93,7 @@ public final class EggMaze extends Maze implements IMazeStructure {
 				// polar layers have only one room
 				r = addRoom();
 			}
-			// TODO r je poizita mnohokrat ???
-			String floorId = "r" + Integer.toString(r);
-			final FloorShape floor = new FloorShape(iy * roomMapRatio, ix, false, floorId);
+			final FloorShape floor = new FloorShape(iy * roomMapRatio, ix, false);
 			linkRoomToFloor(r, floor);
 			addShape(floor);
 			

@@ -61,9 +61,8 @@ public final class MoebiusMaze extends Maze implements IMazeStructure {
                 int id1 = addRoom();
                 assert id1 == wall1 : "Inconsistent room numbering";
 
-                String floorId1 = "f" + Integer.toString(wall1);
                 final boolean isHole = true;
-                FloorShape fs1 = new FloorShape(y, x, isHole, floorId1);
+                FloorShape fs1 = new FloorShape(y, x, isHole);
 
                 
                 linkRoomToFloor(id1, fs1);

@@ -64,9 +64,8 @@ public class Triangular2DMaze extends Maze implements IMazeStructure {
 				} else {
 					y2++;
 				}
-				
-				String floorId = "r" + Integer.toString(r);
-				final FloorShape floor = new FloorShape(y, x2, false, floorId);
+								
+				final FloorShape floor = new FloorShape(y, x2, false);
 				linkRoomToFloor(r, floor);
 				addShape(floor);
 				

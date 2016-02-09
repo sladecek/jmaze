@@ -65,8 +65,7 @@ public class Hexagonal2DMaze extends Maze implements IMazeStructure {
 	                
 	                LOGGER.info("addRoom "+r+" y="+y+" x="+x+" yc="+yc+" xc="+xc);
 	                
-	                String floorId = "r" + Integer.toString(r);
-	                final FloorShape floor = new FloorShape(yc, xc, false, floorId);
+	                final FloorShape floor = new FloorShape(yc, xc, false);
 	                linkRoomToFloor(r, floor);
 	                addShape(floor);
 	                

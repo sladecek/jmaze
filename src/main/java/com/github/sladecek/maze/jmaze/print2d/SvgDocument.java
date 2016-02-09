@@ -4,7 +4,6 @@ import org.apache.batik.dom.svg.SVGDOMImplementation;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.xml.sax.XMLReader;
 
 import com.github.sladecek.maze.jmaze.geometry.Point2D;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContext;
@@ -16,15 +15,14 @@ public class SvgDocument implements I2DDocument {
         final int cellSize = context.getResolution();
         final int margin = cellSize / 2;
 
+        canvasWidth = 2 * margin + context.getPictureWidth() * cellSize;
+        canvasHeight = 2 * margin + context.getPictureHeight() * cellSize;
+
         if (context.isPolarCoordinates()) {
-            canvasWidth = 2 * margin + context.getPictureWidth() * cellSize;
-            canvasHeight = 2 * margin + context.getPictureHeight() * cellSize;
             Point2D zeroPoint = new Point2D(margin + canvasWidth / 2, margin
                     + canvasHeight / 2);
             mapper = new Polar2DMapper(zeroPoint, cellSize);
         } else {
-            canvasWidth = 2 * margin + context.getPictureWidth() * cellSize;
-            canvasHeight = 2 * margin + context.getPictureHeight() * cellSize;
             Point2D zeroPoint = new Point2D(margin, margin);
             mapper = new Cartesian2DMapper(zeroPoint, cellSize);
 
@@ -61,7 +59,6 @@ public class SvgDocument implements I2DDocument {
 
     }
 
-    
     @Override
     public void printArcSegment(Point2D p1, Point2D p2, String style) {
 
@@ -125,7 +122,6 @@ public class SvgDocument implements I2DDocument {
         }
     }
 
-
     @Override
     public int getCanvasWidth() {
         return canvasWidth;
@@ -136,13 +132,15 @@ public class SvgDocument implements I2DDocument {
         return canvasHeight;
     }
 
-
     @Override
     public ShapeContext getContext() {
         return context;
     }
 
-    
+    public Document getDocument() {
+        return doc;
+    }
+
     ShapeContext context;
     private Document doc;
 
@@ -150,9 +148,5 @@ public class SvgDocument implements I2DDocument {
     private int canvasHeight;
 
     private IMaze2DMapper mapper;
-
-    public Document getDocument() {
-        return doc;
-    }
 
 }

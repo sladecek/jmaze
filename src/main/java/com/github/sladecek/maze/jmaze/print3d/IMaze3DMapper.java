@@ -5,10 +5,8 @@ import com.github.sladecek.maze.jmaze.geometry.Point3D;
 import com.github.sladecek.maze.jmaze.geometry.SouthNorth;
 import com.github.sladecek.maze.jmaze.geometry.UpDown;
 
-/**
- * 
+/** 
  * Map planar maze coordinates into 3D points.
- *
  */
 public interface IMaze3DMapper {
 

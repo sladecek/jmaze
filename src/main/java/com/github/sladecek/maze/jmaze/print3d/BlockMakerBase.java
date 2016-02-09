@@ -20,8 +20,6 @@ import com.github.sladecek.maze.jmaze.shapes.WallShape;
  */
 public abstract class BlockMakerBase {
 
-    protected ShapeContainer shapes;
-
     public BlockMakerBase(ShapeContainer shapes, Maze3DSizes sizes,
             MazeColors colors, double approxRoomSizeInmm) {
         this.shapes = shapes;
@@ -170,9 +168,6 @@ public abstract class BlockMakerBase {
 
     }
 
-    /*
-     * protected void printText(Point p, String text, Color color) {
-     */
     protected final Point3D getHolePoint(int y, int x, EastWest ew,
             SouthNorth sn, UpDown ud) {
 
@@ -200,17 +195,6 @@ public abstract class BlockMakerBase {
         final int dX = (ew == EastWest.east) ? 0 : 1;
         return mapPointWithZ(cellY + dY, cellX + dX, ud, 0, 0);
     }
-
-    private static final Logger LOG = Logger.getLogger("maze.jmaze");
-
-    protected Maze3DSizes sizes;
-    protected MazeColors colors;
-    protected OpenScadComposer scad;
-    protected IMaze3DMapper maze3dMapper;
-
-    private double approxRoomSizeInmm;
-
-    protected ArrayList<Block> blocks;
 
     public final Iterable<Block> getBlocks() {
         return blocks;
@@ -250,5 +234,18 @@ public abstract class BlockMakerBase {
         blocks.add(b);
 
     }
+
+    private static final Logger LOG = Logger.getLogger("maze.jmaze");
+
+    protected ShapeContainer shapes;
+
+    protected Maze3DSizes sizes;
+    protected MazeColors colors;
+    protected OpenScadComposer scad;
+    protected IMaze3DMapper maze3dMapper;
+
+    private double approxRoomSizeInmm;
+
+    protected ArrayList<Block> blocks;
 
 }

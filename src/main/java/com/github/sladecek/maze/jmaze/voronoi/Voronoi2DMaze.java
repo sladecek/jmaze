@@ -27,16 +27,6 @@ public class Voronoi2DMaze extends Maze implements IMazeStructure {
 		buildMaze();
 	}
 
-	private int width;
-	private int height;
-	private int roomCount;
-
-	private double[] roomCenterY;
-	private double[] roomCenterX;
-
-
-
-	private Random randomGenerator;
 
 	private static int flr(double r) {
 		return (int) Math.floor(r);
@@ -67,8 +57,7 @@ public class Voronoi2DMaze extends Maze implements IMazeStructure {
 			int x = flr(roomCenterX[i]);
 			int y = flr(roomCenterY[i]);
 			int r = addRoom();
-			String floorId = "r" + Integer.toString(r);
-			final FloorShape floor = new FloorShape(y, x, false, floorId);
+			final FloorShape floor = new FloorShape(y, x, false);
 			linkRoomToFloor(r, floor);
 			addShape(floor);
 		}
@@ -110,4 +99,12 @@ public class Voronoi2DMaze extends Maze implements IMazeStructure {
 	}
 
 	private static final Logger LOGGER = Logger.getLogger("maze.jmaze");
+    private int width;
+    private int height;
+    private int roomCount;
+
+    private double[] roomCenterY;
+    private double[] roomCenterX;
+
+    private Random randomGenerator;
 }

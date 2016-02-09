@@ -11,60 +11,51 @@ import com.github.sladecek.maze.jmaze.print2d.I2DDocument;
 /// type.
 public final class FloorShape implements IMazeShape {
 
+    public FloorShape(int y, int x, boolean isHole) {
+        super();
+        this.center = new Point2D(x, y);
 
-	public FloorShape(int y, int x, boolean isHole, String id) {
-		super();
-		this.center = new Point2D(x,y);
+        this.isHole = isHole;
+        LOG.log(Level.INFO, "FloorShape  x=" + x + " y=" + y);
+    }
 
-		this.isHole = isHole;
-		this.id = id;
-		LOG.log(Level.INFO, "FloorShape id=" + id + " x=" + x + " y=" + y);
-	}
+    @Override
+    public ShapeType getShapeType() {
+        if (isHole) {
+            return ShapeType.hole;
+        } else {
+            return ShapeType.nonHole;
+        }
+    }
 
-	@Override
-	public ShapeType getShapeType() {
-		if (isHole) {
-			return  ShapeType.hole;
-		} else {
-			return ShapeType.nonHole;
-		}
-	}
+    public int getY() {
+        return center.getY();
+    }
 
-	public int getY() {
-		return center.getY();
-	}
+    public int getX() {
+        return center.getX();
+    }
 
-	public int getX() {
-		return center.getX();
-	}
-	
+    public boolean isHole() {
+        return isHole;
+    }
 
+    public MarkShape CreateMarkInThisRoom(ShapeType type) {
+        return new MarkShape(type, getY(), getX());
+    }
 
-	public boolean isHole() {
-		return isHole;
-	}
+    @Override
+    public void print2D(I2DDocument doc) {
+    }
 
+    @Override
+    public String toString() {
+        return "FloorShape [y=" + getY() + ", x=" + getX() + ", isHole="
+                + isHole + "]";
+    }
 
-	@Override
-	public void print2D(I2DDocument doc)  {
-	}
-	
-	@Override
-	public String toString() {
-		return "FloorShape [id=" + id + " y=" + getY() + ", x=" + getX() + ", isHole=" + isHole + "]";
-	}
-
-	private static final Logger LOG =  Logger.getLogger("maze.jmaze");
-
-	private Point2D center; 
-private boolean isHole;
-	private String id;
-	
-	
-	public MarkShape CreateMarkInThisRoom(ShapeType type) {
-		return new MarkShape(type, getY(), getX());
-	}
-	
-
+    private static final Logger LOG = Logger.getLogger("maze.jmaze");
+    private Point2D center;
+    private boolean isHole;
 
 }

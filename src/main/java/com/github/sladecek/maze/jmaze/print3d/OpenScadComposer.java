@@ -16,11 +16,6 @@ import com.github.sladecek.maze.jmaze.geometry.Point3D;
  */
 public final class OpenScadComposer implements java.lang.AutoCloseable {
 
-	/* TODO smazat public OpenScadComposer(final String fileName) throws IOException {
-		stream = new FileOutputStream(fileName);
-		out = new OutputStreamWriter(stream, "UTF8");
-	}
-	*/
 	
 	public OpenScadComposer(final OutputStream stream) throws IOException {
 		this.stream = stream;
