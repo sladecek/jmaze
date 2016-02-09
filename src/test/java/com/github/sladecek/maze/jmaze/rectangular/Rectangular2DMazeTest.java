@@ -2,7 +2,6 @@ package com.github.sladecek.maze.jmaze.rectangular;
 
 import static org.junit.Assert.assertEquals;
 
-
 import java.util.Collections;
 import java.util.Vector;
 

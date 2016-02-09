@@ -4,13 +4,11 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.github.sladecek.maze.jmaze.generator.MazeRealization;
 import com.github.sladecek.maze.jmaze.geometry.SouthNorth;
-import com.github.sladecek.maze.jmaze.maze.Maze;
 import com.github.sladecek.maze.jmaze.maze.IMazeStructure;
+import com.github.sladecek.maze.jmaze.maze.Maze;
 import com.github.sladecek.maze.jmaze.shapes.FloorShape;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape.ShapeType;
-import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContext;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
 /**

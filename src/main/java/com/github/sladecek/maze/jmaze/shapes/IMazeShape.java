@@ -1,6 +1,6 @@
 package com.github.sladecek.maze.jmaze.shapes;
 
-import com.github.sladecek.maze.jmaze.print2d.SvgMazePrinter;
+import com.github.sladecek.maze.jmaze.print2d.I2DDocument;
 
 /**
  * Shapes for maze drawing.
@@ -10,6 +10,6 @@ public interface IMazeShape {
 	
 	ShapeType getShapeType();
 
-	void printToSvg(SvgMazePrinter printer, ShapeContext context) ;
+	void print2D(I2DDocument doc) ;
 
 }

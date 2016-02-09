@@ -1,5 +1,6 @@
 package com.github.sladecek.maze.jmaze.generator;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -9,7 +10,6 @@ import java.util.Random;
 import org.junit.Test;
 
 import com.github.sladecek.maze.jmaze.maze.GenericMazeStructure;
-import static org.junit.Assert.assertEquals;
 
 public class DepthFirstMazeGeneratorTest {
 

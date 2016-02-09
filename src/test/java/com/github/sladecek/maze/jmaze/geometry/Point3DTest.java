@@ -1,11 +1,7 @@
 package com.github.sladecek.maze.jmaze.geometry;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 import org.junit.Test;
-
-import com.github.sladecek.maze.jmaze.geometry.Point2D;
-import com.github.sladecek.maze.jmaze.geometry.Point3D;
 
 
 public class Point3DTest {

@@ -1,7 +1,7 @@
 package com.github.sladecek.maze.jmaze.shapes;
 
 import com.github.sladecek.maze.jmaze.geometry.Point2D;
-import com.github.sladecek.maze.jmaze.print2d.SvgMazePrinter;
+import com.github.sladecek.maze.jmaze.print2d.I2DDocument;
 
 public final class WallShape implements IMazeShape {
 	
@@ -18,7 +18,7 @@ public final class WallShape implements IMazeShape {
 	}
 
 	@Override
-	public void printToSvg(SvgMazePrinter svg, ShapeContext context) {		
+	public void print2D(I2DDocument doc) {		
 		String style = "";
 		boolean center = false;
 		switch (shapeType) {		
@@ -39,17 +39,17 @@ public final class WallShape implements IMazeShape {
 			break;
 			
 		}
-		if (context.isPolarCoordinates() && p1.getY() == p2.getY()) 
+		if (doc.getContext().isPolarCoordinates() && p1.getY() == p2.getY()) 
 		{
 			if (p1.getX() == 0 && p2.getX()==0) {
-				svg.printCircle(new Point2D(0,0), "none", 0,  0, p1.getY(), false, style, context);
+				doc.printCircle(new Point2D(0,0), "none", 0,  0, p1.getY(), false, style);
 			} else {
-				svg.printArcSegment(p1, p2, style, context);
+				doc.printArcSegment(p1, p2, style);
 			}
 		}
 		else
 		{
-			svg.printLine(p1, p2, style, center, context);
+			doc.printLine(p1, p2, style, center);
 		}
 	}
 

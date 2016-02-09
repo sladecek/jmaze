@@ -4,9 +4,11 @@ import java.io.OutputStream;
 
 import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
 
+// TODO smazat
+
 /**
  * Print maze to a stream.
- */
+ *//*
 public interface IMaze2DPrinter {
 	void printShapes(ShapeContainer maze, MazeOutputFormat format, OutputStream output, boolean showSolution);
-}
+}*/

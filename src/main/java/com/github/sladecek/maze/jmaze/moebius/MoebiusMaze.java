@@ -2,8 +2,8 @@ package com.github.sladecek.maze.jmaze.moebius;
 
 import java.security.InvalidParameterException;
 
-import com.github.sladecek.maze.jmaze.maze.Maze;
 import com.github.sladecek.maze.jmaze.maze.IMazeStructure;
+import com.github.sladecek.maze.jmaze.maze.Maze;
 import com.github.sladecek.maze.jmaze.shapes.FloorShape;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;

@@ -1,6 +1,6 @@
 package com.github.sladecek.maze.jmaze.geometry;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 

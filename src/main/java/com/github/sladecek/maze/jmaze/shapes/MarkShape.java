@@ -1,7 +1,7 @@
 package com.github.sladecek.maze.jmaze.shapes;
 
 import com.github.sladecek.maze.jmaze.geometry.Point2D;
-import com.github.sladecek.maze.jmaze.print2d.SvgMazePrinter;
+import com.github.sladecek.maze.jmaze.print2d.I2DDocument;
 
 public final class MarkShape implements IMazeShape {
 	
@@ -42,17 +42,17 @@ public final class MarkShape implements IMazeShape {
 	}
 
 	@Override
-	public void printToSvg(SvgMazePrinter svg, ShapeContext context)   {
+	public void print2D(I2DDocument doc)   {
 		
 		switch (shapeType) {
 		case startRoom:
-			svg.printMark(center, "red", 25, offsetXPercent, offsetYPercent, context);		
+			doc.printMark(center, "red", 25, offsetXPercent, offsetYPercent);		
 			break;
 		case targetRoom:
-			svg.printMark(center, "green", 25, offsetXPercent, offsetYPercent, context);
+			doc.printMark(center, "green", 25, offsetXPercent, offsetYPercent);
 			break;
 		case solution:
-			svg.printMark(center, "gray", 15, offsetXPercent, offsetYPercent, context);
+			doc.printMark(center, "gray", 15, offsetXPercent, offsetYPercent);
 			break;
 		default:
 			break;			
