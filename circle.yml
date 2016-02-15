@@ -4,5 +4,6 @@ machine:
 
 deployment:
   master:
+    branch: master
     commands:
       - mvn deploy
