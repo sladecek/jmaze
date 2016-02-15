@@ -12,7 +12,23 @@ public class SvgDocument implements I2DDocument {
 
     public SvgDocument(ShapeContext context) {
         this.context = context;
-        final int cellSize = context.getResolution();
+        constructCoordinateSystem();
+        createSvgRoot();
+    }
+
+	private void createSvgRoot() {
+		DOMImplementation impl = SVGDOMImplementation.getDOMImplementation();
+        String svgNS = SVGDOMImplementation.SVG_NAMESPACE_URI;
+        doc = impl.createDocument(svgNS, "svg", null);
+
+        // Set the width and height attributes on the root 'svg' element.
+        Element svgRoot = doc.getDocumentElement();
+        svgRoot.setAttributeNS(null, "width", Integer.toString(canvasWidth));
+        svgRoot.setAttributeNS(null, "height", Integer.toString(canvasHeight));
+	}
+
+	private void constructCoordinateSystem() {
+		final int cellSize = context.getResolution();
         final int margin = cellSize / 2;
 
         canvasWidth = 2 * margin + context.getPictureWidth() * cellSize;
@@ -27,17 +43,7 @@ public class SvgDocument implements I2DDocument {
             mapper = new Cartesian2DMapper(zeroPoint, cellSize);
 
         }
-
-        DOMImplementation impl = SVGDOMImplementation.getDOMImplementation();
-        String svgNS = SVGDOMImplementation.SVG_NAMESPACE_URI;
-        doc = impl.createDocument(svgNS, "svg", null);
-
-        // Set the width and height attributes on the root 'svg' element.
-        Element svgRoot = doc.getDocumentElement();
-        svgRoot.setAttributeNS(null, "width", Integer.toString(canvasWidth));
-        svgRoot.setAttributeNS(null, "height", Integer.toString(canvasHeight));
-
-    }
+	}
 
     @Override
     public void printLine(Point2D p1, Point2D p2, String style, boolean center) {

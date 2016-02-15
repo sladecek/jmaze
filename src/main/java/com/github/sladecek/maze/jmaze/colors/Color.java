@@ -3,7 +3,6 @@ package com.github.sladecek.maze.jmaze.colors;
 /**
  * Represents color in maze printout.
  * 
- *
  */
 public final class Color {	
 	/**
@@ -32,16 +31,6 @@ public final class Color {
 		g = parseHex(s, 1);
 		b = parseHex(s, 2);		
 	}
-
-	private int parseHex(final String s, final int pair) {
-		if (s.length() < (pair + 1) * 2) {
-			throw new IllegalArgumentException("String '" + s 
-					+ "' is too short to specify color. Must have at least 6 characters");
-		}
-		final int hex = 16;
-		int result = Integer.parseInt(s.substring(pair * 2, pair * 2 + 2), hex);
-		return result;
-	}
 	
 	public int getR() {
 		return r;
@@ -61,10 +50,20 @@ public final class Color {
 		return "Color [r=" + r + ", g=" + g + ", b=" + b + ", a=" + a + "]";
 	}
 
+
+	private int parseHex(final String s, final int pair) {
+		if (s.length() < (pair + 1) * 2) {
+			throw new IllegalArgumentException("String '" + s 
+					+ "' is too short to specify color. Must have at least 6 characters");
+		}
+		final int hex = 16;
+		int result = Integer.parseInt(s.substring(pair * 2, pair * 2 + 2), hex);
+		return result;
+	}
+
 	private int r;
 	private int g;
 	private int b;
 	private int a;
-
 	
 }

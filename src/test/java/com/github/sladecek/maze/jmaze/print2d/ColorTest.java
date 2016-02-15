@@ -17,4 +17,15 @@ public class ColorTest {
 		assertEquals(0, c.getA());
 	}
 
+	@Test
+	public void testToString() {
+		Color c = new Color("0181ff");
+		assertEquals("Color [r=1, g=129, b=255, a=0]", c.toString());
+	}
+
+	@Test(expected=IllegalArgumentException.class)
+	public final void testColor_invalid() {
+		new Color("01234");
+	}
+	
 }
