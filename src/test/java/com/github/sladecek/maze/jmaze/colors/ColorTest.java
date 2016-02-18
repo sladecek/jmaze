@@ -1,4 +1,4 @@
-package com.github.sladecek.maze.jmaze.print2d;
+package com.github.sladecek.maze.jmaze.colors;
 
 import static org.junit.Assert.assertEquals;
 
