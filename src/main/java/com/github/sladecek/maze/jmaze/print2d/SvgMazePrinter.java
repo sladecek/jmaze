@@ -5,10 +5,8 @@ import java.io.OutputStream;
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.TransformerFactoryConfigurationError;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
@@ -39,9 +37,7 @@ public final class SvgMazePrinter  {
 
     public void printSvgDocument(MazeOutputFormat format, OutputStream output,
             SvgDocument sd) throws  MazeGenerationException {
-        try {
-            
-
+        try {            
             switch (format) {
             case svg:
                 Source source = new DOMSource(sd.getDocument());

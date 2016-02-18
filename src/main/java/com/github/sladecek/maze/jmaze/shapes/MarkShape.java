@@ -4,7 +4,7 @@ import com.github.sladecek.maze.jmaze.geometry.Point2D;
 import com.github.sladecek.maze.jmaze.print2d.I2DDocument;
 
 public final class MarkShape implements IMazeShape {
-	
+
 	public int getX() {
 		return center.getX();
 	}
@@ -27,11 +27,8 @@ public final class MarkShape implements IMazeShape {
 
 	@Override
 	public String toString() {
-		return "MarkShape [shapeType=" + shapeType + ", x=" + getX() + ", y=" + getY()
-				+ "]";
+		return "MarkShape [shapeType=" + shapeType + ", x=" + getX() + ", y=" + getY() + "]";
 	}
-	
-	
 
 	public void setOffsetXPercent(int offsetXPercent) {
 		this.offsetXPercent = offsetXPercent;
@@ -42,11 +39,11 @@ public final class MarkShape implements IMazeShape {
 	}
 
 	@Override
-	public void print2D(I2DDocument doc)   {
-		
+	public void print2D(I2DDocument doc) {
+
 		switch (shapeType) {
 		case startRoom:
-			doc.printMark(center, "red", 25, offsetXPercent, offsetYPercent);		
+			doc.printMark(center, "red", 25, offsetXPercent, offsetYPercent);
 			break;
 		case targetRoom:
 			doc.printMark(center, "green", 25, offsetXPercent, offsetYPercent);
@@ -55,12 +52,11 @@ public final class MarkShape implements IMazeShape {
 			doc.printMark(center, "gray", 15, offsetXPercent, offsetYPercent);
 			break;
 		default:
-			break;			
+			break;
 		}
 	}
 
 	private Point2D center;
-	
 
 	private int offsetXPercent = 50;
 	private int offsetYPercent = 50;
