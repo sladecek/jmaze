@@ -2,6 +2,7 @@ package com.github.sladecek.maze.jmaze.shapes;
 
 import com.github.sladecek.maze.jmaze.geometry.Point2D;
 import com.github.sladecek.maze.jmaze.print2d.I2DDocument;
+import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
 
 public final class MarkShape implements IMazeShape {
 
@@ -39,7 +40,7 @@ public final class MarkShape implements IMazeShape {
 	}
 
 	@Override
-	public void print2D(I2DDocument doc) {
+	public void print2D(I2DDocument doc, IPrintStyle printStyle) {
 
 		switch (shapeType) {
 		case startRoom:

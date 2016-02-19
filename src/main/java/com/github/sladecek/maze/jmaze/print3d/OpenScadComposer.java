@@ -8,8 +8,8 @@ import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Locale;
 
-import com.github.sladecek.maze.jmaze.colors.Color;
 import com.github.sladecek.maze.jmaze.geometry.Point3D;
+import com.github.sladecek.maze.jmaze.printstyle.Color;
 
 /*
  * Compose content of Open Scad file.

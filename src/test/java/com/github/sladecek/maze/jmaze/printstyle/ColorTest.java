@@ -1,10 +1,10 @@
-package com.github.sladecek.maze.jmaze.colors;
+package com.github.sladecek.maze.jmaze.printstyle;
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import com.github.sladecek.maze.jmaze.colors.Color;
+import com.github.sladecek.maze.jmaze.printstyle.Color;
 
 public class ColorTest {
 

@@ -1,4 +1,4 @@
-package com.github.sladecek.maze.jmaze.colors;
+package com.github.sladecek.maze.jmaze.printstyle;
 
 /**
  * Represents color in maze printout.
@@ -50,6 +50,9 @@ public final class Color {
 		return "Color [r=" + r + ", g=" + g + ", b=" + b + ", a=" + a + "]";
 	}
 
+	public String toSvg() {
+		return "rgb("+r+","+g+","+b+")";
+	}
 
 	private int parseHex(final String s, final int pair) {
 		if (s.length() < (pair + 1) * 2) {

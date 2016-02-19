@@ -2,8 +2,8 @@ package com.github.sladecek.maze.jmaze.print3d;
 
 import java.util.ArrayList;
 
-import com.github.sladecek.maze.jmaze.colors.Color;
 import com.github.sladecek.maze.jmaze.geometry.Point3D;
+import com.github.sladecek.maze.jmaze.printstyle.Color;
 
 /**
  * Piece of 3D maze - solid irregular polyhedron or a spherical mark.

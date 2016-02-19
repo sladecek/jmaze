@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.github.sladecek.maze.jmaze.colors.Color;
-import com.github.sladecek.maze.jmaze.colors.MazeColors;
 import com.github.sladecek.maze.jmaze.geometry.EastWest;
 import com.github.sladecek.maze.jmaze.geometry.Point3D;
 import com.github.sladecek.maze.jmaze.geometry.SouthNorth;
 import com.github.sladecek.maze.jmaze.geometry.UpDown;
+import com.github.sladecek.maze.jmaze.printstyle.Color;
+import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
 import com.github.sladecek.maze.jmaze.shapes.FloorShape;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
@@ -21,7 +21,7 @@ import com.github.sladecek.maze.jmaze.shapes.WallShape;
 public abstract class BlockMakerBase {
 
     public BlockMakerBase(ShapeContainer shapes, Maze3DSizes sizes,
-            MazeColors colors, double approxRoomSizeInmm) {
+            IPrintStyle colors, double approxRoomSizeInmm) {
         this.shapes = shapes;
         this.sizes = sizes;
         this.colors = colors;
@@ -240,7 +240,7 @@ public abstract class BlockMakerBase {
     protected ShapeContainer shapes;
 
     protected Maze3DSizes sizes;
-    protected MazeColors colors;
+    protected IPrintStyle colors;
     protected OpenScadComposer scad;
     protected IMaze3DMapper maze3dMapper;
 

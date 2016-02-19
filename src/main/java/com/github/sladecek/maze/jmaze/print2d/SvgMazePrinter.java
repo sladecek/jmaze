@@ -16,6 +16,8 @@ import org.apache.batik.transcoder.TranscoderInput;
 import org.apache.batik.transcoder.TranscoderOutput;
 import org.apache.fop.svg.PDFTranscoder;
 
+import com.github.sladecek.maze.jmaze.printstyle.DefaultPrintStyle;
+import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
 import com.github.sladecek.maze.jmaze.util.MazeGenerationException;
@@ -69,9 +71,11 @@ public final class SvgMazePrinter  {
             if (showSolution
                     || shape.getShapeType() != IMazeShape.ShapeType.solution) {
 
-                shape.print2D(sd);
+                shape.print2D(sd, printStyle);
             }
         }
         return sd;
     }
+    
+    private IPrintStyle printStyle = new DefaultPrintStyle(); 
 }

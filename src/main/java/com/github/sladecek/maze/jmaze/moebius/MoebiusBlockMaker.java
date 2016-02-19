@@ -2,7 +2,6 @@ package com.github.sladecek.maze.jmaze.moebius;
 
 import java.util.ArrayList;
 
-import com.github.sladecek.maze.jmaze.colors.MazeColors;
 import com.github.sladecek.maze.jmaze.geometry.EastWest;
 import com.github.sladecek.maze.jmaze.geometry.Point3D;
 import com.github.sladecek.maze.jmaze.geometry.SouthNorth;
@@ -11,6 +10,7 @@ import com.github.sladecek.maze.jmaze.print3d.Block;
 import com.github.sladecek.maze.jmaze.print3d.BlockMakerBase;
 import com.github.sladecek.maze.jmaze.print3d.IBlockMaker;
 import com.github.sladecek.maze.jmaze.print3d.Maze3DSizes;
+import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
 import com.github.sladecek.maze.jmaze.shapes.FloorShape;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape.ShapeType;
@@ -24,7 +24,7 @@ import com.github.sladecek.maze.jmaze.shapes.WallShape;
 public final class MoebiusBlockMaker extends BlockMakerBase implements IBlockMaker  {
 	
 	public MoebiusBlockMaker( ShapeContainer shapes, Maze3DSizes sizes, 
-			MazeColors colors, double approxRoomSizeInmm) {
+			IPrintStyle colors, double approxRoomSizeInmm) {
 		super(shapes, sizes, colors, approxRoomSizeInmm);
 	}
 

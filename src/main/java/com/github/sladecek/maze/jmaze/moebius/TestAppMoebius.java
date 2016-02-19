@@ -4,14 +4,14 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.Random;
 
-import com.github.sladecek.maze.jmaze.colors.MazeColors;
-import com.github.sladecek.maze.jmaze.colors.WinterColors;
 import com.github.sladecek.maze.jmaze.generator.DepthFirstMazeGenerator;
 import com.github.sladecek.maze.jmaze.generator.IMazeGenerator;
 import com.github.sladecek.maze.jmaze.generator.MazeRealization;
 import com.github.sladecek.maze.jmaze.print3d.Maze3DSizes;
 import com.github.sladecek.maze.jmaze.print3d.OpenScad3DPrinter;
 import com.github.sladecek.maze.jmaze.print3d.ThreeJs3DPrinter;
+import com.github.sladecek.maze.jmaze.printstyle.DefaultPrintStyle;
+import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
 
 /***
@@ -30,7 +30,7 @@ public final class TestAppMoebius {
 		Maze3DSizes sizes = new Maze3DSizes();
 		sizes.setCellSizeInmm(2);
 
-		MazeColors colors = new WinterColors();
+		IPrintStyle colors = new DefaultPrintStyle();
 
 		ShapeContainer shapes =  maze.applyRealization(r);
 		

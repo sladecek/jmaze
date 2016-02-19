@@ -39,6 +39,7 @@ public class SvgDocument implements I2DDocument {
 	@Override
 	public void printArcSegment(Point2D p1, Point2D p2, String style) {
 
+		// TODO throw an exception
 		assert p1.getY() == p2.getY() : "arc segment must be defined on the same diameter";
 		String svgNS = SVGDOMImplementation.SVG_NAMESPACE_URI;
 		Element path = doc.createElementNS(svgNS, "path");

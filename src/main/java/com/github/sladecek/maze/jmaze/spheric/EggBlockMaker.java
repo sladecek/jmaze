@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.github.sladecek.maze.jmaze.colors.Color;
-import com.github.sladecek.maze.jmaze.colors.MazeColors;
 import com.github.sladecek.maze.jmaze.maze.Maze;
 import com.github.sladecek.maze.jmaze.print3d.Block;
 import com.github.sladecek.maze.jmaze.print3d.BlockMakerBase;
 import com.github.sladecek.maze.jmaze.print3d.IBlockMaker;
 import com.github.sladecek.maze.jmaze.print3d.Maze3DSizes;
+import com.github.sladecek.maze.jmaze.printstyle.Color;
+import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
 import com.github.sladecek.maze.jmaze.shapes.FloorShape;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape.ShapeType;
@@ -24,7 +24,7 @@ import com.github.sladecek.maze.jmaze.shapes.WallShape;
 public final class EggBlockMaker extends BlockMakerBase implements IBlockMaker {
 
 	public EggBlockMaker(ShapeContainer shapes,
-			Maze3DSizes sizes, MazeColors colors, final EggGeometry egg,
+			Maze3DSizes sizes, IPrintStyle colors, final EggGeometry egg,
 			final int equatorCellCnt) {
 		super(shapes, sizes, colors, egg
 				.computeBaseRoomSizeInmm(equatorCellCnt));

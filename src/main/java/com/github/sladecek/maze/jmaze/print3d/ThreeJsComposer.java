@@ -7,8 +7,8 @@ import java.io.OutputStreamWriter;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
 
-import com.github.sladecek.maze.jmaze.colors.Color;
 import com.github.sladecek.maze.jmaze.geometry.Point3D;
+import com.github.sladecek.maze.jmaze.printstyle.Color;
 
 /***
  * Write 3D maze shapes as ThreeJS javascript file format.

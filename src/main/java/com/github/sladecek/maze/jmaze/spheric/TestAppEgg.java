@@ -9,14 +9,14 @@ import java.util.logging.LogManager;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
-import com.github.sladecek.maze.jmaze.colors.MazeColors;
-import com.github.sladecek.maze.jmaze.colors.WinterColors;
 import com.github.sladecek.maze.jmaze.generator.DepthFirstMazeGenerator;
 import com.github.sladecek.maze.jmaze.generator.IMazeGenerator;
 import com.github.sladecek.maze.jmaze.generator.MazeRealization;
 import com.github.sladecek.maze.jmaze.print3d.Maze3DSizes;
 import com.github.sladecek.maze.jmaze.print3d.OpenScad3DPrinter;
 import com.github.sladecek.maze.jmaze.print3d.ThreeJs3DPrinter;
+import com.github.sladecek.maze.jmaze.printstyle.DefaultPrintStyle;
+import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
 
 final class TestAppEgg {
@@ -49,7 +49,7 @@ final class TestAppEgg {
             sizes.setWallHeightInmm(0.3);
             sizes.setInnerWallToCellRatio(0.05);
 
-            MazeColors colors = new WinterColors();
+            IPrintStyle colors = new DefaultPrintStyle();
 
             ShapeContainer shapes = maze.applyRealization(real);
 

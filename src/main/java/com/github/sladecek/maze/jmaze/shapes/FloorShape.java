@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 
 import com.github.sladecek.maze.jmaze.geometry.Point2D;
 import com.github.sladecek.maze.jmaze.print2d.I2DDocument;
+import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
 
 /// Represents hole in the ground of the maze or the lack of thereof.
 /// The user usually prints either holes or non-holes depending on output
@@ -45,7 +46,7 @@ public final class FloorShape implements IMazeShape {
 	}
 
 	@Override
-	public void print2D(I2DDocument doc) {
+	public void print2D(I2DDocument doc, IPrintStyle printStyle) {
 	}
 
 	@Override

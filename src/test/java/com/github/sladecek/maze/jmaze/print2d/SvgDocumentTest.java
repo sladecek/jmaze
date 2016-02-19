@@ -15,13 +15,18 @@ import javax.xml.transform.TransformerFactoryConfigurationError;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.w3c.dom.Document;
 
 import com.github.sladecek.maze.jmaze.geometry.Point2D;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContext;
 
 public class SvgDocumentTest {
+	
+	@Rule
+	public ExpectedException thrown= ExpectedException.none();
 
 	@Test
 	public void testSvgDocumentWithRectangularContextShouldCreateCorrectCoordinateSystem() {

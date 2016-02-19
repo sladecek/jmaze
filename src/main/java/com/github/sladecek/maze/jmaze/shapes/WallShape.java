@@ -2,6 +2,7 @@ package com.github.sladecek.maze.jmaze.shapes;
 
 import com.github.sladecek.maze.jmaze.geometry.Point2D;
 import com.github.sladecek.maze.jmaze.print2d.I2DDocument;
+import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
 
 public final class WallShape implements IMazeShape {
 
@@ -16,22 +17,26 @@ public final class WallShape implements IMazeShape {
 	}
 
 	@Override
-	public void print2D(I2DDocument doc) {
+	public void print2D(I2DDocument doc, IPrintStyle printStyle) {
 		String style = "";
 		boolean center = false;
 		switch (shapeType) {
 		case outerWall:
-			style = "stroke:rgb(0,0,0);stroke-width:2";
+			style = "stroke:" + printStyle.getOuterWallColor().toSvg() + ";stroke-width:"
+					+ printStyle.getOuterWallWidth();
 			break;
 		case innerWall:
-			style = "stroke:rgb(0,0,0);stroke-width:1";
+			style = "stroke:" + printStyle.getInnerWallColor().toSvg() + ";stroke-width:"
+					+ printStyle.getInnerWallWidth();
 			break;
 		case solution:
-			style = "stroke:rgb(255,0,0);stroke-width:2";
+			style = "stroke:" + printStyle.getSolutionWallColor().toSvg() + ";stroke-width:"
+					+ printStyle.getSolutionWallWidth();
 			center = true;
 			break;
 		case auxiliaryWall:
-			style = "stroke:rgb(240,240,240);stroke-width:1";
+			style = "stroke:" + printStyle.getDebugWallColor().toSvg() + ";stroke-width:"
+					+ printStyle.getInnerWallWidth();
 			break;
 		default:
 			break;
