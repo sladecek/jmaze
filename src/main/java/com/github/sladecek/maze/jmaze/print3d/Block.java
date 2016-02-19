@@ -7,8 +7,6 @@ import com.github.sladecek.maze.jmaze.printstyle.Color;
 
 /**
  * Piece of 3D maze - solid irregular polyhedron or a spherical mark.
- * 
- * @author sladecek
  *
  */
 public final class Block {
@@ -63,5 +61,4 @@ public final class Block {
     private Color color;
     private double radius;
     private boolean isMark;
-
 }
