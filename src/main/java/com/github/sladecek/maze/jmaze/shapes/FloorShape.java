@@ -41,7 +41,7 @@ public final class FloorShape implements IMazeShape {
 		return isHole;
 	}
 
-	public MarkShape CreateMarkInThisRoom(ShapeType type) {
+	public MarkShape createMarkInThisRoom(ShapeType type) {
 		return new MarkShape(type, getY(), getX());
 	}
 
