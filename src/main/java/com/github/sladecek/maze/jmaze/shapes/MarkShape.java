@@ -6,16 +6,6 @@ import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
 
 public final class MarkShape implements IMazeShape {
 
-	public int getX() {
-		return center.getX();
-	}
-
-	public int getY() {
-		return center.getY();
-	}
-
-	private ShapeType shapeType;
-
 	public MarkShape(ShapeType type, int y, int x) {
 		this.shapeType = type;
 		this.center = new Point2D(x, y);
@@ -24,6 +14,14 @@ public final class MarkShape implements IMazeShape {
 
 	public ShapeType getShapeType() {
 		return this.shapeType;
+	}
+
+	public int getX() {
+		return center.getX();
+	}
+
+	public int getY() {
+		return center.getY();
 	}
 
 	@Override
@@ -44,18 +42,23 @@ public final class MarkShape implements IMazeShape {
 
 		switch (shapeType) {
 		case startRoom:
-			doc.printMark(center, "red", 25, offsetXPercent, offsetYPercent);
+			doc.printMark(center, printStyle.getStartMarkColor().toSvg(), printStyle.getStartTargetMarkWidth(),
+					offsetXPercent, offsetYPercent);
 			break;
 		case targetRoom:
-			doc.printMark(center, "green", 25, offsetXPercent, offsetYPercent);
+			doc.printMark(center, printStyle.getTargetMarkColor().toSvg(), printStyle.getStartTargetMarkWidth(),
+					offsetXPercent, offsetYPercent);
 			break;
 		case solution:
-			doc.printMark(center, "gray", 15, offsetXPercent, offsetYPercent);
+			doc.printMark(center, printStyle.getSolutionMarkColor().toSvg(), printStyle.getSolutionMarkWidth(),
+					offsetXPercent, offsetYPercent);
 			break;
 		default:
 			break;
 		}
 	}
+
+	private ShapeType shapeType;
 
 	private Point2D center;
 
