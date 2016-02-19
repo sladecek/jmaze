@@ -101,12 +101,19 @@ public class SvgDocumentTest {
 	public void testPrintArcSegment() throws TransformerConfigurationException, TransformerFactoryConfigurationError, TransformerException {
 		boolean isPolarCoordinates = false;
 		SvgDocument d = createTestDocument(isPolarCoordinates);
-		d.printArcSegment(new Point2D(20, 30), new Point2D(40, 50), "style");
+		d.printArcSegment(new Point2D(20, 30), new Point2D(40, 30), "style");
 		
 		Document document = d.getDocument();
 		
-		final String expected = header + "><path fill=\"none\" d=\"M143 213 A210 210 0 0 1 283 353\" style=\"style\"/></svg>";
+		final String expected = header + "><path fill=\"none\" d=\"M143 213 A210 210 0 0 1 283 213\" style=\"style\"/></svg>";
 		assertEquals(expected, svgToString(document));
+	}
+
+	@Test(expected=IllegalArgumentException.class)
+	public void testPrintArcSegmentShouldThrowEception() throws TransformerConfigurationException, TransformerFactoryConfigurationError, TransformerException {
+		boolean isPolarCoordinates = false;
+		SvgDocument d = createTestDocument(isPolarCoordinates);
+		d.printArcSegment(new Point2D(20, 30), new Point2D(40, 31), "style");
 	}
 
 	@Test
