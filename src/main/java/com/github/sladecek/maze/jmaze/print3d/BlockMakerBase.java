@@ -15,20 +15,32 @@ import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
 
 /**
- * Base class for 3D OpenScad Maze printers. Responsible for shared operations
- * such as wall and floor drawing for one room.
+ * Base class for 3D Maze printers. Responsible for shared operations such as
+ * rectangular room drawing. Converts 2D shapes to 3D blocks.
  */
 public abstract class BlockMakerBase {
 
     public BlockMakerBase(ShapeContainer shapes, Maze3DSizes sizes,
-            IPrintStyle colors, double approxRoomSizeInmm) {
+            IPrintStyle style, double approxRoomSizeInmm) {
         this.shapes = shapes;
         this.sizes = sizes;
-        this.colors = colors;
+        this.style = style;
         this.approxRoomSizeInmm = approxRoomSizeInmm;
+		blocks = new ArrayList<Block>();
     }
 
-    protected final void printWallElements(final double wallThickness,
+    public final Iterable<Block> getBlocks() {
+        return blocks;
+    }
+
+    public final void printPolyhedron(final ArrayList<Point3D> polyhedron,
+            final String comment, final Color color) {
+        LOG.log(Level.INFO, "printPolyhedron " + comment);
+        Block b = Block.newPolyhedron(polyhedron, comment, color);
+        blocks.add(b);
+    }
+
+    public final void printWallElements(final double wallThickness,
             WallShape wall) {
 
         LOG.log(Level.INFO, wall.toString());
@@ -43,22 +55,22 @@ public abstract class BlockMakerBase {
         // corners must be rendered separately.
         printInnerWallElement(y1, y1, x1, x1, wallThickness, wallThickness,
                 "inner wall corner " + wall.toString(),
-                colors.getInnerWallColor());
+                style.getInnerWallColor());
         printInnerWallElement(y2, y2, x2, x2, wallThickness, wallThickness,
                 "inner wall corner " + wall.toString(),
-                colors.getInnerWallColor());
+                style.getInnerWallColor());
         if (x1 == x2) {
             printInnerWallElement(y1, y2, x1, x2, -wallThickness,
                     wallThickness, "inner wall along y " + wall.toString(),
-                    colors.getCornerColor());
+                    style.getCornerColor());
         } else {
             printInnerWallElement(y1, y2, x1, x2, wallThickness,
                     -wallThickness, "inner wall along x " + wall.toString(),
-                    colors.getCornerColor());
+                    style.getCornerColor());
         }
     }
 
-    private void printInnerWallElement(int y1, int y2, int x1, int x2,
+    public void printInnerWallElement(int y1, int y2, int x1, int x2,
             double wy, double wx, String comment, Color color) {
 
         final double z = sizes.getWallHeightInmm();
@@ -75,25 +87,25 @@ public abstract class BlockMakerBase {
 
     }
 
-    protected final void printFloorWithHoleOneRoom(int cellY, int cellX) {
+    public final void printFloorWithHoleOneRoom(int cellY, int cellX) {
         ArrayList<Point3D> pe = makeFloorSegmentEast(cellY, cellX);
         printPolyhedron(pe, "base e " + cellX + " " + cellY,
-                colors.getBaseColor());
+                style.getBaseColor());
 
         ArrayList<Point3D> pw = makeFloorSegmentWest(cellY, cellX);
         printPolyhedron(pw, "base w" + cellX + " " + cellY,
-                colors.getBaseColor());
+                style.getBaseColor());
 
         ArrayList<Point3D> pn = makeFloorSegmentNorth(pe, pw);
         printPolyhedron(pn, "base n " + cellX + " " + cellY,
-                colors.getBaseColor());
+                style.getBaseColor());
 
         ArrayList<Point3D> ps = makeFloorSegmentSouth(pe, pw);
         printPolyhedron(ps, "base s " + cellX + " " + cellY,
-                colors.getBaseColor());
+                style.getBaseColor());
     }
 
-    private ArrayList<Point3D> makeFloorSegmentWest(int cellY, int cellX) {
+    public ArrayList<Point3D> makeFloorSegmentWest(int cellY, int cellX) {
         ArrayList<Point3D> pw = new ArrayList<Point3D>();
         for (SouthNorth sn : SouthNorth.values()) {
             for (UpDown ud : UpDown.values()) {
@@ -110,7 +122,7 @@ public abstract class BlockMakerBase {
         return pw;
     }
 
-    private ArrayList<Point3D> makeFloorSegmentEast(int cellY, int cellX) {
+    public ArrayList<Point3D> makeFloorSegmentEast(int cellY, int cellX) {
         ArrayList<Point3D> pe = new ArrayList<Point3D>();
         for (SouthNorth sn : SouthNorth.values()) {
             for (UpDown ud : UpDown.values()) {
@@ -127,7 +139,7 @@ public abstract class BlockMakerBase {
         return pe;
     }
 
-    private ArrayList<Point3D> makeFloorSegmentSouth(ArrayList<Point3D> pe,
+    public ArrayList<Point3D> makeFloorSegmentSouth(ArrayList<Point3D> pe,
             ArrayList<Point3D> pw) {
         ArrayList<Point3D> ps = new ArrayList<Point3D>();
         ps.add(pw.get(6));
@@ -141,7 +153,7 @@ public abstract class BlockMakerBase {
         return ps;
     }
 
-    private ArrayList<Point3D> makeFloorSegmentNorth(ArrayList<Point3D> pe,
+    public ArrayList<Point3D> makeFloorSegmentNorth(ArrayList<Point3D> pe,
             ArrayList<Point3D> pw) {
         ArrayList<Point3D> pn = new ArrayList<Point3D>();
         pn.add(pw.get(0));
@@ -155,7 +167,7 @@ public abstract class BlockMakerBase {
         return pn;
     }
 
-    protected final void fillHoleInTheFloorOneRoom(FloorShape hs) {
+    public final void fillHoleInTheFloorOneRoom(FloorShape hs) {
         ArrayList<Point3D> p = new ArrayList<Point3D>();
         for (EastWest ew : EastWest.values()) {
             for (SouthNorth sn : SouthNorth.values()) {
@@ -164,11 +176,11 @@ public abstract class BlockMakerBase {
                 }
             }
         }
-        printPolyhedron(p, "hole", colors.getHoleColor());
+        printPolyhedron(p, "hole", style.getHoleColor());
 
     }
 
-    protected final Point3D getHolePoint(int y, int x, EastWest ew,
+    public final Point3D getHolePoint(int y, int x, EastWest ew,
             SouthNorth sn, UpDown ud) {
 
         final double wt = sizes.getInnerWallToCellRatio() / 2
@@ -182,13 +194,13 @@ public abstract class BlockMakerBase {
 
     }
 
-    final Point3D mapPointWithZ(int cellY, int cellX, UpDown ud,
+    public Point3D mapPointWithZ(int cellY, int cellX, UpDown ud,
             double offsetY, double offsetX) {
         double z = ud == UpDown.down ? 0 : sizes.getBaseThicknessInmm();
         return maze3dMapper.mapPoint(cellY, cellX, offsetY, offsetX, z);
     }
 
-    final Point3D getFloorPoint(int cellY, int cellX, UpDown ud, SouthNorth sn,
+    public final Point3D getFloorPoint(int cellY, int cellX, UpDown ud, SouthNorth sn,
             EastWest ew) {
         final int dY = (sn == SouthNorth.south) ? 0 : maze3dMapper.getStepY(
                 cellY, cellX);
@@ -196,19 +208,7 @@ public abstract class BlockMakerBase {
         return mapPointWithZ(cellY + dY, cellX + dX, ud, 0, 0);
     }
 
-    public final Iterable<Block> getBlocks() {
-        return blocks;
-    }
-
-    public final void printPolyhedron(final ArrayList<Point3D> polyhedron,
-            final String comment, final Color color) {
-        LOG.log(Level.INFO, "printPolyhedron " + comment);
-        Block b = Block.newPolyhedron(polyhedron, comment, color);
-        blocks.add(b);
-
-    }
-
-    protected void printMark(int y, int x, Color color) {
+    public void printMark(int y, int x, Color color) {
 
         double z = 3 * sizes.getBaseThicknessInmm();
         double avgX = 0;
@@ -240,8 +240,8 @@ public abstract class BlockMakerBase {
     protected ShapeContainer shapes;
 
     protected Maze3DSizes sizes;
-    protected IPrintStyle colors;
-    protected OpenScadComposer scad;
+    protected IPrintStyle style;
+    
     protected IMaze3DMapper maze3dMapper;
 
     private double approxRoomSizeInmm;

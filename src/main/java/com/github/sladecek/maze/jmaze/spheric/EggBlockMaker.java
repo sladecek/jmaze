@@ -19,7 +19,7 @@ import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
 
 /**
- * Create list of solid blocks to make a 3D Moebius maze.
+ * Egg maze - create 3D blocks from 2D shapes. 
  */
 public final class EggBlockMaker extends BlockMakerBase implements IBlockMaker {
 
@@ -35,7 +35,6 @@ public final class EggBlockMaker extends BlockMakerBase implements IBlockMaker {
 	public void makeBlocks() {
 		maze3dMapper = new Egg3dMapper(egg, (EggMaze) maze);
 		prepareShapes(maze);
-		blocks = new ArrayList<Block>();
 		printFloors();
 		printWalls();
 		printMarks();
