@@ -2,6 +2,7 @@ package com.github.sladecek.maze.jmaze.print3d;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.logging.Logger;
 
 /**
  * Save maze blocks in open scad file format.
@@ -25,8 +26,9 @@ public class OpenScad3DPrinter implements IMaze3DPrinter {
             scad.closeUnion();
 
         } catch (IOException ioe) {
-            System.out.println(ioe.getMessage());
+            LOG.severe("OpenScad3DPrinter failed " + ioe.getMessage());
         }
     }
 
+    private static final Logger LOG = Logger.getLogger("maze.jmaze");
 }

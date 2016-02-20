@@ -9,26 +9,26 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 
+import com.github.sladecek.maze.jmaze.TestUtilities;
 import com.github.sladecek.maze.jmaze.geometry.Point3D;
 import com.github.sladecek.maze.jmaze.printstyle.Color;
 
-
-
 public class ThreeJsComposerTest {
 	@FunctionalInterface
-	public interface TestedOperation  {
-	  void test(ThreeJsComposer t) throws IOException;
+	public interface TestedOperation {
+		void test(ThreeJsComposer t) throws IOException;
 	}
 
 	@Test
-	public void testHeader()  {
+	public void testHeader() {
 		String expected = "{ } ";
-		TestedOperation testedOperation = jsc -> {};
+		TestedOperation testedOperation = jsc -> {
+		};
 		testOneOperation(expected, testedOperation);
 	}
 
 	@Test
-	public void testBeginList() throws IOException  {
+	public void testBeginList() throws IOException {
 		String expected = "{ \"listName\":[ } ";
 		TestedOperation testedOperation = jsc -> jsc.beginList("listName");
 		testOneOperation(expected, testedOperation);
@@ -44,16 +44,8 @@ public class ThreeJsComposerTest {
 	@Test
 	public void testPrintPolyhedron() {
 		String expected = "{ [ [ 1.0,2.0,3.0] , [ 2.0,2.0,3.0] , [ 3.0,2.0,3.0] , [ 4.0,2.0,3.0] , [ 5.0,2.0,3.0] , [ 6.0,2.0,3.0] , [ 7.0,2.0,3.0] , [ 8.0,2.0,3.0] ] } ";
-		ArrayList<Point3D> polyhedron = new ArrayList<Point3D>();
-		polyhedron.add(new Point3D(1, 2, 3));
-		polyhedron.add(new Point3D(2, 2, 3));
-		polyhedron.add(new Point3D(3, 2, 3));
-		polyhedron.add(new Point3D(4, 2, 3));
-		polyhedron.add(new Point3D(5, 2, 3));
-		polyhedron.add(new Point3D(6, 2, 3));
-		polyhedron.add(new Point3D(7, 2, 3));
-		polyhedron.add(new Point3D(8, 2, 3));
-		
+		ArrayList<Point3D> polyhedron = TestUtilities.buildPolyhedronForTest(1, 2, 3, 1);
+
 		String comment = "myComment";
 		Color color = new Color("010203");
 		TestedOperation testedOperation = jsc -> jsc.printPolyhedron(polyhedron, comment, color);
@@ -81,5 +73,4 @@ public class ThreeJsComposerTest {
 		assertEquals(expected, content);
 	}
 
-	
 }

@@ -2,6 +2,7 @@ package com.github.sladecek.maze.jmaze.print3d;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.logging.Logger;
 
 public class ThreeJs3DPrinter implements IMaze3DPrinter {
 
@@ -14,7 +15,7 @@ public class ThreeJs3DPrinter implements IMaze3DPrinter {
             printMarks(tjs, blockMaker);
             tjs.close();
         } catch (IOException ioe) {
-            System.out.println(ioe.getMessage());
+        	LOG.severe("OpenScad3DPrinter failed " + ioe.getMessage());
         }
     }
 
@@ -46,4 +47,5 @@ public class ThreeJs3DPrinter implements IMaze3DPrinter {
         tjs.closeList(insertComma);
     }
 
+    private static final Logger LOG = Logger.getLogger("maze.jmaze");
 }
