@@ -235,7 +235,15 @@ public abstract class BlockMakerBase {
 
     }
 
-    private static final Logger LOG = Logger.getLogger("maze.jmaze");
+    public IMaze3DMapper getMaze3dMapper() {
+		return maze3dMapper;
+	}
+
+	public void setMaze3dMapper(IMaze3DMapper maze3dMapper) {
+		this.maze3dMapper = maze3dMapper;
+	}
+
+	private static final Logger LOG = Logger.getLogger("maze.jmaze");
 
     protected ShapeContainer shapes;
 
