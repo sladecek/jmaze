@@ -28,6 +28,7 @@ public class Hexagonal2DMaze extends Maze implements IMazeStructure {
 	static final int hH = (int) Math.floor(hP * Math.sqrt(3f) / 2f);
 
 	// parameters of six walls of a hexagon
+	// walls numbered counterclockwise, starting at upper room
 	static final int[] walllXOffs = { hP / 2, -hP / 2, -hP, -hP / 2, hP / 2, hP };
 	static final int[] wallYOffs = { -hH, -hH, 0, hH, hH, 0 };
 	static final int[] neigbourRoomX = { 0, -1, -1, 0, 1, 1 };
@@ -36,10 +37,7 @@ public class Hexagonal2DMaze extends Maze implements IMazeStructure {
 
 	private void buildMaze() {
 
-		final int height = hH * (2 * size + 1);
-		final int width = hP * (3 * size - 1);
-		final boolean isPolar = false;
-		setContext(new ShapeContext(isPolar, height, width, 1, 0, 50));
+		makeContext();
 
 		final int roomsPerRow = 2 * size - 1;
 
@@ -55,12 +53,10 @@ public class Hexagonal2DMaze extends Maze implements IMazeStructure {
 				mapXY2room.add(r);
 
 				Point2D center = computeRoomCenter(x, isOdd, y);
-				
+
 				LOGGER.info("addRoom " + r + " y=" + y + " x=" + x + " center=" + center);
 
-				final FloorShape floor = new FloorShape(center, false);
-				linkRoomToFloor(r, floor);
-				addShape(floor);
+				makeFloor(r, center);
 
 				// make walls
 				for (int w = 0; w < 6; w++) {
@@ -86,7 +82,11 @@ public class Hexagonal2DMaze extends Maze implements IMazeStructure {
 					if (!areRoomCoordinatesValid(roomsPerRow, ox, oy)) {
 						addOuterWall(x1, y1, x2, y2);
 					} else if (w < 3) {
-						addInnerWall(mapXY2room, r, x1, y1, x2, y2, ox, oy);
+						// Link only three rooms out of six. The other three
+						// walls will be linked in the from the other room
+						// (which does not exist yet).
+						int r2 = mapXY2room.get(ox * size + oy);
+						addInnerWall(r2, r, x1, y1, x2, y2, ox, oy);
 					}
 
 				}
@@ -96,6 +96,19 @@ public class Hexagonal2DMaze extends Maze implements IMazeStructure {
 		setStartRoom(0);
 		final int lastRoom = size * roomsPerRow - 1;
 		setTargetRoom(lastRoom);
+	}
+
+	private void makeFloor(int r, Point2D center) {
+		final FloorShape floor = new FloorShape(center, false);
+		linkRoomToFloor(r, floor);
+		addShape(floor);
+	}
+
+	private void makeContext() {
+		final int height = hH * (2 * size + 1);
+		final int width = hP * (3 * size - 1);
+		final boolean isPolar = false;
+		setContext(new ShapeContext(isPolar, height, width, 1, 0, 50));
 	}
 
 	private Point2D computeRoomCenter(int x, boolean isOdd, int y) {
@@ -109,12 +122,12 @@ public class Hexagonal2DMaze extends Maze implements IMazeStructure {
 		return center;
 	}
 
-	private void addInnerWall(Vector<Integer> mapXY2room, int r, int x1, int y1, int x2, int y2, int ox, int oy) {
-		int r2 = mapXY2room.get(ox * size + oy);
+	private void addInnerWall(int r2, int r, int x1, int y1, int x2, int y2, int ox, int oy) {
+
 		int id = addWall(r, r2);
 
-		LOGGER.info("addWallAndShape room1=" + r + " room2=" + r2 + " y1=" + y1 + " y2=" + y2 + " x1="
-				+ x1 + " x2=" + x2);
+		LOGGER.info(
+				"addWallAndShape room1=" + r + " room2=" + r2 + " y1=" + y1 + " y2=" + y2 + " x1=" + x1 + " x2=" + x2);
 		WallShape ws = new WallShape(ShapeType.innerWall, y1, x1, y2, x2);
 		addShape(ws);
 		linkShapeToId(ws, id);

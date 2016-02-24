@@ -67,6 +67,10 @@ public class Maze extends GenericMazeStructure  {
 
     }
 
+    public ShapeContainer getShapes() {
+    	return shapes;
+    }
+    
     private ShapeContext context;
     
 	private ShapeContainer shapes;
