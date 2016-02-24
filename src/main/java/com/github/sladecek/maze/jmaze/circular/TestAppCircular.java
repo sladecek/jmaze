@@ -6,8 +6,8 @@ public class TestAppCircular extends TestApp2DBase {
 	
 	public static void main(String[] args) {
 		new TestAppCircular().printTestMaze("maze-circular", () -> {
-			final int defaultSize = 50	;			
-			return new Circular2DMaze(defaultSize, 5);				
+			final int defaultSize = 3	;			
+			return new Circular2DMaze(defaultSize, 40);				
 		});
     }
 

@@ -15,19 +15,15 @@ import com.github.sladecek.maze.jmaze.shapes.WallShape;
 
 public class Circular2DMaze extends Maze implements IMazeStructure {
 
-	private int cellsPerLayer;
+	private int layerSize;
 
-	public Circular2DMaze(int layerCount, int cellsPerLayer) {
+	public Circular2DMaze(int layerCount, int layerSize) {
 		super();
 		this.layerCount = layerCount;
-		this.cellsPerLayer = cellsPerLayer;
+		this.layerSize = layerSize;
 		buildMaze();
 	}
 
-	private int layerCount;
-
-	private Vector<Integer> roomCounts;
-	private Vector<Integer> firstRoomInLayer;
 
 	private void buildMaze() {
 		roomCounts = computeRoomCounts();
@@ -39,20 +35,20 @@ public class Circular2DMaze extends Maze implements IMazeStructure {
 		generateRooms();
 		generateConcentricWalls();
 		generateRadialWalls();
-		setStartAndTaretRooms();
+		setStartAndTargetRooms();
 		// outer walls
 		final IMazeShape.ShapeType ow = IMazeShape.ShapeType.outerWall;
-		addShape(new WallShape(ow, layerCount * cellsPerLayer, 0, layerCount * cellsPerLayer, 0));
+		addShape(new WallShape(ow, layerCount * layerSize, 0, layerCount * layerSize, 0));
 	}
 
 	private void createContext() {
-		final int height = 2 * layerCount * cellsPerLayer;
-		final int width = 2 * layerCount * cellsPerLayer;
+		final int height = 2 * layerCount * layerSize;
+		final int width = 2 * layerCount * layerSize;
 		final boolean isPolar = true;
 		setContext(new ShapeContext(isPolar, height, width, 1, 0, 50));
 	}
 
-	private void setStartAndTaretRooms() {
+	private void setStartAndTargetRooms() {
 		setStartRoom(0);
 		setTargetRoom(getRoomCount() - 1);
 	}
@@ -89,7 +85,7 @@ public class Circular2DMaze extends Maze implements IMazeStructure {
 				}
 			}
 
-			final Point2D center = new Point2D(mapPhi(phi * roomRatio), (layerCount - r - 1) * cellsPerLayer);
+			final Point2D center = new Point2D(mapPhi(phi * roomRatio), (layerCount - r - 1) * layerSize);
 			final FloorShape floor = new FloorShape(center, false);
 			linkRoomToFloor(room, floor);
 			addShape(floor);
@@ -133,13 +129,13 @@ public class Circular2DMaze extends Maze implements IMazeStructure {
 		final int roomMapRatio = equatorCellCnt / roomCntThisLayer;
 		final int rphi1 = (phi1 * roomMapRatio) % equatorCellCnt;
 		final int rphi2 = (phi2 * roomMapRatio) % equatorCellCnt;
-		WallShape ws = new WallShape(ShapeType.innerWall, r1 * cellsPerLayer, mapPhi(rphi1), r2 * cellsPerLayer,
+		WallShape ws = new WallShape(ShapeType.innerWall, r1 * layerSize, mapPhi(rphi1), r2 * layerSize,
 				mapPhi(rphi2));
 		addShape(ws);
 		linkShapeToId(ws, id);
 	}
 
-	public Vector<Integer> computeRoomCounts() {
+	private Vector<Integer> computeRoomCounts() {
 		// number of rooms in the equator layer
 		double circumference = 2 * Math.PI * (layerCount + 1);
 		int cnt = 1;
@@ -200,4 +196,8 @@ public class Circular2DMaze extends Maze implements IMazeStructure {
 	}
 
 	private static final Logger LOGGER = Logger.getLogger("maze.jmaze");
+	private int layerCount;
+
+	private Vector<Integer> roomCounts;
+	private Vector<Integer> firstRoomInLayer;
 }

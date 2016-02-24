@@ -1,4 +1,4 @@
-package com.github.sladecek.maze.jmaze.hexagonal;
+package com.github.sladecek.maze.jmaze.circular;
 
 import static org.junit.Assert.assertEquals;
 
@@ -12,37 +12,34 @@ import com.github.sladecek.maze.jmaze.shapes.FloorShape;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
 
-public class Hexagonal2DMazeTest {
+public class Circular2DMazeTest {
 
 	
-	private Hexagonal2DMaze maze;
+	private Circular2DMaze maze;
 	
 	@Before
-	public void setUp() throws Exception {
-		maze = new Hexagonal2DMaze(2);		
+	public void setUp() throws Exception {		
+		int layerCount = 3;
+		int layerSize = 10;
+		maze = new Circular2DMaze(layerCount, layerSize);				
 	}
 
-
-	@Test
-	public void testGetSize() {
-		assertEquals(2, maze.getSize());
-	}
 
 	@Test
 	public void testGetRoomCount() {
-		assertEquals(6, maze.getRoomCount());
+		assertEquals(18, maze.getRoomCount());
 	}
 
 	@Test
 	public void testGetWallCount() {
-		assertEquals(9, maze.getWallCount());
+		assertEquals(32, maze.getWallCount());
 	}
 
 	@Test
 	public void testGetWalls() {
 		List<Integer> list = new ArrayList<Integer>();
 		maze.getWalls(0).iterator().forEachRemaining(list::add);
-		assertEquals(2, list.size());
+		assertEquals(3, list.size());
 	}
 
 	@Test
@@ -52,14 +49,14 @@ public class Hexagonal2DMazeTest {
 
 	@Test
 	public void testGetTargetRoom() {
-		assertEquals(5, maze.getTargetRoom());
+		assertEquals(17, maze.getTargetRoom());
 	}
 
 	@Test
 	public void testGetRoomBehindWall() {
 		// rooms are numbered by columns
 		// walls counterclockwise
-		
+/*		TODO
 		assertEquals(1, maze.getRoomBehindWall(0, 0));
 		assertEquals(2, maze.getRoomBehindWall(0, 1));
 		
@@ -78,9 +75,9 @@ public class Hexagonal2DMazeTest {
 		assertEquals(4, maze.getRoomBehindWall(5, 6));
 		assertEquals(2, maze.getRoomBehindWall(5, 7));
 		assertEquals(3, maze.getRoomBehindWall(5, 8));
+		*/
 	}
 
-	// TODO wall shapes
 	@Test
 	public void testFloorShapes() {
 		ArrayList<FloorShape> floors = new ArrayList<FloorShape>();
@@ -90,13 +87,10 @@ public class Hexagonal2DMazeTest {
 				floors.add((FloorShape)s);
 			}
 		}
-		assertEquals(6, floors.size());
+		assertEquals(33, floors.size());
 		
-		assertEquals(10, floors.get(0).getX());
-		assertEquals(8, floors.get(0).getY());
-
-		assertEquals(40, floors.get(5).getX());
-		assertEquals(24, floors.get(5).getY());
+		assertEquals(0, floors.get(0).getX());
+		assertEquals(20, floors.get(0).getY());
 	}
 	
 
