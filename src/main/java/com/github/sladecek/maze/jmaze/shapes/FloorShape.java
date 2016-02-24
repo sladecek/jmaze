@@ -12,12 +12,12 @@ import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
 /// type.
 public final class FloorShape implements IMazeShape {
 
-	public FloorShape(int y, int x, boolean isHole) {
+	public FloorShape(Point2D center, boolean isHole) {
 		super();
-		this.center = new Point2D(x, y);
+		this.center = center;
 
 		this.isHole = isHole;
-		LOG.log(Level.INFO, "FloorShape  x=" + x + " y=" + y);
+		LOG.log(Level.INFO, "FloorShape  center=" + center);
 	}
 
 	@Override

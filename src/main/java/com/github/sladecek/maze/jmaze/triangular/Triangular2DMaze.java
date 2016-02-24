@@ -2,6 +2,7 @@ package com.github.sladecek.maze.jmaze.triangular;
 
 import java.util.logging.Logger;
 
+import com.github.sladecek.maze.jmaze.geometry.Point2D;
 import com.github.sladecek.maze.jmaze.maze.IMazeStructure;
 import com.github.sladecek.maze.jmaze.maze.Maze;
 import com.github.sladecek.maze.jmaze.shapes.FloorShape;
@@ -65,7 +66,7 @@ public class Triangular2DMaze extends Maze implements IMazeStructure {
 					y2++;
 				}
 								
-				final FloorShape floor = new FloorShape(y, x2, false);
+				final FloorShape floor = new FloorShape(new Point2D(x2, y), false);
 				linkRoomToFloor(r, floor);
 				addShape(floor);
 				

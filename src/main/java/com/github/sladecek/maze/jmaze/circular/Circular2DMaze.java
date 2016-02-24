@@ -26,35 +26,31 @@ public class Circular2DMaze extends Maze implements IMazeStructure {
 
 	private int layerCount;
 
-	
 	private Vector<Integer> roomCounts;
 	private Vector<Integer> firstRoomInLayer;
-
 
 	private void buildMaze() {
 		roomCounts = computeRoomCounts();
 		firstRoomInLayer = new Vector<Integer>();
 		firstRoomInLayer.setSize(layerCount);
-		
+
 		createContext();
-	        
-		
-		
+
 		generateRooms();
 		generateConcentricWalls();
 		generateRadialWalls();
 		setStartAndTaretRooms();
-	      // outer walls      
-        final IMazeShape.ShapeType ow = IMazeShape.ShapeType.outerWall;
-        addShape(new WallShape(ow, layerCount*cellsPerLayer, 0, layerCount*cellsPerLayer, 0));
+		// outer walls
+		final IMazeShape.ShapeType ow = IMazeShape.ShapeType.outerWall;
+		addShape(new WallShape(ow, layerCount * cellsPerLayer, 0, layerCount * cellsPerLayer, 0));
 	}
 
-    private void createContext() {
-        final int height = 2 * layerCount* cellsPerLayer;
-	        final int width = 2 * layerCount* cellsPerLayer;
-	        final boolean isPolar = true;
-	        setContext(new ShapeContext(isPolar, height, width, 1, 0, 50));
-    }
+	private void createContext() {
+		final int height = 2 * layerCount * cellsPerLayer;
+		final int width = 2 * layerCount * cellsPerLayer;
+		final boolean isPolar = true;
+		setContext(new ShapeContext(isPolar, height, width, 1, 0, 50));
+	}
 
 	private void setStartAndTaretRooms() {
 		setStartRoom(0);
@@ -77,8 +73,7 @@ public class Circular2DMaze extends Maze implements IMazeStructure {
 			thisNextRatio = cntThis / cntNext;
 		}
 
-		LOGGER.log(Level.INFO, "computeRoomRatio r=" + r + " ctnThis="
-				+ cntThis + " cntNext=" + cntNext);
+		LOGGER.log(Level.INFO, "computeRoomRatio r=" + r + " ctnThis=" + cntThis + " cntNext=" + cntNext);
 		return thisNextRatio;
 	}
 
@@ -94,8 +89,8 @@ public class Circular2DMaze extends Maze implements IMazeStructure {
 				}
 			}
 
-			final FloorShape floor = new FloorShape((layerCount - r - 1)*cellsPerLayer, mapPhi(phi
-					* roomRatio), false);
+			final Point2D center = new Point2D(mapPhi(phi * roomRatio), (layerCount - r - 1) * cellsPerLayer);
+			final FloorShape floor = new FloorShape(center, false);
 			linkRoomToFloor(room, floor);
 			addShape(floor);
 		}
@@ -107,7 +102,7 @@ public class Circular2DMaze extends Maze implements IMazeStructure {
 	}
 
 	private int mapPhi(int phi) {
-		return (phi * Point2D.ANGLE_2PI)/roomCntInOuterLayer();
+		return (phi * Point2D.ANGLE_2PI) / roomCntInOuterLayer();
 	}
 
 	private void generateConcentricWalls() {
@@ -126,20 +121,20 @@ public class Circular2DMaze extends Maze implements IMazeStructure {
 				for (int j = 0; j < roomCntRatio; j++) {
 					int roomThis = roomNext * roomCntRatio + j;
 					int id = addWall(gRoomThis + roomThis, gRoomNext + roomNext);
-					addWallShape(roomCntThis, layerCount-r, layerCount-r, roomThis, roomThis + 1, id);
+					addWallShape(roomCntThis, layerCount - r, layerCount - r, roomThis, roomThis + 1, id);
 				}
 			}
 		}
 
 	}
 
-	private void addWallShape(int roomCntThisLayer, int r1, int r2, int phi1,
-			int phi2, int id) {
+	private void addWallShape(int roomCntThisLayer, int r1, int r2, int phi1, int phi2, int id) {
 		final int equatorCellCnt = roomCntInOuterLayer();
 		final int roomMapRatio = equatorCellCnt / roomCntThisLayer;
 		final int rphi1 = (phi1 * roomMapRatio) % equatorCellCnt;
 		final int rphi2 = (phi2 * roomMapRatio) % equatorCellCnt;
-		WallShape ws = new WallShape(ShapeType.innerWall, r1*cellsPerLayer, mapPhi(rphi1), r2*cellsPerLayer, mapPhi(rphi2));
+		WallShape ws = new WallShape(ShapeType.innerWall, r1 * cellsPerLayer, mapPhi(rphi1), r2 * cellsPerLayer,
+				mapPhi(rphi2));
 		addShape(ws);
 		linkShapeToId(ws, id);
 	}
@@ -188,7 +183,7 @@ public class Circular2DMaze extends Maze implements IMazeStructure {
 				// strange wall naming convention - wall 0 is between room 0 and
 				// 1
 				int phi = (j + 1) % cnt;
-				addWallShape(cnt, layerCount - r - 1, layerCount - r, phi, phi,  id);
+				addWallShape(cnt, layerCount - r - 1, layerCount - r, phi, phi, id);
 			}
 		}
 	}

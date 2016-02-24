@@ -2,6 +2,7 @@ package com.github.sladecek.maze.jmaze.moebius;
 
 import java.security.InvalidParameterException;
 
+import com.github.sladecek.maze.jmaze.geometry.Point2D;
 import com.github.sladecek.maze.jmaze.maze.IMazeStructure;
 import com.github.sladecek.maze.jmaze.maze.Maze;
 import com.github.sladecek.maze.jmaze.shapes.FloorShape;
@@ -62,7 +63,7 @@ public final class MoebiusMaze extends Maze implements IMazeStructure {
                 assert id1 == wall1 : "Inconsistent room numbering";
 
                 final boolean isHole = true;
-                FloorShape fs1 = new FloorShape(y, x, isHole);
+                FloorShape fs1 = new FloorShape(new Point2D(x,y), isHole);
 
                 
                 linkRoomToFloor(id1, fs1);

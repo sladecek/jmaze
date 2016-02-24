@@ -19,9 +19,6 @@ public class Rectangular2DMazeTest {
 		
 	}
 
-	@After
-	public void tearDown() throws Exception {
-	}
 
 	@Test
 	public void testGetRoomCount() {

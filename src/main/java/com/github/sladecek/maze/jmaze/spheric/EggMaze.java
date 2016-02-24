@@ -4,6 +4,7 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.github.sladecek.maze.jmaze.geometry.Point2D;
 import com.github.sladecek.maze.jmaze.geometry.SouthNorth;
 import com.github.sladecek.maze.jmaze.maze.IMazeStructure;
 import com.github.sladecek.maze.jmaze.maze.Maze;
@@ -93,7 +94,8 @@ public final class EggMaze extends Maze implements IMazeStructure {
 				// polar layers have only one room
 				r = addRoom();
 			}
-			final FloorShape floor = new FloorShape(iy * roomMapRatio, ix, false);
+			Point2D center = new Point2D(ix, iy*roomMapRatio);
+			final FloorShape floor = new FloorShape(center, false);
 			linkRoomToFloor(r, floor);
 			addShape(floor);
 			

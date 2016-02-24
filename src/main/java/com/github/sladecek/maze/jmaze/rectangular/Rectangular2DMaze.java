@@ -1,5 +1,6 @@
 package com.github.sladecek.maze.jmaze.rectangular;
 
+import com.github.sladecek.maze.jmaze.geometry.Point2D;
 import com.github.sladecek.maze.jmaze.maze.IMazeStructure;
 import com.github.sladecek.maze.jmaze.maze.Maze;
 import com.github.sladecek.maze.jmaze.shapes.FloorShape;
@@ -39,7 +40,7 @@ public final class Rectangular2DMaze extends Maze implements
                 int id = addRoom();
                 assert id == y * width + x : "Inconsistent room numbering";
                                 
-                final FloorShape floor = new FloorShape(y, x, false);
+                final FloorShape floor = new FloorShape(new Point2D(x,y), false);
                 linkRoomToFloor(id, floor);
                 addShape(floor);
             }

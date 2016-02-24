@@ -48,6 +48,14 @@ public class BlockMakerBaseTest {
 	}
 
 	private List<Block> testOneOperation(Consumer<BlockMakerBase> operation) {
+		BlockMakerBase bmb = constructBlockMaker();
+		operation.accept(bmb);
+		List<Block> list = new ArrayList<Block>();
+		bmb.getBlocks().iterator().forEachRemaining(list::add);
+		return list;
+	}
+
+	private BlockMakerBase constructBlockMaker() {
 		ShapeContainer shapes = null;
 		Maze3DSizes sizes = new Maze3DSizes();
 		IPrintStyle colors = new DefaultPrintStyle();
@@ -55,10 +63,7 @@ public class BlockMakerBaseTest {
 		BlockMakerBase bmb = new BlockMakerBase(shapes, sizes, colors, approxRoomSizeInmm) {
 		};
 		bmb.setMaze3dMapper(new Maze3DMapperStub());
-		operation.accept(bmb);
-		List<Block> list = new ArrayList<Block>();
-		bmb.getBlocks().iterator().forEachRemaining(list::add);
-		return list;
+		return bmb;
 	}
 
 	/*
@@ -88,21 +93,91 @@ public class BlockMakerBaseTest {
 		assertEquals("Point [x=2.0, y=2.0, z=0.0]", b.getPolyhedron().get(6).toString());
 		assertEquals("Point [x=2.0, y=2.0, z=5.0]", b.getPolyhedron().get(7).toString());
 	}
+
+	@Test
+	public void testPrintFloorWithHoleOneRoom() {
+		List<Block> list = testOneOperation(bmb -> {
+			int y1 = 1;
+			int x1 = 1;
+			bmb.printFloorWithHoleOneRoom(y1, x1);
+		});
+		assertEquals(4, list.size());
+	}
+
+	@Test
+	public void testMakeFloorSegmentWest() {
+		BlockMakerBase bmb = constructBlockMaker();
+		int y1 = 10;
+		int x1 = 20;
+		ArrayList<Point3D> p = bmb.makeFloorSegmentWest(y1, x1);
+		assertEquals("Point [x=20.0, y=10.0, z=0.0]", p.get(0).toString());
+		assertEquals("Point [x=20.0, y=10.0, z=1.0]", p.get(1).toString());
+		assertEquals("Point [x=20.0, y=11.0, z=0.0]", p.get(2).toString());
+		assertEquals("Point [x=20.0, y=11.0, z=1.0]", p.get(3).toString());
+		assertEquals("Point [x=21.0, y=10.0, z=0.0]", p.get(4).toString());
+		assertEquals("Point [x=21.0, y=10.0, z=1.0]", p.get(5).toString());
+		assertEquals("Point [x=21.0, y=11.0, z=0.0]", p.get(6).toString());
+		assertEquals("Point [x=21.0, y=11.0, z=1.0]", p.get(7).toString());
+	}
+
+	// TODO proc je east a west stejne
+	@Test
+	public void testMakeFloorSegmentEast() {
+		BlockMakerBase bmb = constructBlockMaker();
+		int y1 = 10;
+		int x1 = 20;
+		ArrayList<Point3D> p = bmb.makeFloorSegmentEast(y1, x1);
+		assertEquals("Point [x=20.0, y=10.0, z=0.0]", p.get(0).toString());
+		assertEquals("Point [x=20.0, y=10.0, z=1.0]", p.get(1).toString());
+		assertEquals("Point [x=20.0, y=11.0, z=0.0]", p.get(2).toString());
+		assertEquals("Point [x=20.0, y=11.0, z=1.0]", p.get(3).toString());
+		assertEquals("Point [x=21.0, y=10.0, z=0.0]", p.get(4).toString());
+		assertEquals("Point [x=21.0, y=10.0, z=1.0]", p.get(5).toString());
+		assertEquals("Point [x=21.0, y=11.0, z=0.0]", p.get(6).toString());
+		assertEquals("Point [x=21.0, y=11.0, z=1.0]", p.get(7).toString());
+	}
+
+	@Test
+	public void testMakeFloorSegmentSouth() {
+		BlockMakerBase bmb = constructBlockMaker();
+		int y1 = 10;
+		int x1 = 20;
+		ArrayList<Point3D> pe = bmb.makeFloorSegmentEast(y1, x1);
+		ArrayList<Point3D> pw = bmb.makeFloorSegmentEast(y1, x1);
+		ArrayList<Point3D> p = bmb.makeFloorSegmentSouth(pe, pw);
+		/* TODO
+		assertEquals("Point [x=20.0, y=10.0, z=0.0]", p.get(0).toString());
+		assertEquals("Point [x=20.0, y=10.0, z=1.0]", p.get(1).toString());
+		assertEquals("Point [x=20.0, y=11.0, z=0.0]", p.get(2).toString());
+		assertEquals("Point [x=20.0, y=11.0, z=1.0]", p.get(3).toString());
+		assertEquals("Point [x=21.0, y=10.0, z=0.0]", p.get(4).toString());
+		assertEquals("Point [x=21.0, y=10.0, z=1.0]", p.get(5).toString());
+		assertEquals("Point [x=21.0, y=11.0, z=0.0]", p.get(6).toString());
+		assertEquals("Point [x=21.0, y=11.0, z=1.0]", p.get(7).toString());
+		*/
+	}
+
+	@Test
+	public void testMakeFloorSegmentNorth() {
+		BlockMakerBase bmb = constructBlockMaker();
+		int y1 = 10;
+		int x1 = 20;
+		ArrayList<Point3D> pe = bmb.makeFloorSegmentEast(y1, x1);
+		ArrayList<Point3D> pw = bmb.makeFloorSegmentEast(y1, x1);
+		ArrayList<Point3D> p = bmb.makeFloorSegmentNorth(pe, pw);
+		/*
+		assertEquals("Point [x=20.0, y=10.0, z=0.0]", p.get(0).toString());
+		assertEquals("Point [x=20.0, y=10.0, z=1.0]", p.get(1).toString());
+		assertEquals("Point [x=20.0, y=11.0, z=0.0]", p.get(2).toString());
+		assertEquals("Point [x=20.0, y=11.0, z=1.0]", p.get(3).toString());
+		assertEquals("Point [x=21.0, y=10.0, z=0.0]", p.get(4).toString());
+		assertEquals("Point [x=21.0, y=10.0, z=1.0]", p.get(5).toString());
+		assertEquals("Point [x=21.0, y=11.0, z=0.0]", p.get(6).toString());
+		assertEquals("Point [x=21.0, y=11.0, z=1.0]", p.get(7).toString());
+		*/
+	}
+	
 	/*
-	 * @Test public void testPrintFloorWithHoleOneRoom() { fail(
-	 * "Not yet implemented"); }
-	 * 
-	 * @Test public void testMakeFloorSegmentWest() { fail("Not yet implemented"
-	 * ); }
-	 * 
-	 * @Test public void testMakeFloorSegmentEast() { fail("Not yet implemented"
-	 * ); }
-	 * 
-	 * @Test public void testMakeFloorSegmentSouth() { fail(
-	 * "Not yet implemented"); }
-	 * 
-	 * @Test public void testMakeFloorSegmentNorth() { fail(
-	 * "Not yet implemented"); }
 	 * 
 	 * @Test public void testFillHoleInTheFloorOneRoom() { fail(
 	 * "Not yet implemented"); }

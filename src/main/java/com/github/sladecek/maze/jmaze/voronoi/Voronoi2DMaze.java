@@ -4,9 +4,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.logging.Logger;
 
-import be.humphreys.simplevoronoi.GraphEdge;
-import be.humphreys.simplevoronoi.Voronoi;
-
+import com.github.sladecek.maze.jmaze.geometry.Point2D;
 import com.github.sladecek.maze.jmaze.maze.IMazeStructure;
 import com.github.sladecek.maze.jmaze.maze.Maze;
 import com.github.sladecek.maze.jmaze.shapes.FloorShape;
@@ -14,6 +12,9 @@ import com.github.sladecek.maze.jmaze.shapes.IMazeShape;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape.ShapeType;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContext;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
+
+import be.humphreys.simplevoronoi.GraphEdge;
+import be.humphreys.simplevoronoi.Voronoi;
 
 public class Voronoi2DMaze extends Maze implements IMazeStructure {
 
@@ -57,7 +58,7 @@ public class Voronoi2DMaze extends Maze implements IMazeStructure {
 			int x = flr(roomCenterX[i]);
 			int y = flr(roomCenterY[i]);
 			int r = addRoom();
-			final FloorShape floor = new FloorShape(y, x, false);
+			final FloorShape floor = new FloorShape(new Point2D(x, y), false);
 			linkRoomToFloor(r, floor);
 			addShape(floor);
 		}
