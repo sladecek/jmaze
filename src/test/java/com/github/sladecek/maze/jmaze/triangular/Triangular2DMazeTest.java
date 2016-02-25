@@ -1,6 +1,7 @@
-package com.github.sladecek.maze.jmaze.hexagonal;
+package com.github.sladecek.maze.jmaze.triangular;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,24 +13,25 @@ import com.github.sladecek.maze.jmaze.shapes.FloorShape;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
 
-public class Hexagonal2DMazeTest {
+public class Triangular2DMazeTest {
 	
-	private Hexagonal2DMaze maze;
-	
+	private Triangular2DMaze maze;
+
 	@Before
 	public void setUp() throws Exception {
-		maze = new Hexagonal2DMaze(2);		
+		final int size = 3;
+		maze = new Triangular2DMaze(size);		
 	}
 
 
 	@Test
 	public void testGetSize() {
-		assertEquals(2, maze.getSize());
+		assertEquals(3, maze.getSize());
 	}
 
 	@Test
 	public void testGetRoomCount() {
-		assertEquals(6, maze.getRoomCount());
+		assertEquals(9, maze.getRoomCount());
 	}
 
 	@Test
@@ -41,7 +43,7 @@ public class Hexagonal2DMazeTest {
 	public void testGetWalls() {
 		List<Integer> list = new ArrayList<Integer>();
 		maze.getWalls(0).iterator().forEachRemaining(list::add);
-		assertEquals(2, list.size());
+		assertEquals(1, list.size());
 	}
 
 	@Test
@@ -51,14 +53,14 @@ public class Hexagonal2DMazeTest {
 
 	@Test
 	public void testGetTargetRoom() {
-		assertEquals(5, maze.getTargetRoom());
+		assertEquals(8, maze.getTargetRoom());
 	}
 
 	@Test
 	public void testGetRoomBehindWall() {
 		// rooms are numbered by columns
 		// walls counterclockwise
-		
+		/* TODO
 		assertEquals(1, maze.getRoomBehindWall(0, 0));
 		assertEquals(2, maze.getRoomBehindWall(0, 1));
 		
@@ -77,6 +79,7 @@ public class Hexagonal2DMazeTest {
 		assertEquals(4, maze.getRoomBehindWall(5, 6));
 		assertEquals(2, maze.getRoomBehindWall(5, 7));
 		assertEquals(3, maze.getRoomBehindWall(5, 8));
+		*/
 	}
 
 	// TODO wall shapes
@@ -89,14 +92,28 @@ public class Hexagonal2DMazeTest {
 				floors.add((FloorShape)s);
 			}
 		}
-		assertEquals(6, floors.size());
+		assertEquals(9, floors.size());
 		
+		/* TODO
 		assertEquals(10, floors.get(0).getX());
 		assertEquals(8, floors.get(0).getY());
 
 		assertEquals(40, floors.get(5).getX());
 		assertEquals(24, floors.get(5).getY());
+		*/
 	}
-	
 
+/*
+ * TODO
+	@Test
+	public void testGetShapes() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testGetContext() {
+		fail("Not yet implemented");
+	}
+
+*/
 }
