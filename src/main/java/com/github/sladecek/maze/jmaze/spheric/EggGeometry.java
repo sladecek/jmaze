@@ -12,26 +12,25 @@ import com.github.sladecek.maze.jmaze.geometry.SouthNorth;
  */
 public final class EggGeometry {
 
-
-	private double ellipseMajorInmm;
-	private double ellipseMinorInmm;
-	private double eggCoef;
-	
 	public EggGeometry(double ellipseMajorInmm, double ellipseMinorInmm, double eggCoef) {
 		super();
 		this.ellipseMajorInmm = ellipseMajorInmm;
 		this.ellipseMinorInmm = ellipseMinorInmm;
 		this.eggCoef = eggCoef;
 	}
+
 	public double getEllipseMajorInmm() {
 		return ellipseMajorInmm;
 	}
+
 	public double getEllipseMinorInmm() {
 		return ellipseMinorInmm;
 	}
+
 	public double getEggCoef() {
 		return eggCoef;
 	}
+
 	public double computeY(double x) {
 		final double tx = 1 / (1 - this.eggCoef * x);
 		final double aa = this.ellipseMajorInmm * this.ellipseMajorInmm;
@@ -44,10 +43,13 @@ public final class EggGeometry {
 	}
 
 	/**
-	 * Divide egg meridian into steps of required size (approximate). Keep the rest at pole.
-	 *  
-	 * @param stepInmm Required step size. 
-	 * @param hemisphere Which hemisphere to divide.
+	 * Divide egg meridian into steps of required size (approximate). Keep the
+	 * rest at pole.
+	 * 
+	 * @param stepInmm
+	 *            Required step size.
+	 * @param hemisphere
+	 *            Which hemisphere to divide.
 	 * @return Vector of x positions starting with the equator (x==0).
 	 */
 	public Vector<Double> divideMeridian(double stepInmm, SouthNorth hemisphere) {
@@ -56,7 +58,7 @@ public final class EggGeometry {
 		Vector<Double> result = new Vector<Double>();
 		double xInmm = 0;
 		result.add(xInmm);
-		
+
 		while (xInmm < this.ellipseMajorInmm - 2 * probeInmm) {
 			double angleInRad = Math.atan2(computeY(sign * (xInmm + probeInmm)) - computeY(sign * xInmm), probeInmm);
 			double dxInmm = stepInmm * Math.cos(angleInRad);
@@ -66,25 +68,18 @@ public final class EggGeometry {
 			}
 			result.add(xInmm * sign);
 		}
-		
+
 		if (result.size() < 2) {
 			// maze must have at least one layer of rooms, place it
 			// somewhere
 			final double twoThirds = 2.0 / 3.0;
 			result.add(this.ellipseMajorInmm * twoThirds * sign);
 		}
-		
+
 		return result;
 	}
-	
-	private int signOfHemispherePole(SouthNorth hemisphere) {
-		if (hemisphere  == SouthNorth.north) {
-			return  1;
-		} else {
-			return -1;
-		}
-	}
-	
+
+
 	public OrientationVector2D computeNormalVector(double x) {
 		double y = computeY(x);
 		double cc = x / Math.pow(this.ellipseMajorInmm, 2);
@@ -92,9 +87,22 @@ public final class EggGeometry {
 		double norm = Math.sqrt(cc * cc + ss * ss);
 		return new OrientationVector2D(cc / norm, ss / norm);
 	}
-	
+
 	public double computeBaseRoomSizeInmm(int equatorCellCnt) {
 		final double equatorCircumferenceInmm = ellipseMinorInmm * 2 * Math.PI;
 		return equatorCircumferenceInmm / equatorCellCnt;
 	}
+	
+	private int signOfHemispherePole(SouthNorth hemisphere) {
+		if (hemisphere == SouthNorth.north) {
+			return 1;
+		} else {
+			return -1;
+		}
+	}
+
+	private double ellipseMajorInmm;
+	private double ellipseMinorInmm;
+	private double eggCoef;
+
 }
