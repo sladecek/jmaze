@@ -24,5 +24,8 @@ public final class ShapeContainer {
 	}
 
 	private ShapeContext context;
+	
+	
+	// TODO nemel by to byt array list - najit vsechny dalsi vector
 	private Vector<IMazeShape> shapes;
 }

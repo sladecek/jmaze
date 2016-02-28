@@ -1,9 +1,14 @@
-package com.github.sladecek.maze.jmaze.triangular;
+package com.github.sladecek.maze.jmaze.voronoi;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -12,30 +17,30 @@ import com.github.sladecek.maze.jmaze.shapes.FloorShape;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
 
-public class Triangular2DMazeTest {
-	
-	private Triangular2DMaze maze;
+public class Voronoi2DMazeTest {
+
+	private Voronoi2DMaze maze;
 
 	@Before
 	public void setUp() throws Exception {
-		final int size = 3;
-		maze = new Triangular2DMaze(size);		
+		
+		int width = 10;
+		int height = 30;
+		int roomCount = 3;
+        Random r = mock(Random.class);
+        when(r.nextDouble()).thenReturn(0.5, 0.1, 0.5, 0.5, 0.5, 0.9);
+		maze = new Voronoi2DMaze(width, height, roomCount, r);
 	}
 
-
-	@Test
-	public void testGetSize() {
-		assertEquals(3, maze.getSize());
-	}
 
 	@Test
 	public void testGetRoomCount() {
-		assertEquals(9, maze.getRoomCount());
+		assertEquals(3, maze.getRoomCount());
 	}
 
 	@Test
 	public void testGetWallCount() {
-		assertEquals(9, maze.getWallCount());
+		assertEquals(2, maze.getWallCount());
 	}
 
 	@Test
@@ -52,7 +57,7 @@ public class Triangular2DMazeTest {
 
 	@Test
 	public void testGetTargetRoom() {
-		assertEquals(8, maze.getTargetRoom());
+		assertEquals(2, maze.getTargetRoom());
 	}
 
 	@Test
@@ -91,7 +96,7 @@ public class Triangular2DMazeTest {
 				floors.add((FloorShape)s);
 			}
 		}
-		assertEquals(9, floors.size());
+		assertEquals(3, floors.size());
 		
 		/* TODO
 		assertEquals(10, floors.get(0).getX());

@@ -1,5 +1,6 @@
 package com.github.sladecek.maze.jmaze.voronoi;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.logging.Logger;
@@ -34,7 +35,7 @@ public class Voronoi2DMaze extends Maze implements IMazeStructure {
 	}
 
 	private void buildMaze() {
-	    final int height = 2*width;
+// TODO smazat	    final int height = 2*width;
         final boolean isPolar = false;
         setContext(new ShapeContext(isPolar, height, width, 10, 0, 50));
 
@@ -63,13 +64,15 @@ public class Voronoi2DMaze extends Maze implements IMazeStructure {
 			addShape(floor);
 		}
 
-	// TODO smazat	HashSet<Long> set = new HashSet();
+	// TODO smazat	
+		HashSet<Long> set = new HashSet();
 		Voronoi v = new Voronoi(0.00001f);
 		List<GraphEdge> allEdges = v.generateVoronoi(roomCenterX, roomCenterY,
 				0, height - 1, 0, width - 1);
 
 		for (GraphEdge ge : allEdges) {
 		    /*
+		     * TODO smazat - older simplevoronoi */
 			Long k = ge.site1 * 1000000l + ge.site2;
 			if (ge.site1 < ge.site2) {
 				k = ge.site2 * 1000000l + ge.site1;
@@ -79,7 +82,7 @@ public class Voronoi2DMaze extends Maze implements IMazeStructure {
 			}
 			
 			set.add(k);
-*/
+/**/
 			int id = addWall(ge.site1, ge.site2);
 			LOGGER.info("voronoi edge room1=" + ge.site1 + " room2=" + ge.site2
 					+ " x1=" + ge.x1 + " y1=" + ge.y1 + " x2=" + ge.x2 + " y2="
