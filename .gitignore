@@ -17,3 +17,5 @@ maze.log
 /maze-hexagonal.pdf
 /maze-voronoi.pdf
 /#maze-hexagonal.svg#
+/.externalToolBuilders/net.sf.eclipsecs.core.CheckstyleBuilder.launch
+/.externalToolBuilders/org.eclipse.m2e.core.maven2Builder.launch
