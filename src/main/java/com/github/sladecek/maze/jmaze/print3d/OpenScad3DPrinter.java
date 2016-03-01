@@ -4,13 +4,15 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.logging.Logger;
 
+import com.github.sladecek.maze.jmaze.util.MazeGenerationException;
+
 /**
  * Save maze blocks in open scad file format.
  */
 public class OpenScad3DPrinter implements IMaze3DPrinter {
 
     public final void printBlocks(final IBlockMaker blockMaker,
-            final OutputStream stream) {
+            final OutputStream stream) throws MazeGenerationException {
         blockMaker.makeBlocks();
         try (OpenScadComposer scad = new OpenScadComposer(stream)) {
 
@@ -26,7 +28,7 @@ public class OpenScad3DPrinter implements IMaze3DPrinter {
             scad.closeUnion();
 
         } catch (IOException ioe) {
-            LOG.severe("OpenScad3DPrinter failed " + ioe.getMessage());
+            throw new MazeGenerationException("OpenScad3DPrinter failed", ioe);
         }
     }
 

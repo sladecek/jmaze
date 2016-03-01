@@ -19,85 +19,83 @@ import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
 
 /**
- * Egg maze - create 3D blocks from 2D shapes. 
+ * Egg maze - create 3D blocks from 2D shapes.
  */
 public final class EggBlockMaker extends BlockMakerBase implements IBlockMaker {
 
-	public EggBlockMaker(ShapeContainer shapes,
-			Maze3DSizes sizes, IPrintStyle colors, final EggGeometry egg,
-			final int equatorCellCnt) {
-		super(shapes, sizes, colors, egg
-				.computeBaseRoomSizeInmm(equatorCellCnt));
-		this.egg = egg;
-	}
+    public EggBlockMaker(EggMaze maze, ShapeContainer shapes, Maze3DSizes sizes, IPrintStyle colors,
+            final EggGeometry egg, final int equatorCellCnt) {
+        super(shapes, sizes, colors, egg.computeBaseRoomSizeInmm(equatorCellCnt));
+        this.egg = egg;
+        this.maze = maze;
+    }
 
-	@Override
-	public void makeBlocks() {
-		maze3dMapper = new Egg3dMapper(egg, (EggMaze) maze);
-		prepareShapes(maze);
-		printFloors();
-		printWalls();
-		printMarks();
+    @Override
+    public void makeBlocks() {
+        maze3dMapper = new Egg3dMapper(egg, maze);
+        prepareShapes(maze);
+        printFloors();
+        printWalls();
+        printMarks();
 
-	}
+    }
 
-	private void printMarks() {
-		for (MarkShape ms : marks) {
-			Color c = new Color(0, 120, 120, 120);
-			if (ms.getShapeType() == ShapeType.startRoom) {
-				c = new Color(120, 0, 0, 120);
-			} else if (ms.getShapeType() == ShapeType.targetRoom) {
-				c = new Color(0, 120, 0, 120);
-			}
-			printMark(ms.getY(), ms.getX(), c);
-		}
+    private void printMarks() {
+        for (MarkShape ms : marks) {
+            Color c = new Color(0, 120, 120, 120);
+            if (ms.getShapeType() == ShapeType.startRoom) {
+                c = new Color(120, 0, 0, 120);
+            } else if (ms.getShapeType() == ShapeType.targetRoom) {
+                c = new Color(0, 120, 0, 120);
+            }
+            printMark(ms.getY(), ms.getX(), c);
+        }
 
-	}
+    }
 
-	protected void prepareShapes(final Maze maze) {
+    protected void prepareShapes(final Maze maze) {
 
-		walls = new ArrayList<WallShape>();
-		floor = new ArrayList<FloorShape>();
-		marks = new ArrayList<MarkShape>();
-		for (IMazeShape shape : shapes.getShapes()) {
-			// TODO neda se to udelat elegantneji ?
-			if (shape.getShapeType() == ShapeType.nonHole) {
-				floor.add((FloorShape) shape);
-			} else if (shape.getShapeType() == ShapeType.innerWall) {
-				walls.add((WallShape) shape);
-			} else {
-				ShapeType sp = shape.getShapeType();
-				if (sp == ShapeType.startRoom || sp == ShapeType.targetRoom
-						|| sp == ShapeType.solution) {
-					marks.add((MarkShape) shape);
-				}
-			}
-		}
-	}
+        walls = new ArrayList<WallShape>();
+        floor = new ArrayList<FloorShape>();
+        marks = new ArrayList<MarkShape>();
+        for (IMazeShape shape : shapes.getShapes()) {
+            // TODO neda se to udelat elegantneji ?
+            if (shape.getShapeType() == ShapeType.nonHole) {
+                floor.add((FloorShape) shape);
+            } else if (shape.getShapeType() == ShapeType.innerWall) {
+                walls.add((WallShape) shape);
+            } else {
+                ShapeType sp = shape.getShapeType();
+                if (sp == ShapeType.startRoom || sp == ShapeType.targetRoom || sp == ShapeType.solution) {
+                    marks.add((MarkShape) shape);
+                }
+            }
+        }
+    }
 
-	private void printFloors() {
-		for (FloorShape hs : floor) {
-			LOGGER.log(Level.INFO, hs.toString());
-			LOGGER.log(Level.INFO, "room");
-			printFloorWithHoleOneRoom(hs.getY(), hs.getX());
-			LOGGER.log(Level.INFO, "hole");
-			fillHoleInTheFloorOneRoom(hs);
-			LOGGER.log(Level.INFO, "end");
-		}
-	}
+    private void printFloors() {
+        for (FloorShape hs : floor) {
+            LOGGER.log(Level.INFO, hs.toString());
+            LOGGER.log(Level.INFO, "room");
+            printFloorWithHoleOneRoom(hs.getY(), hs.getX());
+            LOGGER.log(Level.INFO, "hole");
+            fillHoleInTheFloorOneRoom(hs);
+            LOGGER.log(Level.INFO, "end");
+        }
+    }
 
-	private void printWalls() {
-		final double wt = sizes.getInnerWallToCellRatio() / 2;
-		for (WallShape wall : walls) {
-			printWallElements(wt, wall);
-		}
-	}
+    private void printWalls() {
+        final double wt = sizes.getInnerWallToCellRatio() / 2;
+        for (WallShape wall : walls) {
+            printWallElements(wt, wall);
+        }
+    }
 
-	private static final Logger LOGGER =  Logger.getLogger("maze.jmaze");
-	private EggGeometry egg;
-	private EggMaze maze;
-	private ArrayList<WallShape> walls;
-	private ArrayList<FloorShape> floor;
-	private ArrayList<MarkShape> marks;
+    private static final Logger LOGGER = Logger.getLogger("maze.jmaze");
+    private EggGeometry egg;
+    private EggMaze maze;
+    private ArrayList<WallShape> walls;
+    private ArrayList<FloorShape> floor;
+    private ArrayList<MarkShape> marks;
 
 }

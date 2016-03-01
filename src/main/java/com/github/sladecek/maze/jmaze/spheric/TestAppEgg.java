@@ -18,6 +18,7 @@ import com.github.sladecek.maze.jmaze.print3d.ThreeJs3DPrinter;
 import com.github.sladecek.maze.jmaze.printstyle.DefaultPrintStyle;
 import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
+import com.github.sladecek.maze.jmaze.util.MazeGenerationException;
 
 final class TestAppEgg {
     private TestAppEgg() {
@@ -53,7 +54,7 @@ final class TestAppEgg {
 
             ShapeContainer shapes = maze.applyRealization(real);
 
-            EggBlockMaker maker = new EggBlockMaker(shapes, sizes, colors, egg,
+            EggBlockMaker maker = new EggBlockMaker(maze, shapes, sizes, colors, egg,
                     equatorCells);
 
             final boolean printInJs = true;
@@ -67,7 +68,7 @@ final class TestAppEgg {
                 new OpenScad3DPrinter().printBlocks(maker, f);
             }
 
-        } catch (SecurityException | IOException e) {
+        } catch (SecurityException | IOException | MazeGenerationException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }

@@ -13,6 +13,7 @@ import com.github.sladecek.maze.jmaze.print3d.ThreeJs3DPrinter;
 import com.github.sladecek.maze.jmaze.printstyle.DefaultPrintStyle;
 import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
+import com.github.sladecek.maze.jmaze.util.MazeGenerationException;
 
 /***
  * Command line application generating a Moebius maze into OpenScad file.
@@ -52,7 +53,7 @@ public final class TestAppMoebius {
 				new OpenScad3DPrinter().printBlocks(maker, f);
 			}
 
-		} catch (FileNotFoundException e) {
+		} catch (FileNotFoundException | MazeGenerationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

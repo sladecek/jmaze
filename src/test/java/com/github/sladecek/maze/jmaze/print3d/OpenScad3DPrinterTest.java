@@ -54,7 +54,7 @@ public class OpenScad3DPrinterTest {
 			verify(bm, atLeast(1)).getBlocks();
 			String result = baos.toString().replaceAll("\\s+", " ");
 			assertEquals(expected, result);
-		} catch (IOException ioe) {
+		} catch (Exception ioe) {
 			fail(ioe.getMessage());
 		}
 
