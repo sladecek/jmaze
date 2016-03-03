@@ -15,11 +15,11 @@ public class EggMazeTest {
 	{
 		SouthNorth hemisphere = SouthNorth.north;
 		Vector<Integer> layerRoomCnt = generateTestHemisphere(hemisphere, 16);
-		assertEquals(4, layerRoomCnt.size());
+		assertEquals(3, layerRoomCnt.size());
 		assertEquals(16, (int)layerRoomCnt.get(0));
 		assertEquals(16, (int)layerRoomCnt.get(1));
-		assertEquals(8, (int)layerRoomCnt.get(2));
-		assertEquals(8, (int)layerRoomCnt.get(3));
+		assertEquals(16, (int)layerRoomCnt.get(2));
+
 
 	}
 
@@ -28,11 +28,10 @@ public class EggMazeTest {
 	{
 		SouthNorth hemisphere = SouthNorth.south;
 		Vector<Integer> layerRoomCnt = generateTestHemisphere(hemisphere, 16);
-		assertEquals(4, layerRoomCnt.size());
+		assertEquals(3, layerRoomCnt.size());
 		assertEquals(16, (int)layerRoomCnt.get(0));
 		assertEquals(16, (int)layerRoomCnt.get(1));
 		assertEquals(16, (int)layerRoomCnt.get(2));
-		assertEquals(16, (int)layerRoomCnt.get(3));
 
 	}
 	

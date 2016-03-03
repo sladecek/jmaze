@@ -50,7 +50,7 @@ public class EggGeometryTest {
 		EggGeometry e = new EggGeometry(4, 3, 0.2);
 		final double xm = 2;
 		final double ym = e.computeY(xm);
-		assertEquals(1, xm*xm/(4*4)+ym*ym/(3*3)*1/(1-0.2*xm) , delta);
+		assertEquals(1, xm*xm/(4*4)+ym*ym/(3*3)*1/(1-0.2*xm/4) , delta);
 	}
 	
 
@@ -64,9 +64,9 @@ public class EggGeometryTest {
 		
 			Vector<Double> v = e.divideMeridian(b, sn);
 			if (sn == SouthNorth.south) {
-				assertEquals(56,  v.size());
+				assertEquals(54,  v.size());
 			} else {
-				assertEquals(51,  v.size());
+				assertEquals(52,  v.size());
 			}			
 			
 			

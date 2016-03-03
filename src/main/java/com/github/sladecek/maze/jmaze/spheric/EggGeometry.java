@@ -32,7 +32,7 @@ public final class EggGeometry {
 	}
 
 	public double computeY(double x) {
-		final double tx = 1 / (1 - this.eggCoef * x);
+		final double tx = 1 / (1 - this.eggCoef * x/this.ellipseMajorInmm);
 		final double aa = this.ellipseMajorInmm * this.ellipseMajorInmm;
 		final double bb = this.ellipseMinorInmm * this.ellipseMinorInmm;
 		final double yy = (1 - x * x / aa) * bb / tx;

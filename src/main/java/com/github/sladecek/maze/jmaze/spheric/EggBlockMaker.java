@@ -5,7 +5,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.github.sladecek.maze.jmaze.maze.Maze;
-import com.github.sladecek.maze.jmaze.print3d.Block;
 import com.github.sladecek.maze.jmaze.print3d.BlockMakerBase;
 import com.github.sladecek.maze.jmaze.print3d.IBlockMaker;
 import com.github.sladecek.maze.jmaze.print3d.Maze3DSizes;
@@ -37,7 +36,6 @@ public final class EggBlockMaker extends BlockMakerBase implements IBlockMaker {
         printFloors();
         printWalls();
         printMarks();
-
     }
 
     private void printMarks() {
@@ -50,11 +48,9 @@ public final class EggBlockMaker extends BlockMakerBase implements IBlockMaker {
             }
             printMark(ms.getY(), ms.getX(), c);
         }
-
     }
 
     protected void prepareShapes(final Maze maze) {
-
         walls = new ArrayList<WallShape>();
         floor = new ArrayList<FloorShape>();
         marks = new ArrayList<MarkShape>();

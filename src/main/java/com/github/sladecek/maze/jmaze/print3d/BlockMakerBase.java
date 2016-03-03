@@ -93,7 +93,7 @@ public abstract class BlockMakerBase {
                 style.getBaseColor());
 
         ArrayList<Point3D> pw = makeFloorSegmentWest(cellY, cellX);
-        printPolyhedron(pw, "base w" + cellX + " " + cellY,
+        printPolyhedron(pw, "base w " + cellX + " " + cellY,
                 style.getBaseColor());
 
         ArrayList<Point3D> pn = makeFloorSegmentNorth(pe, pw);

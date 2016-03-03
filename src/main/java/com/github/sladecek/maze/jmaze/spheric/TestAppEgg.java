@@ -34,7 +34,7 @@ final class TestAppEgg {
             LOG.addHandler(fh);
             fh.setFormatter(new SimpleFormatter());
 
-            final int equatorCells = 32; // must be power of 2
+            final int equatorCells = 4; // must be power of 2
             EggGeometry egg = new EggGeometry(10, 10, 0.2);
 
             EggMaze maze = new EggMaze(egg, equatorCells);
