@@ -11,7 +11,7 @@ import com.github.sladecek.maze.jmaze.util.MazeGenerationException;
  */
 public class OpenScad3DPrinter implements IMaze3DPrinter {
 
-    public final void printBlocks(final IBlockMaker blockMaker,
+    public final void printBlocks(final IBlockMaker blockMaker, boolean showSolution,
             final OutputStream stream) throws MazeGenerationException {
         blockMaker.makeBlocks();
         try (OpenScadComposer scad = new OpenScadComposer(stream)) {

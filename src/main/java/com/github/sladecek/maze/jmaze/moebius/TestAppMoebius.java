@@ -41,16 +41,17 @@ public final class TestAppMoebius {
 
 		final boolean printInJs = true;
 		final boolean printInScad = true;
+		final boolean showSolution = true;
 
 		try {
 			if (printInJs) {
 				FileOutputStream f;
 				f = new FileOutputStream("maze-moebius.js");
-				new ThreeJs3DPrinter().printBlocks(maker, f);
+				new ThreeJs3DPrinter().printBlocks(maker, showSolution, f);
 			}
 			if (printInScad) {
 				FileOutputStream f = new FileOutputStream("maze-moebius.scad");
-				new OpenScad3DPrinter().printBlocks(maker, f);
+				new OpenScad3DPrinter().printBlocks(maker, showSolution, f);
 			}
 
 		} catch (FileNotFoundException | MazeGenerationException e) {

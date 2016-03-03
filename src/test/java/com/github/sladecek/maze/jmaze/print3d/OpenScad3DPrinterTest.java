@@ -49,7 +49,8 @@ public class OpenScad3DPrinterTest {
 		when(bm.getBlocks()).thenReturn(inputBlocks);
 		OpenScad3DPrinter p = new OpenScad3DPrinter();
 		try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
-			p.printBlocks(bm, baos);
+		     final boolean showSolution = true;
+		    p.printBlocks(bm, showSolution, baos);
 			verify(bm).makeBlocks();
 			verify(bm, atLeast(1)).getBlocks();
 			String result = baos.toString().replaceAll("\\s+", " ");

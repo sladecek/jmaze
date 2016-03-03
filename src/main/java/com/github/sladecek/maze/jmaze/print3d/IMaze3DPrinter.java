@@ -9,6 +9,6 @@ import com.github.sladecek.maze.jmaze.util.MazeGenerationException;
  */
 public interface IMaze3DPrinter {
 
-    void printBlocks(IBlockMaker blockMaker, OutputStream stream) throws MazeGenerationException;
+    void printBlocks(IBlockMaker blockMaker, boolean showSolution, OutputStream stream) throws MazeGenerationException;
 
 }

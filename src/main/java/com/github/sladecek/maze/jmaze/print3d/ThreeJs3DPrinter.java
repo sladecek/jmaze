@@ -7,12 +7,12 @@ import java.util.logging.Logger;
 public class ThreeJs3DPrinter implements IMaze3DPrinter {
 
     @Override
-    public final void printBlocks(final IBlockMaker blockMaker,
+    public final void printBlocks(final IBlockMaker blockMaker, boolean showSolution,
             final OutputStream stream) {
         blockMaker.makeBlocks();
         try (ThreeJsComposer tjs = new ThreeJsComposer(stream)) {
             printPureBlocks(tjs, blockMaker);
-            printMarks(tjs, blockMaker);
+            printMarks(tjs, blockMaker, showSolution);
             tjs.close();
         } catch (IOException ioe) {
         	LOG.severe("OpenScad3DPrinter failed " + ioe.getMessage());
@@ -33,14 +33,16 @@ public class ThreeJs3DPrinter implements IMaze3DPrinter {
         tjs.closeList(insertComma);
     }
 
-    private void printMarks(ThreeJsComposer tjs, final IBlockMaker blockMaker)
+    private void printMarks(ThreeJsComposer tjs, final IBlockMaker blockMaker, boolean showSolution)
             throws IOException {
         tjs.beginList("marks");
-        for (Block b : blockMaker.getBlocks()) {
-            if (b.isMark()) {
-                assert b.getPolyhedron().size() == 1 : "mark blocks must have exactly one point";
-                tjs.printMark(b.getPolyhedron().get(0), b.getComment(),
-                        b.getColor());
+        if (showSolution) {
+            for (Block b : blockMaker.getBlocks()) {
+                if (b.isMark()) {
+                    assert b.getPolyhedron().size() == 1 : "mark blocks must have exactly one point";
+                    tjs.printMark(b.getPolyhedron().get(0), b.getComment(),
+                            b.getColor());
+                }
             }
         }
         final boolean insertComma = false;

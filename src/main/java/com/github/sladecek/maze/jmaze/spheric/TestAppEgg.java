@@ -59,13 +59,15 @@ final class TestAppEgg {
 
             final boolean printInJs = true;
             final boolean printInScad = true;
+            final boolean showSolution = true;
+            
             if (printInJs) {
                 FileOutputStream f = new FileOutputStream("maze-egg.js");
-                new ThreeJs3DPrinter().printBlocks(maker, f);
+                new ThreeJs3DPrinter().printBlocks(maker, showSolution, f);
             }
             if (printInScad) {
                 FileOutputStream f = new FileOutputStream("maze-egg.scad");
-                new OpenScad3DPrinter().printBlocks(maker, f);
+                new OpenScad3DPrinter().printBlocks(maker, showSolution,  f);
             }
 
         } catch (SecurityException | IOException | MazeGenerationException e) {
