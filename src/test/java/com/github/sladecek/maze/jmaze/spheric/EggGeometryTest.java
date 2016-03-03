@@ -91,8 +91,6 @@ public class EggGeometryTest {
 			
 			// first distance must be on equator
 			assertEquals(0, v.elementAt(0), delta);
-			
-			
 		}
 	}
 

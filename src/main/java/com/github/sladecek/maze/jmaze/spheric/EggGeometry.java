@@ -104,5 +104,4 @@ public final class EggGeometry {
 	private double ellipseMajorInmm;
 	private double ellipseMinorInmm;
 	private double eggCoef;
-
 }
