@@ -31,19 +31,18 @@ public final class MoebiusStripGeometry {
 		return result;
 	}
 
-	public double getCircumferenceInmm() {
+    protected double computeTheta(double distanceAlongEdgeInmm) {
+        return 4 * Math.PI * distanceAlongEdgeInmm / circumferenceInmm;
+    }
+
+    public double getCircumferenceInmm() {
 		return circumferenceInmm;
 	}
 
 	public double getRadiusInmm() {
 		return radiusInmm;
 	}
-
-	private double computeTheta(double distanceAlongEdgeInmm) {
-		return 4 * Math.PI * distanceAlongEdgeInmm / circumferenceInmm;
-	}
 	
 	private final double circumferenceInmm;
-	private final double radiusInmm;
-	
+	private final double radiusInmm;	
 }
