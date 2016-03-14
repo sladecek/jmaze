@@ -71,7 +71,6 @@ final class TestAppEgg {
             }
 
         } catch (SecurityException | IOException | MazeGenerationException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }

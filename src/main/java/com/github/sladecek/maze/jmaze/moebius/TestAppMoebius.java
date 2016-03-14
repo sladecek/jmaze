@@ -55,7 +55,6 @@ public final class TestAppMoebius {
 			}
 
 		} catch (FileNotFoundException | MazeGenerationException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

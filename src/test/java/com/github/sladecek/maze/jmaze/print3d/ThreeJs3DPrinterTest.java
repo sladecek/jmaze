@@ -17,6 +17,7 @@ import org.junit.Test;
 import com.github.sladecek.maze.jmaze.TestUtilities;
 import com.github.sladecek.maze.jmaze.geometry.Point3D;
 import com.github.sladecek.maze.jmaze.printstyle.Color;
+import com.github.sladecek.maze.jmaze.util.MazeGenerationException;
 
 public class ThreeJs3DPrinterTest {
 
@@ -57,7 +58,7 @@ public class ThreeJs3DPrinterTest {
 			verify(bm, atLeast(1)).getBlocks();
 			String result = baos.toString().replaceAll("\\s+", " ");
 			assertEquals(expected, result);
-		} catch (IOException ioe) {
+		} catch (IOException | MazeGenerationException ioe ) {
 			fail(ioe.getMessage());
 		}
 

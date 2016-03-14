@@ -4,18 +4,20 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.logging.Logger;
 
+import com.github.sladecek.maze.jmaze.util.MazeGenerationException;
+
 public class ThreeJs3DPrinter implements IMaze3DPrinter {
 
     @Override
     public final void printBlocks(final IBlockMaker blockMaker, boolean showSolution,
-            final OutputStream stream) {
+            final OutputStream stream) throws MazeGenerationException {
         blockMaker.makeBlocks();
         try (ThreeJsComposer tjs = new ThreeJsComposer(stream)) {
             printPureBlocks(tjs, blockMaker);
             printMarks(tjs, blockMaker, showSolution);
-            tjs.close();
+            // TODO smazat tjs.close();
         } catch (IOException ioe) {
-        	LOG.severe("OpenScad3DPrinter failed " + ioe.getMessage());
+            throw new MazeGenerationException("printBlocsk failed", ioe);
         }
     }
 

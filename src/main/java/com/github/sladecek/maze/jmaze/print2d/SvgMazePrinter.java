@@ -60,7 +60,7 @@ public final class SvgMazePrinter  {
             }
 
         } catch ( TransformerException | TranscoderException e) {
-            throw new MazeGenerationException("Printing SVG",e);
+            throw new MazeGenerationException("Printing SVG failed",e);
         }
     }
 
