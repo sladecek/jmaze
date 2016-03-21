@@ -59,7 +59,7 @@ public final class TestAppMoebius {
 			if (printInJs) {
 				FileOutputStream f;
 				f = new FileOutputStream("maze-moebius.js");
-				new ThreeJs3DPrinter().printBlocks(maker, showSolution, f);
+				new ThreeJs3DPrinter(colors).printBlocks(maker, showSolution, f);
 			}
 			if (printInScad) {
 				FileOutputStream f = new FileOutputStream("maze-moebius.scad");

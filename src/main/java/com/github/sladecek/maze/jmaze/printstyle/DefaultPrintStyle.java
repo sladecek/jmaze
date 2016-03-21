@@ -48,6 +48,22 @@ public final class DefaultPrintStyle implements IPrintStyle {
 		return debugFloorColor;
 	}
 
+	public Color getThreeJsClearColor() {
+		return threeJsClearColor;
+	}
+
+	public Color getThreeJsMeshColor() {
+		return threeJsMeshColor;
+	}
+
+	public Color getThreeJsAmbientLightColor() {
+		return threeJsAmbientLightColor;
+	}
+
+	public Color getThreeJsPointLightColor() {
+		return threeJsPointLightColor;
+	}
+
 	@Override
 	public int getInnerWallWidth() {
 		return 1;
@@ -70,7 +86,7 @@ public final class DefaultPrintStyle implements IPrintStyle {
 	}
 
 	@Override
-	public int getStartTargetMarkWidth() {
+	public int getStartTargetMarkWidth() {		
 		return 25;
 	}
 
@@ -85,6 +101,9 @@ public final class DefaultPrintStyle implements IPrintStyle {
 	private final Color holeColor = new Color("777777");
 	private final Color debugWallColor = new Color("ff0000");
 	private final Color debugFloorColor = new Color("00ff00");
-
+	private final Color threeJsClearColor = new Color("eeeeee");
+	private final Color threeJsMeshColor = new Color("33ff33");
+	private final Color threeJsAmbientLightColor = new Color("222222");
+	private final Color threeJsPointLightColor = new Color("777777");
 
 }

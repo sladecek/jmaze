@@ -17,20 +17,18 @@ import org.junit.Test;
 import com.github.sladecek.maze.jmaze.TestUtilities;
 import com.github.sladecek.maze.jmaze.geometry.Point3D;
 import com.github.sladecek.maze.jmaze.printstyle.Color;
+import com.github.sladecek.maze.jmaze.printstyle.DefaultPrintStyle;
+import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
 import com.github.sladecek.maze.jmaze.util.MazeGenerationException;
 
 public class ThreeJs3DPrinterTest {
 
 	@Test
 	public void testPrintBlocks() {
-		String expected = "{ \"blocks\":[ " 
-				+ "["
-				+ " [ 0.0,1.0,2.0] , [ 2.0,1.0,2.0] , [ 4.0,1.0,2.0] ,"
-				+ " [ 6.0,1.0,2.0] , [ 8.0,1.0,2.0] , [ 10.0,1.0,2.0] ,"
-				+ " [ 12.0,1.0,2.0] , [ 14.0,1.0,2.0] ] ,"
+		String expected = "{ \"blocks\":[ " + "[" + " [ 0.0,1.0,2.0] , [ 2.0,1.0,2.0] , [ 4.0,1.0,2.0] ,"
+				+ " [ 6.0,1.0,2.0] , [ 8.0,1.0,2.0] , [ 10.0,1.0,2.0] ," + " [ 12.0,1.0,2.0] , [ 14.0,1.0,2.0] ] ,"
 				+ " [ [ 3.0,4.0,5.0] , [ 5.0,4.0,5.0] , [ 7.0,4.0,5.0] ,"
-				+ " [ 9.0,4.0,5.0] , [ 11.0,4.0,5.0] , [ 13.0,4.0,5.0] ,"
-				+ " [ 15.0,4.0,5.0] , [ 17.0,4.0,5.0] ] ] ,"
+				+ " [ 9.0,4.0,5.0] , [ 11.0,4.0,5.0] , [ 13.0,4.0,5.0] ," + " [ 15.0,4.0,5.0] , [ 17.0,4.0,5.0] ] ] ,"
 				+ " \"marks\":[ [ 6.0,7.0,8.0] ] } ";
 
 		Color color = new Color("010203");
@@ -49,16 +47,18 @@ public class ThreeJs3DPrinterTest {
 
 		IBlockMaker bm = mock(IBlockMaker.class);
 
+		IPrintStyle printStyle = new DefaultPrintStyle();
+
 		when(bm.getBlocks()).thenReturn(inputBlocks);
-		ThreeJs3DPrinter p = new ThreeJs3DPrinter();
+		ThreeJs3DPrinter p = new ThreeJs3DPrinter(printStyle);
 		try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
-		     final boolean showSolution = true;
-		    p.printBlocks(bm, showSolution, baos);
+			final boolean showSolution = true;
+			p.printBlocks(bm, showSolution, baos);
 			verify(bm).makeBlocks();
 			verify(bm, atLeast(1)).getBlocks();
 			String result = baos.toString().replaceAll("\\s+", " ");
 			assertEquals(expected, result);
-		} catch (IOException | MazeGenerationException ioe ) {
+		} catch (IOException | MazeGenerationException ioe) {
 			fail(ioe.getMessage());
 		}
 

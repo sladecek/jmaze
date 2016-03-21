@@ -23,9 +23,21 @@ public class ColorTest {
 		assertEquals("Color [r=1, g=129, b=255, a=0]", c.toString());
 	}
 
-	@Test(expected=IllegalArgumentException.class)
+	@Test
+	public void testToSvg() {
+		Color c = new Color("0181ff");
+		assertEquals("rgb(1,129,255)", c.toSvg());
+	}
+
+	@Test
+	public void testToThreeJs() {
+		Color c = new Color("0181ff");
+		assertEquals("#0181ff", c.toThreeJs());
+	}
+
+	@Test(expected = IllegalArgumentException.class)
 	public final void testColor_invalid() {
 		new Color("01234");
 	}
-	
+
 }

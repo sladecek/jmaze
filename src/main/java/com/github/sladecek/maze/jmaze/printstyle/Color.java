@@ -54,6 +54,10 @@ public final class Color {
 		return "rgb("+r+","+g+","+b+")";
 	}
 
+	public String toThreeJs() {
+		return String.format("#%02x%02x%02x", r, g, b);
+	}
+
 	private int parseHex(final String s, final int pair) {
 		if (s.length() < (pair + 1) * 2) {
 			throw new IllegalArgumentException("String '" + s 

@@ -40,6 +40,13 @@ public final class ThreeJsComposer implements java.lang.AutoCloseable {
         out.close();
         stream.close();
     }
+    
+    public void printColor(String name, Color value, boolean insertComma) throws IOException {
+        out.write("\"" + name + "\": \"" + value.toThreeJs() + "\"\n");
+        if (insertComma) {
+            out.write(",\n");
+        }          	
+    }
 
     public ThreeJsComposer(final String fileName) throws IOException {
         stream = new FileOutputStream(fileName);

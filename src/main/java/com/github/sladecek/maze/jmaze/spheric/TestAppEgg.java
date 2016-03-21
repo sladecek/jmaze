@@ -63,7 +63,7 @@ final class TestAppEgg {
             
             if (printInJs) {
                 FileOutputStream f = new FileOutputStream("maze-egg.js");
-                new ThreeJs3DPrinter().printBlocks(maker, showSolution, f);
+                new ThreeJs3DPrinter(colors).printBlocks(maker, showSolution, f);
             }
             if (printInScad) {
                 FileOutputStream f = new FileOutputStream("maze-egg.scad");

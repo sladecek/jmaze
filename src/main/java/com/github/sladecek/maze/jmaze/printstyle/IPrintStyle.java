@@ -12,6 +12,10 @@ public interface IPrintStyle {
 	Color getHoleColor();
 	Color getDebugWallColor();
 	Color getDebugFloorColor();
+	Color getThreeJsClearColor();
+	Color getThreeJsMeshColor();
+	Color getThreeJsAmbientLightColor();
+	Color getThreeJsPointLightColor();
 	int getInnerWallWidth();
 	int getOuterWallWidth();
 	int getSolutionWallWidth();

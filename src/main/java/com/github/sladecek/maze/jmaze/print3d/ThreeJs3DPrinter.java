@@ -4,10 +4,16 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.logging.Logger;
 
+import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
 import com.github.sladecek.maze.jmaze.util.MazeGenerationException;
 
 public class ThreeJs3DPrinter implements IMaze3DPrinter {
 
+    public ThreeJs3DPrinter(IPrintStyle printStyle) {
+		super();
+		this.printStyle = printStyle;
+	}
+	
     @Override
     public final void printBlocks(final IBlockMaker blockMaker, boolean showSolution,
             final OutputStream stream) throws MazeGenerationException {
@@ -15,7 +21,7 @@ public class ThreeJs3DPrinter implements IMaze3DPrinter {
         try (ThreeJsComposer tjs = new ThreeJsComposer(stream)) {
             printPureBlocks(tjs, blockMaker);
             printMarks(tjs, blockMaker, showSolution);
-            // TODO smazat tjs.close();
+            printColors(tjs);
         } catch (IOException ioe) {
             throw new MazeGenerationException("printBlocsk failed", ioe);
         }
@@ -47,9 +53,21 @@ public class ThreeJs3DPrinter implements IMaze3DPrinter {
                 }
             }
         }
-        final boolean insertComma = false;
+        final boolean insertComma = true;
         tjs.closeList(insertComma);
     }
 
-    private static final Logger LOG = Logger.getLogger("maze.jmaze");
+    private void printColors(ThreeJsComposer tjs)
+            throws IOException {
+        
+        tjs.printColor("clearColor", printStyle.getThreeJsClearColor(), true);
+        tjs.printColor("meshColor", printStyle.getThreeJsMeshColor(), true);
+        tjs.printColor("ambientLightColor", printStyle.getThreeJsAmbientLightColor(), true);
+        tjs.printColor("pointLightColor", printStyle.getThreeJsPointLightColor(), false);
+    }
+
+    
+    private IPrintStyle printStyle;
+    
+	private static final Logger LOG = Logger.getLogger("maze.jmaze");
 }
