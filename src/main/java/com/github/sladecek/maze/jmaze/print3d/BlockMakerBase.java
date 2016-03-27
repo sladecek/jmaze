@@ -87,6 +87,27 @@ public abstract class BlockMakerBase {
 
     }
 
+    public final void printFloorWithoutHole(int cellY, int cellX) {
+
+        ArrayList<Point3D> po = new ArrayList<Point3D>();
+        for (SouthNorth sn : SouthNorth.values()) {
+            for (UpDown ud : UpDown.values()) {
+                Point3D p = getFloorPoint(cellY, cellX, ud, sn, EastWest.east);
+                po.add(p);
+            }
+        }
+        for (SouthNorth sn : SouthNorth.values()) {
+            for (UpDown ud : UpDown.values()) {
+                Point3D p = getFloorPoint(cellY, cellX, ud, sn, EastWest.west);
+                po.add(p);
+            }
+        }
+
+        printPolyhedron(po, "whole floor" + cellX + " " + cellY,
+                style.getBaseColor());
+    }
+
+    
     public final void printFloorWithHoleOneRoom(int cellY, int cellX) {
         ArrayList<Point3D> pe = makeFloorSegmentEast(cellY, cellX);
         printPolyhedron(pe, "base e " + cellX + " " + cellY,

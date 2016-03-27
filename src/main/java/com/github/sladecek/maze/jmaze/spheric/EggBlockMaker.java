@@ -73,9 +73,8 @@ public final class EggBlockMaker extends BlockMakerBase implements IBlockMaker {
         for (FloorShape hs : floor) {
             LOGGER.log(Level.INFO, hs.toString());
             LOGGER.log(Level.INFO, "room");
-            printFloorWithHoleOneRoom(hs.getY(), hs.getX());
+            printFloorWithoutHole(hs.getY(), hs.getX());
             LOGGER.log(Level.INFO, "hole");
-            fillHoleInTheFloorOneRoom(hs);
             LOGGER.log(Level.INFO, "end");
         }
     }
