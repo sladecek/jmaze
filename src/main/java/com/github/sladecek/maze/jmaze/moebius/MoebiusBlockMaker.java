@@ -74,7 +74,7 @@ public final class MoebiusBlockMaker extends BlockMakerBase implements IBlockMak
 	}
 
 	private void printInnerWalls() {
-		final double wallThickness = sizes.getInnerWallToCellRatio() / 2;
+		final double wallThickness = sizes.getInnerWallToCellRatio() /2 ;
 
 		for (WallShape wall : walls) {
 			printWallElements(wallThickness, wall);

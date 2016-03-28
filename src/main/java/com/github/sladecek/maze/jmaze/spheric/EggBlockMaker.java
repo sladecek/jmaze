@@ -80,7 +80,7 @@ public final class EggBlockMaker extends BlockMakerBase implements IBlockMaker {
     }
 
     private void printWalls() {
-        final double wt = sizes.getInnerWallToCellRatio() / 2;
+        final double wt = sizes.getInnerWallToCellRatio() * 2;
         for (WallShape wall : walls) {
             printWallElements(wt, wall);
         }
