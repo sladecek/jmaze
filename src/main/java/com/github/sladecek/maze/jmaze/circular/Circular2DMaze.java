@@ -45,7 +45,7 @@ public class Circular2DMaze extends Maze implements IMazeStructure {
 		final int height = 2 * layerCount * layerSize;
 		final int width = 2 * layerCount * layerSize;
 		final boolean isPolar = true;
-		setContext(new ShapeContext(isPolar, height, width, 1, 0, 50));
+		setContext(new ShapeContext(isPolar, height, width, 2, 0, 50));
 	}
 
 	private void setStartAndTargetRooms() {
