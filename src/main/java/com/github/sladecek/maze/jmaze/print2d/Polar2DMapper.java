@@ -10,6 +10,7 @@ public class Polar2DMapper implements IMaze2DMapper {
     public Polar2DMapper(Point2D zeroPoint, int cellSize) {
         this.zeroPoint = zeroPoint;
         this.cellSize = cellSize;
+
     }
 
     @Override
@@ -27,4 +28,5 @@ public class Polar2DMapper implements IMaze2DMapper {
 
     private Point2D zeroPoint;
     private int cellSize;
+
 }

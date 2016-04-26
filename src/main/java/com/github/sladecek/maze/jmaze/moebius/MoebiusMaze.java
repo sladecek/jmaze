@@ -38,7 +38,7 @@ public final class MoebiusMaze extends Maze implements IMazeStructure {
 
     public void buildMaze() {
         final boolean isPolar = false;
-        setContext(new ShapeContext(isPolar, height, width, 1, 0, 0));
+        setContext(new ShapeContext(isPolar, height, width, 1, 1, 0, 0));
 
         ShapeContainer result = new ShapeContainer(context);
 

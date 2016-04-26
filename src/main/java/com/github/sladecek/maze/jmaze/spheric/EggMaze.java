@@ -83,7 +83,7 @@ public final class EggMaze extends Maze implements IMazeStructure {
         final boolean isPolar = false;
         int width = 0;
         int height = 0;
-        setContext(new ShapeContext(isPolar, height, width, 1, 50, 50));
+        setContext(new ShapeContext(isPolar, height, width, 1, 1, 50, 50));
 
         // generate both hemispheres
         for (SouthNorth sn : SouthNorth.values()) {

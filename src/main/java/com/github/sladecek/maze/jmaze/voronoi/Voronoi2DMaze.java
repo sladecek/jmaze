@@ -37,7 +37,7 @@ public class Voronoi2DMaze extends Maze implements IMazeStructure {
 	private void buildMaze() {
 // TODO smazat	    final int height = 2*width;
         final boolean isPolar = false;
-        setContext(new ShapeContext(isPolar, height, width, 10, 0, 50));
+        setContext(new ShapeContext(isPolar, height, width, 10, 10, 0, 50));
 
         // outer walls
         final IMazeShape.ShapeType ow = IMazeShape.ShapeType.outerWall;

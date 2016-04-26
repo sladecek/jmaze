@@ -136,7 +136,7 @@ public class MazeTest {
 
 	@Test
 	public void testSetContext() {
-		ShapeContext c = new ShapeContext(true, 1, 2, 3, 4, 5);
+		ShapeContext c = new ShapeContext(true, 1, 2, 3, 3, 4, 5);
 		maze.setContext(c);
 		assertEquals(c,  maze.getContext());
 	}

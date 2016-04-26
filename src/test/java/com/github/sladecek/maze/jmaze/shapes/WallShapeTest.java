@@ -179,10 +179,11 @@ public class WallShapeTest {
 	private void callPrint2D(I2DDocument mockedDocument, boolean isPolarCoordinates, ShapeType shapeType, int y2, int x2) {
 		int pictureHeight = 100;
 		int pictureWidth = 200;
-		int resolution = 7;
+		int resolutionX = 7;
+		int resolutionY = 7;
 		int markOffsetXPercent = 33;
 		int markOffsetYPercent = 66;
-		ShapeContext sc = new ShapeContext(isPolarCoordinates, pictureHeight, pictureWidth, resolution,
+		ShapeContext sc = new ShapeContext(isPolarCoordinates, pictureHeight, pictureWidth, resolutionX, resolutionY, 
 				markOffsetXPercent, markOffsetYPercent);
 		
 		int y1 = 1;

@@ -108,7 +108,7 @@ public class Hexagonal2DMaze extends Maze implements IMazeStructure {
 		final int height = hH * (2 * size + 1);
 		final int width = hP * (3 * size - 1);
 		final boolean isPolar = false;
-		setContext(new ShapeContext(isPolar, height, width, 1, 0, 50));
+		setContext(new ShapeContext(isPolar, height, width, 3, 3, 0, 50));
 	}
 
 	private Point2D computeRoomCenter(int x, boolean isOdd, int y) {

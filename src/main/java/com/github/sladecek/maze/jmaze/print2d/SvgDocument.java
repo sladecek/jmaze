@@ -18,7 +18,8 @@ public class SvgDocument implements I2DDocument {
 
 	@Override
 	public void printLine(Point2D p1, Point2D p2, String style, boolean center) {
-		int offs = center ? context.getResolution() / 2 : 0;
+		int offsX = center ? context.getResolutionX() / 2 : 0;
+		int offsY = center ? context.getResolutionY() / 2 : 0;
 
 		String svgNS = SVGDOMImplementation.SVG_NAMESPACE_URI;
 		Element line = doc.createElementNS(svgNS, "line");
@@ -28,10 +29,10 @@ public class SvgDocument implements I2DDocument {
 		Point2D mp1 = mapper.mapPoint(p1);
 		Point2D mp2 = mapper.mapPoint(p2);
 
-		line.setAttributeNS(null, "x1", String.valueOf(mp1.getX() + offs));
-		line.setAttributeNS(null, "y1", String.valueOf(mp1.getY() + offs));
-		line.setAttributeNS(null, "x2", String.valueOf(mp2.getX() + offs));
-		line.setAttributeNS(null, "y2", String.valueOf(mp2.getY() + offs));
+		line.setAttributeNS(null, "x1", String.valueOf(mp1.getX() + offsX));
+		line.setAttributeNS(null, "y1", String.valueOf(mp1.getY() + offsY));
+		line.setAttributeNS(null, "x2", String.valueOf(mp2.getX() + offsX));
+		line.setAttributeNS(null, "y2", String.valueOf(mp2.getY() + offsY));
 		line.setAttributeNS(null, "style", style);
 
 	}
@@ -64,7 +65,7 @@ public class SvgDocument implements I2DDocument {
 	@Override
 	public void printMark(Point2D center, String fill, int sizePercent, int offsXPercent, int offsYPercent) {
 
-		final int perimeter = context.getResolution() * sizePercent / 100;
+		final int perimeter = context.getResolutionX() * sizePercent / 100;
 		printCircle(center, fill, offsXPercent, offsYPercent, perimeter, true, new String());
 
 	}
@@ -129,20 +130,23 @@ public class SvgDocument implements I2DDocument {
 	}
 
 	private void constructCoordinateSystem() {
-		final int cellSize = context.getResolution();
-		final int margin = cellSize / 2;
+		final int cellSizeX = context.getResolutionX();
+		final int cellSizeY = context.getResolutionY();
+		final int margin = cellSizeX / 2;
 
-		canvasWidth = 2 * margin + context.getPictureWidth() * cellSize;
-		canvasHeight = 2 * margin + context.getPictureHeight() * cellSize;
+		canvasWidth = 2 * margin + context.getPictureWidth() * cellSizeX;
+		canvasHeight = 2 * margin + context.getPictureHeight() * cellSizeY;
 
 		if (context.isPolarCoordinates()) {
+			assert cellSizeX == cellSizeY;
 			Point2D zeroPoint = new Point2D(
-					margin + context.getPictureWidth() * cellSize / 2,
-					margin + context.getPictureHeight() * cellSize / 2);
-			mapper = new Polar2DMapper(zeroPoint, cellSize);
+					margin + context.getPictureWidth() * cellSizeX / 2,
+					margin + context.getPictureHeight() * cellSizeY / 2);
+			mapper = new Polar2DMapper(zeroPoint, cellSizeX);
 		} else {
 			Point2D zeroPoint = new Point2D(margin, margin);
-			mapper = new Cartesian2DMapper(zeroPoint, cellSize);
+			
+			mapper = new Cartesian2DMapper(zeroPoint, cellSizeX, cellSizeY);
 		}
 	}
 
