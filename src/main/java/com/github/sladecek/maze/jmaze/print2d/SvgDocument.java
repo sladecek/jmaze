@@ -65,7 +65,7 @@ public class SvgDocument implements I2DDocument {
 	@Override
 	public void printMark(Point2D center, String fill, int sizePercent, int offsXPercent, int offsYPercent) {
 
-		final int perimeter = context.getResolutionX() * sizePercent / 100;
+		final int perimeter = /*context.getResolutionX() */ sizePercent /* 100*/;
 		printCircle(center, fill, offsXPercent, offsYPercent, perimeter, true, new String());
 
 	}

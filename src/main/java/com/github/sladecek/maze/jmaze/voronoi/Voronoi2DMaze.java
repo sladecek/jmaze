@@ -35,7 +35,6 @@ public class Voronoi2DMaze extends Maze implements IMazeStructure {
 	}
 
 	private void buildMaze() {
-// TODO smazat	    final int height = 2*width;
         final boolean isPolar = false;
         setContext(new ShapeContext(isPolar, height, width, 10, 10, 0, 50));
 
@@ -82,11 +81,24 @@ public class Voronoi2DMaze extends Maze implements IMazeStructure {
 			}
 			
 			set.add(k);
-/**/
-			int id = addWall(ge.site1, ge.site2);
+
+			// Voronoi algorithm generates nonsensical edges with very small length that would
+			// otherwise be outside the rectangle. There are also aesthetical reasons to filter
+			// short edges out.
+			double dx = (ge.x1-ge.x2);
+			double dy = (ge.y1-ge.y2);
+			double lsq = dx*dx+dy*dy;
+			final double minimalLength = 0.01;
+			boolean isShort = lsq < minimalLength*minimalLength;
 			LOGGER.info("voronoi edge room1=" + ge.site1 + " room2=" + ge.site2
 					+ " x1=" + ge.x1 + " y1=" + ge.y1 + " x2=" + ge.x2 + " y2="
-					+ ge.y2);
+					+ ge.y2+ " isShort="+isShort);
+
+			if (isShort) {
+				//continue;
+			}
+			
+			int id = addWall(ge.site1, ge.site2);
 			WallShape ws = new WallShape(ShapeType.innerWall, flr(ge.y1),
 					flr(ge.x1), flr(ge.y2), flr(ge.x2));
 			addShape(ws);

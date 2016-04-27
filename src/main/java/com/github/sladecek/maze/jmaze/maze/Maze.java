@@ -14,7 +14,6 @@ import com.github.sladecek.maze.jmaze.shapes.ShapeContext;
  */
 public class Maze extends GenericMazeStructure {
 
-    
 	public Maze() {
 		shapes = new ShapeContainer(null);
 		shape2id = new HashMap<IMazeShape, Integer>();

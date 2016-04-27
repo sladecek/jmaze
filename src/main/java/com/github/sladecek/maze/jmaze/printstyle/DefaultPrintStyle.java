@@ -82,12 +82,12 @@ public final class DefaultPrintStyle implements IPrintStyle {
 
 	@Override
 	public int getSolutionMarkWidth() {
-		return 15;
+		return 5;
 	}
 
 	@Override
 	public int getStartTargetMarkWidth() {		
-		return 25;
+		return 10;
 	}
 
 	private final Color baseColor = new Color("777777");

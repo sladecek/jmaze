@@ -11,7 +11,7 @@ public class TestAppVoronoi extends TestApp2DBase {
 		new TestAppVoronoi().printTestMaze("maze-voronoi", () -> {
 			final int width = 200;
 			final int height = 200;
-			final int roomCount = 200*200/50;
+			final int roomCount = 100;
 			final Random randomGenerator = new Random();
 			randomGenerator.setSeed(0);
 			return  new Voronoi2DMaze(width, height, roomCount, randomGenerator);
