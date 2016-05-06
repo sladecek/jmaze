@@ -25,7 +25,8 @@ public class Maze extends GenericMazeStructure {
 
 		// copy only closed walls to the result
 		for (IMazeShape s : shapes.getShapes()) {
-			if (!shape2id.containsKey(s) || realization.isWallClosed(shape2id.get(s))) {
+			//if (!shape2id.containsKey(s) || realization.isWallClosed(shape2id.get(s))) 
+			{
 				result.add(s);
 			}
 		}
