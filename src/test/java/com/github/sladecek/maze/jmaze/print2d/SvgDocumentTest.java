@@ -124,7 +124,7 @@ public class SvgDocumentTest {
 		
 		Document document = d.getDocument();
 		
-		final String expected = header + "><circle fill=\"fill\" r=\"0\" cx=\"145\" cy=\"217\"/></svg>";
+		final String expected = header + "><circle fill=\"fill\" r=\"9\" cx=\"145\" cy=\"217\"/></svg>";
 		assertEquals(expected, svgToString(document));
 	}
 

@@ -99,7 +99,7 @@ public final class DefaultPrintStyle implements IPrintStyle {
 	private final Color targetMarkColor = new Color("00ff00");
 	private final Color cornerColor = new Color("666666");
 	private final Color holeColor = new Color("777777");
-	private final Color debugWallColor = new Color("ff0000");
+	private final Color debugWallColor = new Color("eeeeff");
 	private final Color debugFloorColor = new Color("00ff00");
 	private final Color threeJsClearColor = new Color("eeeeee");
 	private final Color threeJsMeshColor = new Color("33ff33");

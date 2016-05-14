@@ -29,7 +29,7 @@ public class Voronoi2DMazeTest {
 		int roomCount = 3;
         Random r = mock(Random.class);
         when(r.nextDouble()).thenReturn(0.5, 0.1, 0.5, 0.5, 0.5, 0.9);
-		maze = new Voronoi2DMaze(width, height, roomCount, r);
+		maze = new Voronoi2DMaze(width, height, roomCount, r, false);
 	}
 
 

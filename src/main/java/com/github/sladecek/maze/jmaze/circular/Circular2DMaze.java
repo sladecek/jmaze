@@ -24,7 +24,6 @@ public class Circular2DMaze extends Maze implements IMazeStructure {
 		buildMaze();
 	}
 
-
 	private void buildMaze() {
 		roomCounts = computeRoomCounts();
 		firstRoomInLayer = new Vector<Integer>();
@@ -129,8 +128,7 @@ public class Circular2DMaze extends Maze implements IMazeStructure {
 		final int roomMapRatio = equatorCellCnt / roomCntThisLayer;
 		final int rphi1 = (phi1 * roomMapRatio) % equatorCellCnt;
 		final int rphi2 = (phi2 * roomMapRatio) % equatorCellCnt;
-		WallShape ws = new WallShape(ShapeType.innerWall, r1 * layerSize, mapPhi(rphi1), r2 * layerSize,
-				mapPhi(rphi2));
+		WallShape ws = new WallShape(ShapeType.innerWall, r1 * layerSize, mapPhi(rphi1), r2 * layerSize, mapPhi(rphi2));
 		addShape(ws);
 		linkShapeToId(ws, id);
 	}
