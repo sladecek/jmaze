@@ -12,6 +12,8 @@ import com.github.sladecek.maze.jmaze.shapes.IMazeShape.ShapeType;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContext;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
 
+import be.humphreys.simplevoronoi.GraphEdge;
+
 public class Voronoi2DMaze extends Maze implements IMazeStructure {
 
 	public Voronoi2DMaze(int width, int height, int roomCount, Random randomGenerator, boolean debug) {
@@ -32,7 +34,7 @@ public class Voronoi2DMaze extends Maze implements IMazeStructure {
 		
 		PointsInRectangle p0 = PointsInRectangle.newRandom(width, height, roomCount, randomGenerator);
 
-		final int loydCnt = 0;
+		final int loydCnt = 2;
 		LoydIteration loyd = new LoydIteration(p0, loydCnt);
 		PointsInRectangle p1 = loyd.getOutput();
 		
@@ -48,11 +50,13 @@ public class Voronoi2DMaze extends Maze implements IMazeStructure {
 			addShape(floor);
 		}
 
-		for (VoronoiAlgorithm.Edge e : new VoronoiAlgorithm().computeEdges(p1)) {
-			int id = addWall(e.getSite1(), e.getSite2());
-			WallShape ws = new WallShape(ShapeType.innerWall, e.getIy1(), e.getIx1(), e.getIy2(), e.getIx2());
+		for (GraphEdge e : new VoronoiAlgorithm().computeEdges(p1)) {
+			if (e.site1 >= 0 && e.site2 >= 0) {
+			int id = addWall(e.site1, e.site2);
+			WallShape ws = new WallShape(ShapeType.innerWall, (int)e.y1, (int)e.x1, (int)e.y2, (int)e.x2);
 			addShape(ws);
 			linkShapeToId(ws, id);
+			}
 		}
 
 		setStartRoom(0);

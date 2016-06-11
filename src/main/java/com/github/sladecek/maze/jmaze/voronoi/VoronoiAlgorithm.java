@@ -1,7 +1,5 @@
 package com.github.sladecek.maze.jmaze.voronoi;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -88,29 +86,18 @@ public class VoronoiAlgorithm {
 		private int iy2;
 	}
 
-	public List<Edge> computeEdges(PointsInRectangle p1) {
-		// TODO smazat
-		HashSet<Long> set = new HashSet();
-		Voronoi v = new Voronoi(0.00001f);
+	public List<GraphEdge> computeEdges(PointsInRectangle p1) {
+		final boolean withBorderEdges = true;
+    	final boolean withoutDuplicateEdges = true;
+    	Voronoi v = new Voronoi(0.1 , withBorderEdges, withoutDuplicateEdges);	
 		List<GraphEdge> allEdges = v.generateVoronoi(p1.getRoomCenterX(), p1.getRoomCenterY(), 0, p1.getWidth() - 1, 
 				0, p1.getHeight() - 1);
 
+    	return allEdges;
+		/*
 		ArrayList<Edge> result = new ArrayList<Edge>();
 		
 		for (GraphEdge ge : allEdges) {
-			/*
-			 * TODO smazat - older simplevoronoi
-			 */
-			Long k = ge.site1 * 1000000l + ge.site2;
-			if (ge.site1 < ge.site2) {
-				k = ge.site2 * 1000000l + ge.site1;
-			}
-			if (set.contains(k)) {
-				continue;
-			}
-
-			set.add(k);
-
 			// Voronoi algorithm generates nonsensical edges with very small
 			// length that would
 			// otherwise be outside the rectangle. There are also estheticall
@@ -132,7 +119,7 @@ public class VoronoiAlgorithm {
 			result.add(e);
 		}
 		return result;
-
+*/
 	}
 
 	private static final Logger LOGGER = Logger.getLogger("maze.jmaze");

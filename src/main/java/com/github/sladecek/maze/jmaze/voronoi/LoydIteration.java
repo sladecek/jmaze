@@ -1,6 +1,9 @@
 package com.github.sladecek.maze.jmaze.voronoi;
 
-import java.util.Arrays;
+import java.util.List;
+
+import be.humphreys.simplevoronoi.GraphEdge;
+import be.humphreys.simplevoronoi.PolygonProperties;
 
 /**
  * Loyd iterative algorithm. Works on a set of points in a rectangle. Makes the
@@ -31,21 +34,19 @@ public class LoydIteration {
 	private void computeOutput() {
 		output = PointsInRectangle.newCopyOf(input);
 		for (int l = 0; l < numberOfIterations; l++) {
-			
-			double[] area = new double[output.getRoomCount()];
-			Arrays.fill(area, 0.0);
-			double[] cx = new double[output.getRoomCount()];
-			Arrays.fill(cx, 0.0);
-			double[] cy = new double[output.getRoomCount()];
-			Arrays.fill(cy, 0.0);
 
-			for (VoronoiAlgorithm.Edge e : new VoronoiAlgorithm().computeEdges(output)) {
+			List<GraphEdge> e= new VoronoiAlgorithm().computeEdges(output);
+			
+			
+	    	PolygonProperties pp = new PolygonProperties(e, input.getRoomCount());
+	    	pp.compute();
+	    	
+
 /* TODO
 				double x1 = Math.max(0, Math.min(ge.x1, width-1));
 				double x2 = Math.max(0, Math.min(ge.x2, width-1));
 				double y1 = Math.max(0, Math.min(ge.y1, height-1));
 				double y2 = Math.max(0, Math.min(ge.y2, height-1));
-		*/		
 				double da = e.getX1() * e.getY2() - e.getX2() * e.getY1();
 				double dcx = (e.getX1()+e.getX2())*da;
 				double dcy = (e.getY1()+e.getY2())*da;
@@ -58,11 +59,13 @@ public class LoydIteration {
 				cy[e.getSite1()] += dcy;
 				cy[e.getSite2()] += dcy;
 			}
-			
+*/			
 			
 			for (int i= 0; i < output.getRoomCount(); i++) {
-				output.setRoomCenterX(i, cx[i] / (6*area[i]));
-				output.setRoomCenterY(i, cy[i] / (6*area[i]));
+				
+				output.setRoomCenterX(i,  pp.getCenterOfGravityX().get(i));
+				output.setRoomCenterY(i,  pp.getCenterOfGravityY().get(i));
+
 			}
 		}
 
