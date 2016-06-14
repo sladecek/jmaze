@@ -36,35 +36,21 @@ public class LoydIteration {
 		for (int l = 0; l < numberOfIterations; l++) {
 
 			List<GraphEdge> e= new VoronoiAlgorithm().computeEdges(output);
+			for (GraphEdge ee: e) System.out.println(ee);
 			
 			
 	    	PolygonProperties pp = new PolygonProperties(e, input.getRoomCount());
 	    	pp.compute();
 	    	
 
-/* TODO
-				double x1 = Math.max(0, Math.min(ge.x1, width-1));
-				double x2 = Math.max(0, Math.min(ge.x2, width-1));
-				double y1 = Math.max(0, Math.min(ge.y1, height-1));
-				double y2 = Math.max(0, Math.min(ge.y2, height-1));
-				double da = e.getX1() * e.getY2() - e.getX2() * e.getY1();
-				double dcx = (e.getX1()+e.getX2())*da;
-				double dcy = (e.getY1()+e.getY2())*da;
-										
-				area[e.getSite1()] += da/2;
-				area[e.getSite2()] += da/2;
 
-				cx[e.getSite1()] += dcx;
-				cx[e.getSite2()] += dcx;
-				cy[e.getSite1()] += dcy;
-				cy[e.getSite2()] += dcy;
-			}
-*/			
 			
 			for (int i= 0; i < output.getRoomCount(); i++) {
-				
-				output.setRoomCenterX(i,  pp.getCenterOfGravityX().get(i));
-				output.setRoomCenterY(i,  pp.getCenterOfGravityY().get(i));
+				double cx = pp.getCenterOfGravityX().get(i);
+				double cy = pp.getCenterOfGravityY().get(i);
+				output.setRoomCenterX(i,  cx);
+				output.setRoomCenterY(i,  cy);
+				System.out.println("it="+l+" i="+i+" cx="+cx+" cy="+cy);
 
 			}
 		}

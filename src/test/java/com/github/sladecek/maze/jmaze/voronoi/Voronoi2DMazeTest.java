@@ -1,8 +1,6 @@
 package com.github.sladecek.maze.jmaze.voronoi;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -29,7 +27,7 @@ public class Voronoi2DMazeTest {
 		int roomCount = 3;
         Random r = mock(Random.class);
         when(r.nextDouble()).thenReturn(0.5, 0.1, 0.5, 0.5, 0.5, 0.9);
-		maze = new Voronoi2DMaze(width, height, roomCount, r, false);
+		maze = new Voronoi2DMaze(width, height, roomCount, 1, r, false);
 	}
 
 

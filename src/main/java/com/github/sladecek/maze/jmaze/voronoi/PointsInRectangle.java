@@ -14,8 +14,8 @@ import com.github.sladecek.maze.jmaze.geometry.Point2D;
 public class PointsInRectangle {
 	public PointsInRectangle(int width, int height, int roomCount) {
 		super();
-		this.width = width * 50;
-		this.height = height * 50;
+		this.width = width;
+		this.height = height;
 		this.roomCount = roomCount;
 		roomCenterY = new double[roomCount];
 		roomCenterX = new double[roomCount];

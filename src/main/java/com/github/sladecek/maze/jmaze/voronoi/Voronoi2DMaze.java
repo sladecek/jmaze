@@ -16,11 +16,12 @@ import be.humphreys.simplevoronoi.GraphEdge;
 
 public class Voronoi2DMaze extends Maze implements IMazeStructure {
 
-	public Voronoi2DMaze(int width, int height, int roomCount, Random randomGenerator, boolean debug) {
+	public Voronoi2DMaze(int width, int height, int roomCount, int loydCnt, Random randomGenerator, boolean debug) {
 		super();
-		this.width = width * 80;
-		this.height = height * 80;
+		this.width = width * 50;
+		this.height = height * 50;
 		this.roomCount = roomCount;
+		this.loydCnt = loydCnt;
 		this.randomGenerator = randomGenerator;
 		this.setDebug(debug);
 		buildMaze();
@@ -34,7 +35,7 @@ public class Voronoi2DMaze extends Maze implements IMazeStructure {
 		
 		PointsInRectangle p0 = PointsInRectangle.newRandom(width, height, roomCount, randomGenerator);
 
-		final int loydCnt = 2;
+		
 		LoydIteration loyd = new LoydIteration(p0, loydCnt);
 		PointsInRectangle p1 = loyd.getOutput();
 		
@@ -75,6 +76,7 @@ public class Voronoi2DMaze extends Maze implements IMazeStructure {
 	private int width;
 	private int height;
 	private int roomCount;
+	private int loydCnt;
 
 	private Random randomGenerator;
 }

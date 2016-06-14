@@ -12,9 +12,13 @@ public class TestAppVoronoi extends TestApp2DBase {
 			final int width = 10;
 			final int height = 10;
 			final int roomCount = 20;
+			final int loydCount = 2;
+					
+					
+					
 			final Random randomGenerator = new Random();
 			randomGenerator.setSeed(4);
-			return  new Voronoi2DMaze(width, height, roomCount, randomGenerator, true);
+			return  new Voronoi2DMaze(width, height, roomCount, loydCount, randomGenerator, true);
 		});
     }
 
