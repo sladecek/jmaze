@@ -52,12 +52,14 @@ public class Voronoi2DMaze extends Maze implements IMazeStructure {
 		}
 
 		for (GraphEdge e : new VoronoiAlgorithm().computeEdges(p1)) {
-			if (e.site1 >= 0 && e.site2 >= 0) {
+			if (e.site1 < 0 || e.site2 < 0) { continue; }
+			if (e.length() < 0.5) continue;
 			int id = addWall(e.site1, e.site2);
 			WallShape ws = new WallShape(ShapeType.innerWall, (int)e.y1, (int)e.x1, (int)e.y2, (int)e.x2);
 			addShape(ws);
 			linkShapeToId(ws, id);
-			}
+			LOGGER.info("wall id="+id+" "+e);
+			
 		}
 
 		setStartRoom(0);

@@ -1,9 +1,11 @@
 package com.github.sladecek.maze.jmaze.voronoi;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import be.humphreys.simplevoronoi.GraphEdge;
-import be.humphreys.simplevoronoi.PolygonProperties;
+import be.humphreys.simplevoronoi.Polygon;
+import be.humphreys.simplevoronoi.PolygonSeparator;
 
 /**
  * Loyd iterative algorithm. Works on a set of points in a rectangle. Makes the
@@ -35,22 +37,19 @@ public class LoydIteration {
 		output = PointsInRectangle.newCopyOf(input);
 		for (int l = 0; l < numberOfIterations; l++) {
 
-			List<GraphEdge> e= new VoronoiAlgorithm().computeEdges(output);
-			for (GraphEdge ee: e) System.out.println(ee);
-			
-			
-	    	PolygonProperties pp = new PolygonProperties(e, input.getRoomCount());
-	    	pp.compute();
-	    	
+			List<GraphEdge> e = new VoronoiAlgorithm().computeEdges(output);
 
-
-			
-			for (int i= 0; i < output.getRoomCount(); i++) {
-				double cx = pp.getCenterOfGravityX().get(i);
-				double cy = pp.getCenterOfGravityY().get(i);
-				output.setRoomCenterX(i,  cx);
-				output.setRoomCenterY(i,  cy);
-				System.out.println("it="+l+" i="+i+" cx="+cx+" cy="+cy);
+			for (GraphEdge ee : e)
+				System.out.println(ee);
+			ArrayList<Polygon> polygons = PolygonSeparator.makePolygons(e);
+			for (Polygon p : polygons) {
+				Polygon.CenterOfGravity cog = p.computeAreaAndCog();
+				int i = p.getCenterSite();
+				if (i >= 0) {
+					output.setRoomCenterX(i, cog.getX());
+					output.setRoomCenterY(i, cog.getY());
+					System.out.println("it=" + l + " i=" + i + " cog=" + cog);
+				}
 
 			}
 		}

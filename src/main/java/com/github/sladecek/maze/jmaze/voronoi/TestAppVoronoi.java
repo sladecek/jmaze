@@ -11,8 +11,8 @@ public class TestAppVoronoi extends TestApp2DBase {
 		new TestAppVoronoi().printTestMaze("maze-voronoi", () -> {
 			final int width = 10;
 			final int height = 10;
-			final int roomCount = 20;
-			final int loydCount = 2;
+			final int roomCount = 3;
+			final int loydCount = 1;
 					
 					
 					
