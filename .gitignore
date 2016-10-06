@@ -19,3 +19,4 @@ maze.log
 /#maze-hexagonal.svg#
 /.externalToolBuilders/net.sf.eclipsecs.core.CheckstyleBuilder.launch
 /.externalToolBuilders/org.eclipse.m2e.core.maven2Builder.launch
+/hs_err_pid29512.log

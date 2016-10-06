@@ -23,7 +23,9 @@ public class VoronoiAlgorithmTest {
 		
 		VoronoiAlgorithm va = new VoronoiAlgorithm();
 		List<GraphEdge> e = va.computeEdges(pts);
-		assertEquals(1, e.size());
+		assertEquals(7, e.size());
+		long insideEdgeCount = e.stream().filter(edge -> edge.site1 != -1 && edge.site2 != -1).count();
+		assertEquals(1, insideEdgeCount);
 	}
 
 }

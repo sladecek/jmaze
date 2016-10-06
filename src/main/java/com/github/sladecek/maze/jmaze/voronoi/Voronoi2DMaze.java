@@ -35,10 +35,25 @@ public class Voronoi2DMaze extends Maze implements IMazeStructure {
 		
 		PointsInRectangle p0 = PointsInRectangle.newRandom(width, height, roomCount, randomGenerator);
 
+		for (int i = 0; i < p0.getRoomCount(); i++) {
+			Point2D pt = p0.getIntegerPoint(i);
+			LOGGER.info("random room center [" + i + "]=" + pt);
+		}
 		
 		LoydIteration loyd = new LoydIteration(p0, loydCnt);
 		PointsInRectangle p1 = loyd.getOutput();
-		
+		/*
+		System.out.print("x=[");
+		for (int i = 0; i < p1.getRoomCount(); i++) {
+			System.out.print(p1.getRoomCenterX()[i] + ", ");
+		}
+		System.out.println("];");
+		System.out.print("y=[");
+		for (int i = 0; i < p1.getRoomCount(); i++) {
+			System.out.print(p1.getRoomCenterY()[i] + ", ");
+		}
+		System.out.println("];");
+		*/
 		// sort points by longer coordinate to get decent start/target rooms
 		p1.sortByLongerCoordinate();
 

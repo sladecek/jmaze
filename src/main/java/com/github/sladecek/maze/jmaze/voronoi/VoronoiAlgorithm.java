@@ -88,8 +88,8 @@ public class VoronoiAlgorithm {
 
 	public List<GraphEdge> computeEdges(PointsInRectangle p1) {
 		final boolean withBorderEdges = true;
-    	final boolean withoutDuplicateEdges = true;
-    	Voronoi v = new Voronoi(0.1 , withBorderEdges, withoutDuplicateEdges);	
+    	final boolean withoutDegenerateEdges = true;
+    	Voronoi v = new Voronoi(0.1 , withBorderEdges, withoutDegenerateEdges);	
 		List<GraphEdge> allEdges = v.generateVoronoi(p1.getRoomCenterX(), p1.getRoomCenterY(), 0, p1.getWidth() - 1, 
 				0, p1.getHeight() - 1);
 

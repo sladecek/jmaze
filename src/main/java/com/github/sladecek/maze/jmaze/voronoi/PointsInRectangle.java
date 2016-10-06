@@ -1,10 +1,13 @@
 package com.github.sladecek.maze.jmaze.voronoi;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.logging.Logger;
 
 import com.github.sladecek.maze.jmaze.geometry.Point2D;
+
+import groovyjarjarantlr.collections.List;
 
 /***
  * 
@@ -41,11 +44,26 @@ public class PointsInRectangle {
 	
 	public void sortByLongerCoordinate() {
 
-		if (width >= height) {
-			Arrays.sort(roomCenterX);
-		} else {
-			Arrays.sort(roomCenterY);
+		ArrayList<Integer> points = new ArrayList<Integer>();
+		for (int i = 0; i < roomCount; i++) {
+			points.add(i);
 		}
+		if (width >= height) {
+			points.sort((i1,i2) -> Double.compare(roomCenterX[i1],roomCenterX[i2]));
+		} else {
+			points.sort((i1,i2) -> Double.compare(roomCenterY[i1],roomCenterY[i2]));
+		}
+		
+		double y[] = new double[roomCount];
+		double x[] = new double[roomCount];
+		
+		for (int i = 0; i < roomCount; i++) {
+			y[i] = roomCenterY[points.get(i)];
+			x[i] = roomCenterX[points.get(i)];
+		}
+				
+		roomCenterX = x;
+		roomCenterY = y;
 	}
 
 	public Point2D getIntegerPoint(int i) {

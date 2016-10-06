@@ -1,7 +1,6 @@
 package com.github.sladecek.maze.jmaze.maze;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 import java.util.Vector;
 
