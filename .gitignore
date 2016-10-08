@@ -20,3 +20,5 @@ maze.log
 /.externalToolBuilders/net.sf.eclipsecs.core.CheckstyleBuilder.launch
 /.externalToolBuilders/org.eclipse.m2e.core.maven2Builder.launch
 /hs_err_pid29512.log
+/.project
+/.classpath
