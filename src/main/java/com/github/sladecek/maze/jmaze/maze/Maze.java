@@ -112,7 +112,7 @@ public class Maze extends GenericMazeStructure {
 	protected void setContext(ShapeContext context) {
 		this.context = context;
 	}
-
+	
 	public void setDebug(boolean debug) {
 		this.debug = debug;
 	}

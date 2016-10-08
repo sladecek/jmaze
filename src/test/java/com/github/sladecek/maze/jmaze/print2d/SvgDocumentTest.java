@@ -23,6 +23,7 @@ import org.w3c.dom.Document;
 import com.github.sladecek.maze.jmaze.geometry.Point2D;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContext;
 
+
 public class SvgDocumentTest {
 	
 	@Rule
@@ -96,7 +97,6 @@ public class SvgDocumentTest {
 		assertEquals(expected, svgToString(document));
 		
 	}
-
 	@Test
 	public void testPrintArcSegment() throws TransformerConfigurationException, TransformerFactoryConfigurationError, TransformerException {
 		boolean isPolarCoordinates = false;
@@ -142,10 +142,11 @@ public class SvgDocumentTest {
 	
 
 	final String header = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
-			+ "<svg contentScriptType=\"text/ecmascript\" width=\"1406\" "
+			+ "<svg contentScriptType=\"text/ecmascript\" "
 			+ "xmlns:xlink=\"http://www.w3.org/1999/xlink\" zoomAndPan=\"magnify\" "
-			+ "contentStyleType=\"text/css\" height=\"706\" preserveAspectRatio=\"xMidYMid meet\" "
+			+ "contentStyleType=\"text/css\" viewBox=\"0 0 1406 706\" preserveAspectRatio=\"xMidYMid meet\" "
 			+ "xmlns=\"http://www.w3.org/2000/svg\" version=\"1.0\"";
+	
 
 	private SvgDocument createTestDocument(boolean isPolarCoordinates) {
 		int pictureHeight = 100;

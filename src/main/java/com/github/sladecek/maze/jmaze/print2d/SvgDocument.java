@@ -35,6 +35,7 @@ public class SvgDocument implements I2DDocument {
 		line.setAttributeNS(null, "y2", String.valueOf(mp2.getY() + offsY));
 		line.setAttributeNS(null, "style", style);
 
+
 	}
 
 	@Override
@@ -125,8 +126,9 @@ public class SvgDocument implements I2DDocument {
 		doc = impl.createDocument(svgNS, "svg", null);
 
 		Element svgRoot = doc.getDocumentElement();
-		svgRoot.setAttributeNS(null, "width", Integer.toString(canvasWidth));
-		svgRoot.setAttributeNS(null, "height", Integer.toString(canvasHeight));
+		String viewBox = "0 0 "+Integer.toString(canvasWidth)+ " " +Integer.toString(canvasHeight);
+		svgRoot.setAttributeNS(null, "viewBox", viewBox);
+	
 	}
 
 	private void constructCoordinateSystem() {
