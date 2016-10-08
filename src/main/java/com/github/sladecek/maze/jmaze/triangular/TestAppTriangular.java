@@ -7,7 +7,7 @@ public class TestAppTriangular extends TestApp2DBase {
 	
 	public static void main(String[] args) {
 		new TestAppTriangular().printTestMaze("maze-triangular", () -> {
-			final int defaultSize = 60	;			
+			final int defaultSize = 6	;			
 			return  new Triangular2DMaze(defaultSize);
 		});
     }
