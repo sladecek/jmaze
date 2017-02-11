@@ -7,7 +7,7 @@ import be.humphreys.simplevoronoi.GraphEdge;
 import be.humphreys.simplevoronoi.Voronoi;
 
 /***
- * 
+ *
  * Given a list of points (sites) in plane, partition plane into polygons so
  * that each point in the plane belongs to the nearest site.
  *
@@ -15,87 +15,87 @@ import be.humphreys.simplevoronoi.Voronoi;
  */
 public class VoronoiAlgorithm {
 
-	/*
-	 * 
-	 */
-	public class Edge {
+    /*
+     *
+     */
+    public class Edge {
 
-		public Edge(int site1, int site2, double x1, double x2, double y1, double y2) {
-			super();
-			this.site1 = site1;
-			this.site2 = site2;
-			this.x1 = x1;
-			this.x2 = x2;
-			this.y1 = y1;
-			this.y2 = y2;
-			this.ix1 = (int)Math.floor(x1);
-			this.ix2 = (int)Math.floor(x2);
-			this.iy1 = (int)Math.floor(y1);
-			this.iy2 = (int)Math.floor(y2);
-		}
+        public Edge(int site1, int site2, double x1, double x2, double y1, double y2) {
+            super();
+            this.site1 = site1;
+            this.site2 = site2;
+            this.x1 = x1;
+            this.x2 = x2;
+            this.y1 = y1;
+            this.y2 = y2;
+            this.ix1 = (int) Math.floor(x1);
+            this.ix2 = (int) Math.floor(x2);
+            this.iy1 = (int) Math.floor(y1);
+            this.iy2 = (int) Math.floor(y2);
+        }
 
-		public int getSite1() {
-			return site1;
-		}
+        public int getSite1() {
+            return site1;
+        }
 
-		public int getSite2() {
-			return site2;
-		}
+        public int getSite2() {
+            return site2;
+        }
 
-		public double getX1() {
-			return x1;
-		}
+        public double getX1() {
+            return x1;
+        }
 
-		public double getX2() {
-			return x2;
-		}
+        public double getX2() {
+            return x2;
+        }
 
-		public double getY1() {
-			return y1;
-		}
+        public double getY1() {
+            return y1;
+        }
 
-		public double getY2() {
-			return y2;
-		}
+        public double getY2() {
+            return y2;
+        }
 
-		public int getIx1() {
-			return ix1;
-		}
+        public int getIx1() {
+            return ix1;
+        }
 
-		public int getIx2() {
-			return ix2;
-		}
+        public int getIx2() {
+            return ix2;
+        }
 
-		public int getIy1() {
-			return iy1;
-		}
+        public int getIy1() {
+            return iy1;
+        }
 
-		public int getIy2() {
-			return iy2;
-		}
+        public int getIy2() {
+            return iy2;
+        }
 
-		private int site1;
-		private int site2;
-		private double x1;
-		private double x2;
-		private double y1;
-		private double y2;
-		private int ix1;
-		private int ix2;
-		private int iy1;
-		private int iy2;
-	}
+        private int site1;
+        private int site2;
+        private double x1;
+        private double x2;
+        private double y1;
+        private double y2;
+        private int ix1;
+        private int ix2;
+        private int iy1;
+        private int iy2;
+    }
 
-	public List<GraphEdge> computeEdges(PointsInRectangle p1) {
-		final boolean withBorderEdges = true;
-    	final boolean withoutDegenerateEdges = true;
-    	Voronoi v = new Voronoi(0.1 , withBorderEdges, withoutDegenerateEdges);	
-		List<GraphEdge> allEdges = v.generateVoronoi(p1.getRoomCenterX(), p1.getRoomCenterY(), 0, p1.getWidth() - 1, 
-				0, p1.getHeight() - 1);
+    public List<GraphEdge> computeEdges(PointsInRectangle p1) {
+        final boolean withBorderEdges = true;
+        final boolean withoutDegenerateEdges = true;
+        Voronoi v = new Voronoi(0.1, withBorderEdges, withoutDegenerateEdges);
+        List<GraphEdge> allEdges = v.generateVoronoi(p1.getRoomCenterX(), p1.getRoomCenterY(), 0, p1.getWidth() - 1,
+                0, p1.getHeight() - 1);
 
-    	return allEdges;
-		/*
-		ArrayList<Edge> result = new ArrayList<Edge>();
+        return allEdges;
+        /*
+        ArrayList<Edge> result = new ArrayList<Edge>();
 		
 		for (GraphEdge ge : allEdges) {
 			// Voronoi algorithm generates nonsensical edges with very small
@@ -120,8 +120,8 @@ public class VoronoiAlgorithm {
 		}
 		return result;
 */
-	}
+    }
 
-	private static final Logger LOGGER = Logger.getLogger("maze.jmaze");
+    private static final Logger LOGGER = Logger.getLogger("maze.jmaze");
 
 }
