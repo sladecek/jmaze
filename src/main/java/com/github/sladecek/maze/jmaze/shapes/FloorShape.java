@@ -12,9 +12,11 @@ import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
 /// type.
 public final class FloorShape implements IMazeShape {
 
-    public FloorShape(final Point2D center, boolean isHole) {
+    public FloorShape(final Point2D center, boolean isHole, int offsetXPercent, int offsetYPercent) {
         super();
         this.center = center;
+        this.offsetXPercent = offsetXPercent;
+        this.offsetYPercent = offsetYPercent;
 
         this.isHole = isHole;
         LOG.log(Level.INFO, "FloorShape  center=" + center);
@@ -42,7 +44,10 @@ public final class FloorShape implements IMazeShape {
     }
 
     public MarkShape createMarkInThisRoom(ShapeType type) {
-        return new MarkShape(type, getY(), getX());
+        MarkShape ms = new MarkShape(type, getY(), getX());
+        ms.setOffsetXPercent(offsetXPercent);
+        ms.setOffsetYPercent(offsetYPercent);
+        return ms;
     }
 
     @Override
@@ -54,9 +59,14 @@ public final class FloorShape implements IMazeShape {
         return "FloorShape [y=" + getY() + ", x=" + getX() + ", isHole=" + isHole + "]";
     }
 
+
+
+
     private Point2D center;
     private boolean isHole;
 
+    private int offsetXPercent = 50;
+    private int offsetYPercent = 50;
     /**
      * Logger facility.
      */

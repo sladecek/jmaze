@@ -86,19 +86,14 @@ public class MarkShapeTest {
 		int pictureWidth = 200;
 		int resolutionX = 7;
 		int resolutionY = 7;
-		int markOffsetXPercent = 33;
-		int markOffsetYPercent = 66;
-		ShapeContext sc = new ShapeContext(isPolarCoordinates, pictureHeight, pictureWidth, resolutionX, resolutionY,
-				markOffsetXPercent, markOffsetYPercent);
+
+		ShapeContext sc = new ShapeContext(isPolarCoordinates, pictureHeight, pictureWidth, resolutionX, resolutionY);
 		
 		when(mockedDocument.getContext()).thenReturn(sc);		
 		int y = 1; 
 		int x = 2;
 		MarkShape m = new MarkShape(type, y, x);
-		// TODO proc se to nebere z kontextu?
-		m.setOffsetXPercent(markOffsetXPercent);
-		m.setOffsetYPercent(markOffsetYPercent);
-		
+
 		IPrintStyle mockedPrintStyle = mock(IPrintStyle.class);
 		when(mockedPrintStyle.getStartMarkColor()).thenReturn(new Color("010203"));
 		when(mockedPrintStyle.getTargetMarkColor()).thenReturn(new Color("040404"));
@@ -122,8 +117,6 @@ public class MarkShapeTest {
 		assertEquals(x, center.getValue().getX());
 		assertEquals(y, center.getValue().getY());
 		assertEquals(expectedFill, fill.getValue());
-		assertEquals(66, (int)offsYPercent.getValue());
-		assertEquals(33, (int)offsXPercent.getValue());
 		assertEquals(expectedSize, (int)size.getValue());
 
 	}

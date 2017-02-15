@@ -46,7 +46,7 @@ public class Circular2DMaze extends Maze implements IMazeStructure {
         final int height = 2 * layerCount * layerSize;
         final int width = 2 * layerCount * layerSize;
         final boolean isPolar = true;
-        setContext(new ShapeContext(isPolar, height, width, 2, 2, 50, 50));
+        setContext(new ShapeContext(isPolar, height, width, 2, 2));
     }
 
     private void setStartAndTargetRooms() {
@@ -86,10 +86,16 @@ public class Circular2DMaze extends Maze implements IMazeStructure {
                 }
             }
 
-            final Point2D center = new Point2D(mapPhi(phi * roomRatio), (layerCount - r - 1) * layerSize);
-            final FloorShape floor = new FloorShape(center, false);
+            Point2D center = new Point2D(mapPhiD(phi * roomRatio+0.5),
+                    (layerCount - r - 1) * layerSize + layerSize/2);
+            if (room == 0)
+            {
+                // start in the center
+                center = new Point2D(0, 0);
+            }
+            final FloorShape floor = new FloorShape(center, false, 0, 0);
             linkRoomToFloor(room, floor);
-            addShape(floor);
+                addShape(floor);
         }
     }
 
@@ -99,6 +105,10 @@ public class Circular2DMaze extends Maze implements IMazeStructure {
 
     private int mapPhi(int phi) {
         return (phi * Point2D.ANGLE_2PI) / roomCntInOuterLayer();
+    }
+
+    private int mapPhiD(double phi) {
+        return (int) Math.floor((phi * Point2D.ANGLE_2PI) / roomCntInOuterLayer());
     }
 
     private void generateConcentricWalls() {

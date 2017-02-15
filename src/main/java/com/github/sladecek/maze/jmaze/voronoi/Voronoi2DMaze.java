@@ -29,7 +29,7 @@ public class Voronoi2DMaze extends Maze implements IMazeStructure {
 
 	private void buildMaze() {
 		final boolean isPolar = false;
-		setContext(new ShapeContext(isPolar, height, width, 1, 1, 0, 50));
+		setContext(new ShapeContext(isPolar, height, width, 1, 1));
 
 		createOuterWalls();
 		
@@ -61,7 +61,7 @@ public class Voronoi2DMaze extends Maze implements IMazeStructure {
 			Point2D pt = p1.getIntegerPoint(i);
 			LOGGER.info("room center [" + i + "]=" + pt);
 			int r = addRoom();
-			final FloorShape floor = new FloorShape(pt, false);
+			final FloorShape floor = new FloorShape(pt, false, 0, 50);
 			linkRoomToFloor(r, floor);
 			addShape(floor);
 		}

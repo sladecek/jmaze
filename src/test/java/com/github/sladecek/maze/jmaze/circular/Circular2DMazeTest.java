@@ -49,7 +49,7 @@ public class Circular2DMazeTest {
 
 	@Test
 	public void testGetTargetRoom() {
-		assertEquals(17, maze.getTargetRoom());
+		assertEquals(1, maze.getTargetRoom());
 	}
 
 	@Test
@@ -90,7 +90,7 @@ public class Circular2DMazeTest {
 		assertEquals(33, floors.size());
 		
 		assertEquals(0, floors.get(0).getX());
-		assertEquals(20, floors.get(0).getY());
+		assertEquals(0, floors.get(0).getY());
 	}
 	
 

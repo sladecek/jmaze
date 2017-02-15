@@ -57,7 +57,7 @@ public class MazeTest {
 
 	@Test
 	public void applyRealizationShouldReturnStartRoom() {		
-		FloorShape fs = new FloorShape(new Point2D(0, 0), false);
+		FloorShape fs = new FloorShape(new Point2D(0, 0), false, 0,0);
 		maze.linkRoomToFloor(2, fs);
 		maze.setStartRoom(2);
 		
@@ -71,7 +71,7 @@ public class MazeTest {
 
 	@Test
 	public void applyRealizationShouldReturnTargetRoom() {		
-		FloorShape fs = new FloorShape(new Point2D(0, 0), false);
+		FloorShape fs = new FloorShape(new Point2D(0, 0), false,0,0);
 		maze.linkRoomToFloor(2, fs);
 		maze.setTargetRoom(2);
 		
@@ -85,14 +85,14 @@ public class MazeTest {
 
 	@Test
 	public void applyRealizationShouldReturnSolutionWithoutStartAndTargetRooms() {		
-		FloorShape fsS = new FloorShape(new Point2D(0, 0), false);
+		FloorShape fsS = new FloorShape(new Point2D(0, 0), false,0,0);
 		maze.linkRoomToFloor(0, fsS);
 		maze.setStartRoom(0);
 
-		FloorShape fs = new FloorShape(new Point2D(0, 0), false);
+		FloorShape fs = new FloorShape(new Point2D(0, 0), false,0,0);
 		maze.linkRoomToFloor(1, fs);
 
-		FloorShape fsT = new FloorShape(new Point2D(0, 0), false);
+		FloorShape fsT = new FloorShape(new Point2D(0, 0), false,0,0);
 		maze.linkRoomToFloor(7, fsT);
 		maze.setTargetRoom(7);
 
@@ -114,28 +114,28 @@ public class MazeTest {
 	
 	@Test
 	public void testGetShapes() {
-		maze.addShape(new FloorShape(new Point2D(1, 1), false));
+		maze.addShape(new FloorShape(new Point2D(1, 1), false,0,0));
 		Vector<IMazeShape> s = maze.getShapes().getShapes();
 		assertEquals(1, s.size());
 	}
 
 	@Test
 	public void testLinkRoomToFloor() {
-		FloorShape floor = new FloorShape(new Point2D(1, 1), false);
+		FloorShape floor = new FloorShape(new Point2D(1, 1), false,0,0);
 		maze.linkRoomToFloor(27, floor);
 		assertEquals(floor, maze.getFloorFromRoom(27));
 	}
 
 	@Test
 	public void testLinkShapeToId() {
-		FloorShape floor = new FloorShape(new Point2D(1, 1), false);
+		FloorShape floor = new FloorShape(new Point2D(1, 1), false,0,0);
 		maze.linkShapeToId(floor, 23);
 		assertEquals(23, maze.getIdFromShape(floor));
 	}
 
 	@Test
 	public void testSetContext() {
-		ShapeContext c = new ShapeContext(true, 1, 2, 3, 3, 4, 5);
+		ShapeContext c = new ShapeContext(true, 1, 2, 3, 3);
 		maze.setContext(c);
 		assertEquals(c,  maze.getContext());
 	}

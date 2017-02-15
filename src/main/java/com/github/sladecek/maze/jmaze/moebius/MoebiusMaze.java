@@ -38,7 +38,7 @@ public final class MoebiusMaze extends Maze implements IMazeStructure {
 
     public void buildMaze() {
         final boolean isPolar = false;
-        setContext(new ShapeContext(isPolar, height, width, 1, 1, 0, 0));
+        setContext(new ShapeContext(isPolar, height, width, 1, 1));
 
         ShapeContainer result = new ShapeContainer(context);
 
@@ -63,7 +63,7 @@ public final class MoebiusMaze extends Maze implements IMazeStructure {
                 assert id1 == wall1 : "Inconsistent room numbering";
 
                 final boolean isHole = true;
-                FloorShape fs1 = new FloorShape(new Point2D(x,y), isHole);
+                FloorShape fs1 = new FloorShape(new Point2D(x,y), isHole, 0, 0);
 
                 
                 linkRoomToFloor(id1, fs1);

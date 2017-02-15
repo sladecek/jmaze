@@ -37,20 +37,22 @@ public class Maze extends GenericMazeStructure {
         FloorShape startFloor = room2floor.get(getStartRoom());
         if (startFloor != null) {
             final MarkShape mark = startFloor.createMarkInThisRoom(IMazeShape.ShapeType.startRoom);
-            if (context != null) {
+/*  TODO smazat            if (context != null) {
                 mark.setOffsetXPercent(context.getMarkOffsetXPercent());
                 mark.setOffsetYPercent(context.getMarkOffsetYPercent());
             }
+            */
             result.add(mark);
         }
 
         FloorShape targetFloor = room2floor.get(getTargetRoom());
         if (targetFloor != null) {
             final MarkShape mark = targetFloor.createMarkInThisRoom(IMazeShape.ShapeType.targetRoom);
-            if (context != null) {
+/*  TODO smazat            if (context != null) {
                 mark.setOffsetXPercent(context.getMarkOffsetXPercent());
                 mark.setOffsetYPercent(context.getMarkOffsetYPercent());
             }
+            */
             result.add(mark);
         }
 
@@ -63,11 +65,11 @@ public class Maze extends GenericMazeStructure {
                 continue;
             }
             final MarkShape mark = room2floor.get(i).createMarkInThisRoom(IMazeShape.ShapeType.solution);
-            if (context != null) {
+/*  TODO smazat          if (context != null) {
                 mark.setOffsetXPercent(context.getMarkOffsetXPercent());
                 mark.setOffsetYPercent(context.getMarkOffsetYPercent());
             }
-            result.add(mark);
+  */          result.add(mark);
         }
         return result;
 

@@ -13,7 +13,7 @@ public class FloorShapeTest {
 	public void testGetShapeTypeHole() {
 		final Point2D center = new Point2D(2, 1);
 		final boolean isHole = true;
-		FloorShape f = new FloorShape(center, isHole);
+		FloorShape f = new FloorShape(center, isHole, 0,0);
 		assertEquals(ShapeType.hole, f.getShapeType());
 	}
 
@@ -21,7 +21,7 @@ public class FloorShapeTest {
 	public void testGetShapeTypeNonHole() {
 		final Point2D center = new Point2D(2, 1);
 		final boolean isHole = false;
-		FloorShape f = new FloorShape(center, isHole);
+		FloorShape f = new FloorShape(center, isHole, 0,0);
 		assertEquals(ShapeType.nonHole, f.getShapeType());
 	}
 
@@ -29,7 +29,7 @@ public class FloorShapeTest {
 	public void testGetY() {
 		final Point2D center = new Point2D(2, 1);
 		final boolean isHole = true;
-		FloorShape f = new FloorShape(center, isHole);
+		FloorShape f = new FloorShape(center, isHole, 0,0);
 		assertEquals(1, f.getY());
 	}
 
@@ -37,7 +37,7 @@ public class FloorShapeTest {
 	public void testGetX() {
 		final Point2D center = new Point2D(2, 1);
 		final boolean isHole = true;
-		FloorShape f = new FloorShape(center, isHole);
+		FloorShape f = new FloorShape(center, isHole, 0,0);
 		assertEquals(2, f.getX());
 	}
 
@@ -45,7 +45,7 @@ public class FloorShapeTest {
 	public void testIsHole() {
 		final Point2D center = new Point2D(2, 1);
 		final boolean isHole = false;
-		FloorShape f = new FloorShape(center, isHole);
+		FloorShape f = new FloorShape(center, isHole, 0,0);
 		assertEquals(isHole, f.isHole());
 	}
 
@@ -53,7 +53,7 @@ public class FloorShapeTest {
 	public void testCreateMarkInThisRoom() {
 		final Point2D center = new Point2D(2, 1);
 		final boolean isHole = false;
-		FloorShape f = new FloorShape(center, isHole);
+		FloorShape f = new FloorShape(center, isHole, 0,0);
 		MarkShape m = f.createMarkInThisRoom(ShapeType.solution);
 		assertEquals(ShapeType.solution, m.getShapeType());
 		assertEquals(1, m.getY());
@@ -64,7 +64,7 @@ public class FloorShapeTest {
 	public void testToString() {
 		final Point2D center = new Point2D(2, 1);
 		final boolean isHole = false;
-		FloorShape f = new FloorShape(center, isHole);
+		FloorShape f = new FloorShape(center, isHole, 0,0);
 		assertEquals("FloorShape [y=1, x=2, isHole=false]", f.toString());
 	}
 
