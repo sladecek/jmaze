@@ -12,50 +12,54 @@ import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
 /// type.
 public final class FloorShape implements IMazeShape {
 
-	public FloorShape(Point2D center, boolean isHole) {
-		super();
-		this.center = center;
+    public FloorShape(final Point2D center, boolean isHole) {
+        super();
+        this.center = center;
 
-		this.isHole = isHole;
-		LOG.log(Level.INFO, "FloorShape  center=" + center);
-	}
+        this.isHole = isHole;
+        LOG.log(Level.INFO, "FloorShape  center=" + center);
+    }
 
-	@Override
-	public ShapeType getShapeType() {
-		if (isHole) {
-			return ShapeType.hole;
-		} else {
-			return ShapeType.nonHole;
-		}
-	}
+    @Override
+    public ShapeType getShapeType() {
+        if (isHole) {
+            return ShapeType.hole;
+        } else {
+            return ShapeType.nonHole;
+        }
+    }
 
-	public int getY() {
-		return center.getY();
-	}
+    public int getY() {
+        return center.getY();
+    }
 
-	public int getX() {
-		return center.getX();
-	}
+    public int getX() {
+        return center.getX();
+    }
 
-	public boolean isHole() {
-		return isHole;
-	}
+    public boolean isHole() {
+        return isHole;
+    }
 
-	public MarkShape createMarkInThisRoom(ShapeType type) {
-		return new MarkShape(type, getY(), getX());
-	}
+    public MarkShape createMarkInThisRoom(ShapeType type) {
+        return new MarkShape(type, getY(), getX());
+    }
 
-	@Override
-	public void print2D(I2DDocument doc, IPrintStyle printStyle) {
-	}
+    @Override
+    public void print2D(I2DDocument doc, IPrintStyle printStyle) {
+    }
 
-	@Override
-	public String toString() {
-		return "FloorShape [y=" + getY() + ", x=" + getX() + ", isHole=" + isHole + "]";
-	}
+    @Override
+    public String toString() {
+        return "FloorShape [y=" + getY() + ", x=" + getX() + ", isHole=" + isHole + "]";
+    }
 
-	private static final Logger LOG = Logger.getLogger("maze.jmaze");
-	private Point2D center;
-	private boolean isHole;
+    private Point2D center;
+    private boolean isHole;
+
+    /**
+     * Logger facility.
+     */
+    private static final Logger LOG = Logger.getLogger("maze.jmaze");
 
 }

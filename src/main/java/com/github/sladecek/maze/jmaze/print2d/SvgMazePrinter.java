@@ -28,17 +28,16 @@ import com.github.sladecek.maze.jmaze.util.MazeGenerationException;
 public final class SvgMazePrinter  {
 
     public SvgMazePrinter() {
-        super();
     }
 
-    public void printShapes(ShapeContainer shapes, MazeOutputFormat format,
-            OutputStream output, boolean showSolution) throws MazeGenerationException {
+    public void printShapes(final ShapeContainer shapes, final MazeOutputFormat format,
+            final OutputStream output, final boolean showSolution) throws MazeGenerationException {
         SvgDocument sd = createSvgDocument(shapes, showSolution);
         printSvgDocument(format, output, sd);
     }
 
-    public void printSvgDocument(MazeOutputFormat format, OutputStream output,
-            SvgDocument sd) throws  MazeGenerationException {
+    public void printSvgDocument(final MazeOutputFormat format, final OutputStream output,
+            final SvgDocument sd) throws  MazeGenerationException {
         try {            
             switch (format) {
             case svg:
@@ -64,8 +63,8 @@ public final class SvgMazePrinter  {
         }
     }
 
-    public SvgDocument createSvgDocument(ShapeContainer shapes,
-            boolean showSolution) {
+    public SvgDocument createSvgDocument(final ShapeContainer shapes,
+            final boolean showSolution) {
         SvgDocument sd = new SvgDocument(shapes.getContext());
         for (IMazeShape shape : shapes.getShapes()) {
             if (showSolution

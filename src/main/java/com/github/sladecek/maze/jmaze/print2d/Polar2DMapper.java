@@ -7,10 +7,9 @@ import com.github.sladecek.maze.jmaze.geometry.Point2D;
  */
 public class Polar2DMapper implements IMaze2DMapper {
 
-    public Polar2DMapper(Point2D zeroPoint, int cellSize) {
+    public Polar2DMapper(Point2D zeroPoint, int resolution) {
         this.zeroPoint = zeroPoint;
-        this.cellSize = cellSize;
-
+        this.resolution = resolution;
     }
 
     @Override
@@ -23,10 +22,10 @@ public class Polar2DMapper implements IMaze2DMapper {
 
     @Override
     public int mapLength(int l) {
-        return l * cellSize;
+        return l * resolution;
     }
 
     private Point2D zeroPoint;
-    private int cellSize;
+    private int resolution;
 
 }

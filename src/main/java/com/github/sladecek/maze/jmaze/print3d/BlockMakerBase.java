@@ -1,9 +1,5 @@
 package com.github.sladecek.maze.jmaze.print3d;
 
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import com.github.sladecek.maze.jmaze.geometry.EastWest;
 import com.github.sladecek.maze.jmaze.geometry.Point3D;
 import com.github.sladecek.maze.jmaze.geometry.SouthNorth;
@@ -14,6 +10,10 @@ import com.github.sladecek.maze.jmaze.shapes.FloorShape;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
 
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * Base class for 3D Maze printers. Responsible for shared operations such as
  * rectangular room drawing. Converts 2D shapes to 3D blocks.
@@ -21,12 +21,12 @@ import com.github.sladecek.maze.jmaze.shapes.WallShape;
 public abstract class BlockMakerBase {
 
     public BlockMakerBase(ShapeContainer shapes, Maze3DSizes sizes,
-            IPrintStyle style, double approxRoomSizeInmm) {
+                          IPrintStyle style, double approxRoomSizeInmm) {
         this.shapes = shapes;
         this.sizes = sizes;
         this.style = style;
         this.approxRoomSizeInmm = approxRoomSizeInmm;
-		blocks = new ArrayList<Block>();
+        blocks = new ArrayList<Block>();
     }
 
     public final Iterable<Block> getBlocks() {
@@ -34,14 +34,14 @@ public abstract class BlockMakerBase {
     }
 
     public final void printPolyhedron(final ArrayList<Point3D> polyhedron,
-            final String comment, final Color color) {
+                                      final String comment, final Color color) {
         LOG.log(Level.INFO, "printPolyhedron " + comment);
         Block b = Block.newPolyhedron(polyhedron, comment, color);
         blocks.add(b);
     }
 
     public final void printWallElements(final double wallThickness,
-            WallShape wall) {
+                                        WallShape wall) {
 
         LOG.log(Level.INFO, wall.toString());
         int y1 = wall.getY1();
@@ -71,7 +71,7 @@ public abstract class BlockMakerBase {
     }
 
     public void printInnerWallElement(int y1, int y2, int x1, int x2,
-            double wy, double wx, String comment, Color color) {
+                                      double wy, double wx, String comment, Color color) {
 
         final double z = sizes.getWallHeightInmm();
         ArrayList<Point3D> p = new ArrayList<Point3D>();
@@ -107,7 +107,7 @@ public abstract class BlockMakerBase {
                 style.getBaseColor());
     }
 
-    
+
     public final void printFloorWithHoleOneRoom(int cellY, int cellX) {
         ArrayList<Point3D> pe = makeFloorSegmentEast(cellY, cellX);
         printPolyhedron(pe, "base e " + cellX + " " + cellY,
@@ -161,7 +161,7 @@ public abstract class BlockMakerBase {
     }
 
     public ArrayList<Point3D> makeFloorSegmentSouth(ArrayList<Point3D> pe,
-            ArrayList<Point3D> pw) {
+                                                    ArrayList<Point3D> pw) {
         ArrayList<Point3D> ps = new ArrayList<Point3D>();
         ps.add(pw.get(6));
         ps.add(pw.get(7));
@@ -175,7 +175,7 @@ public abstract class BlockMakerBase {
     }
 
     public ArrayList<Point3D> makeFloorSegmentNorth(ArrayList<Point3D> pe,
-            ArrayList<Point3D> pw) {
+                                                    ArrayList<Point3D> pw) {
         ArrayList<Point3D> pn = new ArrayList<Point3D>();
         pn.add(pw.get(0));
         pn.add(pw.get(1));
@@ -202,7 +202,7 @@ public abstract class BlockMakerBase {
     }
 
     public final Point3D getHolePoint(int y, int x, EastWest ew,
-            SouthNorth sn, UpDown ud) {
+                                      SouthNorth sn, UpDown ud) {
 
         final double wt = sizes.getInnerWallToCellRatio() / 2
                 * approxRoomSizeInmm;
@@ -216,13 +216,13 @@ public abstract class BlockMakerBase {
     }
 
     public Point3D mapPointWithZ(int cellY, int cellX, UpDown ud,
-            double offsetY, double offsetX) {
+                                 double offsetY, double offsetX) {
         double z = ud == UpDown.down ? 0 : sizes.getBaseThicknessInmm();
         return maze3dMapper.mapPoint(cellY, cellX, offsetY, offsetX, z);
     }
 
     public final Point3D getFloorPoint(int cellY, int cellX, UpDown ud, SouthNorth sn,
-            EastWest ew) {
+                                       EastWest ew) {
         final int dY = (sn == SouthNorth.south) ? 0 : maze3dMapper.getStepY(
                 cellY, cellX);
         final int dX = (ew == EastWest.east) ? 0 : 1;
@@ -257,20 +257,20 @@ public abstract class BlockMakerBase {
     }
 
     public IMaze3DMapper getMaze3dMapper() {
-		return maze3dMapper;
-	}
+        return maze3dMapper;
+    }
 
-	public void setMaze3dMapper(IMaze3DMapper maze3dMapper) {
-		this.maze3dMapper = maze3dMapper;
-	}
+    public void setMaze3dMapper(IMaze3DMapper maze3dMapper) {
+        this.maze3dMapper = maze3dMapper;
+    }
 
-	private static final Logger LOG = Logger.getLogger("maze.jmaze");
+    private static final Logger LOG = Logger.getLogger("maze.jmaze");
 
     protected ShapeContainer shapes;
 
     protected Maze3DSizes sizes;
     protected IPrintStyle style;
-    
+
     protected IMaze3DMapper maze3dMapper;
 
     private double approxRoomSizeInmm;
