@@ -19,27 +19,26 @@ public class Circular2DMazeTest {
 	
 	@Before
 	public void setUp() throws Exception {		
-		int layerCount = 3;
-		int layerSize = 10;
+		int layerCount = 4;
+		int layerSize = 40;
 		maze = new Circular2DMaze(layerCount, layerSize);				
 	}
 
-
 	@Test
 	public void testGetRoomCount() {
-		assertEquals(18, maze.getRoomCount());
+		assertEquals(29, maze.getRoomCount());
 	}
 
 	@Test
 	public void testGetWallCount() {
-		assertEquals(32, maze.getWallCount());
+		assertEquals(56, maze.getWallCount());
 	}
 
 	@Test
 	public void testGetWalls() {
 		List<Integer> list = new ArrayList<Integer>();
 		maze.getWalls(0).iterator().forEachRemaining(list::add);
-		assertEquals(3, list.size());
+		assertEquals(4, list.size());
 	}
 
 	@Test
@@ -49,34 +48,9 @@ public class Circular2DMazeTest {
 
 	@Test
 	public void testGetTargetRoom() {
-		assertEquals(1, maze.getTargetRoom());
+		assertEquals(28, maze.getTargetRoom());
 	}
 
-	@Test
-	public void testGetRoomBehindWall() {
-		// rooms are numbered by columns
-		// walls counterclockwise
-/*		TODO
-		assertEquals(1, maze.getRoomBehindWall(0, 0));
-		assertEquals(2, maze.getRoomBehindWall(0, 1));
-		
-		assertEquals(0, maze.getRoomBehindWall(1, 0));
-		assertEquals(2, maze.getRoomBehindWall(1, 2));
-		
-		assertEquals(0, maze.getRoomBehindWall(2, 1));
-		assertEquals(1, maze.getRoomBehindWall(2, 2));
-		assertEquals(3, maze.getRoomBehindWall(2, 3));
-		assertEquals(5, maze.getRoomBehindWall(2, 7));
-		assertEquals(4, maze.getRoomBehindWall(2, 5));
-
-		assertEquals(2, maze.getRoomBehindWall(4, 5));
-		assertEquals(5, maze.getRoomBehindWall(4, 6));
-		
-		assertEquals(4, maze.getRoomBehindWall(5, 6));
-		assertEquals(2, maze.getRoomBehindWall(5, 7));
-		assertEquals(3, maze.getRoomBehindWall(5, 8));
-		*/
-	}
 
 	@Test
 	public void testFloorShapes() {
@@ -87,9 +61,9 @@ public class Circular2DMazeTest {
 				floors.add((FloorShape)s);
 			}
 		}
-		assertEquals(33, floors.size());
-		
-		assertEquals(0, floors.get(0).getX());
+		assertEquals(29, floors.size());
+
+
 		assertEquals(0, floors.get(0).getY());
 	}
 	

@@ -57,6 +57,7 @@ public class GenericMazeStructure implements IMazeStructure {
 
  
     public final void setStartRoom(final int startRoom) {
+        LOGGER.log(Level.INFO, "setStartRoom "+startRoom);
         this.startRoom = startRoom;
     }
 
@@ -66,6 +67,7 @@ public class GenericMazeStructure implements IMazeStructure {
     }
 
     public final void setTargetRoom(final int targetRoom) {
+        LOGGER.log(Level.INFO, "setTargetRoom "+targetRoom);
         this.targetRoom = targetRoom;
     }
 

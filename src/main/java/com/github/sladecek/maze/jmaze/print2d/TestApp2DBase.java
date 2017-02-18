@@ -40,6 +40,7 @@ public class TestApp2DBase {
 
             // construct maze generator
             Maze maze = mazeProvider.get();
+            maze.setDebug(true);
             final Random randomGenerator = new Random();
             randomGenerator.setSeed(0);
             IMazeGenerator g = new DepthFirstMazeGenerator(randomGenerator);

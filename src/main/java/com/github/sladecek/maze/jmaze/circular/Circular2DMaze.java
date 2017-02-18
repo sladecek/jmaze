@@ -4,7 +4,6 @@ import com.github.sladecek.maze.jmaze.geometry.Point2D;
 import com.github.sladecek.maze.jmaze.maze.IMazeStructure;
 import com.github.sladecek.maze.jmaze.maze.Maze;
 import com.github.sladecek.maze.jmaze.shapes.FloorShape;
-import com.github.sladecek.maze.jmaze.shapes.IMazeShape;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape.ShapeType;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContext;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
@@ -23,11 +22,14 @@ public class Circular2DMaze extends Maze implements IMazeStructure {
         super();
         this.layerCount = layerCount;
         this.layerSize = layerSize;
+        this.zeroLayerRadius = layerSize * 2 / 3;
+        this.roomCountInZeroLayer = 4;
+        this.minimalRoomLength = layerSize / 2;
         buildMaze();
     }
 
     private void buildMaze() {
-        roomCounts = computeRoomCounts();
+        computeRoomCounts();
         firstRoomInLayer = new Vector<Integer>();
         firstRoomInLayer.setSize(layerCount);
 
@@ -37,62 +39,78 @@ public class Circular2DMaze extends Maze implements IMazeStructure {
         generateConcentricWalls();
         generateRadialWalls();
         setStartAndTargetRooms();
-        // outer walls
-        final IMazeShape.ShapeType ow = IMazeShape.ShapeType.outerWall;
-        addShape(new WallShape(ow, layerCount * layerSize, 0, layerCount * layerSize, 0));
+        generateOuterWalls();
+    }
+
+    private void computeRoomCounts() {
+        roomCounts = new Vector<Integer>();
+        roomCountRatio = new Vector<Integer>();
+        if (layerCount > 0) {
+            roomCounts.add(1);
+            roomCountRatio.add(1);
+            if (layerCount > 1) {
+                roomCounts.add(roomCountInZeroLayer);
+                roomCountRatio.add(roomCountInZeroLayer);
+
+                // all layers except the central layer
+                for (int i = 2; i < layerCount; i++) {
+                    int cnt = roomCounts.get(i-1);
+                    double nextRoomIfDoubled =  Math.PI * computeRadius(i-1) / cnt;
+                    if (nextRoomIfDoubled < minimalRoomLength) {
+                        roomCounts.add(cnt);
+                        roomCountRatio.add(1);
+                    } else {
+                        roomCounts.add(2 * cnt);
+                        roomCountRatio.add(2);
+                    }
+                }
+            }
+        }
+        assert roomCounts.size() == layerCount;
+        assert roomCountRatio.size() == layerCount;
+
+    }
+
+    private int computeRadius(int i) {
+        return zeroLayerRadius + i * layerSize;
     }
 
     private void createContext() {
-        final int height = 2 * layerCount * layerSize;
-        final int width = 2 * layerCount * layerSize;
+        final int rmax = computeRadius(layerCount);
+        final int height = 2 * rmax;
+        final int width = 2 * rmax;
         final boolean isPolar = true;
         setContext(new ShapeContext(isPolar, height, width, 2, 2));
     }
 
     private void setStartAndTargetRooms() {
         setStartRoom(0);
-        setTargetRoom(/*getRoomCount() - TODO */1);
+        setTargetRoom(getRoomCount()-1);
     }
 
     private void generateRooms() {
         for (int r = 0; r < layerCount; r++) {
-            final int cntThis = getRoomCntInLayer(r);
-            int thisNextRatio = computeRoomRatio(r);
-            generateRowOfRooms(r, cntThis, thisNextRatio);
+            generateRowOfRooms(r);
         }
     }
 
-    private int computeRoomRatio(int r) {
-        final int cntThis = getRoomCntInLayer(r);
-        final int cntNext = getRoomCntInNextLayer(r);
-        int thisNextRatio = 1;
-        if (cntNext > 0) {
-            thisNextRatio = cntThis / cntNext;
-        }
-
-        LOGGER.log(Level.INFO, "computeRoomRatio r=" + r + " ctnThis=" + cntThis + " cntNext=" + cntNext);
-        return thisNextRatio;
-    }
-
-    private void generateRowOfRooms(int r, int cntThis, int thisNextRatio) {
+    private void generateRowOfRooms(int layer) {
         final int cntMax = roomCntInOuterLayer();
+        final int cntThis = roomCounts.get(layer);
         final int roomRatio = cntMax / cntThis;
         for (int phi = 0; phi < cntThis; phi++) {
-            int room = 0;
-            if (phi % thisNextRatio == 0) {
-                room = addRoom();
-                if (phi == 0) {
-                    firstRoomInLayer.set(r, room);
-                }
+            int room = addRoom();
+            if (phi == 0) {
+                firstRoomInLayer.set(layer, room);
             }
 
-            Point2D center = new Point2D(mapPhiD(phi * roomRatio+0.5),
-                    (layerCount - r - 1) * layerSize + layerSize/2);
-            if (room == 0)
-            {
-                // start in the center
-                center = new Point2D(0, 0);
+            int y = 0;
+            if (layer > 0) {
+                y = (computeRadius(layer) + computeRadius(layer - 1)) / 2;
             }
+
+            Point2D center = new Point2D(mapPhiD(phi * roomRatio+roomRatio*0.5), y);
+
             final FloorShape floor = new FloorShape(center, false, 0, 0);
             linkRoomToFloor(room, floor);
                 addShape(floor);
@@ -100,12 +118,9 @@ public class Circular2DMaze extends Maze implements IMazeStructure {
     }
 
     private Integer roomCntInOuterLayer() {
-        return roomCounts.get(0);
+        return roomCounts.get(roomCounts.size()-1);
     }
 
-    private int mapPhi(int phi) {
-        return (phi * Point2D.ANGLE_2PI) / roomCntInOuterLayer();
-    }
 
     private int mapPhiD(double phi) {
         return (int) Math.floor((phi * Point2D.ANGLE_2PI) / roomCntInOuterLayer());
@@ -113,99 +128,73 @@ public class Circular2DMaze extends Maze implements IMazeStructure {
 
     private void generateConcentricWalls() {
 
-        for (int r = 1; r < layerCount; r++) {
-            LOGGER.log(Level.INFO, "generateConcentricWalls r=" + r);
+        // draw concentric wall at radius r
+        for (int layer = 0; layer < layerCount-1; layer++) {
+            LOGGER.log(Level.INFO, "generateConcentricWalls r=" + layer);
 
             // the next layer may have less rooms than this one
-            final int roomCntThis = getRoomCntInLayer(r);
-            final int roomCntNext = getRoomCntInNextLayer(r);
-            final int gRoomThis = firstRoomInLayer.get(r - 1);
-            final int gRoomNext = firstRoomInLayer.get(r);
+            final int roomCntInner = roomCounts.get(layer);
+            final int roomCntOuter = roomCounts.get(layer+1);
+            final int gRoomInner = firstRoomInLayer.get(layer);
+            final int gRoomOuter = firstRoomInLayer.get(layer+1);
 
-            final int roomCntRatio = computeRoomRatio(r);
-            for (int roomNext = 0; roomNext < roomCntNext; roomNext++) {
+            final int roomCntRatio = roomCountRatio.get(layer+1);
+            for (int roomInner = 0; roomInner < roomCntInner; roomInner++) {
                 for (int j = 0; j < roomCntRatio; j++) {
-                    int roomThis = roomNext * roomCntRatio + j;
-                    int id = addWall(gRoomThis + roomThis, gRoomNext + roomNext);
-                    addWallShape(roomCntThis, layerCount - r, layerCount - r, roomThis, roomThis + 1, id);
+                    int roomOuter = roomInner * roomCntRatio + j;
+                    int id = addWall(gRoomInner + roomInner, gRoomOuter + roomOuter);
+                    final int r = computeRadius(layer);
+                    addWallShape(roomCntOuter, r, r, roomOuter, roomOuter + 1, id);
                 }
             }
         }
     }
 
     private void addWallShape(int roomCntThisLayer, int r1, int r2, int phi1, int phi2, int id) {
-        final int equatorCellCnt = roomCntInOuterLayer();
-        final int roomMapRatio = equatorCellCnt / roomCntThisLayer;
-        final int rphi1 = (phi1 * roomMapRatio) % equatorCellCnt;
-        final int rphi2 = (phi2 * roomMapRatio) % equatorCellCnt;
-        WallShape ws = new WallShape(ShapeType.innerWall, r1 * layerSize, mapPhi(rphi1), r2 * layerSize, mapPhi(rphi2));
+        final int outerCnt = roomCntInOuterLayer();
+        final int roomMapRatio = outerCnt / roomCntThisLayer;
+        final int rphi1 = (phi1 * roomMapRatio) % outerCnt;
+        final int rphi2 = (phi2 * roomMapRatio) % outerCnt;
+        WallShape ws = new WallShape(ShapeType.innerWall, r1 , mapPhiD(rphi1), r2 , mapPhiD(rphi2));
         addShape(ws);
         linkShapeToId(ws, id);
     }
 
-    private Vector<Integer> computeRoomCounts() {
-        // number of rooms in the equator layer
-        double circumference = 2 * Math.PI * (layerCount + 1);
-        int cnt = 1;
-        while (cnt * 2 < circumference) {
-            cnt *= 2;
-        }
-
-        Vector<Integer> result = new Vector<Integer>();
-        result.add(cnt);
-
-        // all layers except the central layer
-        for (int i = 1; i < layerCount - 1; i++) {
-            double currentRoomSize = 2 * Math.PI * (layerCount - i) / cnt;
-            if (currentRoomSize < 0.5) {
-                // cell becoming too narrow, join two cells together
-                if (cnt >= 4) {
-                    cnt /= 2;
-                }
-            }
-            result.add(cnt);
-        }
-
-        // central layer
-        result.add(1);
-
-        return result;
-    }
 
     private void generateRadialWalls() {
-        for (int r = 0; r < layerCount; r++) {
-            LOGGER.log(Level.INFO, "generateRadialWalls i=" + r);
+        for (int layer = 1; layer < layerCount; layer++) {
+            LOGGER.log(Level.INFO, "generateRadialWalls i=" + layer);
 
-            final int cnt = getRoomCntInNextLayer(r);
+            final int cnt = roomCounts.get(layer);
             if (cnt <= 1) {
                 continue;
             }
 
-            final int gr = firstRoomInLayer.get(r);
+            final int gr = firstRoomInLayer.get(layer);
             for (int j = 0; j < cnt; j++) {
                 int id = addWall(gr + j, gr + (j + 1) % cnt);
                 // strange wall naming convention - wall 0 is between room 0 and
                 // 1
                 int phi = (j + 1) % cnt;
-                addWallShape(cnt, layerCount - r - 1, layerCount - r, phi, phi, id);
+                addWallShape(cnt, computeRadius(layer-1), computeRadius(layer), phi, phi, id);
             }
         }
     }
 
-    private int getRoomCntInLayer(int r) {
-        return roomCounts.get(r);
+    private void generateOuterWalls() {
+        final ShapeType ow = ShapeType.outerWall;
+        int r = computeRadius(layerCount-1);
+        addShape(new WallShape(ow, r, 0, r, 0));
     }
 
-    private int getRoomCntInNextLayer(int r) {
-        if (r + 1 >= roomCounts.size()) {
-            return 0;
-        }
-        return roomCounts.get(r + 1);
-    }
 
     private int layerCount;
+    private int zeroLayerRadius;
+    private int roomCountInZeroLayer;
+    private int minimalRoomLength;
     private int layerSize;
     private Vector<Integer> roomCounts;
+    private Vector<Integer> roomCountRatio;
     private Vector<Integer> firstRoomInLayer;
 
     private static final Logger LOGGER = Logger.getLogger("maze.jmaze");
