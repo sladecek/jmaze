@@ -17,8 +17,8 @@ public class SvgDocument implements I2DDocument {
 
     @Override
     public void printLine(Point2D p1, Point2D p2, String style, boolean center) {
-        int offsX = center ? context.getResolutionX() / 2 : 0;
-        int offsY = center ? context.getResolutionY() / 2 : 0;
+        int offsX = center ? basicRoomSize / 2 : 0;
+        int offsY = center ? basicRoomSize / 2 : 0;
 
         String svgNS = SVGDOMImplementation.SVG_NAMESPACE_URI;
         Element line = doc.createElementNS(svgNS, "line");
@@ -65,7 +65,7 @@ public class SvgDocument implements I2DDocument {
     @Override
     public void printMark(Point2D center, String fill, int sizePercent, int offsXPercent, int offsYPercent) {
 
-        final int perimeter = /*context.getResolutionX() */ sizePercent /* 100*/;
+        final int perimeter = /*basicRoomSize() */ sizePercent /* 100*/;
         printCircle(center, fill, offsXPercent, offsYPercent, perimeter, true, new String());
 
     }
@@ -131,23 +131,20 @@ public class SvgDocument implements I2DDocument {
     }
 
     private void constructCoordinateSystem() {
-        final int resolutionX = context.getResolutionX();
-        final int resolutionY = context.getResolutionY();
-        final int margin = resolutionX / 2;
+        final int margin = basicRoomSize / 2;
 
-        canvasWidth = 2 * margin + context.getPictureWidth() * resolutionX;
-        canvasHeight = 2 * margin + context.getPictureHeight() * resolutionY;
+        canvasWidth = 2 * margin + context.getPictureWidth() * basicRoomSize;
+        canvasHeight = 2 * margin + context.getPictureHeight() * basicRoomSize;
 
         if (context.isPolarCoordinates()) {
-            assert resolutionX == resolutionY;
             Point2D zeroPoint = new Point2D(
-                    margin + context.getPictureWidth() * resolutionX / 2,
-                    margin + context.getPictureHeight() * resolutionY / 2);
-            mapper = new Polar2DMapper(zeroPoint, resolutionX);
+                    margin + context.getPictureWidth() * basicRoomSize / 2,
+                    margin + context.getPictureHeight() * basicRoomSize / 2);
+            mapper = new Polar2DMapper(zeroPoint, basicRoomSize);
         } else {
             Point2D zeroPoint = new Point2D(margin, margin);
 
-            mapper = new Cartesian2DMapper(zeroPoint, resolutionX, resolutionY);
+            mapper = new Cartesian2DMapper(zeroPoint, basicRoomSize, basicRoomSize);
         }
     }
 

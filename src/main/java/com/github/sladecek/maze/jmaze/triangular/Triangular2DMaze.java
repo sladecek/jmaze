@@ -28,7 +28,7 @@ public class Triangular2DMaze extends Maze implements IMazeStructure {
         final int height = size;
         final int width = 2 * size;
         final boolean isPolar = false;
-        setContext(new ShapeContext(isPolar, height, width, 12, 20));
+        setContext(new ShapeContext(isPolar, height, width/*, 12, 20*/));
 
 
         // outer walls

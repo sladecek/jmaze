@@ -3,6 +3,7 @@ package com.github.sladecek.maze.jmaze.hexagonal;
 import com.github.sladecek.maze.jmaze.geometry.Point2D;
 import com.github.sladecek.maze.jmaze.maze.IMazeStructure;
 import com.github.sladecek.maze.jmaze.maze.Maze;
+import com.github.sladecek.maze.jmaze.print2d.I2DDocument;
 import com.github.sladecek.maze.jmaze.shapes.FloorShape;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape.ShapeType;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContext;
@@ -22,7 +23,7 @@ public class Hexagonal2DMaze extends Maze implements IMazeStructure {
     }
 
     // Perimeter of the hexagon.
-    static final int hP = 10;
+    static final int hP = I2DDocument.basicRoomSize * 3;
 
     /// Half-height of the hexagon
     static final int hH = (int) Math.floor(hP * Math.sqrt(3f) / 2f);
@@ -108,7 +109,7 @@ public class Hexagonal2DMaze extends Maze implements IMazeStructure {
         final int height = hH * (2 * size + 1);
         final int width = hP * (3 * size - 1);
         final boolean isPolar = false;
-        setContext(new ShapeContext(isPolar, height, width, 3, 3));
+        setContext(new ShapeContext(isPolar, height, width));
     }
 
     private Point2D computeRoomCenter(int x, boolean isOdd, int y) {

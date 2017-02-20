@@ -153,7 +153,7 @@ public class SvgDocumentTest {
 		int pictureWidth = 200;
 		int resolutionX = 7;
 		int resolutionY = 7;
-		ShapeContext sc = new ShapeContext(isPolarCoordinates, pictureHeight, pictureWidth, resolutionX, resolutionY);
+		ShapeContext sc = new ShapeContext(isPolarCoordinates, pictureHeight, pictureWidth/*, resolutionX, resolutionY*/);
 
 		SvgDocument d = new SvgDocument(sc);
 		return d;

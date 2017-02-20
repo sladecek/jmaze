@@ -26,7 +26,7 @@ public final class Rectangular2DMaze extends Maze implements
      */
     public void buildMaze() {
         final boolean isPolar = false;
-        setContext(new ShapeContext(isPolar, height, width, 20, 20));
+        setContext(new ShapeContext(isPolar, height, width /*20, 20*/));
 
         // outer walls
         final IMazeShape.ShapeType ow = IMazeShape.ShapeType.outerWall;

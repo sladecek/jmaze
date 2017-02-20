@@ -28,7 +28,7 @@ public class Voronoi2DMaze extends Maze implements IMazeStructure {
 
     private void buildMaze() {
         final boolean isPolar = false;
-        setContext(new ShapeContext(isPolar, height, width, 1, 1));
+        setContext(new ShapeContext(isPolar, height, width/*, 1, 1*/));
 
         createOuterWalls();
 

@@ -20,6 +20,11 @@ public interface I2DDocument {
 
     int getCanvasHeight();
 
+    /**
+     * Basic unit of room size in pixels. Corresponds to the size of three rectangular rooms.
+     */
+    int basicRoomSize = 64;
+
     ShapeContext getContext();
 
 }
