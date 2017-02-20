@@ -15,7 +15,7 @@ public class ShapeContext {
         this.resolutionX = resolutionX;
         this.resolutionY = resolutionY;
     /*	this.markOffsetXPercent = markOffsetXPercent;
-		this.markOffsetYPercent = markOffsetYPercent;*/
+        this.markOffsetYPercent = markOffsetYPercent;*/
     }
 
     private boolean isPolarCoordinates;
@@ -46,13 +46,5 @@ public class ShapeContext {
         return resolutionY;
     }
 
-	/*
-	public int getMarkOffsetXPercent() {
-		return markOffsetXPercent;
-	}
 
-	public int getMarkOffsetYPercent() {
-		return markOffsetYPercent;
-	}
-	*/
 }

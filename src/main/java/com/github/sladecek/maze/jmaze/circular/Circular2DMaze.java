@@ -17,14 +17,18 @@ import java.util.logging.Logger;
  */
 public class Circular2DMaze extends Maze implements IMazeStructure {
 
-
-    public Circular2DMaze(int layerCount, int layerSize) {
+    /**
+     * Creates a new instance of circular maze generator.
+     * @param layerCount number of layers in the maze.
+     * @param layerThickness layer size
+     */
+    public Circular2DMaze(int layerCount, int layerThickness) {
         super();
         this.layerCount = layerCount;
-        this.layerSize = layerSize;
-        this.zeroLayerRadius = layerSize * 2 / 3;
+        this.layerSize = layerThickness;
+        this.zeroLayerRadius = layerThickness * 2 / 3;
         this.roomCountInZeroLayer = 4;
-        this.minimalRoomLength = layerSize / 2;
+        this.minimalRoomLength = layerThickness / 2;
         buildMaze();
     }
 
