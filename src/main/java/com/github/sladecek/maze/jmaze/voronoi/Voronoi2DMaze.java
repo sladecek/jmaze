@@ -15,10 +15,11 @@ import java.util.logging.Logger;
 
 public class Voronoi2DMaze extends Maze implements IMazeStructure {
 
+
     public Voronoi2DMaze(int width, int height, int roomCount, int loydCnt, Random randomGenerator, boolean debug) {
         super();
-        this.width = width * 50;
-        this.height = height * 50;
+        this.width = width * rsp;
+        this.height = height * rsp;
         this.roomCount = roomCount;
         this.loydCnt = loydCnt;
         this.randomGenerator = randomGenerator;
@@ -89,8 +90,11 @@ public class Voronoi2DMaze extends Maze implements IMazeStructure {
         addShape(new WallShape(ow, 0, width, height, width));
         addShape(new WallShape(ow, height, 0, height, width));
     }
-
     private static final Logger LOGGER = Logger.getLogger("maze.jmaze");
+    /**
+     * Approximate room size in pixels.
+     */
+    private final int rsp = 20;
     private int width;
     private int height;
     private int roomCount;
