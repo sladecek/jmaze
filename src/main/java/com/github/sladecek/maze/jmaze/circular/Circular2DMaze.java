@@ -22,13 +22,13 @@ public class Circular2DMaze extends Maze implements IMazeStructure {
      * @param layerCount number of layers in the maze.
      * @param layerThickness layer size
      */
-    public Circular2DMaze(int layerCount, int layerThickness) {
+    public Circular2DMaze(int layerCount) {
         super();
         this.layerCount = layerCount;
-        this.layerSize = layerThickness;
-        this.zeroLayerRadius = layerThickness * 2 / 3;
+        this.layerSize = 30;
+        this.zeroLayerRadius = 20;
         this.roomCountInZeroLayer = 4;
-        this.minimalRoomLength = layerThickness / 2;
+        this.minimalRoomLength = 15;
         buildMaze();
     }
 

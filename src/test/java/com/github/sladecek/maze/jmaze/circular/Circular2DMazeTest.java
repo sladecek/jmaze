@@ -20,8 +20,7 @@ public class Circular2DMazeTest {
 	@Before
 	public void setUp() throws Exception {		
 		int layerCount = 4;
-		int layerSize = 40;
-		maze = new Circular2DMaze(layerCount, layerSize);				
+		maze = new Circular2DMaze(layerCount);
 	}
 
 	@Test

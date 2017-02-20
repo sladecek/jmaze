@@ -23,19 +23,22 @@ public class Triangular2DMaze extends Maze implements IMazeStructure {
         buildMaze();
     }
 
+private final int rsx = 12;
+    private final int rsy = 20;
+
 
     private void buildMaze() {
         final int height = size;
         final int width = 2 * size;
         final boolean isPolar = false;
-        setContext(new ShapeContext(isPolar, height, width/*, 12, 20*/));
+        setContext(new ShapeContext(isPolar, rsy*height, rsx*width/*, 12, 20*/));
 
 
         // outer walls
         final IMazeShape.ShapeType ow = IMazeShape.ShapeType.outerWall;
-        addShape(new WallShape(ow, 0, size, size, 0));
-        addShape(new WallShape(ow, size, 0, size, 2 * size));
-        addShape(new WallShape(ow, size, 2 * size, 0, size));
+        addShape(new WallShape(ow, 0, rsx*size, rsy*size, 0));
+        addShape(new WallShape(ow, rsy*size, 0, rsy*size, 2 * size*rsx));
+        addShape(new WallShape(ow, rsy*size, 2 * size*rsx, 0, rsx*size));
 
         int prevFirst = -1;
         int lastRoom = -1;
@@ -65,7 +68,7 @@ public class Triangular2DMaze extends Maze implements IMazeStructure {
                     y2++;
                 }
 
-                final FloorShape floor = new FloorShape(new Point2D(x2, y), false, 0, 100);
+                final FloorShape floor = new FloorShape(new Point2D(rsx*x2, rsy*y+rsy/2), false, 0, 100);
                 linkRoomToFloor(r, floor);
                 addShape(floor);
 
@@ -94,7 +97,7 @@ public class Triangular2DMaze extends Maze implements IMazeStructure {
     private void addWallAndShape(int prevRoom, int room, int x1, int x2,
                                  int y1, int y2) {
         int id = addWall(prevRoom, room);
-        WallShape ws = new WallShape(ShapeType.innerWall, y1, x1, y2, x2);
+        WallShape ws = new WallShape(ShapeType.innerWall, rsy*y1, rsx*x1, rsy*y2, rsx*x2);
         LOGGER.info("addWallAndShape room1=" + prevRoom + " room2=" + room + " y1=" + y1 + " y2=" + y2 + " x1=" + x1 + " x2=" + x2);
         addShape(ws);
         linkShapeToId(ws, id);
