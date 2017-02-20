@@ -17,9 +17,6 @@ public class SvgDocument implements I2DDocument {
 
     @Override
     public void printLine(Point2D p1, Point2D p2, String style) {
-        int offsX =  0;
-        int offsY =  0;
-
         String svgNS = SVGDOMImplementation.SVG_NAMESPACE_URI;
         Element line = doc.createElementNS(svgNS, "line");
         Element svgRoot = doc.getDocumentElement();
@@ -28,10 +25,10 @@ public class SvgDocument implements I2DDocument {
         Point2D mp1 = mapper.mapPoint(p1);
         Point2D mp2 = mapper.mapPoint(p2);
 
-        line.setAttributeNS(null, "x1", String.valueOf(mp1.getX() + offsX));
-        line.setAttributeNS(null, "y1", String.valueOf(mp1.getY() + offsY));
-        line.setAttributeNS(null, "x2", String.valueOf(mp2.getX() + offsX));
-        line.setAttributeNS(null, "y2", String.valueOf(mp2.getY() + offsY));
+        line.setAttributeNS(null, "x1", String.valueOf(mp1.getX()));
+        line.setAttributeNS(null, "y1", String.valueOf(mp1.getY()));
+        line.setAttributeNS(null, "x2", String.valueOf(mp2.getX()));
+        line.setAttributeNS(null, "y2", String.valueOf(mp2.getY()));
         line.setAttributeNS(null, "style", style);
 
 
@@ -65,8 +62,7 @@ public class SvgDocument implements I2DDocument {
     @Override
     public void printMark(Point2D center, String fill, int sizePercent, int offsXPercent, int offsYPercent) {
 
-        final int perimeter = /*basicRoomSize() */ sizePercent /* 100*/;
-        printCircle(center, fill, offsXPercent, offsYPercent, perimeter, true, new String());
+        printCircle(center, fill, offsXPercent, offsYPercent, sizePercent, true, new String());
 
     }
 
@@ -131,20 +127,20 @@ public class SvgDocument implements I2DDocument {
     }
 
     private void constructCoordinateSystem() {
-        final int margin = basicRoomSize / 2;
 
-        canvasWidth = 2 * margin + context.getPictureWidth() * basicRoomSize;
-        canvasHeight = 2 * margin + context.getPictureHeight() * basicRoomSize;
+
+        canvasWidth = 2 * margin + context.getPictureWidth();
+        canvasHeight = 2 * margin + context.getPictureHeight();
 
         if (context.isPolarCoordinates()) {
             Point2D zeroPoint = new Point2D(
-                    margin + context.getPictureWidth() * basicRoomSize / 2,
-                    margin + context.getPictureHeight() * basicRoomSize / 2);
-            mapper = new Polar2DMapper(zeroPoint, basicRoomSize);
+                    margin + context.getPictureWidth()  / 2,
+                    margin + context.getPictureHeight() / 2);
+            mapper = new Polar2DMapper(zeroPoint, 1);
         } else {
             Point2D zeroPoint = new Point2D(margin, margin);
 
-            mapper = new Cartesian2DMapper(zeroPoint, basicRoomSize, basicRoomSize);
+            mapper = new Cartesian2DMapper(zeroPoint, 1,1);
         }
     }
 
@@ -156,4 +152,5 @@ public class SvgDocument implements I2DDocument {
 
     private IMaze2DMapper mapper;
 
+    final int margin = 10;
 }

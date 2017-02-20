@@ -172,7 +172,7 @@ public class WallShapeTest {
 		verify(mockedDocument).printLine(p1.capture(), p2.capture(), style.capture());
 				
 		assertEquals(expectedStyle, style.getValue());
-		
+
 	}
 
 	

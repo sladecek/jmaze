@@ -14,6 +14,12 @@ import com.github.sladecek.maze.jmaze.shapes.WallShape;
  */
 public final class Rectangular2DMaze extends Maze implements
         IMazeStructure {
+
+    /**
+     * Room size in pixels.
+     */
+    private final int rsp = 20;
+
     public Rectangular2DMaze(int height, int width) {
         this.width = width;
         this.height = height;
@@ -26,21 +32,25 @@ public final class Rectangular2DMaze extends Maze implements
      */
     public void buildMaze() {
         final boolean isPolar = false;
-        setContext(new ShapeContext(isPolar, height, width /*20, 20*/));
+
+        // width and height in pixels
+        final int h = rsp * height;
+        final int w = rsp * width;
+        setContext(new ShapeContext(isPolar, h, w));
 
         // outer walls
         final IMazeShape.ShapeType ow = IMazeShape.ShapeType.outerWall;
-        addShape(new WallShape(ow, 0, 0, 0, width));
-        addShape(new WallShape(ow, 0, 0, height, 0));
-        addShape(new WallShape(ow, 0, width, height, width));
-        addShape(new WallShape(ow, height, 0, height, width));
+        addShape(new WallShape(ow, 0, 0, 0, w));
+        addShape(new WallShape(ow, 0, 0, h, 0));
+        addShape(new WallShape(ow, 0, w, h, w));
+        addShape(new WallShape(ow, h, 0, h, w));
 
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 int id = addRoom();
                 assert id == y * width + x : "Inconsistent room numbering";
                                 
-                final FloorShape floor = new FloorShape(new Point2D(x,y), false, 50, 50);
+                final FloorShape floor = new FloorShape(new Point2D(x*rsp+rsp/2,y*rsp+rsp/2), false, 50, 50);
                 linkRoomToFloor(id, floor);
                 addShape(floor);
             }
@@ -55,9 +65,9 @@ public final class Rectangular2DMaze extends Maze implements
                 int roomWest = roomEast + 1;
                 int id = addWall(roomEast, roomWest);
                 
-                WallShape w = new WallShape(iw, y, x + 1, y + 1, x + 1);
-                addShape(w);
-                linkShapeToId(w, id);
+                WallShape wall = new WallShape(iw, rsp*y, rsp*(x + 1), rsp*(y + 1), rsp*(x + 1));
+                addShape(wall);
+                linkShapeToId(wall, id);
             }
         }
 
@@ -67,9 +77,9 @@ public final class Rectangular2DMaze extends Maze implements
                 int roomNorth = y * width + x;
                 int roomSouth = roomNorth + width;
                 int id = addWall(roomNorth, roomSouth);
-                WallShape w = new WallShape(iw, y + 1, x, y + 1, x + 1);
-                addShape(w);
-                linkShapeToId(w, id);
+                WallShape wall = new WallShape(iw, rsp*(y + 1), rsp*x, rsp*(y + 1), rsp*(x + 1));
+                addShape(wall);
+                linkShapeToId(wall, id);
             }
         }
 

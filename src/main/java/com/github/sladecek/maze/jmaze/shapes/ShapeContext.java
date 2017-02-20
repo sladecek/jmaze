@@ -5,6 +5,12 @@ package com.github.sladecek.maze.jmaze.shapes;
  */
 public class ShapeContext {
 
+    /**
+     * Creates a new Shape context.
+     * @param isPolarCoordinates
+     * @param pictureHeight  picture heigth in pixels (2D) or rooms (3D)
+     * @param pictureWidth picture width in pixels (2D) or rooms (3D)
+     */
     public ShapeContext(boolean isPolarCoordinates, int pictureHeight, int pictureWidth) {
 
 
@@ -12,19 +18,13 @@ public class ShapeContext {
         this.isPolarCoordinates = isPolarCoordinates;
         this.pictureHeight = pictureHeight;
         this.pictureWidth = pictureWidth;
-  /*      this.resolutionX = resolutionX;
-        this.resolutionY = resolutionY;*/
 
     }
 
     private boolean isPolarCoordinates;
     private int pictureHeight;
     private int pictureWidth;
-  /*  private int resolutionX;
-    private int resolutionY;
-    private int markOffsetXPercent;
-    private int markOffsetYPercent;
-*/
+
     public boolean isPolarCoordinates() {
         return isPolarCoordinates;
     }
@@ -36,14 +36,5 @@ public class ShapeContext {
     public int getPictureWidth() {
         return pictureWidth;
     }
-/*
-    public int getResolutionX() {
-        return resolutionX;
-    }
-
-    public int getResolutionY() {
-        return resolutionY;
-    }
-*/
 
 }
