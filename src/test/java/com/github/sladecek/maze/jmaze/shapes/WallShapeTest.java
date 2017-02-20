@@ -34,8 +34,8 @@ public class WallShapeTest {
 		ArgumentCaptor<Point2D> p1 = ArgumentCaptor.forClass(Point2D.class);
 		ArgumentCaptor<Point2D> p2 = ArgumentCaptor.forClass(Point2D.class);
 		ArgumentCaptor<String> style = ArgumentCaptor.forClass(String.class);
-		ArgumentCaptor<Boolean> c = ArgumentCaptor.forClass(Boolean.class);
-		verify(mockedDocument).printLine(p1.capture(), p2.capture(), style.capture(), c.capture());
+
+		verify(mockedDocument).printLine(p1.capture(), p2.capture(), style.capture());
 		
 
 		assertEquals(0, p1.getValue().getX());
@@ -45,7 +45,7 @@ public class WallShapeTest {
 		assertEquals(3, p2.getValue().getY());
 		
 		assertEquals("", style.getValue());
-		assertEquals(false, c.getValue());		
+
 	}
 
 	@Test
@@ -59,8 +59,8 @@ public class WallShapeTest {
 		ArgumentCaptor<Point2D> p1 = ArgumentCaptor.forClass(Point2D.class);
 		ArgumentCaptor<Point2D> p2 = ArgumentCaptor.forClass(Point2D.class);
 		ArgumentCaptor<String> style = ArgumentCaptor.forClass(String.class);
-		ArgumentCaptor<Boolean> c = ArgumentCaptor.forClass(Boolean.class);
-		verify(mockedDocument).printLine(p1.capture(), p2.capture(), style.capture(), c.capture());
+
+		verify(mockedDocument).printLine(p1.capture(), p2.capture(), style.capture());
 		
 
 		assertEquals(0, p1.getValue().getX());
@@ -70,7 +70,7 @@ public class WallShapeTest {
 		assertEquals(5, p2.getValue().getY());
 		
 		assertEquals("", style.getValue());
-		assertEquals(false, c.getValue());		
+
 	}
 
 	@Test
@@ -168,11 +168,11 @@ public class WallShapeTest {
 		ArgumentCaptor<Point2D> p1 = ArgumentCaptor.forClass(Point2D.class);
 		ArgumentCaptor<Point2D> p2 = ArgumentCaptor.forClass(Point2D.class);
 		ArgumentCaptor<String> style = ArgumentCaptor.forClass(String.class);
-		ArgumentCaptor<Boolean> c = ArgumentCaptor.forClass(Boolean.class);
-		verify(mockedDocument).printLine(p1.capture(), p2.capture(), style.capture(), c.capture());
+
+		verify(mockedDocument).printLine(p1.capture(), p2.capture(), style.capture());
 				
 		assertEquals(expectedStyle, style.getValue());
-		assertEquals(expectedCenter, c.getValue());
+		
 	}
 
 	

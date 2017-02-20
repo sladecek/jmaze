@@ -89,7 +89,7 @@ public class SvgDocumentTest {
 	public void testPrintLine() throws TransformerConfigurationException, TransformerFactoryConfigurationError, TransformerException {
 		boolean isPolarCoordinates = false;
 		SvgDocument d = createTestDocument(isPolarCoordinates);
-		d.printLine(new Point2D(20, 30), new Point2D(40, 50), "style", false);
+		d.printLine(new Point2D(20, 30), new Point2D(40, 50), "style");
 		
 		Document document = d.getDocument();
 		

@@ -5,7 +5,7 @@ import com.github.sladecek.maze.jmaze.shapes.ShapeContext;
 
 public interface I2DDocument {
 
-    void printLine(Point2D p1, Point2D p2, String style, boolean center);
+    void printLine(Point2D p1, Point2D p2, String style);
 
     void printArcSegment(Point2D p1, Point2D p2, String style);
 

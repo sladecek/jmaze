@@ -16,9 +16,9 @@ public class SvgDocument implements I2DDocument {
     }
 
     @Override
-    public void printLine(Point2D p1, Point2D p2, String style, boolean center) {
-        int offsX = center ? basicRoomSize / 2 : 0;
-        int offsY = center ? basicRoomSize / 2 : 0;
+    public void printLine(Point2D p1, Point2D p2, String style) {
+        int offsX =  0;
+        int offsY =  0;
 
         String svgNS = SVGDOMImplementation.SVG_NAMESPACE_URI;
         Element line = doc.createElementNS(svgNS, "line");

@@ -19,7 +19,7 @@ public final class WallShape implements IMazeShape {
     @Override
     public void print2D(I2DDocument doc, IPrintStyle printStyle) {
         String style = "";
-        boolean center = false;
+
         switch (shapeType) {
             case outerWall:
                 style = "stroke:" + printStyle.getOuterWallColor().toSvg() + ";stroke-width:"
@@ -29,11 +29,7 @@ public final class WallShape implements IMazeShape {
                 style = "stroke:" + printStyle.getInnerWallColor().toSvg() + ";stroke-width:"
                         + printStyle.getInnerWallWidth();
                 break;
-            case solution:
-                style = "stroke:" + printStyle.getSolutionWallColor().toSvg() + ";stroke-width:"
-                        + printStyle.getSolutionWallWidth();
-                center = true;
-                break;
+
             case auxiliaryWall:
                 style = "stroke:" + printStyle.getDebugWallColor().toSvg() + ";stroke-width:"
                         + printStyle.getInnerWallWidth();
@@ -49,7 +45,7 @@ public final class WallShape implements IMazeShape {
                 doc.printArcSegment(p1, p2, style);
             }
         } else {
-            doc.printLine(p1, p2, style, center);
+            doc.printLine(p1, p2, style);
         }
     }
 
