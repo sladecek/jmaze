@@ -22,8 +22,8 @@ public class Hexagonal2DMaze extends Maze implements IMazeStructure {
         buildMaze();
     }
 
-    // Perimeter of the hexagon.
-    static final int hP = I2DDocument.basicRoomSize * 3;
+    // Radius of the hexagon.
+    static final int hP = 20;
 
     /// Half-height of the hexagon
     static final int hH = (int) Math.floor(hP * Math.sqrt(3f) / 2f);

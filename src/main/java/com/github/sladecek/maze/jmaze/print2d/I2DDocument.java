@@ -9,21 +9,14 @@ public interface I2DDocument {
 
     void printArcSegment(Point2D p1, Point2D p2, String style);
 
-    void printMark(Point2D center, String fill, int sizePercent,
-            int offsXPercent, int offsYPercent);
+    void printMark(Point2D center, String fill, int sizePercent);
 
-    void printCircle(Point2D center, String fill, int offsXPercent,
-            int offsYPercent, int perimeter, boolean isPerimeterAbsolute,
+    void printCircle(Point2D center, String fill, int perimeter, boolean isPerimeterAbsolute,
             String style);
 
     int getCanvasWidth();
 
     int getCanvasHeight();
-
-    /**
-     * Basic unit of room size in pixels. Corresponds to the size of three rectangular rooms.
-     */
-    int basicRoomSize = 64;
 
     ShapeContext getContext();
 

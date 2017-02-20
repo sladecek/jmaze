@@ -15,8 +15,6 @@ public final class FloorShape implements IMazeShape {
     public FloorShape(final Point2D center, boolean isHole, int offsetXPercent, int offsetYPercent) {
         super();
         this.center = center;
-        this.offsetXPercent = offsetXPercent;
-        this.offsetYPercent = offsetYPercent;
 
         this.isHole = isHole;
         LOG.log(Level.INFO, "FloorShape  center=" + center);
@@ -45,8 +43,6 @@ public final class FloorShape implements IMazeShape {
 
     public MarkShape createMarkInThisRoom(ShapeType type) {
         MarkShape ms = new MarkShape(type, getY(), getX());
-        ms.setOffsetXPercent(offsetXPercent);
-        ms.setOffsetYPercent(offsetYPercent);
         return ms;
     }
 
@@ -64,10 +60,7 @@ public final class FloorShape implements IMazeShape {
 
     private Point2D center;
     private boolean isHole;
-
-    private int offsetXPercent = 50;
-    private int offsetYPercent = 50;
-    /**
+/**
      * Logger facility.
      */
     private static final Logger LOG = Logger.getLogger("maze.jmaze");

@@ -120,7 +120,7 @@ public class SvgDocumentTest {
 	public void testPrintMark() throws TransformerConfigurationException, TransformerFactoryConfigurationError, TransformerException {
 		boolean isPolarCoordinates = false;
 		SvgDocument d = createTestDocument(isPolarCoordinates);
-		d.printMark(new Point2D(20, 30), "fill", 9, 33, 66);
+		d.printMark(new Point2D(20, 30), "fill", 9);
 		
 		Document document = d.getDocument();
 		
@@ -132,7 +132,7 @@ public class SvgDocumentTest {
 	public void testPrintCircle() throws TransformerConfigurationException, TransformerFactoryConfigurationError, TransformerException {
 		boolean isPolarCoordinates = false;
 		SvgDocument d = createTestDocument(isPolarCoordinates);
-		d.printCircle(new Point2D(20, 30), "fill", 9, 33, 66, true, "style");
+		d.printCircle(new Point2D(20, 30), "fill", 9,true, "style");
 		
 		Document document = d.getDocument();
 		

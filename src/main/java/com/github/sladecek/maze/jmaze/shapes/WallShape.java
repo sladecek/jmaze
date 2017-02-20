@@ -40,7 +40,7 @@ public final class WallShape implements IMazeShape {
         }
         if (doc.getContext().isPolarCoordinates() && p1.getY() == p2.getY()) {
             if (p1.getX() == 0 && p2.getX() == 0) {
-                doc.printCircle(new Point2D(0, 0), "none", 0, 0, p1.getY(), false, style);
+                doc.printCircle(new Point2D(0, 0), "none", p1.getY(), false, style);
             } else {
                 doc.printArcSegment(p1, p2, style);
             }

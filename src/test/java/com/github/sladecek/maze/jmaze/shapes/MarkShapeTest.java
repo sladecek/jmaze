@@ -105,13 +105,11 @@ public class MarkShapeTest {
 				
 		ArgumentCaptor<Point2D> center = ArgumentCaptor.forClass(Point2D.class);
 		ArgumentCaptor<String> fill = ArgumentCaptor.forClass(String.class);
-		ArgumentCaptor<Integer> offsXPercent = ArgumentCaptor.forClass(Integer.class);
-		ArgumentCaptor<Integer> offsYPercent = ArgumentCaptor.forClass(Integer.class);
 		ArgumentCaptor<Integer> size = ArgumentCaptor.forClass(Integer.class);
 
 		
 		verify(mockedDocument).printMark(center.capture(), fill.capture(), 
-				size.capture(), offsXPercent.capture(), offsYPercent.capture());
+				size.capture());
 		
 
 		assertEquals(x, center.getValue().getX());

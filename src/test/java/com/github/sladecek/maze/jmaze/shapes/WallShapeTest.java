@@ -107,13 +107,11 @@ public class WallShapeTest {
 		ArgumentCaptor<Point2D> center = ArgumentCaptor.forClass(Point2D.class);
 		ArgumentCaptor<String> fill = ArgumentCaptor.forClass(String.class);
 		ArgumentCaptor<String> style = ArgumentCaptor.forClass(String.class);
-		ArgumentCaptor<Integer> offsXPercent = ArgumentCaptor.forClass(Integer.class);
-		ArgumentCaptor<Integer> offsYPercent = ArgumentCaptor.forClass(Integer.class);
 		ArgumentCaptor<Integer> perimeter = ArgumentCaptor.forClass(Integer.class);
 		ArgumentCaptor<Boolean> isPerimeterAbsolute = ArgumentCaptor.forClass(Boolean.class);
 		
 		verify(mockedDocument).printCircle(center.capture(), fill.capture(), 
-				offsXPercent.capture(), offsYPercent.capture(), perimeter.capture(), 
+				perimeter.capture(),
 				isPerimeterAbsolute.capture(), style.capture());
 		
 
@@ -121,8 +119,6 @@ public class WallShapeTest {
 		assertEquals(0, center.getValue().getY());
 		assertEquals("none", fill.getValue());
 		assertEquals("", style.getValue());
-		assertEquals(0, (int)offsXPercent.getValue());
-		assertEquals(0, (int)offsYPercent.getValue());
 		assertEquals(1, (int)perimeter.getValue());
 		assertEquals(false, isPerimeterAbsolute.getValue());		
 	}

@@ -60,14 +60,14 @@ public class SvgDocument implements I2DDocument {
 
 
     @Override
-    public void printMark(Point2D center, String fill, int sizePercent, int offsXPercent, int offsYPercent) {
+    public void printMark(Point2D center, String fill, int sizePercent) {
 
-        printCircle(center, fill, offsXPercent, offsYPercent, sizePercent, true, new String());
+        printCircle(center, fill, sizePercent, true, new String());
 
     }
 
     @Override
-    public void printCircle(Point2D center, String fill, int offsXPercent, int offsYPercent, final int perimeter,
+    public void printCircle(Point2D center, String fill,  int perimeter,
                             boolean isPerimeterAbsolute, String style) {
         String svgNS = SVGDOMImplementation.SVG_NAMESPACE_URI;
 
@@ -78,11 +78,9 @@ public class SvgDocument implements I2DDocument {
 
         Point2D mc = mapper.mapPoint(center);
 
-        int offsX = mapper.mapLength(offsXPercent) / 100;
-        int offsY = mapper.mapLength(offsYPercent) / 100;
 
-        circle.setAttributeNS(null, "cx", String.valueOf(mc.getX() + offsX));
-        circle.setAttributeNS(null, "cy", String.valueOf(mc.getY() + offsY));
+        circle.setAttributeNS(null, "cx", String.valueOf(mc.getX()));
+        circle.setAttributeNS(null, "cy", String.valueOf(mc.getY()));
 
         int perimeterAbsolute = isPerimeterAbsolute ? perimeter : mapper.mapLength(perimeter);
         circle.setAttributeNS(null, "r", String.valueOf(perimeterAbsolute));
