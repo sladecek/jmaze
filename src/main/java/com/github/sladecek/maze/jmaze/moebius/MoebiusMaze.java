@@ -34,6 +34,7 @@ public final class MoebiusMaze extends Maze implements IMazeStructure {
     }
 
     public void buildMaze() {
+        /* TODO
         final boolean isPolar = false;
         setContext(new ShapeContext(isPolar, height, width));
 
@@ -44,7 +45,7 @@ public final class MoebiusMaze extends Maze implements IMazeStructure {
 
         // outer walls
         final IMazeShape2D.ShapeType ow = IMazeShape2D.ShapeType.outerWall;
-        result.add(new WallShape(ow, 0, 0, 0, width));
+        result.add(new WallShape(WallShape.WallType.outerWall, ow, 0, 0, 0, width));
         result.add(new WallShape(ow, height, 0, height, width));
         final IMazeShape2D.ShapeType aw = IMazeShape2D.ShapeType.auxiliaryWall;
         result.add(new WallShape(aw, 0, 0, height, 0));
@@ -77,7 +78,7 @@ public final class MoebiusMaze extends Maze implements IMazeStructure {
                 addShape(w);
                 linkShapeToId(w, id);
 
-                
+
                 // ?
                 if (x == width - 1) {
                     // repeat wrapped east border
@@ -111,13 +112,12 @@ public final class MoebiusMaze extends Maze implements IMazeStructure {
                 int room2 = mapXYToRoomId(hy, hx);
                 int wall = addWall(room1, room2);
 
-/* TODO
                 IMazeShape2D fs1 = getFloorFromRoom(wall);
                 linkShapeToId(fs1, wall);
-*/
+
             }
         }
-
+*/
     }
 
     private int mapXYToRoomId(int hy, int hx) {

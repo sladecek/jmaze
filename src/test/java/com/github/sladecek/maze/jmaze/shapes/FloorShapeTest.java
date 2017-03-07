@@ -5,7 +5,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import com.github.sladecek.maze.jmaze.geometry.Point2D;
-import com.github.sladecek.maze.jmaze.shapes.IMazeShape2D.ShapeType;
+
 
 /* TODO opravit
 public class FloorShapeTest {
@@ -15,7 +15,7 @@ public class FloorShapeTest {
 		final Point2D center = new Point2D(2, 1);
 		final boolean isHole = true;
 		FloorShape f = new FloorShape(center, isHole, 0,0);
-		assertEquals(ShapeType.hole, f.getShapeType());
+		assertEquals(WallType.hole, f.getShapeType());
 	}
 
 	@Test
@@ -23,7 +23,7 @@ public class FloorShapeTest {
 		final Point2D center = new Point2D(2, 1);
 		final boolean isHole = false;
 		FloorShape f = new FloorShape(center, isHole, 0,0);
-		assertEquals(ShapeType.nonHole, f.getShapeType());
+		assertEquals(WallType.nonHole, f.getShapeType());
 	}
 
 	@Test
@@ -55,8 +55,8 @@ public class FloorShapeTest {
 		final Point2D center = new Point2D(2, 1);
 		final boolean isHole = false;
 		FloorShape f = new FloorShape(center, isHole, 0,0);
-		MarkShape m = f.createMarkInThisRoom(ShapeType.solution);
-		assertEquals(ShapeType.solution, m.getShapeType());
+		MarkShape m = f.createMarkInThisRoom(WallType.solution);
+		assertEquals(WallType.solution, m.getShapeType());
 		assertEquals(1, m.getY());
 		assertEquals(2, m.getX());
 	}

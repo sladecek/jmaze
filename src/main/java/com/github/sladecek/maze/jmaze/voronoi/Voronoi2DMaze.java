@@ -6,7 +6,7 @@ import com.github.sladecek.maze.jmaze.maze.IMazeStructure;
 import com.github.sladecek.maze.jmaze.maze.Maze;
 import com.github.sladecek.maze.jmaze.shapes.MarkShape;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape2D;
-import com.github.sladecek.maze.jmaze.shapes.IMazeShape2D.ShapeType;
+
 import com.github.sladecek.maze.jmaze.shapes.ShapeContext;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
 
@@ -23,7 +23,7 @@ public class Voronoi2DMaze extends Maze implements IMazeStructure {
         this.roomCount = roomCount;
         this.loydCnt = loydCnt;
         this.randomGenerator = randomGenerator;
-        this.setDebug(debug);
+
         buildMaze();
     }
 
@@ -72,9 +72,7 @@ public class Voronoi2DMaze extends Maze implements IMazeStructure {
             }
             if (e.length() < 0.5) continue;
             int id = addWall(e.site1, e.site2);
-            WallShape ws = new WallShape(ShapeType.innerWall, (int) e.y1, (int) e.x1, (int) e.y2, (int) e.x2);
-            addShape(ws);
-            linkShapeToId(ws, id);
+            addShape(WallShape.newInnerWall(id, (int) e.y1, (int) e.x1, (int) e.y2, (int) e.x2));
             LOGGER.info("wall id=" + id + " " + e);
 
         }
@@ -84,11 +82,11 @@ public class Voronoi2DMaze extends Maze implements IMazeStructure {
     }
 
     private void createOuterWalls() {
-        final IMazeShape2D.ShapeType ow = IMazeShape2D.ShapeType.outerWall;
-        addShape(new WallShape(ow, 0, 0, 0, width));
-        addShape(new WallShape(ow, 0, 0, height, 0));
-        addShape(new WallShape(ow, 0, width, height, width));
-        addShape(new WallShape(ow, height, 0, height, width));
+
+        addShape(WallShape.newOuterWall(0, 0, 0, width));
+        addShape(WallShape.newOuterWall(0, 0, height, 0));
+        addShape(WallShape.newOuterWall(0, width, height, width));
+        addShape(WallShape.newOuterWall(height, 0, height, width));
     }
 
     private static final Logger LOGGER = Logger.getLogger("maze.jmaze");

@@ -9,7 +9,7 @@ import com.github.sladecek.maze.jmaze.geometry.SouthNorth;
 import com.github.sladecek.maze.jmaze.maze.IMazeStructure;
 import com.github.sladecek.maze.jmaze.maze.Maze;
 import com.github.sladecek.maze.jmaze.shapes.MarkShape;
-import com.github.sladecek.maze.jmaze.shapes.IMazeShape2D.ShapeType;
+
 import com.github.sladecek.maze.jmaze.shapes.ShapeContext;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
 
@@ -199,9 +199,7 @@ public final class EggMaze extends Maze implements IMazeStructure {
         final int roomMapRatio = equatorCellCnt / roomCntThisLayer;
         final int y1 = (yr1 * roomMapRatio) % equatorCellCnt;
         final int y2 = (yr2 * roomMapRatio) % equatorCellCnt;
-        WallShape ws = new WallShape(ShapeType.innerWall, y1, x1, y2, x2);
-        addShape(ws);
-        linkShapeToId(ws, id);
+        addShape(WallShape.newInnerWall(id, y1, x1, y2, x2));
     }
 
     private void generateMeridianWalls(SouthNorth sn) {

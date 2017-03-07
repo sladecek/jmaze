@@ -12,23 +12,23 @@ import com.github.sladecek.maze.jmaze.geometry.Point2D;
 import com.github.sladecek.maze.jmaze.print2d.I2DDocument;
 import com.github.sladecek.maze.jmaze.printstyle.Color;
 import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
-import com.github.sladecek.maze.jmaze.shapes.IMazeShape2D.ShapeType;
+
 
 /* TODO opravit
 public class MarkShapeTest {
 
 	@Test
 	public void testGetShapeType() {
-		final ShapeType type = ShapeType.startRoom;
+		final WallType type = WallType.startRoom;
 		int y = 1; 
 		int x = 2;
 		MarkShape m = new MarkShape(type, y, x);
-		assertEquals(ShapeType.startRoom, m.getShapeType());
+		assertEquals(WallType.startRoom, m.getShapeType());
 	}
 
 	@Test
 	public void testGetX() {
-		final ShapeType type = ShapeType.startRoom;
+		final WallType type = WallType.startRoom;
 		int y = 1; 
 		int x = 2;
 		MarkShape m = new MarkShape(type, y, x);
@@ -37,7 +37,7 @@ public class MarkShapeTest {
 
 	@Test
 	public void testGetY() {
-		final ShapeType type = ShapeType.startRoom;
+		final WallType type = WallType.startRoom;
 		int y = 1; 
 		int x = 2;
 		MarkShape m = new MarkShape(type, y, x);
@@ -46,7 +46,7 @@ public class MarkShapeTest {
 
 	@Test
 	public void testToString() {
-		final ShapeType type = ShapeType.startRoom;
+		final WallType type = WallType.startRoom;
 		int y = 1; 
 		int x = 2;
 		MarkShape m = new MarkShape(type, y, x);
@@ -55,7 +55,7 @@ public class MarkShapeTest {
 
 	@Test
 	public void testPrint2DStartRoom() {
-		final ShapeType type = ShapeType.startRoom;
+		final WallType type = WallType.startRoom;
 		String expectedFill = "rgb(1,2,3)";
 		int expectedSize = 5;
 		testPrint2DForOneMarkType(type, expectedFill, expectedSize);		
@@ -64,7 +64,7 @@ public class MarkShapeTest {
 
 	@Test
 	public void testPrint2DTargetRoom() {
-		final ShapeType type = ShapeType.targetRoom;
+		final WallType type = WallType.targetRoom;
 		String expectedFill = "rgb(4,4,4)";
 		int expectedSize = 5;
 		testPrint2DForOneMarkType(type, expectedFill, expectedSize);		
@@ -73,13 +73,13 @@ public class MarkShapeTest {
 
 	@Test
 	public void testPrint2DSolutionRoom() {
-		final ShapeType type = ShapeType.solution;
+		final WallType type = WallType.solution;
 		String expectedFill = "rgb(5,5,5)";
 		int expectedSize = 7;
 		testPrint2DForOneMarkType(type, expectedFill, expectedSize);		
 	}
 
-	private void testPrint2DForOneMarkType(final ShapeType type, String expectedFill, int expectedSize) {
+	private void testPrint2DForOneMarkType(final WallType type, String expectedFill, int expectedSize) {
 		I2DDocument mockedDocument = mock(I2DDocument.class);
 		
 		boolean isPolarCoordinates = false;

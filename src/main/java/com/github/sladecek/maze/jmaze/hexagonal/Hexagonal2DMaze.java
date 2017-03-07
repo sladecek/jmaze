@@ -4,7 +4,7 @@ import com.github.sladecek.maze.jmaze.geometry.Point2D;
 import com.github.sladecek.maze.jmaze.maze.IMazeStructure;
 import com.github.sladecek.maze.jmaze.maze.Maze;
 import com.github.sladecek.maze.jmaze.shapes.MarkShape;
-import com.github.sladecek.maze.jmaze.shapes.IMazeShape2D.ShapeType;
+
 import com.github.sladecek.maze.jmaze.shapes.ShapeContext;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
 
@@ -128,13 +128,11 @@ public class Hexagonal2DMaze extends Maze implements IMazeStructure {
 
         LOGGER.info(
                 "addWallAndShape room1=" + r + " room2=" + r2 + " y1=" + y1 + " y2=" + y2 + " x1=" + x1 + " x2=" + x2);
-        WallShape ws = new WallShape(ShapeType.innerWall, y1, x1, y2, x2);
-        addShape(ws);
-        linkShapeToId(ws, id);
+        addShape(WallShape.newInnerWall(id, y1, x1, y2, x2));
     }
 
     private void addOuterWall(int x1, int y1, int x2, int y2) {
-        addShape(new WallShape(ShapeType.outerWall, y1, x1, y2, x2));
+        addShape(WallShape.newOuterWall(y1, x1, y2, x2));
     }
 
     private boolean areRoomCoordinatesValid(final int roomsPerRow, int ox, int oy) {

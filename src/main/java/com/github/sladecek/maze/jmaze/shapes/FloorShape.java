@@ -24,11 +24,11 @@ public final class FloorShape implements IMazeShape2D {
     }
 
     @Override
-    public ShapeType getShapeType() {
+    public WallType getShapeType() {
         if (isHole) {
-            return ShapeType.hole;
+            return WallType.hole;
         } else {
-            return ShapeType.nonHole;
+            return WallType.nonHole;
         }
     }
 
@@ -44,7 +44,7 @@ public final class FloorShape implements IMazeShape2D {
         return isHole;
     }
 
-    public MarkShape createMarkInThisRoom(ShapeType type) {
+    public MarkShape createMarkInThisRoom(WallType type) {
         MarkShape ms = new MarkShape(type, getY(), getX());
         return ms;
     }

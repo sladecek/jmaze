@@ -4,7 +4,7 @@ import com.github.sladecek.maze.jmaze.geometry.Point2D;
 import com.github.sladecek.maze.jmaze.maze.IMazeStructure;
 import com.github.sladecek.maze.jmaze.maze.Maze;
 import com.github.sladecek.maze.jmaze.shapes.MarkShape;
-import com.github.sladecek.maze.jmaze.shapes.IMazeShape2D.ShapeType;
+
 import com.github.sladecek.maze.jmaze.shapes.ShapeContext;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
 
@@ -155,9 +155,7 @@ public class Circular2DMaze extends Maze implements IMazeStructure {
         final int roomMapRatio = outerCnt / roomCntThisLayer;
         final int rphi1 = (phi1 * roomMapRatio) % outerCnt;
         final int rphi2 = (phi2 * roomMapRatio) % outerCnt;
-        WallShape ws = new WallShape(ShapeType.innerWall, r1, mapPhiD(rphi1), r2, mapPhiD(rphi2));
-        addShape(ws);
-        linkShapeToId(ws, id);
+        addShape(WallShape.newInnerWall(id, r1, mapPhiD(rphi1), r2, mapPhiD(rphi2)));
     }
 
 
@@ -182,9 +180,9 @@ public class Circular2DMaze extends Maze implements IMazeStructure {
     }
 
     private void generateOuterWalls() {
-        final ShapeType ow = ShapeType.outerWall;
+
         int r = computeRadius(layerCount - 1);
-        addShape(new WallShape(ow, r, 0, r, 0));
+        addShape(WallShape.newOuterWall(r, 0, r, 0));
     }
 
     private static final Logger LOGGER = Logger.getLogger("maze.jmaze");

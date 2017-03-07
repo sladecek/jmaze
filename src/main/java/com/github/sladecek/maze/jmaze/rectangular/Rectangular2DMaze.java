@@ -39,11 +39,11 @@ public final class Rectangular2DMaze extends Maze implements
         setContext(new ShapeContext(isPolar, h, w));
 
         // outer walls
-        final IMazeShape2D.ShapeType ow = IMazeShape2D.ShapeType.outerWall;
-        addShape(new WallShape(ow, 0, 0, 0, w));
-        addShape(new WallShape(ow, 0, 0, h, 0));
-        addShape(new WallShape(ow, 0, w, h, w));
-        addShape(new WallShape(ow, h, 0, h, w));
+
+        addShape(WallShape.newOuterWall(0, 0, 0, w));
+        addShape(WallShape.newOuterWall(0, 0, h, 0));
+        addShape(WallShape.newOuterWall(0, w, h, w));
+        addShape(WallShape.newOuterWall(h, 0, h, w));
 
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
@@ -56,7 +56,7 @@ public final class Rectangular2DMaze extends Maze implements
             }
         }
 
-        final IMazeShape2D.ShapeType iw = IMazeShape2D.ShapeType.innerWall;
+
 
         // inner walls - east/west
         for (int y = 0; y < height; y++) {
@@ -64,10 +64,8 @@ public final class Rectangular2DMaze extends Maze implements
                 int roomEast = y * width + x;
                 int roomWest = roomEast + 1;
                 int id = addWall(roomEast, roomWest);
-                
-                WallShape wall = new WallShape(iw, rsp*y, rsp*(x + 1), rsp*(y + 1), rsp*(x + 1));
-                addShape(wall);
-                linkShapeToId(wall, id);
+
+                addShape(WallShape.newInnerWall(id, rsp*y, rsp*(x + 1), rsp*(y + 1), rsp*(x + 1)));
             }
         }
 
@@ -77,9 +75,7 @@ public final class Rectangular2DMaze extends Maze implements
                 int roomNorth = y * width + x;
                 int roomSouth = roomNorth + width;
                 int id = addWall(roomNorth, roomSouth);
-                WallShape wall = new WallShape(iw, rsp*(y + 1), rsp*x, rsp*(y + 1), rsp*(x + 1));
-                addShape(wall);
-                linkShapeToId(wall, id);
+                addShape(WallShape.newInnerWall(id, rsp*(y + 1), rsp*x, rsp*(y + 1), rsp*(x + 1)));
             }
         }
 

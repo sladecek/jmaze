@@ -12,15 +12,15 @@ import com.github.sladecek.maze.jmaze.geometry.Point2D;
 import com.github.sladecek.maze.jmaze.print2d.I2DDocument;
 import com.github.sladecek.maze.jmaze.printstyle.Color;
 import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
-import com.github.sladecek.maze.jmaze.shapes.IMazeShape2D.ShapeType;
+
 
 public class WallShapeTest {
 
 /* TODO opravit
 	@Test
 	public void testGetShapeType() {
-		WallShape w = new WallShape(ShapeType.hole, 1, 2, 3, 4);
-		assertEquals(ShapeType.hole, w.getShapeType());
+		WallShape w = new WallShape(WallType.hole, 1, 2, 3, 4);
+		assertEquals(WallType.hole, w.getShapeType());
 	}
 
 	@Test
@@ -28,7 +28,7 @@ public class WallShapeTest {
 		I2DDocument mockedDocument = mock(I2DDocument.class);
 		
 		boolean isPolarCoordinates = false;
-		ShapeType shapeType = ShapeType.hole;
+		WallType shapeType = WallType.hole;
 		callPrint2D(mockedDocument, isPolarCoordinates, shapeType, 3, 4);
 		
 		ArgumentCaptor<Point2D> p1 = ArgumentCaptor.forClass(Point2D.class);
@@ -53,7 +53,7 @@ public class WallShapeTest {
 		I2DDocument mockedDocument = mock(I2DDocument.class);
 		
 		boolean isPolarCoordinates = true;
-		ShapeType shapeType = ShapeType.hole;
+		WallType shapeType = WallType.hole;
 		callPrint2D(mockedDocument, isPolarCoordinates, shapeType, 5, 0);
 		
 		ArgumentCaptor<Point2D> p1 = ArgumentCaptor.forClass(Point2D.class);
@@ -78,7 +78,7 @@ public class WallShapeTest {
 		I2DDocument mockedDocument = mock(I2DDocument.class);
 		
 		boolean isPolarCoordinates = true;
-		ShapeType shapeType = ShapeType.hole;
+		WallType shapeType = WallType.hole;
 		callPrint2D(mockedDocument, isPolarCoordinates, shapeType, 1, 5);
 		
 		ArgumentCaptor<Point2D> p1 = ArgumentCaptor.forClass(Point2D.class);
@@ -101,7 +101,7 @@ public class WallShapeTest {
 		I2DDocument mockedDocument = mock(I2DDocument.class);
 		
 		boolean isPolarCoordinates = true;
-		ShapeType shapeType = ShapeType.hole;
+		WallType shapeType = WallType.hole;
 		callPrint2D(mockedDocument, isPolarCoordinates, shapeType, 1, 0);
 		
 		ArgumentCaptor<Point2D> center = ArgumentCaptor.forClass(Point2D.class);
@@ -127,7 +127,7 @@ public class WallShapeTest {
 	public void testPrint2DShouldPrintInnerWallInCorrectStyle() {		
 		String expectedStyle = "stroke:rgb(4,4,4);stroke-width:3";   
 		boolean expectedCenter = false;
-		ShapeType shapeType = ShapeType.innerWall;		
+		WallType shapeType = WallType.innerWall;
 		test2DPrintStyle(expectedStyle, expectedCenter, shapeType);		
 	}
 
@@ -135,7 +135,7 @@ public class WallShapeTest {
 	public void testPrint2DShouldPrintOuterWallInCorrectStyle() {		
 		String expectedStyle = "stroke:rgb(5,5,5);stroke-width:5";   
 		boolean expectedCenter = false;
-		ShapeType shapeType = ShapeType.outerWall;		
+		WallType shapeType = WallType.outerWall;
 		test2DPrintStyle(expectedStyle, expectedCenter, shapeType);		
 	}
 
@@ -143,7 +143,7 @@ public class WallShapeTest {
 	public void testPrint2DShouldPrintSolutionWallInCorrectStyle() {		
 		String expectedStyle = "stroke:rgb(6,6,6);stroke-width:7";   
 		boolean expectedCenter = true;
-		ShapeType shapeType = ShapeType.solution;
+		WallType shapeType = WallType.solution;
 		test2DPrintStyle(expectedStyle, expectedCenter, shapeType);		
 	}
 
@@ -151,12 +151,12 @@ public class WallShapeTest {
 	public void testPrint2DShouldPrintAuxiliaryWallInCorrectStyle() {		
 		String expectedStyle = "stroke:rgb(7,7,7);stroke-width:3";   
 		boolean expectedCenter = false;
-		ShapeType shapeType = ShapeType.auxiliaryWall;		
+		WallType shapeType = WallType.auxiliaryWall;
 		test2DPrintStyle(expectedStyle, expectedCenter, shapeType);		
 	}
 
 	private void test2DPrintStyle(String expectedStyle, boolean expectedCenter,
-			ShapeType shapeType) {
+			WallType shapeType) {
 		I2DDocument mockedDocument = mock(I2DDocument.class);
 		boolean isPolarCoordinates = false;
 		callPrint2D(mockedDocument, isPolarCoordinates, shapeType, 3, 0);
@@ -172,7 +172,7 @@ public class WallShapeTest {
 	}
 
 	
-	private void callPrint2D(I2DDocument mockedDocument, boolean isPolarCoordinates, ShapeType shapeType, int y2, int x2) {
+	private void callPrint2D(I2DDocument mockedDocument, boolean isPolarCoordinates, WallType shapeType, int y2, int x2) {
 		int pictureHeight = 100;
 		int pictureWidth = 200;
 		int resolutionX = 7;
@@ -200,31 +200,31 @@ public class WallShapeTest {
 
 	@Test
 	public void testGetX1() {
-		WallShape w = new WallShape(ShapeType.hole, 1, 2, 3, 4);
+		WallShape w = new WallShape(WallType.hole, 1, 2, 3, 4);
 		assertEquals(2, w.getX1());
 	}
 
 	@Test
 	public void testGetX2() {
-		WallShape w = new WallShape(ShapeType.hole, 1, 2, 3, 4);
+		WallShape w = new WallShape(WallType.hole, 1, 2, 3, 4);
 		assertEquals(4, w.getX2());
 	}
 
 	@Test
 	public void testGetY1() {
-		WallShape w = new WallShape(ShapeType.hole, 1, 2, 3, 4);
+		WallShape w = new WallShape(WallType.hole, 1, 2, 3, 4);
 		assertEquals(1, w.getY1());
 	}
 
 	@Test
 	public void testGetY2() {
-		WallShape w = new WallShape(ShapeType.hole, 1, 2, 3, 4);
+		WallShape w = new WallShape(WallType.hole, 1, 2, 3, 4);
 		assertEquals(3, w.getY2());
 	}
 
 	@Test
 	public void testToString() {
-		WallShape w = new WallShape(ShapeType.hole, 1, 2, 3, 4);
+		WallShape w = new WallShape(WallType.hole, 1, 2, 3, 4);
 		assertEquals("WallShape [ shapeType=hole, x1=2, x2=4, y1=1, y2=3]", w.toString());
 	}
 */

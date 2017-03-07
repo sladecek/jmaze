@@ -11,7 +11,7 @@ import org.junit.Test;
 import com.github.sladecek.maze.jmaze.generator.MazeRealization;
 import com.github.sladecek.maze.jmaze.geometry.Point2D;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape2D;
-import com.github.sladecek.maze.jmaze.shapes.IMazeShape2D.ShapeType;
+
 
 public class MazeTest {
 
