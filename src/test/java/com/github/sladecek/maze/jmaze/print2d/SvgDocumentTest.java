@@ -35,22 +35,22 @@ public class SvgDocumentTest {
 		boolean isPolarCoordinates = false;
 		SvgDocument d = createTestDocument(isPolarCoordinates);
 
-		assertEquals(3 + 3 + 100 * 7, d.getCanvasHeight());
-		assertEquals(3 + 3 + 200 * 7, d.getCanvasWidth());
+		assertEquals(120, d.getCanvasHeight());
+		assertEquals(220, d.getCanvasWidth());
 
 		IMaze2DMapper map = d.getMapper();
 
 		Point2D zp = map.mapPoint(new Point2D(0, 0));
-		assertEquals(3, zp.getX());
-		assertEquals(3, zp.getY());
+		assertEquals(10, zp.getX());
+		assertEquals(10, zp.getY());
 
 		Point2D px = map.mapPoint(new Point2D(10, 0));
-		assertEquals(3 + 10 * 7, px.getX());
-		assertEquals(3, px.getY());
+		assertEquals(20, px.getX());
+		assertEquals(10, px.getY());
 
 		Point2D py = map.mapPoint(new Point2D(0, 10));
-		assertEquals(3, py.getX());
-		assertEquals(3 + 10 * 7, py.getY());
+		assertEquals(10, py.getX());
+		assertEquals(20, py.getY());
 	}
 
 	@Test
@@ -59,18 +59,18 @@ public class SvgDocumentTest {
 		boolean isPolarCoordinates = true;
 		SvgDocument d = createTestDocument(isPolarCoordinates);
 
-		assertEquals(3 + 3 + 100 * 7, d.getCanvasHeight());
-		assertEquals(3 + 3 + 200 * 7, d.getCanvasWidth());
+		assertEquals(120, d.getCanvasHeight());
+		assertEquals(220, d.getCanvasWidth());
 
 		IMaze2DMapper map = d.getMapper();
 
 		Point2D zp = map.mapPoint(new Point2D(0, 0));
-		assertEquals(3 + 200 * 7 / 2, zp.getX());
-		assertEquals(3 + 100 * 7 / 2, zp.getY());
+		assertEquals(110, zp.getX());
+		assertEquals(60, zp.getY());
 
 		Point2D px = map.mapPoint(new Point2D(Point2D.ANGLE_2PI / 4, 10));
-		assertEquals(3 + 200 * 7 / 2, px.getX());
-		assertEquals(3 + 100 * 7 / 2 + 7 * 10, px.getY());
+		assertEquals(110, px.getX());
+		assertEquals(70, px.getY());
 	}
 
 	@Test
@@ -93,7 +93,7 @@ public class SvgDocumentTest {
 		
 		Document document = d.getDocument();
 		
-		final String expected = header + "><line y2=\"353\" style=\"style\" x1=\"143\" x2=\"283\" y1=\"213\"/></svg>";
+		final String expected = header + "><line y2=\"60\" style=\"style\" x1=\"30\" x2=\"50\" y1=\"40\"/></svg>";
 		assertEquals(expected, svgToString(document));
 		
 	}
@@ -105,7 +105,7 @@ public class SvgDocumentTest {
 		
 		Document document = d.getDocument();
 		
-		final String expected = header + "><path fill=\"none\" d=\"M143 213 A210 210 0 0 1 283 213\" style=\"style\"/></svg>";
+		final String expected = header + "><path fill=\"none\" d=\"M30 40 A30 30 0 0 1 50 40\" style=\"style\"/></svg>";
 		assertEquals(expected, svgToString(document));
 	}
 
@@ -124,7 +124,7 @@ public class SvgDocumentTest {
 		
 		Document document = d.getDocument();
 		
-		final String expected = header + "><circle fill=\"fill\" r=\"9\" cx=\"145\" cy=\"217\"/></svg>";
+		final String expected = header + "><circle fill=\"fill\" r=\"9\" cx=\"30\" cy=\"40\"/></svg>";
 		assertEquals(expected, svgToString(document));
 	}
 
@@ -136,7 +136,7 @@ public class SvgDocumentTest {
 		
 		Document document = d.getDocument();
 		
-		final String expected = header + "><circle fill=\"fill\" r=\"66\" style=\"style\" cx=\"143\" cy=\"215\"/></svg>";
+		final String expected = header + "><circle fill=\"fill\" r=\"9\" style=\"style\" cx=\"30\" cy=\"40\"/></svg>";
 		assertEquals(expected, svgToString(document));
 	}
 	
@@ -144,7 +144,7 @@ public class SvgDocumentTest {
 	final String header = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
 			+ "<svg contentScriptType=\"text/ecmascript\" "
 			+ "xmlns:xlink=\"http://www.w3.org/1999/xlink\" zoomAndPan=\"magnify\" "
-			+ "contentStyleType=\"text/css\" viewBox=\"0 0 1406 706\" preserveAspectRatio=\"xMidYMid meet\" "
+			+ "contentStyleType=\"text/css\" viewBox=\"0 0 220 120\" preserveAspectRatio=\"xMidYMid meet\" "
 			+ "xmlns=\"http://www.w3.org/2000/svg\" version=\"1.0\"";
 	
 

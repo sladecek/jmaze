@@ -93,11 +93,11 @@ public class Hexagonal2DMazeTest {
 		}
 		assertEquals(6, floors.size());
 		
-		assertEquals(10, floors.get(0).getX());
-		assertEquals(8, floors.get(0).getY());
+		assertEquals(20, floors.get(0).getX());
+		assertEquals(17, floors.get(0).getY());
 
-		assertEquals(40, floors.get(5).getX());
-		assertEquals(24, floors.get(5).getY());
+		assertEquals(80, floors.get(5).getX());
+		assertEquals(51, floors.get(5).getY());
 	}
 	
 
