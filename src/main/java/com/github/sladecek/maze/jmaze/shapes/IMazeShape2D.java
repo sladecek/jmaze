@@ -8,12 +8,12 @@ import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
  */
 public interface IMazeShape2D extends IMazeShape {
     enum ShapeType {
-        innerWall, outerWall, hole, nonHole, solution, auxiliaryWall, startRoom, targetRoom
+        innerWall, outerWall, /*hole, nonHole, */ auxiliaryWall, /*solution,  startRoom, targetRoom*/
     }
 
     ;
 
-    ShapeType getShapeType();
+    // ShapeType getShapeType();
 
     void print2D(I2DDocument doc, IPrintStyle printStyle);
 

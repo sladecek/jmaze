@@ -3,7 +3,7 @@ package com.github.sladecek.maze.jmaze.triangular;
 import com.github.sladecek.maze.jmaze.geometry.Point2D;
 import com.github.sladecek.maze.jmaze.maze.IMazeStructure;
 import com.github.sladecek.maze.jmaze.maze.Maze;
-import com.github.sladecek.maze.jmaze.shapes.FloorShape;
+import com.github.sladecek.maze.jmaze.shapes.MarkShape;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape2D;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape2D.ShapeType;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContext;
@@ -68,8 +68,8 @@ private final int rsx = 12;
                     y2++;
                 }
 
-                final FloorShape floor = new FloorShape(new Point2D(rsx*x2, rsy*y+rsy/2), false, 0, 100);
-                linkRoomToFloor(r, floor);
+                final MarkShape floor = new MarkShape(r, new Point2D(rsx*x2, rsy*y+rsy/2));
+//                linkRoomToFloor(r, floor);
                 addShape(floor);
 
                 if (prevRoom > 0) {

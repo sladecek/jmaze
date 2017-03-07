@@ -8,10 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import com.github.sladecek.maze.jmaze.shapes.MarkShape;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.github.sladecek.maze.jmaze.shapes.FloorShape;
+
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape2D;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
 
@@ -86,12 +87,12 @@ public class Voronoi2DMazeTest {
 
 	// TODO wall shapes
 	@Test
-	public void testFloorShapes() {
-		ArrayList<FloorShape> floors = new ArrayList<FloorShape>();
+	public void testMarkShapes() {
+		ArrayList<MarkShape> floors = new ArrayList<MarkShape>();
 		ShapeContainer  sc = maze.getShapes();
 		for (IMazeShape2D s: sc.getShapes()) {
-			if (s instanceof FloorShape) {
-				floors.add((FloorShape)s);
+			if (s instanceof MarkShape) {
+				floors.add((MarkShape)s);
 			}
 		}
 		assertEquals(3, floors.size());

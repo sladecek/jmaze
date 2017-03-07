@@ -39,12 +39,6 @@ public class Room3D implements IMazeShape2D {
 
     /* TODO odstranit */
     @Override
-    public ShapeType getShapeType() {
-        return null;
-    }
-
-    /* TODO odstranit */
-    @Override
     public void print2D(I2DDocument doc, IPrintStyle printStyle) {
 
     }

@@ -8,7 +8,7 @@ import java.util.logging.Logger;
 
 /**
  * Save maze blocks in open scad file format.
- */
+
 public class OpenScad3DPrinter implements IMaze3DPrinter {
 
     public final void printBlocks(final IBlockMaker blockMaker, boolean showSolution,
@@ -34,3 +34,5 @@ public class OpenScad3DPrinter implements IMaze3DPrinter {
 
     private static final Logger LOG = Logger.getLogger("maze.jmaze");
 }
+
+ */

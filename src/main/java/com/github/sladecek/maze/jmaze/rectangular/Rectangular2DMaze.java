@@ -3,7 +3,7 @@ package com.github.sladecek.maze.jmaze.rectangular;
 import com.github.sladecek.maze.jmaze.geometry.Point2D;
 import com.github.sladecek.maze.jmaze.maze.IMazeStructure;
 import com.github.sladecek.maze.jmaze.maze.Maze;
-import com.github.sladecek.maze.jmaze.shapes.FloorShape;
+import com.github.sladecek.maze.jmaze.shapes.MarkShape;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape2D;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContext;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
@@ -50,8 +50,8 @@ public final class Rectangular2DMaze extends Maze implements
                 int id = addRoom();
                 assert id == y * width + x : "Inconsistent room numbering";
                                 
-                final FloorShape floor = new FloorShape(new Point2D(x*rsp+rsp/2,y*rsp+rsp/2), false, 50, 50);
-                linkRoomToFloor(id, floor);
+                final MarkShape floor = new MarkShape(id, new Point2D(x*rsp+rsp/2,y*rsp+rsp/2));
+
                 addShape(floor);
             }
         }

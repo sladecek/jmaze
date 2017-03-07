@@ -2,6 +2,17 @@ package com.github.sladecek.maze.jmaze.printstyle;
 
 public final class DefaultPrintStyle implements IPrintStyle {
 
+    @Override
+    public boolean isPrintSolution() {
+        return isPrintSolution;
+    }
+
+    @Override
+    public boolean isDebugPrintAllWalls() {
+
+        return isDebugPrintAllWalls;
+    }
+
     public Color getBaseColor() {
         return baseColor;
     }
@@ -90,6 +101,8 @@ public final class DefaultPrintStyle implements IPrintStyle {
         return 4;
     }
 
+    private final boolean isDebugPrintAllWalls = true;
+    private final boolean isPrintSolution = true;
     private final Color baseColor = new Color("777777");
     private final Color outerWallColor = new Color("000000");
     private final Color innerWallColor = new Color("000000");
@@ -105,5 +118,6 @@ public final class DefaultPrintStyle implements IPrintStyle {
     private final Color threeJsMeshColor = new Color("33ff33");
     private final Color threeJsAmbientLightColor = new Color("222222");
     private final Color threeJsPointLightColor = new Color("777777");
+
 
 }

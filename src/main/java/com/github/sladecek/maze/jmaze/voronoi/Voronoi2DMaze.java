@@ -4,7 +4,7 @@ import be.humphreys.simplevoronoi.GraphEdge;
 import com.github.sladecek.maze.jmaze.geometry.Point2D;
 import com.github.sladecek.maze.jmaze.maze.IMazeStructure;
 import com.github.sladecek.maze.jmaze.maze.Maze;
-import com.github.sladecek.maze.jmaze.shapes.FloorShape;
+import com.github.sladecek.maze.jmaze.shapes.MarkShape;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape2D;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape2D.ShapeType;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContext;
@@ -61,8 +61,8 @@ public class Voronoi2DMaze extends Maze implements IMazeStructure {
             Point2D pt = p1.getIntegerPoint(i);
             LOGGER.info("room center [" + i + "]=" + pt);
             int r = addRoom();
-            final FloorShape floor = new FloorShape(pt, false, 0, 50);
-            linkRoomToFloor(r, floor);
+            final MarkShape floor = new MarkShape(r, pt);
+
             addShape(floor);
         }
 
@@ -90,6 +90,7 @@ public class Voronoi2DMaze extends Maze implements IMazeStructure {
         addShape(new WallShape(ow, 0, width, height, width));
         addShape(new WallShape(ow, height, 0, height, width));
     }
+
     private static final Logger LOGGER = Logger.getLogger("maze.jmaze");
     /**
      * Approximate room size in pixels.

@@ -6,47 +6,59 @@ import java.util.Vector;
 import com.github.sladecek.maze.jmaze.util.BitSetIntervalPrinter;
 
 /**
- * 
- * Data structure which defines one particular maze. Defines which walls are open 
+ * Data structure which defines one particular maze. Defines which walls are open
  * on the maze. Also contains solution.
- *
  */
 public final class MazeRealization {
-	
-	
-	public MazeRealization(int wallCount) {
-		allocateWalls(wallCount);
-		this.wallCount = wallCount;
-	}
 
-	public boolean isWallClosed(int wall) {
-		return isWallClosed.get(wall);
-	}
 
-	public void setWallClosed(int wall, boolean value) {
-		isWallClosed.set(wall, value);
-	}
+    public MazeRealization(int wallCount, int startRoom, int targetRoom) {
+        allocateWalls(wallCount);
+        this.wallCount = wallCount;
+        this.startRoom = startRoom;
+        this.targetRoom = targetRoom;
+    }
 
-	public Vector<Integer> getSolution() {
-		return solution;
-	}
+    public boolean isWallClosed(int wall) {
+        return isWallClosed.get(wall);
+    }
 
-	public void setSolution(Vector<Integer> solution) {
-		this.solution = solution;
-	}
+    public void setWallClosed(int wall, boolean value) {
+        isWallClosed.set(wall, value);
+    }
 
-	public String printClosedWalls() {
-		return new BitSetIntervalPrinter(isWallClosed, wallCount).printAsIntervals();
-	}	
+    public Vector<Integer> getSolution() {
+        return solution;
+    }
 
-	private void allocateWalls(int wallCount) {
-		isWallClosed = new BitSet(wallCount);
-		isWallClosed.set(0, isWallClosed.size(), true);
-	}
-	
-	private BitSet isWallClosed;
-	private int wallCount;
+    public void setSolution(Vector<Integer> solution) {
+        this.solution = solution;
+    }
 
-	private Vector<Integer> solution = new Vector<Integer>();
+    public String printClosedWalls() {
+        return new BitSetIntervalPrinter(isWallClosed, wallCount).printAsIntervals();
+    }
+
+    private void allocateWalls(int wallCount) {
+        isWallClosed = new BitSet(wallCount);
+        isWallClosed.set(0, isWallClosed.size(), true);
+    }
+
+    private BitSet isWallClosed;
+    private int wallCount;
+
+    private Vector<Integer> solution = new Vector<Integer>();
+
+    public int getStartRoom() {
+        return startRoom;
+    }
+
+    public int getTargetRoom() {
+        return targetRoom;
+    }
+
+    private int startRoom;
+    private int targetRoom;
+
 
 }

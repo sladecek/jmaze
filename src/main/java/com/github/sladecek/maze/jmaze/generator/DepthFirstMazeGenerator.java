@@ -22,7 +22,7 @@ public final class DepthFirstMazeGenerator implements IMazeGenerator {
 
     @Override
     public MazeRealization generateMaze(final IMazeStructure maze) {
-        MazeRealization result = new MazeRealization(maze.getWallCount());
+        MazeRealization result = new MazeRealization(maze.getWallCount(), maze.getStartRoom(), maze.getTargetRoom());
         Vector<Integer> solution = null;
         int allRoomsCnt = maze.getRoomCount();
         visitedRooms = new BitSet(allRoomsCnt);

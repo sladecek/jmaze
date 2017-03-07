@@ -5,12 +5,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.github.sladecek.maze.jmaze.maze.Maze;
-import com.github.sladecek.maze.jmaze.print3d.BlockMakerBase;
-import com.github.sladecek.maze.jmaze.print3d.IBlockMaker;
 import com.github.sladecek.maze.jmaze.print3d.Maze3DSizes;
 import com.github.sladecek.maze.jmaze.printstyle.Color;
 import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
-import com.github.sladecek.maze.jmaze.shapes.FloorShape;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape2D;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape2D.ShapeType;
 import com.github.sladecek.maze.jmaze.shapes.MarkShape;
@@ -19,7 +16,6 @@ import com.github.sladecek.maze.jmaze.shapes.WallShape;
 
 /**
  * Egg maze - create 3D blocks from 2D shapes.
- */
 public final class EggBlockMaker extends BlockMakerBase implements IBlockMaker {
 
     public EggBlockMaker(EggMaze maze, ShapeContainer shapes, Maze3DSizes sizes, IPrintStyle colors,
@@ -94,3 +90,4 @@ public final class EggBlockMaker extends BlockMakerBase implements IBlockMaker {
     private ArrayList<MarkShape> marks;
 
 }
+*/

@@ -3,7 +3,7 @@ package com.github.sladecek.maze.jmaze.circular;
 import com.github.sladecek.maze.jmaze.geometry.Point2D;
 import com.github.sladecek.maze.jmaze.maze.IMazeStructure;
 import com.github.sladecek.maze.jmaze.maze.Maze;
-import com.github.sladecek.maze.jmaze.shapes.FloorShape;
+import com.github.sladecek.maze.jmaze.shapes.MarkShape;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape2D.ShapeType;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContext;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
@@ -111,8 +111,8 @@ public class Circular2DMaze extends Maze implements IMazeStructure {
 
             Point2D center = new Point2D(mapPhiD(phi * roomRatio + roomRatio * 0.5), y);
 
-            final FloorShape floor = new FloorShape(center, false, 0, 0);
-            linkRoomToFloor(room, floor);
+            final MarkShape floor = new MarkShape(room, center);
+
             addShape(floor);
         }
     }

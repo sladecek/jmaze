@@ -5,19 +5,24 @@ import com.github.sladecek.maze.jmaze.geometry.Point2D;
 import com.github.sladecek.maze.jmaze.print2d.I2DDocument;
 import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
 
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public final class MarkShape implements IMazeShape2D {
 
-    public MarkShape(ShapeType type, int y, int x) {
-        this.shapeType = type;
-        this.center = new Point2D(x, y);
-        LOG.log(Level.INFO, "MarkShape  " + type + " center=" + center);
-    }
+    private enum MarkType {none, solution, startRoom, targetRoom}
 
-    public ShapeType getShapeType() {
-        return this.shapeType;
+    ;
+
+    private MarkType markType;
+    private int roomId;
+
+    public MarkShape(int roomId, Point2D position) {
+        this.roomId = roomId;
+        this.center = position;
+        this.markType = MarkType.none;
+        LOG.log(Level.INFO, "MarkShape  " + markType + " center=" + center);
     }
 
     public int getX() {
@@ -30,21 +35,12 @@ public final class MarkShape implements IMazeShape2D {
 
     @Override
     public String toString() {
-        return "MarkShape [shapeType=" + shapeType + ", x=" + getX() + ", y=" + getY() + "]";
-    }
-/*
-    public void setOffsetXPercent(int offsetXPercent) {
-        this.offsetXPercent = offsetXPercent;
+        return "MarkShape [markType=" + markType + ", x=" + getX() + ", y=" + getY() + "]";
     }
 
-    public void setOffsetYPercent(int offsetYPercent) {
-        this.offsetYPercent = offsetYPercent;
-    }
-*/
     @Override
     public void print2D(I2DDocument doc, IPrintStyle printStyle) {
-
-        switch (shapeType) {
+        switch (markType) {
             case startRoom:
                 doc.printMark(center, printStyle.getStartMarkColor().toSvg(), printStyle.getStartTargetMarkWidth());
                 break;
@@ -52,19 +48,30 @@ public final class MarkShape implements IMazeShape2D {
                 doc.printMark(center, printStyle.getTargetMarkColor().toSvg(), printStyle.getStartTargetMarkWidth());
                 break;
             case solution:
-                doc.printMark(center, printStyle.getSolutionMarkColor().toSvg(), printStyle.getSolutionMarkWidth());
+                if (printStyle.isPrintSolution()) {
+                    doc.printMark(center, printStyle.getSolutionMarkColor().toSvg(), printStyle.getSolutionMarkWidth());
+                }
                 break;
             default:
                 break;
+
         }
     }
 
     @Override
     public void applyRealization(MazeRealization mr) {
+        if (mr.getStartRoom() == roomId) {
+            markType = MarkType.startRoom;
+        } else if (mr.getTargetRoom() == roomId) {
+            markType = MarkType.targetRoom;
+        } else if (mr.getSolution().contains(roomId)) {
+            markType = MarkType.solution;
+        } else {
+            markType = MarkType.none;
+        }
 
     }
 
-    private ShapeType shapeType;
 
     private Point2D center;
 /*

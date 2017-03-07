@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
 import com.github.sladecek.maze.jmaze.util.MazeGenerationException;
 
+/*
 public class ThreeJs3DPrinter implements IMaze3DPrinter {
 
     public ThreeJs3DPrinter(IPrintStyle printStyle) {
@@ -71,3 +72,4 @@ public class ThreeJs3DPrinter implements IMaze3DPrinter {
     
 	private static final Logger LOG = Logger.getLogger("maze.jmaze");
 }
+*/

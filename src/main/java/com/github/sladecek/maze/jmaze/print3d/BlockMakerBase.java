@@ -6,7 +6,7 @@ import com.github.sladecek.maze.jmaze.geometry.SouthNorth;
 import com.github.sladecek.maze.jmaze.geometry.UpDown;
 import com.github.sladecek.maze.jmaze.printstyle.Color;
 import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
-import com.github.sladecek.maze.jmaze.shapes.FloorShape;
+import com.github.sladecek.maze.jmaze.shapes.MarkShape;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
 
@@ -18,6 +18,8 @@ import java.util.logging.Logger;
  * Base class for 3D Maze printers. Responsible for shared operations such as
  * rectangular room drawing. Converts 2D shapes to 3D blocks.
  */
+
+/*
 public abstract class BlockMakerBase {
 
     public BlockMakerBase(ShapeContainer shapes, Maze3DSizes sizes,
@@ -279,3 +281,5 @@ public abstract class BlockMakerBase {
     protected ArrayList<Block> blocks;
 
 }
+
+*/

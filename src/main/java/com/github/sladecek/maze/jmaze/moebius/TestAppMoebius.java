@@ -4,9 +4,6 @@ import com.github.sladecek.maze.jmaze.generator.DepthFirstMazeGenerator;
 import com.github.sladecek.maze.jmaze.generator.IMazeGenerator;
 import com.github.sladecek.maze.jmaze.generator.MazeRealization;
 import com.github.sladecek.maze.jmaze.print3d.Maze3DSizes;
-import com.github.sladecek.maze.jmaze.print3d.OpenScad3DPrinter;
-import com.github.sladecek.maze.jmaze.print3d.StlMazePrinter;
-import com.github.sladecek.maze.jmaze.print3d.ThreeJs3DPrinter;
 import com.github.sladecek.maze.jmaze.printstyle.DefaultPrintStyle;
 import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
@@ -17,7 +14,6 @@ import java.util.logging.*;
 
 /***
  * Command line application generating a Moebius maze into OpenScad file.
- */
 public final class TestAppMoebius {
 
     public static void main(final String[] args) {
@@ -74,3 +70,4 @@ public final class TestAppMoebius {
     }
     private static final Logger LOG = Logger.getLogger("maze.jmaze");
 }
+*/

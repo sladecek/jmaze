@@ -11,6 +11,8 @@ import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
 /// Represents hole in the ground of the maze or the lack of thereof.
 /// The user usually prints either holes or non-holes depending on output
 /// type.
+
+/*
 public final class FloorShape implements IMazeShape2D {
 
     public FloorShape(final Point2D center, boolean isHole, int offsetXPercent, int offsetYPercent) {
@@ -64,9 +66,7 @@ public final class FloorShape implements IMazeShape2D {
 
     private Point2D center;
     private boolean isHole;
-/**
-     * Logger facility.
-     */
     private static final Logger LOG = Logger.getLogger("maze.jmaze");
 
 }
+*/

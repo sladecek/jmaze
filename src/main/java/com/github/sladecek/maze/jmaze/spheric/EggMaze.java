@@ -8,7 +8,7 @@ import com.github.sladecek.maze.jmaze.geometry.Point2D;
 import com.github.sladecek.maze.jmaze.geometry.SouthNorth;
 import com.github.sladecek.maze.jmaze.maze.IMazeStructure;
 import com.github.sladecek.maze.jmaze.maze.Maze;
-import com.github.sladecek.maze.jmaze.shapes.FloorShape;
+import com.github.sladecek.maze.jmaze.shapes.MarkShape;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape2D.ShapeType;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContext;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
@@ -147,8 +147,8 @@ public final class EggMaze extends Maze implements IMazeStructure {
                 r = addRoom();
             }
             Point2D center = new Point2D(ix, iy * roomMapRatio);
-            final FloorShape floor = new FloorShape(center, false, 50, 50);
-            linkRoomToFloor(r, floor);
+            final MarkShape floor = new MarkShape(r, center);
+
             addShape(floor);
 
         }

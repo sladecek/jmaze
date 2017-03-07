@@ -31,8 +31,8 @@ public final class SvgMazePrinter  {
     }
 
     public void printShapes(final ShapeContainer shapes, final MazeOutputFormat format,
-            final OutputStream output, final boolean showSolution) throws MazeGenerationException {
-        SvgDocument sd = createSvgDocument(shapes, showSolution);
+            final OutputStream output) throws MazeGenerationException {
+        SvgDocument sd = createSvgDocument(shapes);
         printSvgDocument(format, output, sd);
     }
 
@@ -63,16 +63,12 @@ public final class SvgMazePrinter  {
         }
     }
 
-    public SvgDocument createSvgDocument(final ShapeContainer shapes,
-            final boolean showSolution) {
+    public SvgDocument createSvgDocument(final ShapeContainer shapes) {
         SvgDocument sd = new SvgDocument(shapes.getContext());
         for (IMazeShape2D shape : shapes.getShapes()) {
-            if (showSolution
-                    || shape.getShapeType() != IMazeShape2D.ShapeType.solution) {
 
                 shape.print2D(sd, printStyle);
             }
-        }
         return sd;
     }
     

@@ -59,12 +59,8 @@ public final class MoebiusMaze extends Maze implements IMazeStructure {
                 int id1 = addRoom();
                 assert id1 == wall1 : "Inconsistent room numbering";
 
-                final boolean isHole = true;
-                FloorShape fs1 = new FloorShape(new Point2D(x,y), isHole, 0, 0);
 
-                
-                linkRoomToFloor(id1, fs1);
-                addShape(fs1);
+                addShape(new MarkShape(id1, new Point2D(x,y)));
                 
             }
         }
@@ -115,9 +111,10 @@ public final class MoebiusMaze extends Maze implements IMazeStructure {
                 int room2 = mapXYToRoomId(hy, hx);
                 int wall = addWall(room1, room2);
 
+/* TODO
                 IMazeShape2D fs1 = getFloorFromRoom(wall);
                 linkShapeToId(fs1, wall);
-
+*/
             }
         }
 

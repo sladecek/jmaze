@@ -51,11 +51,11 @@ public class TestApp2DBase {
 
             // print result
             SvgMazePrinter printer = new SvgMazePrinter();
-            final boolean showSolution = true;
+
             FileOutputStream f = new FileOutputStream(fileName + ".svg");
-            printer.printShapes(shapes, MazeOutputFormat.svg, f, showSolution);
+            printer.printShapes(shapes, MazeOutputFormat.svg, f);
             FileOutputStream fp = new FileOutputStream(fileName + ".pdf");
-            printer.printShapes(shapes, MazeOutputFormat.pdf, fp, showSolution);
+            printer.printShapes(shapes, MazeOutputFormat.pdf, fp);
 
         } catch (SecurityException | IOException | MazeGenerationException e) {
             e.printStackTrace();

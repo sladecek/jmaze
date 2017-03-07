@@ -14,7 +14,7 @@ public class Maze extends GenericMazeStructure {
     public Maze() {
         shapes = new ShapeContainer(null);
         shape2id = new HashMap<IMazeShape2D, Integer>();
-        room2floor = new HashMap<Integer, FloorShape>();
+
     }
 
     public ShapeContainer applyRealization(MazeRealization realization) {
@@ -31,32 +31,14 @@ public class Maze extends GenericMazeStructure {
                     result.add(nws);
                 }
             }
-        }
 
-        // start/stop
-        FloorShape startFloor = room2floor.get(getStartRoom());
-        if (startFloor != null) {
-            final MarkShape mark = startFloor.createMarkInThisRoom(IMazeShape2D.ShapeType.startRoom);
-            result.add(mark);
-        }
-
-        FloorShape targetFloor = room2floor.get(getTargetRoom());
-        if (targetFloor != null) {
-            final MarkShape mark = targetFloor.createMarkInThisRoom(IMazeShape2D.ShapeType.targetRoom);
-            result.add(mark);
-        }
-
-        // solution
-        for (int i : realization.getSolution()) {
-            if (i == getStartRoom()) {
-                continue;
+            if (s instanceof  MarkShape)
+            {
+                s.applyRealization(realization);
+                result.add(s);
             }
-            if (i == getTargetRoom()) {
-                continue;
-            }
-            final MarkShape mark = room2floor.get(i).createMarkInThisRoom(IMazeShape2D.ShapeType.solution);
-            result.add(mark);
         }
+
        return result;
 
     }
@@ -69,17 +51,22 @@ public class Maze extends GenericMazeStructure {
         shapes.add(shape);
     }
 
+    /* TODO odstranit
     protected void linkRoomToFloor(int r, FloorShape floor) {
         room2floor.put(r, floor);
     }
+    */
 
+    /* TODO odstranit */
     protected void linkShapeToId(IMazeShape2D shape, int id) {
         shape2id.put(shape, id);
     }
 
-    protected IMazeShape2D getFloorFromRoom(int room) {
+
+    /* TODO smazat protected IMazeShape2D getFloorFromRoom(int room) {
         return room2floor.get(room);
     }
+    */
 
     protected int getIdFromShape(IMazeShape2D shape) {
         return shape2id.get(shape);
@@ -100,7 +87,7 @@ public class Maze extends GenericMazeStructure {
     private ShapeContext context;
     private ShapeContainer shapes;
     private HashMap<IMazeShape2D, Integer> shape2id;
-    private HashMap<Integer, FloorShape> room2floor;
+
     private boolean debug;
 
 
