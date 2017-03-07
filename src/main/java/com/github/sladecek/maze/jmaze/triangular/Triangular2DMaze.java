@@ -4,8 +4,8 @@ import com.github.sladecek.maze.jmaze.geometry.Point2D;
 import com.github.sladecek.maze.jmaze.maze.IMazeStructure;
 import com.github.sladecek.maze.jmaze.maze.Maze;
 import com.github.sladecek.maze.jmaze.shapes.FloorShape;
-import com.github.sladecek.maze.jmaze.shapes.IMazeShape;
-import com.github.sladecek.maze.jmaze.shapes.IMazeShape.ShapeType;
+import com.github.sladecek.maze.jmaze.shapes.IMazeShape2D;
+import com.github.sladecek.maze.jmaze.shapes.IMazeShape2D.ShapeType;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContext;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
 
@@ -35,7 +35,7 @@ private final int rsx = 12;
 
 
         // outer walls
-        final IMazeShape.ShapeType ow = IMazeShape.ShapeType.outerWall;
+        final IMazeShape2D.ShapeType ow = IMazeShape2D.ShapeType.outerWall;
         addShape(new WallShape(ow, 0, rsx*size, rsy*size, 0));
         addShape(new WallShape(ow, rsy*size, 0, rsy*size, 2 * size*rsx));
         addShape(new WallShape(ow, rsy*size, 2 * size*rsx, 0, rsx*size));
@@ -47,10 +47,10 @@ private final int rsx = 12;
         // for all rows
         for (int y = 0; y < size; y++) {
             int prevRoom = -1;
-            final int rooms = 2 * y + 1;
+            final int roomsInRow = 2 * y + 1;
 
             // make a row of rooms  and vertical walls among them
-            for (int j = 0; j < rooms; j++) {
+            for (int j = 0; j < roomsInRow; j++) {
                 int r = addRoom();
                 if (j == 0) {
                     prevFirst = myFirst;
@@ -81,7 +81,7 @@ private final int rsx = 12;
             // connect rooms to upper row by horizontal walls
             if (prevFirst >= 0) {
                 int i = 0;
-                for (int j = 1; j < rooms; j += 2) {
+                for (int j = 1; j < roomsInRow; j += 2) {
                     int x = size + j - y - 1;
                     addWallAndShape(prevFirst + i, myFirst + j, x, x + 2, y, y);
                     i += 2;

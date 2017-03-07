@@ -5,11 +5,11 @@ import static org.junit.Assert.assertEquals;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.github.sladecek.maze.jmaze.shapes.IMazeShape2D;
 import org.junit.Before;
 import org.junit.Test;
 
 import com.github.sladecek.maze.jmaze.shapes.FloorShape;
-import com.github.sladecek.maze.jmaze.shapes.IMazeShape;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
 
 public class Triangular2DMazeTest {
@@ -86,7 +86,7 @@ public class Triangular2DMazeTest {
 	public void testFloorShapes() {
 		ArrayList<FloorShape> floors = new ArrayList<FloorShape>();
 		ShapeContainer  sc = maze.getShapes();
-		for (IMazeShape s: sc.getShapes()) {
+		for (IMazeShape2D s: sc.getShapes()) {
 			if (s instanceof FloorShape) {
 				floors.add((FloorShape)s);
 			}

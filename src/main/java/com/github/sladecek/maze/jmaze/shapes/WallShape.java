@@ -1,10 +1,11 @@
 package com.github.sladecek.maze.jmaze.shapes;
 
+import com.github.sladecek.maze.jmaze.generator.MazeRealization;
 import com.github.sladecek.maze.jmaze.geometry.Point2D;
 import com.github.sladecek.maze.jmaze.print2d.I2DDocument;
 import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
 
-public final class WallShape implements IMazeShape {
+public final class WallShape implements IMazeShape2D {
 
     public WallShape(ShapeType type, int y1, int x1, int y2, int x2) {
         this.shapeType = type;
@@ -69,6 +70,11 @@ public final class WallShape implements IMazeShape {
     public String toString() {
         return "WallShape [ shapeType=" + shapeType + ", x1=" + getX1() + ", x2=" + getX2() + ", y1=" + getY1()
                 + ", y2=" + getY2() + "]";
+    }
+
+    @Override
+    public void applyRealization(MazeRealization mr) {
+
     }
 
     private Point2D p1;

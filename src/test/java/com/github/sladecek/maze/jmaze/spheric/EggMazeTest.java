@@ -77,7 +77,7 @@ public class EggMazeTest {
 		int meridianWallCount = 0;
 		int parallelWallCount = 0;
 		/TODO
-		for (IMazeShape s: maze.getShapes()) {
+		for (IMazeShape2D s: maze.getShapes()) {
 			System.out.println(s);
 			if (s.getShapeType() == ShapeType.nonHole) {
 				roomCount++;
@@ -120,7 +120,7 @@ public class EggMazeTest {
 		EggMaze maze = new EggMaze(egg, equator_cells);
 		
 
-		for (IMazeShape s: maze.getShapes()) {
+		for (IMazeShape2D s: maze.getShapes()) {
 			System.out.println(s);
 			 if (s.getShapeType() == ShapeType.innerWall) {
 				WallShape ws = (WallShape)s;

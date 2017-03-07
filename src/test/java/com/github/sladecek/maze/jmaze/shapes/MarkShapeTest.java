@@ -12,7 +12,7 @@ import com.github.sladecek.maze.jmaze.geometry.Point2D;
 import com.github.sladecek.maze.jmaze.print2d.I2DDocument;
 import com.github.sladecek.maze.jmaze.printstyle.Color;
 import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
-import com.github.sladecek.maze.jmaze.shapes.IMazeShape.ShapeType;
+import com.github.sladecek.maze.jmaze.shapes.IMazeShape2D.ShapeType;
 
 public class MarkShapeTest {
 

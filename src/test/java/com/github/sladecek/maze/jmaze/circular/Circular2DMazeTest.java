@@ -9,7 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.github.sladecek.maze.jmaze.shapes.FloorShape;
-import com.github.sladecek.maze.jmaze.shapes.IMazeShape;
+import com.github.sladecek.maze.jmaze.shapes.IMazeShape2D;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
 
 public class Circular2DMazeTest {
@@ -55,7 +55,7 @@ public class Circular2DMazeTest {
 	public void testFloorShapes() {
 		ArrayList<FloorShape> floors = new ArrayList<FloorShape>();
 		ShapeContainer  sc = maze.getShapes();
-		for (IMazeShape s: sc.getShapes()) {
+		for (IMazeShape2D s: sc.getShapes()) {
 			if (s instanceof FloorShape) {
 				floors.add((FloorShape)s);
 			}

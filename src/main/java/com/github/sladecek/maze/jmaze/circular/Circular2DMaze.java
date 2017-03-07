@@ -4,7 +4,7 @@ import com.github.sladecek.maze.jmaze.geometry.Point2D;
 import com.github.sladecek.maze.jmaze.maze.IMazeStructure;
 import com.github.sladecek.maze.jmaze.maze.Maze;
 import com.github.sladecek.maze.jmaze.shapes.FloorShape;
-import com.github.sladecek.maze.jmaze.shapes.IMazeShape.ShapeType;
+import com.github.sladecek.maze.jmaze.shapes.IMazeShape2D.ShapeType;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContext;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
 
@@ -18,17 +18,13 @@ import java.util.logging.Logger;
 public class Circular2DMaze extends Maze implements IMazeStructure {
 
     /**
-     * Creates a new instance of circular maze generator.
+     * Creates new instance of circular maze..
+     *
      * @param layerCount number of layers in the maze.
-     * @param layerThickness layer size
      */
     public Circular2DMaze(int layerCount) {
         super();
         this.layerCount = layerCount;
-        this.layerSize = 30;
-        this.zeroLayerRadius = 20;
-        this.roomCountInZeroLayer = 4;
-        this.minimalRoomLength = 15;
         buildMaze();
     }
 
@@ -42,8 +38,8 @@ public class Circular2DMaze extends Maze implements IMazeStructure {
         generateRooms();
         generateConcentricWalls();
         generateRadialWalls();
-        setStartAndTargetRooms();
         generateOuterWalls();
+        setStartAndTargetRooms();
     }
 
     private void computeRoomCounts() {
@@ -58,8 +54,8 @@ public class Circular2DMaze extends Maze implements IMazeStructure {
 
                 // all layers except the central layer
                 for (int i = 2; i < layerCount; i++) {
-                    int cnt = roomCounts.get(i-1);
-                    double nextRoomIfDoubled =  Math.PI * computeRadius(i-1) / cnt;
+                    int cnt = roomCounts.get(i - 1);
+                    double nextRoomIfDoubled = Math.PI * computeRadius(i - 1) / cnt;
                     if (nextRoomIfDoubled < minimalRoomLength) {
                         roomCounts.add(cnt);
                         roomCountRatio.add(1);
@@ -89,7 +85,7 @@ public class Circular2DMaze extends Maze implements IMazeStructure {
 
     private void setStartAndTargetRooms() {
         setStartRoom(0);
-        setTargetRoom(getRoomCount()-1);
+        setTargetRoom(getRoomCount() - 1);
     }
 
     private void generateRooms() {
@@ -113,16 +109,16 @@ public class Circular2DMaze extends Maze implements IMazeStructure {
                 y = (computeRadius(layer) + computeRadius(layer - 1)) / 2;
             }
 
-            Point2D center = new Point2D(mapPhiD(phi * roomRatio+roomRatio*0.5), y);
+            Point2D center = new Point2D(mapPhiD(phi * roomRatio + roomRatio * 0.5), y);
 
             final FloorShape floor = new FloorShape(center, false, 0, 0);
             linkRoomToFloor(room, floor);
-                addShape(floor);
+            addShape(floor);
         }
     }
 
     private Integer roomCntInOuterLayer() {
-        return roomCounts.get(roomCounts.size()-1);
+        return roomCounts.get(roomCounts.size() - 1);
     }
 
 
@@ -133,16 +129,16 @@ public class Circular2DMaze extends Maze implements IMazeStructure {
     private void generateConcentricWalls() {
 
         // draw concentric wall at radius r
-        for (int layer = 0; layer < layerCount-1; layer++) {
+        for (int layer = 0; layer < layerCount - 1; layer++) {
             LOGGER.log(Level.INFO, "generateConcentricWalls r=" + layer);
 
             // the next layer may have less rooms than this one
             final int roomCntInner = roomCounts.get(layer);
-            final int roomCntOuter = roomCounts.get(layer+1);
+            final int roomCntOuter = roomCounts.get(layer + 1);
             final int gRoomInner = firstRoomInLayer.get(layer);
-            final int gRoomOuter = firstRoomInLayer.get(layer+1);
+            final int gRoomOuter = firstRoomInLayer.get(layer + 1);
 
-            final int roomCntRatio = roomCountRatio.get(layer+1);
+            final int roomCntRatio = roomCountRatio.get(layer + 1);
             for (int roomInner = 0; roomInner < roomCntInner; roomInner++) {
                 for (int j = 0; j < roomCntRatio; j++) {
                     int roomOuter = roomInner * roomCntRatio + j;
@@ -159,7 +155,7 @@ public class Circular2DMaze extends Maze implements IMazeStructure {
         final int roomMapRatio = outerCnt / roomCntThisLayer;
         final int rphi1 = (phi1 * roomMapRatio) % outerCnt;
         final int rphi2 = (phi2 * roomMapRatio) % outerCnt;
-        WallShape ws = new WallShape(ShapeType.innerWall, r1 , mapPhiD(rphi1), r2 , mapPhiD(rphi2));
+        WallShape ws = new WallShape(ShapeType.innerWall, r1, mapPhiD(rphi1), r2, mapPhiD(rphi2));
         addShape(ws);
         linkShapeToId(ws, id);
     }
@@ -180,26 +176,27 @@ public class Circular2DMaze extends Maze implements IMazeStructure {
                 // strange wall naming convention - wall 0 is between room 0 and
                 // 1
                 int phi = (j + 1) % cnt;
-                addWallShape(cnt, computeRadius(layer-1), computeRadius(layer), phi, phi, id);
+                addWallShape(cnt, computeRadius(layer - 1), computeRadius(layer), phi, phi, id);
             }
         }
     }
 
     private void generateOuterWalls() {
         final ShapeType ow = ShapeType.outerWall;
-        int r = computeRadius(layerCount-1);
+        int r = computeRadius(layerCount - 1);
         addShape(new WallShape(ow, r, 0, r, 0));
     }
 
+    private static final Logger LOGGER = Logger.getLogger("maze.jmaze");
 
     private int layerCount;
-    private int zeroLayerRadius;
-    private int roomCountInZeroLayer;
-    private int minimalRoomLength;
-    private int layerSize;
+
+    private final int zeroLayerRadius = 20;
+    private final int roomCountInZeroLayer = 4;
+    private final int minimalRoomLength = 15;
+    private final int layerSize = 30;
+
     private Vector<Integer> roomCounts;
     private Vector<Integer> roomCountRatio;
     private Vector<Integer> firstRoomInLayer;
-
-    private static final Logger LOGGER = Logger.getLogger("maze.jmaze");
 }

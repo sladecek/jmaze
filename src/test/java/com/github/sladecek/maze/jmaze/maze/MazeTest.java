@@ -4,17 +4,14 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.Vector;
 
+import com.github.sladecek.maze.jmaze.shapes.*;
 import org.junit.Before;
 import org.junit.Test;
 
 import com.github.sladecek.maze.jmaze.generator.MazeRealization;
 import com.github.sladecek.maze.jmaze.geometry.Point2D;
-import com.github.sladecek.maze.jmaze.shapes.FloorShape;
-import com.github.sladecek.maze.jmaze.shapes.IMazeShape;
-import com.github.sladecek.maze.jmaze.shapes.IMazeShape.ShapeType;
-import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
-import com.github.sladecek.maze.jmaze.shapes.ShapeContext;
-import com.github.sladecek.maze.jmaze.shapes.WallShape;
+import com.github.sladecek.maze.jmaze.shapes.IMazeShape2D;
+import com.github.sladecek.maze.jmaze.shapes.IMazeShape2D.ShapeType;
 
 public class MazeTest {
 
@@ -45,7 +42,7 @@ public class MazeTest {
 		realization.setWallClosed(3, true);
 		
 		ShapeContainer c = maze.applyRealization(realization);
-		Vector<IMazeShape> s = c.getShapes();
+		Vector<IMazeShape2D> s = c.getShapes();
 		assertEquals(2, s.size());
 		
 		assertEquals(ShapeType.innerWall, s.get(0).getShapeType());
@@ -63,7 +60,7 @@ public class MazeTest {
 		
 		MazeRealization realization = new MazeRealization(10);
 		ShapeContainer c = maze.applyRealization(realization);
-		Vector<IMazeShape> s = c.getShapes();
+		Vector<IMazeShape2D> s = c.getShapes();
 		assertEquals(1, s.size());
 		assertEquals(ShapeType.startRoom, s.get(0).getShapeType());
 		
@@ -77,7 +74,7 @@ public class MazeTest {
 		
 		MazeRealization realization = new MazeRealization(10);
 		ShapeContainer c = maze.applyRealization(realization);
-		Vector<IMazeShape> s = c.getShapes();
+		Vector<IMazeShape2D> s = c.getShapes();
 		assertEquals(1, s.size());
 		assertEquals(ShapeType.targetRoom, s.get(0).getShapeType());
 		
@@ -103,7 +100,7 @@ public class MazeTest {
 		sol.addElement(7);
 		realization.setSolution(sol);
 		ShapeContainer c = maze.applyRealization(realization);
-		Vector<IMazeShape> s = c.getShapes();
+		Vector<IMazeShape2D> s = c.getShapes();
 		assertEquals(3, s.size());
 		assertEquals(ShapeType.startRoom, s.get(0).getShapeType());
 		assertEquals(ShapeType.targetRoom, s.get(1).getShapeType());
@@ -115,7 +112,7 @@ public class MazeTest {
 	@Test
 	public void testGetShapes() {
 		maze.addShape(new FloorShape(new Point2D(1, 1), false,0,0));
-		Vector<IMazeShape> s = maze.getShapes().getShapes();
+		Vector<IMazeShape2D> s = maze.getShapes().getShapes();
 		assertEquals(1, s.size());
 	}
 

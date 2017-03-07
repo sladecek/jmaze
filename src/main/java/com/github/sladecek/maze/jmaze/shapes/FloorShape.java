@@ -3,6 +3,7 @@ package com.github.sladecek.maze.jmaze.shapes;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.github.sladecek.maze.jmaze.generator.MazeRealization;
 import com.github.sladecek.maze.jmaze.geometry.Point2D;
 import com.github.sladecek.maze.jmaze.print2d.I2DDocument;
 import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
@@ -10,7 +11,7 @@ import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
 /// Represents hole in the ground of the maze or the lack of thereof.
 /// The user usually prints either holes or non-holes depending on output
 /// type.
-public final class FloorShape implements IMazeShape {
+public final class FloorShape implements IMazeShape2D {
 
     public FloorShape(final Point2D center, boolean isHole, int offsetXPercent, int offsetYPercent) {
         super();
@@ -55,7 +56,10 @@ public final class FloorShape implements IMazeShape {
         return "FloorShape [y=" + getY() + ", x=" + getX() + ", isHole=" + isHole + "]";
     }
 
+    @Override
+    public void applyRealization(MazeRealization mr) {
 
+    }
 
 
     private Point2D center;

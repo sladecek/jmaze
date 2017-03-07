@@ -110,18 +110,19 @@ public abstract class BlockMakerBase {
 
     public final void printFloorWithHoleOneRoom(int cellY, int cellX) {
         ArrayList<Point3D> pe = makeFloorSegmentEast(cellY, cellX);
+        ArrayList<Point3D> pw = makeFloorSegmentWest(cellY, cellX);
+        ArrayList<Point3D> pn = makeFloorSegmentNorth(pe, pw);
+        ArrayList<Point3D> ps = makeFloorSegmentSouth(pe, pw);
+
         printPolyhedron(pe, "base e " + cellX + " " + cellY,
                 style.getBaseColor());
 
-        ArrayList<Point3D> pw = makeFloorSegmentWest(cellY, cellX);
-        printPolyhedron(pw, "base w " + cellX + " " + cellY,
-                style.getBaseColor());
-
-        ArrayList<Point3D> pn = makeFloorSegmentNorth(pe, pw);
         printPolyhedron(pn, "base n " + cellX + " " + cellY,
                 style.getBaseColor());
 
-        ArrayList<Point3D> ps = makeFloorSegmentSouth(pe, pw);
+        printPolyhedron(pw, "base w " + cellX + " " + cellY,
+                style.getBaseColor());
+
         printPolyhedron(ps, "base s " + cellX + " " + cellY,
                 style.getBaseColor());
     }

@@ -11,8 +11,8 @@ import com.github.sladecek.maze.jmaze.print3d.Maze3DSizes;
 import com.github.sladecek.maze.jmaze.printstyle.Color;
 import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
 import com.github.sladecek.maze.jmaze.shapes.FloorShape;
-import com.github.sladecek.maze.jmaze.shapes.IMazeShape;
-import com.github.sladecek.maze.jmaze.shapes.IMazeShape.ShapeType;
+import com.github.sladecek.maze.jmaze.shapes.IMazeShape2D;
+import com.github.sladecek.maze.jmaze.shapes.IMazeShape2D.ShapeType;
 import com.github.sladecek.maze.jmaze.shapes.MarkShape;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
@@ -54,7 +54,7 @@ public final class EggBlockMaker extends BlockMakerBase implements IBlockMaker {
         walls = new ArrayList<WallShape>();
         floor = new ArrayList<FloorShape>();
         marks = new ArrayList<MarkShape>();
-        for (IMazeShape shape : shapes.getShapes()) {
+        for (IMazeShape2D shape : shapes.getShapes()) {
             // TODO neda se to udelat elegantneji ?
             if (shape.getShapeType() == ShapeType.nonHole) {
                 floor.add((FloorShape) shape);

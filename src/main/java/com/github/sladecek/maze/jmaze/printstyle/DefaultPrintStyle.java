@@ -2,108 +2,108 @@ package com.github.sladecek.maze.jmaze.printstyle;
 
 public final class DefaultPrintStyle implements IPrintStyle {
 
-	public Color getBaseColor() {
-		return baseColor;
-	}
+    public Color getBaseColor() {
+        return baseColor;
+    }
 
-	public Color getOuterWallColor() {
-		return outerWallColor;
-	}
+    public Color getOuterWallColor() {
+        return outerWallColor;
+    }
 
-	public Color getInnerWallColor() {
-		return innerWallColor;
-	}
+    public Color getInnerWallColor() {
+        return innerWallColor;
+    }
 
-	public Color getCornerColor() {
-		return cornerColor;
-	}
-	
-	public Color getSolutionWallColor() {
-		return solutionWallColor;
-	}
-	
-	public Color getSolutionMarkColor() {
-		return solutionMarkColor;
-	}
+    public Color getCornerColor() {
+        return cornerColor;
+    }
 
-	@Override
-	public Color getStartMarkColor() {
-		return startMarkColor;
-	}
+    public Color getSolutionWallColor() {
+        return solutionWallColor;
+    }
 
-	@Override
-	public Color getTargetMarkColor() {
-		return targetMarkColor;
-	}
+    public Color getSolutionMarkColor() {
+        return solutionMarkColor;
+    }
 
-	public Color getHoleColor() {
-		return holeColor;
-	}
+    @Override
+    public Color getStartMarkColor() {
+        return startMarkColor;
+    }
 
-	public Color getDebugWallColor() {
-		return debugWallColor;
-	}
+    @Override
+    public Color getTargetMarkColor() {
+        return targetMarkColor;
+    }
 
-	public Color getDebugFloorColor() {
-		return debugFloorColor;
-	}
+    public Color getHoleColor() {
+        return holeColor;
+    }
 
-	public Color getThreeJsClearColor() {
-		return threeJsClearColor;
-	}
+    public Color getDebugWallColor() {
+        return debugWallColor;
+    }
 
-	public Color getThreeJsMeshColor() {
-		return threeJsMeshColor;
-	}
+    public Color getDebugFloorColor() {
+        return debugFloorColor;
+    }
 
-	public Color getThreeJsAmbientLightColor() {
-		return threeJsAmbientLightColor;
-	}
+    public Color getThreeJsClearColor() {
+        return threeJsClearColor;
+    }
 
-	public Color getThreeJsPointLightColor() {
-		return threeJsPointLightColor;
-	}
+    public Color getThreeJsMeshColor() {
+        return threeJsMeshColor;
+    }
 
-	@Override
-	public int getInnerWallWidth() {
-		return 1;
-	}
+    public Color getThreeJsAmbientLightColor() {
+        return threeJsAmbientLightColor;
+    }
 
-	@Override
-	public int getOuterWallWidth() {
-		return 2;
-	}
+    public Color getThreeJsPointLightColor() {
+        return threeJsPointLightColor;
+    }
 
-	@Override
-	public int getSolutionWallWidth() {
-		return 2;
-	}
+    @Override
+    public int getInnerWallWidth() {
+        return 1;
+    }
+
+    @Override
+    public int getOuterWallWidth() {
+        return 2;
+    }
+
+    @Override
+    public int getSolutionWallWidth() {
+        return 2;
+    }
 
 
-	@Override
-	public int getSolutionMarkWidth() {
-		return 2;
-	}
+    @Override
+    public int getSolutionMarkWidth() {
+        return 2;
+    }
 
-	@Override
-	public int getStartTargetMarkWidth() {		
-		return 4;
-	}
+    @Override
+    public int getStartTargetMarkWidth() {
+        return 4;
+    }
 
-	private final Color baseColor = new Color("777777");
-	private final Color outerWallColor = new Color("000000");
-	private final Color innerWallColor = new Color("000000");
-	private final Color solutionWallColor = new Color("ff0000");
-	private final Color solutionMarkColor = new Color("777777");
-	private final Color startMarkColor = new Color("ff0000");
-	private final Color targetMarkColor = new Color("00ff00");
-	private final Color cornerColor = new Color("666666");
-	private final Color holeColor = new Color("777777");
-	private final Color debugWallColor = new Color("eeeeff");
-	private final Color debugFloorColor = new Color("00ff00");
-	private final Color threeJsClearColor = new Color("eeeeee");
-	private final Color threeJsMeshColor = new Color("33ff33");
-	private final Color threeJsAmbientLightColor = new Color("222222");
-	private final Color threeJsPointLightColor = new Color("777777");
+    private final Color baseColor = new Color("777777");
+    private final Color outerWallColor = new Color("000000");
+    private final Color innerWallColor = new Color("000000");
+    private final Color solutionWallColor = new Color("ff0000");
+    private final Color solutionMarkColor = new Color("777777");
+    private final Color startMarkColor = new Color("ff0000");
+    private final Color targetMarkColor = new Color("00ff00");
+    private final Color cornerColor = new Color("666666");
+    private final Color holeColor = new Color("777777");
+    private final Color debugWallColor = new Color("eeeeff");
+    private final Color debugFloorColor = new Color("00ff00");
+    private final Color threeJsClearColor = new Color("eeeeee");
+    private final Color threeJsMeshColor = new Color("33ff33");
+    private final Color threeJsAmbientLightColor = new Color("222222");
+    private final Color threeJsPointLightColor = new Color("777777");
 
 }

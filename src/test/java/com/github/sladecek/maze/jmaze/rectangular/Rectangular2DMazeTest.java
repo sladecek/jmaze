@@ -30,7 +30,7 @@ public class Rectangular2DMazeTest {
 	@Test
 	public void testGetShapes() {
 		int cnt = 0;
-		for (IMazeShape ms: maze.getShapes()) {
+		for (IMazeShape2D ms: maze.getShapes()) {
 			cnt++;
 			assertEquals("class com.github.sladecek.maze.jmaze.shapes.WallShape", ms.getClass().toString());
 		}

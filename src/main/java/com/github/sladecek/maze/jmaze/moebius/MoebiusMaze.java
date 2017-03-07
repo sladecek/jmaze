@@ -5,11 +5,8 @@ import java.security.InvalidParameterException;
 import com.github.sladecek.maze.jmaze.geometry.Point2D;
 import com.github.sladecek.maze.jmaze.maze.IMazeStructure;
 import com.github.sladecek.maze.jmaze.maze.Maze;
-import com.github.sladecek.maze.jmaze.shapes.FloorShape;
-import com.github.sladecek.maze.jmaze.shapes.IMazeShape;
-import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
-import com.github.sladecek.maze.jmaze.shapes.ShapeContext;
-import com.github.sladecek.maze.jmaze.shapes.WallShape;
+import com.github.sladecek.maze.jmaze.shapes.*;
+import com.github.sladecek.maze.jmaze.shapes.IMazeShape2D;
 
 /**
  * 2D rectangular maze on Moebius strip. Rooms and walls (including holes) are
@@ -46,14 +43,14 @@ public final class MoebiusMaze extends Maze implements IMazeStructure {
         setTargetRoom(width / 4 + (height - 1) * width);
 
         // outer walls
-        final IMazeShape.ShapeType ow = IMazeShape.ShapeType.outerWall;
+        final IMazeShape2D.ShapeType ow = IMazeShape2D.ShapeType.outerWall;
         result.add(new WallShape(ow, 0, 0, 0, width));
         result.add(new WallShape(ow, height, 0, height, width));
-        final IMazeShape.ShapeType aw = IMazeShape.ShapeType.auxiliaryWall;
+        final IMazeShape2D.ShapeType aw = IMazeShape2D.ShapeType.auxiliaryWall;
         result.add(new WallShape(aw, 0, 0, height, 0));
         result.add(new WallShape(aw, 0, width, height, width));
 
-        final IMazeShape.ShapeType iw = IMazeShape.ShapeType.innerWall;
+        final IMazeShape2D.ShapeType iw = IMazeShape2D.ShapeType.innerWall;
 
         // rooms 
         for (int y = 0; y < height; y++) {
@@ -118,7 +115,7 @@ public final class MoebiusMaze extends Maze implements IMazeStructure {
                 int room2 = mapXYToRoomId(hy, hx);
                 int wall = addWall(room1, room2);
 
-                IMazeShape fs1 = getFloorFromRoom(wall);
+                IMazeShape2D fs1 = getFloorFromRoom(wall);
                 linkShapeToId(fs1, wall);
 
             }

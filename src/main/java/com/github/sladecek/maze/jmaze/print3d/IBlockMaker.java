@@ -5,7 +5,7 @@ package com.github.sladecek.maze.jmaze.print3d;
  */
 public interface IBlockMaker {
 
-	void makeBlocks();
+    void makeBlocks();
 
-	Iterable<Block> getBlocks();
+    Iterable<Block> getBlocks();
 }

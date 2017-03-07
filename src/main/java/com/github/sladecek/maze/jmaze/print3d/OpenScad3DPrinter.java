@@ -1,10 +1,10 @@
 package com.github.sladecek.maze.jmaze.print3d;
 
+import com.github.sladecek.maze.jmaze.util.MazeGenerationException;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.logging.Logger;
-
-import com.github.sladecek.maze.jmaze.util.MazeGenerationException;
 
 /**
  * Save maze blocks in open scad file format.

@@ -1,5 +1,6 @@
 package com.github.sladecek.maze.jmaze.shapes;
 
+import com.github.sladecek.maze.jmaze.generator.MazeRealization;
 import com.github.sladecek.maze.jmaze.geometry.Point2D;
 import com.github.sladecek.maze.jmaze.print2d.I2DDocument;
 import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
@@ -7,7 +8,7 @@ import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public final class MarkShape implements IMazeShape {
+public final class MarkShape implements IMazeShape2D {
 
     public MarkShape(ShapeType type, int y, int x) {
         this.shapeType = type;
@@ -56,6 +57,11 @@ public final class MarkShape implements IMazeShape {
             default:
                 break;
         }
+    }
+
+    @Override
+    public void applyRealization(MazeRealization mr) {
+
     }
 
     private ShapeType shapeType;

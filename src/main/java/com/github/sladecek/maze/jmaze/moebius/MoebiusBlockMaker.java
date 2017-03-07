@@ -11,13 +11,13 @@ import com.github.sladecek.maze.jmaze.print3d.IBlockMaker;
 import com.github.sladecek.maze.jmaze.print3d.Maze3DSizes;
 import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
 import com.github.sladecek.maze.jmaze.shapes.FloorShape;
-import com.github.sladecek.maze.jmaze.shapes.IMazeShape;
-import com.github.sladecek.maze.jmaze.shapes.IMazeShape.ShapeType;
+import com.github.sladecek.maze.jmaze.shapes.IMazeShape2D;
+import com.github.sladecek.maze.jmaze.shapes.IMazeShape2D.ShapeType;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
 
 /**
- * Moeabius maze - create 3D blocks from 2D shapes.
+ * Moebius maze - create 3D blocks from 2D shapes.
  *
  */
 public final class MoebiusBlockMaker extends BlockMakerBase implements IBlockMaker {
@@ -44,7 +44,7 @@ public final class MoebiusBlockMaker extends BlockMakerBase implements IBlockMak
 		cellHeight = shapes.getContext().getPictureHeight();
 		cellWidth = shapes.getContext().getPictureWidth();
 
-		for (IMazeShape shape : shapes.getShapes()) {
+		for (IMazeShape2D shape : shapes.getShapes()) {
 			if (shape.getShapeType() == ShapeType.hole) {
 				floors.add((FloorShape) shape);
 			} else {
@@ -59,7 +59,6 @@ public final class MoebiusBlockMaker extends BlockMakerBase implements IBlockMak
 
 		for (int cellX = 0; cellX < cellWidth; cellX++) {
 			for (int cellY = 0; cellY < cellHeight; cellY++) {
-
 				printFloorWithHoleOneRoom(cellY, cellX);
 			}
 		}

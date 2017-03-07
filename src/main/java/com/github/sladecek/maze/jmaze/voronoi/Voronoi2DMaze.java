@@ -5,8 +5,8 @@ import com.github.sladecek.maze.jmaze.geometry.Point2D;
 import com.github.sladecek.maze.jmaze.maze.IMazeStructure;
 import com.github.sladecek.maze.jmaze.maze.Maze;
 import com.github.sladecek.maze.jmaze.shapes.FloorShape;
-import com.github.sladecek.maze.jmaze.shapes.IMazeShape;
-import com.github.sladecek.maze.jmaze.shapes.IMazeShape.ShapeType;
+import com.github.sladecek.maze.jmaze.shapes.IMazeShape2D;
+import com.github.sladecek.maze.jmaze.shapes.IMazeShape2D.ShapeType;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContext;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
 
@@ -84,7 +84,7 @@ public class Voronoi2DMaze extends Maze implements IMazeStructure {
     }
 
     private void createOuterWalls() {
-        final IMazeShape.ShapeType ow = IMazeShape.ShapeType.outerWall;
+        final IMazeShape2D.ShapeType ow = IMazeShape2D.ShapeType.outerWall;
         addShape(new WallShape(ow, 0, 0, 0, width));
         addShape(new WallShape(ow, 0, 0, height, 0));
         addShape(new WallShape(ow, 0, width, height, width));

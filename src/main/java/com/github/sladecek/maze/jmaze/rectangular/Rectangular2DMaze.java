@@ -4,7 +4,7 @@ import com.github.sladecek.maze.jmaze.geometry.Point2D;
 import com.github.sladecek.maze.jmaze.maze.IMazeStructure;
 import com.github.sladecek.maze.jmaze.maze.Maze;
 import com.github.sladecek.maze.jmaze.shapes.FloorShape;
-import com.github.sladecek.maze.jmaze.shapes.IMazeShape;
+import com.github.sladecek.maze.jmaze.shapes.IMazeShape2D;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContext;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
 
@@ -39,7 +39,7 @@ public final class Rectangular2DMaze extends Maze implements
         setContext(new ShapeContext(isPolar, h, w));
 
         // outer walls
-        final IMazeShape.ShapeType ow = IMazeShape.ShapeType.outerWall;
+        final IMazeShape2D.ShapeType ow = IMazeShape2D.ShapeType.outerWall;
         addShape(new WallShape(ow, 0, 0, 0, w));
         addShape(new WallShape(ow, 0, 0, h, 0));
         addShape(new WallShape(ow, 0, w, h, w));
@@ -56,7 +56,7 @@ public final class Rectangular2DMaze extends Maze implements
             }
         }
 
-        final IMazeShape.ShapeType iw = IMazeShape.ShapeType.innerWall;
+        final IMazeShape2D.ShapeType iw = IMazeShape2D.ShapeType.innerWall;
 
         // inner walls - east/west
         for (int y = 0; y < height; y++) {
