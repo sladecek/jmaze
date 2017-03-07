@@ -11,9 +11,7 @@ import java.util.logging.Logger;
 
 public final class MarkShape implements IMazeShape2D {
 
-    private enum MarkType {none, solution, startRoom, targetRoom}
 
-    ;
 
     private MarkType markType;
     private int roomId;
@@ -60,15 +58,7 @@ public final class MarkShape implements IMazeShape2D {
 
     @Override
     public void applyRealization(MazeRealization mr) {
-        if (mr.getStartRoom() == roomId) {
-            markType = MarkType.startRoom;
-        } else if (mr.getTargetRoom() == roomId) {
-            markType = MarkType.targetRoom;
-        } else if (mr.getSolution().contains(roomId)) {
-            markType = MarkType.solution;
-        } else {
-            markType = MarkType.none;
-        }
+       markType = MarkType.markRoomFromRealization(roomId, mr);
 
     }
 

@@ -8,9 +8,7 @@ import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
 public final class WallShape implements IMazeShape2D {
 
 
-    private enum WallType {
-        noWall, innerWall, outerWall
-    }
+
 
     public static WallShape newInnerWall(int wallId, int y1, int x1, int y2, int x2) {
         return new WallShape(wallId, WallType.innerWall, y1,x1,y2,x2);

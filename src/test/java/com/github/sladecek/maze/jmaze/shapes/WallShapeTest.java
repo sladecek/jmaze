@@ -139,7 +139,6 @@ public class WallShapeTest {
 		test2DPrintStyle(expectedStyle, expectedCenter, shapeType);		
 	}
 
-	/* TODO
 	@Test
 	public void testPrint2DShouldPrintSolutionWallInCorrectStyle() {		
 		String expectedStyle = "stroke:rgb(6,6,6);stroke-width:7";   
@@ -147,7 +146,6 @@ public class WallShapeTest {
 		WallType shapeType = WallType.solution;
 		test2DPrintStyle(expectedStyle, expectedCenter, shapeType);		
 	}
-	*/
 
 	@Test
 	public void testPrint2DShouldPrintAuxiliaryWallInCorrectStyle() {		
