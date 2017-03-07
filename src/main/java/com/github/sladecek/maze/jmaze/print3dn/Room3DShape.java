@@ -16,12 +16,12 @@ import java.util.EnumSet;
  * Represents a room in 3D maze.
  */
 /* TODO tohle nebude 2D  */
-public class Room3D implements IMazeShape2D {
-    public Room3D(Point2D position, int roomId) {
+public class Room3DShape implements IMazeShape2D {
+    public Room3DShape(int roomId, Point2D position) {
         this.position = position;
         this.roomId = roomId;
         for (WallDirection wd: WallDirection.values()) {
-            wallType.put(wd, WallType.noWall);
+            wallType.put(wd, WallType.innerWall);
             wallId.put(wd, -1);
         }
     }
