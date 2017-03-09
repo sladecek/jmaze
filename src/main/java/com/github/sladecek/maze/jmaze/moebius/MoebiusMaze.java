@@ -1,7 +1,6 @@
 package com.github.sladecek.maze.jmaze.moebius;
 
 import java.security.InvalidParameterException;
-import java.util.ArrayList;
 
 import com.github.sladecek.maze.jmaze.geometry.Point2D;
 import com.github.sladecek.maze.jmaze.maze.IMazeStructure;
@@ -9,7 +8,6 @@ import com.github.sladecek.maze.jmaze.maze.Maze;
 import com.github.sladecek.maze.jmaze.print3dn.Room3DShape;
 import com.github.sladecek.maze.jmaze.print3dn.WallDirection;
 import com.github.sladecek.maze.jmaze.shapes.*;
-import com.github.sladecek.maze.jmaze.shapes.IMazeShape2D;
 
 /**
  * 2D rectangular maze on Moebius strip. Rooms and walls (including holes) are
@@ -36,13 +34,15 @@ public final class MoebiusMaze extends Maze implements IMazeStructure {
         buildMaze();
     }
 
+
     public void buildMaze() {
 
         ShapeContainer result = new ShapeContainer(context);
 
-        final int wh = width*height;
-        final int firstSNWall = wh-width;
-        final int firstFloorWall = firstSNWall+wh-width;
+        expectedRoomCount = width * height;
+        firstHorizontalWall = expectedRoomCount;
+        firstFloorWall = firstHorizontalWall + expectedRoomCount - width;
+        expectedWallCount = firstFloorWall + expectedRoomCount / 2;
 
         setStartRoom(0);
         setTargetRoom(width / 4 + (height - 1) * width);
@@ -53,44 +53,46 @@ public final class MoebiusMaze extends Maze implements IMazeStructure {
                 int i = addRoom();
                 assert i == wall : "Inconsistent room numbering";
 
-                Room3DShape r3 = new Room3DShape(i, new Point2D(x,y));
+                Room3DShape r3 = new Room3DShape(i, new Point2D(x, y));
                 addShape(r3);
 
-                if (x == 0) {
-                    r3.setWallId(WallDirection.WEST, wh-width-i);
-                } else {
+                if (x > 0) {
                     r3.setWallId(WallDirection.WEST, i);
+                } else {
+                    // In Moebius maze, there is a seam before the first column.
+                    r3.setWallId(WallDirection.WEST, expectedRoomCount - width - i);
                 }
 
-                int rightWall = width * y + (x + 1 % width);
-                if (x==width-1) {
-                    r3.setWallId(WallDirection.EAST, wh-width-rightWall);
+                if (x < width - 1) {
+                    int rightWall = width * y + (x + 1 % width);
+                    r3.setWallId(WallDirection.EAST, rightWall);
                 } else {
+                    int rightWall = width * (height-1-y) + (x + 1) % width;
                     r3.setWallId(WallDirection.EAST, rightWall);
                 }
 
                 if (y == 0) {
                     r3.setWallType(WallDirection.NORTH, WallType.outerWall);
                 } else {
-                    r3.setWallId(WallDirection.NORTH, i+firstSNWall+i-width);
+                    r3.setWallId(WallDirection.NORTH, firstHorizontalWall + i - width);
                 }
-                if (y == height-1) {
+                if (y == height - 1) {
                     r3.setWallType(WallDirection.SOUTH, WallType.outerWall);
                 } else {
-                    r3.setWallId(WallDirection.SOUTH, i+wh-width);
+                    r3.setWallId(WallDirection.SOUTH, i + firstHorizontalWall);
                 }
 
                 int floorWallBelongsToRoom = i;
-                if (y >= y/2) {
+                if (y >= height / 2) {
                     floorWallBelongsToRoom = getTheOtherSideOfHole(i);
                 }
-                r3.setWallId(WallDirection.FLOOR, floorWallBelongsToRoom+firstFloorWall);
+                r3.setWallId(WallDirection.FLOOR, floorWallBelongsToRoom + firstFloorWall);
             }
         }
 
 
         // inner walls - east/west
-        for (int y = 0; y < height - 1; y++) {
+        for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 int roomEast = mapXYToRoomId(y, x);
                 int roomWest = mapXYToRoomId(y, (x + 1) % width);
@@ -106,10 +108,10 @@ public final class MoebiusMaze extends Maze implements IMazeStructure {
                 int roomNorth = mapXYToRoomId(y, x);
                 int roomSouth = mapXYToRoomId(y + 1, x);
                 int id = addWall(roomNorth, roomSouth);
-                assert id == firstSNWall+mapXYToRoomId(y, x) : "Inconsistent wall numbering - south/north";
+                assert id == firstHorizontalWall + mapXYToRoomId(y, x) : "Inconsistent wall numbering - south/north";
             }
         }
-        
+
 
         // floors
         for (int y = 0; y < height / 2; y++) {
@@ -119,9 +121,14 @@ public final class MoebiusMaze extends Maze implements IMazeStructure {
                 int hx = getTheOtherSideOfHoleX(y, x);
                 int room2 = mapXYToRoomId(hy, hx);
                 int id = addWall(room1, room2);
-                assert id == firstFloorWall+mapXYToRoomId(y, x) : "Inconsistent wall numbering - floor";
+                assert id == firstFloorWall + mapXYToRoomId(y, x) : "Inconsistent wall numbering - floor";
             }
         }
+
+        assert getRoomCount() == expectedRoomCount : "Unexpected room count";
+        assert getWallCount() == expectedWallCount : "Unexpected wall count";
+
+        assert getShapes().length() == expectedRoomCount : "Incorrect room count";
 
     }
 
@@ -162,6 +169,12 @@ public final class MoebiusMaze extends Maze implements IMazeStructure {
 
     private int height;
     private int width;
+
+    private int expectedRoomCount;
+    private int firstHorizontalWall;
+    private int firstFloorWall;
+    private int expectedWallCount;
+
     private ShapeContext context;
 
     private int eastWestWallCount;

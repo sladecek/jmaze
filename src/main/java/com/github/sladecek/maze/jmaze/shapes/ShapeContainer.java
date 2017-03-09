@@ -23,6 +23,7 @@ public final class ShapeContainer {
         shapes.add(s);
     }
 
+    public int length() { return shapes.size(); }
     private ShapeContext context;
 
 

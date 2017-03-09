@@ -31,6 +31,7 @@ public class Room3DShape implements IMazeShape2D {
     }
 
     public void setWallId(WallDirection wd, int  wallId) {
+
         this.wallId.put(wd, wallId);
     }
 
