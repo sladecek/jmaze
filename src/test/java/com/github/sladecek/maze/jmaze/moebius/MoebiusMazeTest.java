@@ -10,7 +10,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class MoebiusMazeTest {
-/* TODO
 	private MoebiusMaze maze;
 	
 	@Before
@@ -37,53 +36,6 @@ public class MoebiusMazeTest {
 	public final void testGetTargetRoom() {
 		assertEquals(19, maze.getTargetRoom());
 	}
-	
-	@Test
-	public final void testGetWalls_center() {
-		int[] w = {6,7,25,31,49};
-		testGetWalls(7, w);
-	}
-
-	@Test
-	public final void testGetWalls_corner0() {
-		int[] w = {0,5,24,42};
-		testGetWalls(0, w);
-	}
-
-	@Test
-	public final void testGetWalls_corner5() {
-		int[] w = {4,5,29,47};
-		testGetWalls(5, w);
-	}
-
-	@Test
-	public final void testGetWalls_corner18() {
-		int[] w = {18,23,36,45};
-		testGetWalls(18, w);
-	}
-	
-	@Test
-	public final void testGetWalls_corner23() {
-		int[] w = {22,23,41,44};
-		testGetWalls(23, w);
-	}
-
-	@Test
-	public final void testGetWalls_corner20() {
-		int[] w = {19,20,38,47};
-		testGetWalls(20, w);
-	}
-	
-	private void testGetWalls(final int room, final int[] walls) {
-		Vector<Integer> v = (Vector<Integer>) maze.getWalls(room);
-		Collections.sort(v);
-		assertEquals(walls.length, v.size());				
-		int cnt = Math.min(walls.length, v.size());
-		for (int i = 0; i < cnt; i++) {
-			assertEquals(walls[i], (int)v.get(i));
-		}
-	}
-
 
 	@Test(expected=IllegalArgumentException.class)
 	public final void testGetOtherRoom_invalid() {
@@ -138,5 +90,5 @@ public class MoebiusMazeTest {
 		assertEquals(9, maze.getRoomBehindWall(12, 51));
 	}
 	
-*/
+
 }
