@@ -2,13 +2,10 @@ package com.github.sladecek.maze.jmaze.moebius;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.Vector;
 
 import com.github.sladecek.maze.jmaze.print3dn.Room3DShape;
-import com.github.sladecek.maze.jmaze.print3dn.WallDirection;
+import com.github.sladecek.maze.jmaze.geometry.Direction;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape;
 import org.junit.After;
 import org.junit.Before;
@@ -100,24 +97,24 @@ public class MoebiusMazeTest {
         for (IMazeShape sh : maze.getShapes().getShapes()) {
             if (sh instanceof Room3DShape) {
                 Room3DShape r3 = (Room3DShape) sh;
-                int wallIdEast = r3.getWallId().get(WallDirection.EAST);
+                int wallIdEast = r3.getWallId().get(Direction.EAST);
                 assert (wallIdEast >= 0);
                 assert (wallIdEast < 24);
-                int wallIdWest = r3.getWallId().get(WallDirection.WEST);
+                int wallIdWest = r3.getWallId().get(Direction.WEST);
                 assert (wallIdWest >= 0);
                 assert (wallIdWest < 24);
-                int wallIdSouth = r3.getWallId().get(WallDirection.SOUTH);
+                int wallIdSouth = r3.getWallId().get(Direction.SOUTH);
                 if (wallIdSouth >= 0) {
                     assert (wallIdSouth >= 24);
                     assert (wallIdSouth < 24 + 18);
                 }
-                int wallIdNorth = r3.getWallId().get(WallDirection.NORTH);
+                int wallIdNorth = r3.getWallId().get(Direction.NORTH);
                 if (wallIdNorth >= 0) {
                     assert (wallIdNorth >= 24);
                     assert (wallIdNorth < 24 + 18);
                 }
 
-                int wallIdFloor = r3.getWallId().get(WallDirection.FLOOR);
+                int wallIdFloor = r3.getWallId().get(Direction.FLOOR);
 
                 assert (wallIdFloor >= 24 + 18);
                 assert (wallIdFloor < 24 + 18 + 12);
@@ -135,7 +132,7 @@ public class MoebiusMazeTest {
         for (IMazeShape sh : maze.getShapes().getShapes()) {
             if (sh instanceof Room3DShape) {
                 Room3DShape r3 = (Room3DShape) sh;
-                for (WallDirection wd : WallDirection.values()) {
+                for (Direction wd : Direction.values()) {
                     int wallId = r3.getWallId().get(wd);
                     if (wallId >= 0) {
                         wallCount[wallId]++;

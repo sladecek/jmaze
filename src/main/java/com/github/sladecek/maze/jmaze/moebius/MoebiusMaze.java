@@ -6,7 +6,7 @@ import com.github.sladecek.maze.jmaze.geometry.Point2D;
 import com.github.sladecek.maze.jmaze.maze.IMazeStructure;
 import com.github.sladecek.maze.jmaze.maze.Maze;
 import com.github.sladecek.maze.jmaze.print3dn.Room3DShape;
-import com.github.sladecek.maze.jmaze.print3dn.WallDirection;
+import com.github.sladecek.maze.jmaze.geometry.Direction;
 import com.github.sladecek.maze.jmaze.shapes.*;
 
 /**
@@ -57,36 +57,36 @@ public final class MoebiusMaze extends Maze implements IMazeStructure {
                 addShape(r3);
 
                 if (x > 0) {
-                    r3.setWallId(WallDirection.WEST, i);
+                    r3.setWallId(Direction.WEST, i);
                 } else {
                     // In Moebius maze, there is a seam before the first column.
-                    r3.setWallId(WallDirection.WEST, expectedRoomCount - width - i);
+                    r3.setWallId(Direction.WEST, expectedRoomCount - width - i);
                 }
 
                 if (x < width - 1) {
                     int rightWall = width * y + (x + 1 % width);
-                    r3.setWallId(WallDirection.EAST, rightWall);
+                    r3.setWallId(Direction.EAST, rightWall);
                 } else {
                     int rightWall = width * (height-1-y) + (x + 1) % width;
-                    r3.setWallId(WallDirection.EAST, rightWall);
+                    r3.setWallId(Direction.EAST, rightWall);
                 }
 
                 if (y == 0) {
-                    r3.setWallType(WallDirection.NORTH, WallType.outerWall);
+                    r3.setWallType(Direction.NORTH, WallType.outerWall);
                 } else {
-                    r3.setWallId(WallDirection.NORTH, firstHorizontalWall + i - width);
+                    r3.setWallId(Direction.NORTH, firstHorizontalWall + i - width);
                 }
                 if (y == height - 1) {
-                    r3.setWallType(WallDirection.SOUTH, WallType.outerWall);
+                    r3.setWallType(Direction.SOUTH, WallType.outerWall);
                 } else {
-                    r3.setWallId(WallDirection.SOUTH, i + firstHorizontalWall);
+                    r3.setWallId(Direction.SOUTH, i + firstHorizontalWall);
                 }
 
                 int floorWallBelongsToRoom = i;
                 if (y >= height / 2) {
                     floorWallBelongsToRoom = getTheOtherSideOfHole(i);
                 }
-                r3.setWallId(WallDirection.FLOOR, floorWallBelongsToRoom + firstFloorWall);
+                r3.setWallId(Direction.FLOOR, floorWallBelongsToRoom + firstFloorWall);
             }
         }
 
