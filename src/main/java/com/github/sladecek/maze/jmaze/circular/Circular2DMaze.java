@@ -155,7 +155,8 @@ public class Circular2DMaze extends Maze implements IMazeStructure {
         final int roomMapRatio = outerCnt / roomCntThisLayer;
         final int rphi1 = (phi1 * roomMapRatio) % outerCnt;
         final int rphi2 = (phi2 * roomMapRatio) % outerCnt;
-        addShape(WallShape.newInnerWall(id, r1, mapPhiD(rphi1), r2, mapPhiD(rphi2)));
+        addShape(WallShape.newInnerWall(id, new Point2D(mapPhiD(rphi1), r1)
+                , new Point2D(mapPhiD(rphi2), r2)));
     }
 
 
@@ -182,7 +183,7 @@ public class Circular2DMaze extends Maze implements IMazeStructure {
     private void generateOuterWalls() {
 
         int r = computeRadius(layerCount - 1);
-        addShape(WallShape.newOuterWall(r, 0, r, 0));
+        addShape(WallShape.newOuterWall(new Point2D(0, r), new Point2D(0, r)));
     }
 
     private static final Logger LOGGER = Logger.getLogger("maze.jmaze");

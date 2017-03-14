@@ -40,10 +40,12 @@ public final class Rectangular2DMaze extends Maze implements
 
         // outer walls
 
-        addShape(WallShape.newOuterWall(0, 0, 0, w));
-        addShape(WallShape.newOuterWall(0, 0, h, 0));
-        addShape(WallShape.newOuterWall(0, w, h, w));
-        addShape(WallShape.newOuterWall(h, 0, h, w));
+
+        addShape(WallShape.newOuterWall(new Point2D(0, 0), new Point2D(w, 0)));
+        addShape(WallShape.newOuterWall(new Point2D(0, 0), new Point2D(0, h)));
+        addShape(WallShape.newOuterWall(new Point2D(0, h), new Point2D(w, h)));
+        addShape(WallShape.newOuterWall(new Point2D(w, 0), new Point2D(w, h)));
+
 
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
@@ -65,7 +67,9 @@ public final class Rectangular2DMaze extends Maze implements
                 int roomWest = roomEast + 1;
                 int id = addWall(roomEast, roomWest);
 
-                addShape(WallShape.newInnerWall(id, rsp*y, rsp*(x + 1), rsp*(y + 1), rsp*(x + 1)));
+                addShape(WallShape.newInnerWall(id,
+                        new Point2D(rsp*(x + 1), rsp*y), new Point2D(rsp*(x + 1), rsp*(y + 1))));
+
             }
         }
 
@@ -75,7 +79,8 @@ public final class Rectangular2DMaze extends Maze implements
                 int roomNorth = y * width + x;
                 int roomSouth = roomNorth + width;
                 int id = addWall(roomNorth, roomSouth);
-                addShape(WallShape.newInnerWall(id, rsp*(y + 1), rsp*x, rsp*(y + 1), rsp*(x + 1)));
+                addShape(WallShape.newInnerWall(id,
+                        new Point2D(rsp*x, rsp*(y+1)), new Point2D(rsp*(x + 1), rsp*(y + 1))));
             }
         }
 

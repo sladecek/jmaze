@@ -199,7 +199,7 @@ public final class EggMaze extends Maze implements IMazeStructure {
         final int roomMapRatio = equatorCellCnt / roomCntThisLayer;
         final int y1 = (yr1 * roomMapRatio) % equatorCellCnt;
         final int y2 = (yr2 * roomMapRatio) % equatorCellCnt;
-        addShape(WallShape.newInnerWall(id, y1, x1, y2, x2));
+        addShape(WallShape.newInnerWall(id, new Point2D(x1, y1), new Point2D(x2, y2)));
     }
 
     private void generateMeridianWalls(SouthNorth sn) {

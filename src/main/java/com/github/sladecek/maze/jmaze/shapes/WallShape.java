@@ -10,19 +10,23 @@ public final class WallShape implements IMazeShape2D {
 
 
 
-    public static WallShape newInnerWall(int wallId, int y1, int x1, int y2, int x2) {
-        return new WallShape(wallId, WallType.innerWall, y1,x1,y2,x2);
+    public static WallShape newInnerWall(int wallId, Point2D p1, Point2D p2) {
+        return new WallShape(wallId, WallType.innerWall, p1, p2);
     }
 
-    public static WallShape newOuterWall(int y1, int x1, int y2, int x2) {
-        return new WallShape(-1, WallType.outerWall, y1,x1,y2,x2);
+    public static WallShape newOuterWall(Point2D p1, Point2D p2) {
+        return new WallShape(-1, WallType.outerWall, p1, p2);
     }
 
-    protected WallShape(int wallId, WallType type, int y1, int x1, int y2, int x2) {
+    protected WallShape(int wallId, WallType type, Point2D  p1, Point2D p2) {
         this.wallId = wallId;
         this.wallType = type;
+        /*
         this.p1 = new Point2D(x1, y1);
         this.p2 = new Point2D(x2, y2);
+        */
+        this.p1 = p1;
+        this.p2 = p2;
     }
 
 

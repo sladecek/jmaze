@@ -128,11 +128,11 @@ public class Hexagonal2DMaze extends Maze implements IMazeStructure {
 
         LOGGER.info(
                 "addWallAndShape room1=" + r + " room2=" + r2 + " y1=" + y1 + " y2=" + y2 + " x1=" + x1 + " x2=" + x2);
-        addShape(WallShape.newInnerWall(id, y1, x1, y2, x2));
+        addShape(WallShape.newInnerWall(id, new Point2D(x1, y1), new Point2D(x2, y2)));
     }
 
     private void addOuterWall(int x1, int y1, int x2, int y2) {
-        addShape(WallShape.newOuterWall(y1, x1, y2, x2));
+        addShape(WallShape.newOuterWall(new Point2D(x1, y1), new Point2D(x2, y2)));
     }
 
     private boolean areRoomCoordinatesValid(final int roomsPerRow, int ox, int oy) {

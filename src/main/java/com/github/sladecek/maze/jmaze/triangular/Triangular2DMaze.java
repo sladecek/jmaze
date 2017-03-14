@@ -36,11 +36,10 @@ private final int rsx = 12;
 
         // outer walls
 
-        addShape(WallShape.newOuterWall(0, rsx*size, rsy*size, 0));
-        addShape(WallShape.newOuterWall(rsy*size, 0, rsy*size, 2 * size*rsx));
-        addShape(WallShape.newOuterWall(rsy*size, 2 * size*rsx, 0, rsx*size));
-
-        int prevFirst = -1;
+        addShape(WallShape.newOuterWall(new Point2D(rsx*size,0), new Point2D(0,rsy*size)));
+        addShape(WallShape.newOuterWall(new Point2D(0, rsy*size), new Point2D( 2 * size*rsx,  rsy*size)));
+        addShape(WallShape.newOuterWall(new Point2D(2 * size*rsx,rsy*size),  new Point2D(rsx*size,0)));
+int prevFirst = -1;
         int lastRoom = -1;
         int myFirst = -1;
 
@@ -97,7 +96,7 @@ private final int rsx = 12;
     private void addWallAndShape(int prevRoom, int room, int x1, int x2,
                                  int y1, int y2) {
         int id = addWall(prevRoom, room);
-        addShape(WallShape.newInnerWall(id, rsy*y1, rsx*x1, rsy*y2, rsx*x2));
+        addShape(WallShape.newInnerWall(id, new Point2D(rsx*x1, rsy*y1), new Point2D(rsx*x2, rsy*y2)));
         LOGGER.info("addWallAndShape room1=" + prevRoom + " room2=" + room + " y1=" + y1 + " y2=" + y2 + " x1=" + x1 + " x2=" + x2);
 
     }

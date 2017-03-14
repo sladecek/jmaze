@@ -72,7 +72,10 @@ public class Voronoi2DMaze extends Maze implements IMazeStructure {
             }
             if (e.length() < 0.5) continue;
             int id = addWall(e.site1, e.site2);
-            addShape(WallShape.newInnerWall(id, (int) e.y1, (int) e.x1, (int) e.y2, (int) e.x2));
+            addShape(WallShape.newInnerWall(id,
+                    new Point2D((int) e.x1, (int) e.y1), new Point2D((int) e.x2, (int) e.y2)));
+
+
             LOGGER.info("wall id=" + id + " " + e);
 
         }
@@ -83,10 +86,11 @@ public class Voronoi2DMaze extends Maze implements IMazeStructure {
 
     private void createOuterWalls() {
 
-        addShape(WallShape.newOuterWall(0, 0, 0, width));
-        addShape(WallShape.newOuterWall(0, 0, height, 0));
-        addShape(WallShape.newOuterWall(0, width, height, width));
-        addShape(WallShape.newOuterWall(height, 0, height, width));
+        addShape(WallShape.newOuterWall(new Point2D(0, 0), new Point2D(width, 0)));
+        addShape(WallShape.newOuterWall(new Point2D(0, 0), new Point2D(0, height)));
+        addShape(WallShape.newOuterWall(new Point2D(0, height), new Point2D(width, height)));
+        addShape(WallShape.newOuterWall(new Point2D(width, 0), new Point2D(width, height)));
+
     }
 
     private static final Logger LOGGER = Logger.getLogger("maze.jmaze");
