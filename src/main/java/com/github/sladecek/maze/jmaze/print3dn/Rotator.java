@@ -1,20 +1,20 @@
 package com.github.sladecek.maze.jmaze.print3dn;
 
-
+/*
 import com.github.sladecek.maze.jmaze.geometry.Axis;
 import com.github.sladecek.maze.jmaze.geometry.Direction;
 
 /**
  * Rotator rotates RoomFace coordinates by the z axis so that we can generate all faces of a room
  * by generation one corner and rotating it four time.
- */
+ * /
 public class Rotator {
 
     /**
      * Creates new rotator that rotates everything  {@code quadrants} times by 90 degrees around z axis clockwise..
      *
      * @param quadrants
-     */
+     * /
     public Rotator(int quadrants) {
         this.quadrants = (quadrantCnt + quadrants) % quadrantCnt;
     }
@@ -70,3 +70,4 @@ public class Rotator {
     private int quadrants;
 
 }
+*/

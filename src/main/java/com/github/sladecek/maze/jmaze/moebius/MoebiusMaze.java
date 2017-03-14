@@ -5,8 +5,8 @@ import java.security.InvalidParameterException;
 import com.github.sladecek.maze.jmaze.geometry.Point2D;
 import com.github.sladecek.maze.jmaze.maze.IMazeStructure;
 import com.github.sladecek.maze.jmaze.maze.Maze;
-import com.github.sladecek.maze.jmaze.print3dn.Room3DShape;
-import com.github.sladecek.maze.jmaze.geometry.Direction;
+import com.github.sladecek.maze.jmaze.shapes.FloorShape;
+//import com.github.sladecek.maze.jmaze.geometry.Direction;
 import com.github.sladecek.maze.jmaze.shapes.*;
 
 /**
@@ -53,9 +53,9 @@ public final class MoebiusMaze extends Maze implements IMazeStructure {
                 int i = addRoom();
                 assert i == wall : "Inconsistent room numbering";
 
-                Room3DShape r3 = new Room3DShape(i, new Point2D(x, y));
+                FloorShape r3 = new FloorShape(i, new Point2D(x, y));
                 addShape(r3);
-
+/*
                 if (x > 0) {
                     r3.setWallId(Direction.WEST, i);
                 } else {
@@ -87,6 +87,7 @@ public final class MoebiusMaze extends Maze implements IMazeStructure {
                     floorWallBelongsToRoom = getTheOtherSideOfHole(i);
                 }
                 r3.setWallId(Direction.FLOOR, floorWallBelongsToRoom + firstFloorWall);
+*/
             }
         }
 

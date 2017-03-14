@@ -1,11 +1,12 @@
 package com.github.sladecek.maze.jmaze.print3dn;
 
-import com.github.sladecek.maze.jmaze.geometry.Direction;
+/*import com.github.sladecek.maze.jmaze.geometry.Direction;
+import com.github.sladecek.maze.jmaze.shapes.FloorShape;
 import com.github.sladecek.maze.jmaze.shapes.WallType;
 
 /**
  * Conditions for face presence.
- */
+ * /
 public class WallCondition {
 
     public WallCondition(WallConditionType type, Direction direction) {
@@ -26,7 +27,7 @@ public class WallCondition {
     private WallConditionType type;
     private Direction direction;
 
-    public boolean test(Room3DShape room) {
+    public boolean test(FloorShape room) {
         boolean w = room.getWallType(direction) != WallType.noWall;
         boolean ow = room.getWallType(direction) == WallType.outerWall;
         boolean f = room.getWallType(Direction.FLOOR) != WallType.noWall;
@@ -48,3 +49,4 @@ public class WallCondition {
         }
     }
 }
+*/

@@ -1,5 +1,5 @@
 package com.github.sladecek.maze.jmaze.print3dn;
-
+/*
 import com.github.sladecek.maze.jmaze.geometry.Axis;
 import com.github.sladecek.maze.jmaze.geometry.Direction;
 
@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 /**
  * Builds all faces of a cube.
- */
+ * /
 public class FacesOfCube {
     private ArrayList<RoomFace> faces = new ArrayList<>();
 
@@ -106,3 +106,4 @@ public class FacesOfCube {
     }
 
 }
+*/

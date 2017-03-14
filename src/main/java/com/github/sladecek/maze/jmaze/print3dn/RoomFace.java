@@ -1,5 +1,5 @@
 package com.github.sladecek.maze.jmaze.print3dn;
-
+/*
 import com.github.sladecek.maze.jmaze.geometry.Axis;
 import com.github.sladecek.maze.jmaze.geometry.Direction;
 
@@ -11,7 +11,7 @@ import static com.github.sladecek.maze.jmaze.geometry.Axis.Z;
  * One room face defined by a mesh. In the original coordinates (before mapping), the face is a rectangle. The mapper
  * turns the face into polygonal mesh. A {@code Room} is drawn from several dozens of such faces, Their visibility
  * depends of presence of particular walls.
- */
+ * /
 public class RoomFace {
 
 
@@ -97,3 +97,4 @@ public class RoomFace {
 
 
 }
+*/
