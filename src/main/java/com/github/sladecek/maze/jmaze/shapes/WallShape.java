@@ -8,27 +8,30 @@ import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
 public final class WallShape implements IMazeShape2D {
 
 
-
-
     public static WallShape newInnerWall(int wallId, Point2D p1, Point2D p2) {
-        return new WallShape(wallId, WallType.innerWall, p1, p2);
+        return new WallShape(wallId, WallType.innerWall, p1, p2, -1, -1);
     }
 
     public static WallShape newOuterWall(Point2D p1, Point2D p2) {
-        return new WallShape(-1, WallType.outerWall, p1, p2);
+        return new WallShape(-1, WallType.outerWall, p1, p2, -1, -1);
     }
 
-    protected WallShape(int wallId, WallType type, Point2D  p1, Point2D p2) {
+    public static WallShape newInnerWall(int wallId, Point2D p1, Point2D p2, int leftFaceId, int rightFaceId) {
+        return new WallShape(wallId, WallType.innerWall, p1, p2, leftFaceId, rightFaceId);
+    }
+
+    public static WallShape newOuterWall(Point2D p1, Point2D p2, int leftFaceId, int rightFaceId) {
+        return new WallShape(-1, WallType.outerWall, p1, p2, leftFaceId, rightFaceId);
+    }
+
+    protected WallShape(int wallId, WallType type, Point2D p1, Point2D p2, int leftFaceId, int rightFaceId) {
         this.wallId = wallId;
         this.wallType = type;
-        /*
-        this.p1 = new Point2D(x1, y1);
-        this.p2 = new Point2D(x2, y2);
-        */
         this.p1 = p1;
         this.p2 = p2;
+        this.leftFaceId = leftFaceId;
+        this.rightFaceId = rightFaceId;
     }
-
 
 
     @Override
@@ -84,6 +87,14 @@ public final class WallShape implements IMazeShape2D {
         return p2.getY();
     }
 
+    public int getLeftFaceId() {
+        return leftFaceId;
+    }
+
+    public int getRightFaceId() {
+        return rightFaceId;
+    }
+
     @Override
     public String toString() {
         return "WallShape [ wallType=" + wallType + ", x1=" + getX1() + ", x2=" + getX2() + ", y1=" + getY1()
@@ -103,6 +114,8 @@ public final class WallShape implements IMazeShape2D {
     private Point2D p2;
 
     private WallType wallType;
-private int wallId;
+    private int wallId;
+    private int leftFaceId = -1;
+    private int rightFaceId = -1;
 
 }
