@@ -3,7 +3,11 @@ package com.github.sladecek.maze.jmaze.moebius;
 import com.github.sladecek.maze.jmaze.generator.DepthFirstMazeGenerator;
 import com.github.sladecek.maze.jmaze.generator.IMazeGenerator;
 import com.github.sladecek.maze.jmaze.generator.MazeRealization;
+import com.github.sladecek.maze.jmaze.model3d.Model3d;
 import com.github.sladecek.maze.jmaze.print3d.Maze3DSizes;
+import com.github.sladecek.maze.jmaze.print3d.OpenScad3DPrinter;
+import com.github.sladecek.maze.jmaze.print3d.StlMazePrinter;
+import com.github.sladecek.maze.jmaze.print3d.ThreeJs3DPrinter;
 import com.github.sladecek.maze.jmaze.printstyle.DefaultPrintStyle;
 import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
@@ -13,7 +17,8 @@ import java.util.Random;
 import java.util.logging.*;
 
 /***
- * Command line application generating a Moebius maze into OpenScad file.
+ * Command line application generating a Moebius maze..
+ */
 public final class TestAppMoebius {
 
     public static void main(final String[] args) {
@@ -34,32 +39,34 @@ public final class TestAppMoebius {
             MazeRealization r = g.generateMaze(maze);
 
             Maze3DSizes sizes = new Maze3DSizes();
-            sizes.setCellSizeInmm(2);
+            sizes.setCellSizeInmm(2);  // TODO
 
             IPrintStyle colors = new DefaultPrintStyle();
+
 //maze.setDebug(true);
             ShapeContainer shapes = maze.applyRealization(r);
 
             double approxRoomSizeInmm = 3;
-            MoebiusBlockMaker maker = new MoebiusBlockMaker(shapes, sizes, colors, approxRoomSizeInmm);
+            Model3d model = Model3d.newFromShapes(shapes, sizes, colors);
+
 
             final boolean printInJs = true;
-            final boolean printInScad = true;
-            final boolean printStl = true;
-            final boolean showSolution = true;
+            final boolean printInScad = false;
+            final boolean printStl = false;
+
 
             if (printInJs) {
                 FileOutputStream f;
                 f = new FileOutputStream("maze-moebius.js");
-                new ThreeJs3DPrinter(colors).printBlocks(maker, showSolution, f);
+                new ThreeJs3DPrinter().printModel(model, f);
             }
             if (printInScad) {
                 FileOutputStream f = new FileOutputStream("maze-moebius.scad");
-                new OpenScad3DPrinter().printBlocks(maker, showSolution, f);
+                new OpenScad3DPrinter().printModel(model, f);
             }
             if (printStl) {
                 FileOutputStream f = new FileOutputStream("maze-moebius.stl");
-                new StlMazePrinter().printBlocks(maker, showSolution, f);
+                new StlMazePrinter().printModel(model, f);
                 f.close();
             }
 
@@ -68,6 +75,6 @@ public final class TestAppMoebius {
         }
 
     }
+
     private static final Logger LOG = Logger.getLogger("maze.jmaze");
 }
-*/
