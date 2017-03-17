@@ -33,6 +33,11 @@ public final class WallShape implements IMazeShape2D {
         this.rightFaceId = rightFaceId;
     }
 
+    public static void weldTwoOuterWalls(WallShape w1, WallShape w2, boolean swap) {
+        w1.weld = new OuterWallWeld(w1, w2, swap);
+        w2.weld = w1.weld;
+    }
+
 
     @Override
     public void print2D(I2DDocument doc, IPrintStyle printStyle) {
@@ -117,5 +122,5 @@ public final class WallShape implements IMazeShape2D {
     private int wallId;
     private int leftFaceId = -1;
     private int rightFaceId = -1;
-
+    private OuterWallWeld weld;
 }
