@@ -8,7 +8,10 @@ import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
  * Complete 3d maze model.
  */
 public class Model3d {
-    public static Model3d newFromShapes(ShapeContainer shapes, Maze3DSizes size, IPrintStyle style) {
+    public static Model3d newFromShapes() {
         return null; // TODO
     }
+
+    // TODO Iterable<MBlock> getBlocks();
+
 }

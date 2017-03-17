@@ -4,6 +4,7 @@ import com.github.sladecek.maze.jmaze.generator.DepthFirstMazeGenerator;
 import com.github.sladecek.maze.jmaze.generator.IMazeGenerator;
 import com.github.sladecek.maze.jmaze.generator.MazeRealization;
 import com.github.sladecek.maze.jmaze.model3d.Model3d;
+import com.github.sladecek.maze.jmaze.model3d.ModelFromShapes;
 import com.github.sladecek.maze.jmaze.print3d.Maze3DSizes;
 import com.github.sladecek.maze.jmaze.print3d.OpenScad3DPrinter;
 import com.github.sladecek.maze.jmaze.print3d.StlMazePrinter;
@@ -47,7 +48,7 @@ public final class TestAppMoebius {
             ShapeContainer shapes = maze.applyRealization(r);
 
             double approxRoomSizeInmm = 3;
-            Model3d model = Model3d.newFromShapes(shapes, sizes, colors);
+            Model3d model = ModelFromShapes.make(shapes, sizes, colors);
 
 
             final boolean printInJs = true;
