@@ -2,10 +2,7 @@ package com.github.sladecek.maze.jmaze.moebius;
 
 import java.security.InvalidParameterException;
 
-import com.github.sladecek.maze.jmaze.geometry.EastWest;
-import com.github.sladecek.maze.jmaze.geometry.Point3D;
-import com.github.sladecek.maze.jmaze.geometry.SouthNorth;
-import com.github.sladecek.maze.jmaze.geometry.UpDown;
+import com.github.sladecek.maze.jmaze.geometry.*;
 import com.github.sladecek.maze.jmaze.print3d.IMaze3DMapper;
 import com.github.sladecek.maze.jmaze.print3d.Maze3DSizes;
 
@@ -77,6 +74,12 @@ public final class Moebius3dMapper implements IMaze3DMapper {
 	@Override
 	public int getStepY(int y, int x) {
 		return 1;
+	}
+
+	@Override
+	public double inverselyMapLengthAt(Point2D center, double v) {
+		// TODO
+		return 0;
 	}
 
 }

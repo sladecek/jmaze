@@ -133,6 +133,13 @@ public final class Egg3dMapper implements IMaze3DMapper {
             return eqCnt / roomCntThis;
         }
     }
+
+    @Override
+    public double inverselyMapLengthAt(Point2D center, double v) {
+        // TODO
+        return 0;
+    }
+
     private static final double SMALL_Y_MM = 0.001;
     private static final Logger LOG = Logger.getLogger("maze.jmaze");
     private EggGeometry egg;
