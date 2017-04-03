@@ -20,29 +20,32 @@ public class FloorShape implements IMazeShape2D {
     public FloorShape(int roomId, Point2D position) {
         this.position = position;
         this.roomId = roomId;
+        this.isHole = false;
 /*        for (Direction wd: Direction.values()) {
             wallType.put(wd, WallType.innerWall);
             wallId.put(wd, -1);
         }
- */   }
-/*
-    public EnumMap<Direction, Integer> getWallId() {
-        return wallId;
+ */
     }
 
-    public void setWallId(Direction wd, int  wallId) {
+    /*
+        public EnumMap<Direction, Integer> getWallId() {
+            return wallId;
+        }
 
-        this.wallId.put(wd, wallId);
-    }
+        public void setWallId(Direction wd, int  wallId) {
 
-    public WallType getWallType(Direction wd) {
-        return wallType.get(wd);
-    }
+            this.wallId.put(wd, wallId);
+        }
 
-    public void setWallType(Direction wd, WallType wallType) {
-        this.wallType.put(wd, wallType);
-    }
-*/
+        public WallType getWallType(Direction wd) {
+            return wallType.get(wd);
+        }
+
+        public void setWallType(Direction wd, WallType wallType) {
+            this.wallType.put(wd, wallType);
+        }
+    */
     public Point2D getPosition() {
         return position;
     }
@@ -56,6 +59,10 @@ public class FloorShape implements IMazeShape2D {
         return markType;
     }
 
+    public boolean isHole() {
+        return isHole;
+    }
+
     /* TODO implementovat */
     @Override
     public void applyRealization(MazeRealization mr) {
@@ -67,10 +74,15 @@ public class FloorShape implements IMazeShape2D {
                    wallType.put(wd, WallType.innerWall);
                } else {
                    wallType.put(wd, WallType.noWall);
+
                }
            }
         }
-    */}
+    */
+
+        isHole = !mr.isWallClosed(roomId);
+
+    }
 
     /* TODO odstranit */
     @Override
@@ -85,4 +97,5 @@ public class FloorShape implements IMazeShape2D {
     */
     private int roomId;
     private MarkType markType = MarkType.none;
+    private boolean isHole;
 }

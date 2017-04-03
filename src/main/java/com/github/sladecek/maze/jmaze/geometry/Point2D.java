@@ -1,5 +1,7 @@
 package com.github.sladecek.maze.jmaze.geometry;
 
+import com.github.sladecek.maze.jmaze.shapes.MarkShape;
+
 /**
  * 2D point either in rectangular or polar coordinates. In case of polar coordinates, x is used for
  * angle, y for diameter.
@@ -20,6 +22,10 @@ public final class Point2D {
     public int getY() {
         return y;
     }
+
+    public double getCartesianLength() { return Math.sqrt(x*x+y*y); }
+
+    public double getCartesianAngle() { return Math.atan2(y,x); }
 
     public int getAngle() {
         return x;

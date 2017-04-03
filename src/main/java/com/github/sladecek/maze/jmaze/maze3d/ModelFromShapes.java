@@ -1,16 +1,17 @@
 package com.github.sladecek.maze.jmaze.maze3d;
 
 import com.github.sladecek.maze.jmaze.geometry.Point2D;
+import com.github.sladecek.maze.jmaze.model3d.MEdge;
 import com.github.sladecek.maze.jmaze.model3d.Model3d;
 import com.github.sladecek.maze.jmaze.print3d.IMaze3DMapper;
 import com.github.sladecek.maze.jmaze.print3d.Maze3DSizes;
 import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
+import com.github.sladecek.maze.jmaze.shapes.FloorShape;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
+import com.github.sladecek.maze.jmaze.shapes.WallType;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Creates model from shapes
@@ -31,41 +32,93 @@ public class ModelFromShapes {
 
     private Model3d make() {
         m = new Model3d();
-        collectEdgesForPillars();
+        makeRooms();
+        collectWallsForPillars();
         makePillars();
+
+        mWalls.forEach(MWall::finishEdges);
+        rooms.values().forEach(RoomFace::finishEdges);
+
         makeFloorPlan();
         assignAltitude();
         extrudeBlocks();
         return m;
     }
 
-    private void collectEdgesForPillars() {
-        edgesForPillars = new HashMap<>();
+    private void makeRooms() {
         shapes.getShapes().forEach((shape)-> {
-            if (shape instanceof  WallShape) {
-                WallShape edge = (WallShape)shape;
-                addEdgeToPilar(edge, edge.getP1());
-                addEdgeToPilar(edge, edge.getP2());
+            if (shape instanceof FloorShape) {
+                FloorShape floorShape = (FloorShape) shape;
+                int altitude = FloorFace.FLOOR_ALTITUDE;
+                if (floorShape.isHole()) {
+                    altitude = FloorFace.GROUND_ALTITUDE;
+                }
+                makeRoom(floorShape.getRoomId(), altitude);
             }
         });
     }
 
-    private void addEdgeToPilar(WallShape edge, Point2D p) {
-        Set<WallShape> s = edgesForPillars.get(p);
-        if (s == null) {
-            s = new HashSet<WallShape>();
-            edgesForPillars.put(p, s);
-        }
-        s.add(edge);
+
+    private void collectWallsForPillars() {
+        wallsForPillars = new HashMap<>();
+        shapes.getShapes().forEach((shape)-> {
+            if (shape instanceof  WallShape) {
+                WallShape wallShape = (WallShape) shape;
+                MWall wall = new MWall();
+                int altitude = FloorFace.CEILING_ALTITUDE;
+                if (wallShape.getWallType() == WallType.noWall) {
+                    altitude = FloorFace.FLOOR_ALTITUDE;
+                }
+                wall.setAltitude(altitude);
+                mWalls.add(wall);
+                for (int end = 0; end < 2; end++) {
+                    addWallToPilar(makeWallEnd(wall, wallShape, end == 1));
+                }
+            }
+        });
     }
 
+    private WallEnd makeWallEnd(MWall wall, WallShape wallShape, boolean reversed) {
+        return new WallEnd(wall, wallShape, reversed);
+    }
+
+    private void addWallToPilar(WallEnd end) {
+        Set<WallEnd> s = wallsForPillars.get(end.getCenterPoint());
+        if (s == null) {
+            s = new HashSet<WallEnd>();
+            wallsForPillars.put(end.getCenterPoint(), s);
+        }
+        s.add(end);
+    }
+
+
     private void makePillars() {
-        for(Point2D center: edgesForPillars.keySet()) {
+        for(Point2D center: wallsForPillars.keySet()) {
             double wallWidthInMm = mapper.inverselyMapLengthAt(center,
                     sizes.getInnerWallToCellRatio()*sizes.getCellSizeInmm());
-            PillarMaker pm = new PillarMaker(center, edgesForPillars.get(center), wallWidthInMm);
-            pm.makePillars();
+            PillarMaker pm = new PillarMaker(center, wallsForPillars.get(center), wallWidthInMm, mapper);
+            pm.makePillar();
+            pillars.add(pm.getBase());
+            takeRoomCornersFromPillar(pm.getCorners());
         }
+    }
+
+    private void takeRoomCornersFromPillar(Collection<RoomCorner> corners) {
+        for(RoomCorner c: corners) {
+            int floorId = c.getFloorId();
+            RoomFace room = makeRoom(floorId, FloorFace.FRAME_ALTITUDE);
+            room.addCorner(c);
+        }
+    }
+
+    private RoomFace makeRoom(int floorId, int altitude) {
+        RoomFace room = rooms.get(floorId);
+        if (room == null) {
+            room = new RoomFace();
+            room.setAltitude(altitude);
+            rooms.put(floorId, room);
+        }
+        return room;
     }
 
     private void makeFloorPlan() {
@@ -82,5 +135,8 @@ public class ModelFromShapes {
     private IPrintStyle style;
     private IMaze3DMapper mapper;
     private Model3d m;
-    private HashMap<Point2D, Set<WallShape>> edgesForPillars;
+    private HashMap<Point2D, Set<WallEnd>> wallsForPillars;
+    private ArrayList<MWall> mWalls = new ArrayList<>();
+    private ArrayList<MPillar> pillars = new ArrayList<>();
+    private TreeMap<Integer, RoomFace> rooms = new TreeMap<>();
 }

@@ -6,5 +6,9 @@ import com.github.sladecek.maze.jmaze.geometry.Point3D;
  * Point in a 3D model. All points in the model must be unique.
  */
 public class MPoint {
-    private Point3D coord;
+    public MPoint(Point3D coord) {
+        this.coord = coord;
+    }
+
+    private final Point3D coord;
 }

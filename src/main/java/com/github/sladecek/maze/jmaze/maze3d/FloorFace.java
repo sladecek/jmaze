@@ -7,6 +7,16 @@ import com.github.sladecek.maze.jmaze.model3d.MFace;
  * by extruding floor faces intro approprite altitude in the {@code z} direction.
  */
 public class FloorFace extends MFace {
-    private int altitude;
+    public int getAltitude() {
+        return altitude;
+    }
 
+    public void setAltitude(int altitude) {
+        this.altitude = altitude;
+    }
+    public static final int FLOOR_ALTITUDE = 1;
+    public static final int GROUND_ALTITUDE = 0;
+    public static final int CEILING_ALTITUDE = 2;
+    public static final int FRAME_ALTITUDE = -1;
+    private int altitude = FLOOR_ALTITUDE;
 }

@@ -1,5 +1,6 @@
 package com.github.sladecek.maze.jmaze.model3d;
 
+import com.github.sladecek.maze.jmaze.maze3d.MWall;
 import com.github.sladecek.maze.jmaze.print3d.Maze3DSizes;
 import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
@@ -33,6 +34,9 @@ public class Model3d implements IModel3d {
     @Override
     public Collection<MBlock> getBlocks() {
         return null;
+    }
+
+    public void addFace(MFace wall) {
     }
 
     private ArrayList<MPoint> points = new ArrayList<>();

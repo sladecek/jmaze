@@ -122,6 +122,10 @@ public final class WallShape implements IMazeShape2D {
     private Point2D p1;
     private Point2D p2;
 
+    public WallType getWallType() {
+        return wallType;
+    }
+
     private WallType wallType;
     private int wallId;
     private int leftFaceId = -1;

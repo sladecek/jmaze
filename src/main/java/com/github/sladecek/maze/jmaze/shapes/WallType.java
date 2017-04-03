@@ -1,7 +1,7 @@
 package com.github.sladecek.maze.jmaze.shapes;
 
 /**
- * Created by sla on 3/7/17.
+ * Wall shape types.
  */
 public enum WallType {
 
