@@ -19,11 +19,27 @@ public class MEdge {
         return p2;
     }
 
-    public MEdge(Point3D p1, Point3D p2) {
-        this.p1 = new MPoint(p1);
-        this.p2 = new MPoint(p2);
-    }
-
     private final MPoint p1;
     private final MPoint p2;
+
+    private MFace leftFace;
+    private MFace rightFace;
+
+    public MFace getLeftFace() {
+        return leftFace;
+    }
+
+    public void setLeftFace(MFace leftFace) {
+        assert this.leftFace == null;
+        this.leftFace = leftFace;
+    }
+
+    public MFace getRightFace() {
+        return rightFace;
+    }
+
+    public void setRightFace(MFace rightFace) {
+        assert this.rightFace == null;
+        this.rightFace = rightFace;
+    }
 }

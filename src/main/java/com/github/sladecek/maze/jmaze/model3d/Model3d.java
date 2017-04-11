@@ -1,5 +1,7 @@
 package com.github.sladecek.maze.jmaze.model3d;
 
+import com.github.sladecek.maze.jmaze.maze3d.FloorPoint;
+import com.github.sladecek.maze.jmaze.maze3d.MPillar;
 import com.github.sladecek.maze.jmaze.maze3d.MWall;
 import com.github.sladecek.maze.jmaze.print3d.Maze3DSizes;
 import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
@@ -37,6 +39,26 @@ public class Model3d implements IModel3d {
     }
 
     public void addFace(MFace wall) {
+    }
+
+    public void addFaces(Collection<? extends MFace> newFaces) {
+        faces.addAll(newFaces);
+    }
+
+    public void addEdges(Collection<? extends MEdge> newEdges) {
+        edges.addAll(newEdges);
+    }
+
+    public void addEdge(MEdge e) {
+        edges.add(e);
+    }
+
+    public void addPoints(Collection<? extends MPoint> newPoints) {
+        points.addAll(newPoints);
+    }
+
+    public void addPoint(MPoint p) {
+        points.add(p);
     }
 
     private ArrayList<MPoint> points = new ArrayList<>();

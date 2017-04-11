@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * Builds all faces of a cube.
  * /
 public class FacesOfCube {
-    private ArrayList<RoomFace> faces = new ArrayList<>();
+    private ArrayList<MRoom> faces = new ArrayList<>();
 
     public FacesOfCube() {
 
@@ -19,7 +19,7 @@ public class FacesOfCube {
         }
 
         // generate central floor face
-        RoomFace cfc = new RoomFace();
+        MRoom cfc = new MRoom();
         cfc.setNormalAxis(Axis.Z);
         cfc.setOrientation(false);
         cfc.setCorner(RoomPosition.inSmall, RoomPosition.inBig, RoomPosition.inSmall, RoomPosition.inBig);
@@ -44,7 +44,7 @@ public class FacesOfCube {
 
 
     private void makeHorizontalFaces(Rotator r, RoomPosition normalPos, boolean orientation, WallConditionType wcFront, WallConditionType wcCorner) {
-        RoomFace front = new RoomFace();
+        MRoom front = new MRoom();
         front.setNormalAxis(Axis.Z);
         front.setNormalPosition(normalPos);
         front.setOrientation(orientation);
@@ -52,7 +52,7 @@ public class FacesOfCube {
         front.setCondition(new WallCondition(wcFront, Direction.NORTH));
         faces.add(front.rotate(r));
 
-        RoomFace corner = new RoomFace();
+        MRoom corner = new MRoom();
         corner.setNormalAxis(Axis.Z);
         corner.setNormalPosition(normalPos);
         corner.setOrientation(orientation);
@@ -67,7 +67,7 @@ public class FacesOfCube {
                                 WallConditionType cCornerDown, WallConditionType cInDown) {
 
   // TODO corners
-        RoomFace inUp = new RoomFace();
+        MRoom inUp = new MRoom();
         inUp.setNormalAxis(Axis.X);
         inUp.setNormalPosition(normalPos);
         inUp.setOrientation(orientation);
@@ -75,7 +75,7 @@ public class FacesOfCube {
         inUp.setCondition(new WallCondition(cInUp, Direction.NORTH));
         faces.add(inUp.rotate(r));
 
-        RoomFace cornerUp = new RoomFace();
+        MRoom cornerUp = new MRoom();
         cornerUp.setNormalAxis(Axis.X);
         inUp.setNormalPosition(normalPos);
         cornerUp.setOrientation(orientation);
@@ -83,7 +83,7 @@ public class FacesOfCube {
         cornerUp.setCondition(new WallCondition(cCornerUp, Direction.NORTH));
         faces.add(cornerUp.rotate(r));
 
-        RoomFace inDown = new RoomFace();
+        MRoom inDown = new MRoom();
         inDown.setNormalAxis(Axis.X);
         inDown.setNormalPosition(normalPos);
         inDown.setOrientation(orientation);
@@ -91,7 +91,7 @@ public class FacesOfCube {
         inDown.setCondition(new WallCondition(cInDown, Direction.NORTH));
         faces.add(inDown.rotate(r));
 
-        RoomFace cornerDown = new RoomFace();
+        MRoom cornerDown = new MRoom();
         cornerDown.setNormalAxis(Axis.X);
         inDown.setNormalPosition(normalPos);
         cornerDown.setOrientation(orientation);

@@ -12,7 +12,7 @@ import static com.github.sladecek.maze.jmaze.geometry.Axis.Z;
  * turns the face into polygonal mesh. A {@code Room} is drawn from several dozens of such faces, Their visibility
  * depends of presence of particular walls.
  * /
-public class RoomFace {
+public class MRoom {
 
 
     private Axis[] axes = new Axis[2];
@@ -65,8 +65,8 @@ public class RoomFace {
         this.corner[1][0] = ax2Small;
         this.corner[1][1] = ax2Big;
     }
-    public RoomFace rotate(Rotator r) {
-        RoomFace rf = new RoomFace();
+    public MRoom rotate(Rotator r) {
+        MRoom rf = new MRoom();
         rf.setOrientation(r.rot(isOrientation()));
         rf.setNormalAxis(r.rot(getNormalAxis()));
         rf.setCondition(new WallCondition(getCondition().getType(), r.rot(getCondition().getDirection())));

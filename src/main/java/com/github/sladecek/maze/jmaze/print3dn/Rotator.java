@@ -5,7 +5,7 @@ import com.github.sladecek.maze.jmaze.geometry.Axis;
 import com.github.sladecek.maze.jmaze.geometry.Direction;
 
 /**
- * Rotator rotates RoomFace coordinates by the z axis so that we can generate all faces of a room
+ * Rotator rotates MRoom coordinates by the z axis so that we can generate all faces of a room
  * by generation one corner and rotating it four time.
  * /
 public class Rotator {

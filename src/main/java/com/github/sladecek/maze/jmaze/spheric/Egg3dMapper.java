@@ -140,6 +140,12 @@ public final class Egg3dMapper implements IMaze3DMapper {
         return 0;
     }
 
+    @Override
+    public Point3D map(Point3D image) {
+        // TODO
+        return null;
+    }
+
     private static final double SMALL_Y_MM = 0.001;
     private static final Logger LOG = Logger.getLogger("maze.jmaze");
     private EggGeometry egg;

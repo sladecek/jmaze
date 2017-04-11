@@ -1,6 +1,8 @@
 package com.github.sladecek.maze.jmaze.maze3d;
 
 
+import com.github.sladecek.maze.jmaze.model3d.MEdge;
+
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.Optional;
@@ -11,9 +13,7 @@ import java.util.stream.Collectors;
 /**
  * Room floor in 3D model.
  */
-public class RoomFace extends FloorFace
-{
-
+public class MRoom extends FloorFace {
 
     public void addCorner(RoomCorner c) {
         corners.add(c);
@@ -26,10 +26,14 @@ public class RoomFace extends FloorFace
         Set<RoomCorner> unfinished = corners.stream().collect(Collectors.toSet());
         RoomCorner first = corners.get(0);
         RoomCorner current = first;
-        for(;;) {
+        for (; ; ) {
             unfinished.remove(current);
-            addEdge(current.getWall1().getWall().getSideEdge(false));
-            addEdge(current.getWall2().getWall().getSideEdge(true));
+            MEdge e1 = current.getWall1().getWall().getSideEdge(false);
+            e1.setRightFace(this);
+            addEdge(e1);
+            MEdge e2 = current.getWall2().getWall().getSideEdge(true);
+            addEdge(e2);
+            e2.setRightFace(this);
 
             if (unfinished.isEmpty()) {
                 break;
@@ -47,5 +51,4 @@ public class RoomFace extends FloorFace
     }
 
     private ArrayList<RoomCorner> corners = new ArrayList<>();
-
 }
