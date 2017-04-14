@@ -5,11 +5,6 @@ import com.github.sladecek.maze.jmaze.geometry.Point2D;
 
 import com.github.sladecek.maze.jmaze.print2d.I2DDocument;
 import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
-import com.github.sladecek.maze.jmaze.shapes.IMazeShape2D;
-import com.github.sladecek.maze.jmaze.shapes.MarkType;
-import com.github.sladecek.maze.jmaze.shapes.WallType;
-
-import java.util.EnumMap;
 
 
 /**

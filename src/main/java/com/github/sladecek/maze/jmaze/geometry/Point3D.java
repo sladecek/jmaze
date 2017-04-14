@@ -12,6 +12,10 @@ public final class Point3D {
         this.z = z;
     }
 
+    public Point3D(Point3D image) {
+        this(image.getX(), image.getY(), image.getZ());
+    }
+
     public static Point3D midpoint(Point3D p1, Point3D p2) {
         return new Point3D((p1.x + p2.x) / 2, (p1.y + p2.y) / 2,
                 (p1.z + p2.z) / 2);

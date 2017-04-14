@@ -37,7 +37,7 @@ public final class Moebius3dMapper implements IMaze3DMapper {
         return heightInmm;
     }
 
-    @Override
+    // TODO @Override
     public Point3D mapPoint(int cellY, int cellX, double offsetY, double offsetX,
                             double offsetZ) {
         double y = (offsetY + cellY - height / 2) * cellStepInmm;
@@ -45,7 +45,7 @@ public final class Moebius3dMapper implements IMaze3DMapper {
         return geometry.transform(new Point3D(x, y, offsetZ));
     }
 
-    @Override
+    // TODO @Override
     public Point3D mapCorner(int cellX, EastWest ew, UpDown ud,
                              SouthNorth snWall, SouthNorth snEdge) {
         double x = (((ew == EastWest.east) ? 0 : 1) + cellX) * cellStepInmm;
@@ -62,13 +62,14 @@ public final class Moebius3dMapper implements IMaze3DMapper {
         return geometry.transform(new Point3D(x, y, z));
     }
 
-    @Override
+    // TODO @Override
     public int getStepY(int y, int x) {
         return 1;
     }
 
+
     @Override
-    public double inverselyMapLengthAt(Point2D center, double v) {
+    public double inverselyMapLengthAt(Point3D center, double v) {
         // TODO
         return 0;
     }

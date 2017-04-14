@@ -1,17 +1,9 @@
 package com.github.sladecek.maze.jmaze.shapes;
 
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import org.junit.Test;
-import org.mockito.ArgumentCaptor;
 
 import com.github.sladecek.maze.jmaze.geometry.Point2D;
-import com.github.sladecek.maze.jmaze.print2d.I2DDocument;
-import com.github.sladecek.maze.jmaze.printstyle.Color;
-import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
 
 
 /* TODO opravit

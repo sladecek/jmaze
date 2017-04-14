@@ -2,15 +2,11 @@ package com.github.sladecek.maze.jmaze.maze;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.Vector;
-
 import com.github.sladecek.maze.jmaze.shapes.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.github.sladecek.maze.jmaze.generator.MazeRealization;
 import com.github.sladecek.maze.jmaze.geometry.Point2D;
-import com.github.sladecek.maze.jmaze.shapes.IMazeShape2D;
 
 
 public class MazeTest {

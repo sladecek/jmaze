@@ -20,6 +20,8 @@ public class PillarMaker {
     public PillarMaker(Point2D center, Set<WallEnd> wallShapes, double wallWidthInMm, IMaze3DMapper mapper) {
         this.center = center;
         this.wallEnds = wallShapes;
+        this.unsortedWalls = new LinkedList<WallEnd>();
+        unsortedWalls.addAll(wallShapes);
         this.wallWidthInMm = wallWidthInMm;
         this.mapper = mapper;
     }
@@ -112,7 +114,7 @@ public class PillarMaker {
         double py2 = k2 * s2 + dy2;
         assert Math.abs(px - px2) < 0.000001 : "PillarMaker intersection solutions not equal x";
         assert Math.abs(py - py2) < 0.000001 : "PillarMaker intersection solutions not equal y";
-        return new Point3D(px, py, 0);
+        return new Point3D(px, py, FloorFace.GROUND_ALTITUDE);
     }
 
     public MPillar getBase() {
@@ -142,12 +144,12 @@ public class PillarMaker {
     }
 
     private final IMaze3DMapper mapper;
+    private Set<WallEnd> wallEnds;
     private LinkedList<WallEnd> unsortedWalls;
     private Point2D center;
-    private Set<WallEnd> wallEnds;
     private double wallWidthInMm;
     private MPillar base;
     private ArrayList<WallEnd> walls;
-    private ArrayList<RoomCorner> corners;
+    private ArrayList<RoomCorner> corners = new ArrayList<>();
     private ArrayList<MPoint> intersections = new ArrayList<>();
 }

@@ -14,6 +14,12 @@ import com.github.sladecek.maze.jmaze.generator.DepthFirstMazeGenerator;
 import com.github.sladecek.maze.jmaze.generator.IMazeGenerator;
 import com.github.sladecek.maze.jmaze.generator.MazeRealization;
 import com.github.sladecek.maze.jmaze.maze.Maze;
+import com.github.sladecek.maze.jmaze.maze3d.ModelFromShapes;
+import com.github.sladecek.maze.jmaze.model3d.Model3d;
+import com.github.sladecek.maze.jmaze.moebius.Moebius3dMapper;
+import com.github.sladecek.maze.jmaze.print3d.*;
+import com.github.sladecek.maze.jmaze.printstyle.DefaultPrintStyle;
+import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
 import com.github.sladecek.maze.jmaze.util.MazeGenerationException;
 
@@ -49,13 +55,44 @@ public class TestApp2DBase {
             MazeRealization realization = g.generateMaze(maze);
             ShapeContainer shapes = maze.applyRealization(realization);
 
-            // print result
+            // print 2D
             SvgMazePrinter printer = new SvgMazePrinter();
+            FileOutputStream sSvg = new FileOutputStream(fileName + ".svg");
+            printer.printShapes(shapes, MazeOutputFormat.svg, sSvg);
+            FileOutputStream fPdf = new FileOutputStream(fileName + ".pdf");
+            printer.printShapes(shapes, MazeOutputFormat.pdf, fPdf);
 
-            FileOutputStream f = new FileOutputStream(fileName + ".svg");
-            printer.printShapes(shapes, MazeOutputFormat.svg, f);
-            FileOutputStream fp = new FileOutputStream(fileName + ".pdf");
-            printer.printShapes(shapes, MazeOutputFormat.pdf, fp);
+            // print 3D
+            double approxRoomSizeInmm = 3;
+            Maze3DSizes sizes = new Maze3DSizes();
+            sizes.setCellSizeInmm(2);  // TODO
+
+            IPrintStyle colors = new DefaultPrintStyle();
+
+            IMaze3DMapper mapper = new PlanarMapper();
+            Model3d model = ModelFromShapes.make(shapes, mapper, sizes, colors);
+
+            final boolean printInJs = true;
+            final boolean printInScad = false;
+            final boolean printStl = false;
+
+
+            if (printInJs) {
+                FileOutputStream fJs = new FileOutputStream(fileName+".js");
+                new ThreeJs3DPrinter().printModel(model, fJs);
+                fJs.close();
+            }
+            if (printInScad) {
+                FileOutputStream fScad = new FileOutputStream(fileName+".scad");
+                new OpenScad3DPrinter().printModel(model, fScad);
+                fScad.close();
+            }
+            if (printStl) {
+                FileOutputStream fStl = new FileOutputStream(fileName+".stl");
+                new StlMazePrinter().printModel(model, fStl);
+                fStl.close();
+            }
+
 
         } catch (SecurityException | IOException | MazeGenerationException e) {
             e.printStackTrace();

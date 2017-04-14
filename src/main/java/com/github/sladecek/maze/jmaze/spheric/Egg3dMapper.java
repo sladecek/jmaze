@@ -25,7 +25,7 @@ public final class Egg3dMapper implements IMaze3DMapper {
      * @param cellHorizontal Latitudal room number. Zero index is equator.
      * @return 3D coordinate of south-western corner of the room + offset.
      */
-    @Override
+    // TODO @Override
     public Point3D mapPoint(int cellVertical, int cellHorizontal, double offsetV,
                             double offsetH, double offsetA) {
 
@@ -96,13 +96,13 @@ public final class Egg3dMapper implements IMaze3DMapper {
         return result;
     }
 
-    @Override
+    // TODO @Override
     public Point3D mapCorner(int cellX, EastWest ew, UpDown ud,
                              SouthNorth snWall, SouthNorth snEdge) {
         throw new IllegalArgumentException("Egg has no corners");
     }
 
-    @Override
+    // TODO @Override
     public int getStepY(int y, int x) {
         final int eqCnt = maze.getEquatorCellCnt();
 
@@ -135,7 +135,7 @@ public final class Egg3dMapper implements IMaze3DMapper {
     }
 
     @Override
-    public double inverselyMapLengthAt(Point2D center, double v) {
+    public double inverselyMapLengthAt(Point3D center, double v) {
         // TODO
         return 0;
     }

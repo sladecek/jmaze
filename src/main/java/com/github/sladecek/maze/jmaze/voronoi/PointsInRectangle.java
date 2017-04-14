@@ -7,8 +7,6 @@ import java.util.logging.Logger;
 
 import com.github.sladecek.maze.jmaze.geometry.Point2D;
 
-import groovyjarjarantlr.collections.List;
-
 /***
  * 
  * Collection of points (room centers) in a rectangle.

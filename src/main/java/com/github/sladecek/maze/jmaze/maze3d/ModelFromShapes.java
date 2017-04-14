@@ -1,6 +1,7 @@
 package com.github.sladecek.maze.jmaze.maze3d;
 
 import com.github.sladecek.maze.jmaze.geometry.Point2D;
+import com.github.sladecek.maze.jmaze.geometry.Point3D;
 import com.github.sladecek.maze.jmaze.model3d.MEdge;
 import com.github.sladecek.maze.jmaze.model3d.MFace;
 import com.github.sladecek.maze.jmaze.model3d.MPoint;
@@ -102,7 +103,8 @@ public class ModelFromShapes {
 
     private void makePillars() {
         for (Point2D center : wallsForPillars.keySet()) {
-            double wallWidthInMm = mapper.inverselyMapLengthAt(center,
+            Point3D c3d = new Point3D(center.getX(), center.getY(), 0);
+            double wallWidthInMm = mapper.inverselyMapLengthAt(c3d,
                     sizes.getInnerWallToCellRatio() * sizes.getCellSizeInmm());
             PillarMaker pm = new PillarMaker(center, wallsForPillars.get(center), wallWidthInMm, mapper);
             pm.makePillar();

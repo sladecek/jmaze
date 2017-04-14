@@ -2,8 +2,6 @@ package com.github.sladecek.maze.jmaze.shapes;
 
 import static org.junit.Assert.assertEquals;
 
-import org.junit.Test;
-
 import com.github.sladecek.maze.jmaze.geometry.Point2D;
 
 
