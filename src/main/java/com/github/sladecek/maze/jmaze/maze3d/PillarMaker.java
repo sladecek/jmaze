@@ -68,7 +68,7 @@ public class PillarMaker {
         for (int i = 0; i < size; i++) {
             int j = (i + 1) % size;
             Point3D in = computeIntersection(walls.get(i).getCenterPoint(), walls.get(j).getCenterPoint());
-            MPoint mpin = new FloorPoint(in);
+            MPoint mpin = new FloorPoint(in.getX(), in.getY());
             intersections.add(mpin);
 
             if (i > 0) {
@@ -112,7 +112,7 @@ public class PillarMaker {
         double py2 = k2 * s2 + dy2;
         assert Math.abs(px - px2) < 0.000001 : "PillarMaker intersection solutions not equal x";
         assert Math.abs(py - py2) < 0.000001 : "PillarMaker intersection solutions not equal y";
-        return new Point3D(px, py, FloorFace.GROUND_ALTITUDE);
+        return new Point3D(px, py, 0);
     }
 
     public MPillar getBase() {

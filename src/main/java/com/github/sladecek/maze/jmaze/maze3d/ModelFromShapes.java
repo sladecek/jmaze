@@ -3,6 +3,7 @@ package com.github.sladecek.maze.jmaze.maze3d;
 import com.github.sladecek.maze.jmaze.geometry.Point2D;
 import com.github.sladecek.maze.jmaze.model3d.MEdge;
 import com.github.sladecek.maze.jmaze.model3d.MFace;
+import com.github.sladecek.maze.jmaze.model3d.MPoint;
 import com.github.sladecek.maze.jmaze.model3d.Model3d;
 import com.github.sladecek.maze.jmaze.print3d.IMaze3DMapper;
 import com.github.sladecek.maze.jmaze.print3d.Maze3DSizes;
@@ -143,48 +144,57 @@ public class ModelFromShapes {
     }
 
     private void extrudeBlocks() {
+
         // visit all edges
         for(MEdge e: m.getEdges()) {
+            // edge endpoints
+            FloorPoint fp1 = (FloorPoint) e.getP1();
+            FloorPoint fp2 = (FloorPoint) e.getP2();
+
+            // each edge separates two faces
             FloorFace leftFace = (FloorFace) e.getLeftFace();
             FloorFace rightFace = (FloorFace) e.getRightFace();
 
             // compare altitude of the faces along the edge
             int a1 = leftFace.getAltitude();
             int a2 = rightFace.getAltitude();
+            int lowAltitude = a1;
+            int highAltitude = a2;
+            if (a1 > a2) {
+                lowAltitude = a2;
+                highAltitude = a1;
+            }
 
-            FloorPoint fp1 = (FloorPoint) e.getP1();
-            FloorPoint fp2 = (FloorPoint) e.getP2();
+            // set altitude of the left face to the base level
+            fp1.setAltitudes(mapper, lowAltitude, highAltitude);
+            fp2.setAltitudes(mapper, lowAltitude, highAltitude);
 
-            // set altitude of the left face
-            fp1.setAltitude(a1);
-            fp2.setAltitude(a1);
+            // if the altitude is the same in both faces, we are done
+
+            // if the faces are on different altitudes, it is necessary to
+            // add vertical face on the low altitude
             if (a1 != a2) {
+                MPoint fp1low = fp1.getLowAltitudePoint();
+                MPoint fp2low = fp1.getLowAltitudePoint();
 
-                // split the edge into two edges on different altitudes
-                MEdge e12 = fp1.makeRod(a1, a2);
-                MEdge e21 = fp2.makeRod(a2, a1);
-
-                FloorPoint fp1at2 = fp1.cloneAtAltitude(a2);
-                FloorPoint fp2at2 = fp1.cloneAtAltitude(a2);
-
-                MEdge e22 = new MEdge(fp1at2, fp2at2);
-                rightFace.replaceEdge(e, e22);
+                // new horizontal edge
+                MEdge lowEdge = new MEdge(fp1low, fp2low);
+                rightFace.replaceEdge(e, lowEdge);
 
                 // add new edge to the model
-                m.addEdge(e22);;
+                m.addEdge(lowEdge);
 
                 // add the new points to the model
-                m.addPoint(fp1at2);
-                m.addPoint(fp2at2);
+                m.addPoint(fp1low);
+                m.addPoint(fp2low);
 
                 // create new vertical face
                 MFace vf = new MFace();
                 vf.addEdge(e);
-                vf.addEdge(e21);
-                vf.addEdge(e12);
-                vf.addEdge(e22);
+                vf.addEdge(fp1.getRod());
+                vf.addEdge(fp2.getRod());
+                vf.addEdge(lowEdge);
                 m.addFace(vf);
-
             }
         }
     }

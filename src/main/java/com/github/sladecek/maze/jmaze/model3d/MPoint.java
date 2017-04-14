@@ -11,7 +11,11 @@ public class MPoint {
         this.coord = coord;
     }
 
-    private final Point3D coord;
+    protected void setCoord(Point3D coord) {
+        this.coord = coord;
+    }
+
+    private  Point3D coord;
 
     public Point3D getCoord() {
         return coord;
