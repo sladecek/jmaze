@@ -1,6 +1,5 @@
-package com.github.sladecek.maze.jmaze.model3d;
+package com.github.sladecek.maze.jmaze.print3d.generic3dmodel;
 
-import com.github.sladecek.maze.jmaze.geometry.Point2D;
 import com.github.sladecek.maze.jmaze.geometry.Point3D;
 
 /**
@@ -11,13 +10,12 @@ public class MPoint {
         this.coord = coord;
     }
 
-    protected void setCoord(Point3D coord) {
-        this.coord = coord;
-    }
-
-    private  Point3D coord;
-
     public Point3D getCoord() {
         return coord;
     }
+
+    protected void setCoord(Point3D coord) {
+        this.coord = coord;
+    }
+    private Point3D coord;
 }

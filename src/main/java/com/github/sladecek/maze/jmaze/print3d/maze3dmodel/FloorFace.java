@@ -1,6 +1,6 @@
-package com.github.sladecek.maze.jmaze.maze3d;
+package com.github.sladecek.maze.jmaze.print3d.maze3dmodel;
 
-import com.github.sladecek.maze.jmaze.model3d.MFace;
+import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MFace;
 
 /**
  * A horizontal face that lies in the floor plan of the maze. The 3D maze is constructed

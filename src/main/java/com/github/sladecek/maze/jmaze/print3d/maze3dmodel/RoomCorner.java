@@ -1,9 +1,9 @@
-package com.github.sladecek.maze.jmaze.maze3d;
+package com.github.sladecek.maze.jmaze.print3d.maze3dmodel;
 
 /**
- * Represents a floor touching a pillar between two walls (i.e. wall beams).
+ * Represents a floor touching a pillar between two walls.
  */
-public class RoomCorner extends Beam {
+public class RoomCorner {
     public RoomCorner(int floorId) {
         this.floorId = floorId;
     }
@@ -27,6 +27,7 @@ public class RoomCorner extends Beam {
     public void setWall2(WallEnd wall2) {
         this.wall2 = wall2;
     }
+
     private int floorId;
     private WallEnd wall1;
     private WallEnd wall2;

@@ -1,11 +1,4 @@
-package com.github.sladecek.maze.jmaze.model3d;
-
-import com.github.sladecek.maze.jmaze.maze3d.FloorPoint;
-import com.github.sladecek.maze.jmaze.maze3d.MPillar;
-import com.github.sladecek.maze.jmaze.maze3d.MWall;
-import com.github.sladecek.maze.jmaze.print3d.Maze3DSizes;
-import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
-import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
+package com.github.sladecek.maze.jmaze.print3d.generic3dmodel;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -14,31 +7,29 @@ import java.util.Collection;
  * Complete 3d maze model.
  */
 public class Model3d implements IModel3d {
-    public static Model3d newFromShapes() {
-        return null; // TODO
-    }
 
     @Override
     public Collection<MPoint> getPoints() {
-        return null;
+        return points;
     }
 
     @Override
     public Collection<MEdge> getEdges() {
-        return null;
+        return edges;
     }
 
     @Override
     public Collection<MFace> getFaces() {
-        return null;
+        return faces;
     }
 
     @Override
     public Collection<MBlock> getBlocks() {
-        return null;
+        return blocks;
     }
 
-    public void addFace(MFace wall) {
+    public void addFace(MFace f) {
+        faces.add(f);
     }
 
     public void addFaces(Collection<? extends MFace> newFaces) {
@@ -59,6 +50,10 @@ public class Model3d implements IModel3d {
 
     public void addPoint(MPoint p) {
         points.add(p);
+    }
+
+    public void addBlock(MBlock block) {
+        blocks.add(block);
     }
 
     private ArrayList<MPoint> points = new ArrayList<>();

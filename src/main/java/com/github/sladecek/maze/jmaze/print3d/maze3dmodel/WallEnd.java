@@ -1,15 +1,13 @@
-package com.github.sladecek.maze.jmaze.maze3d;
+package com.github.sladecek.maze.jmaze.print3d.maze3dmodel;
 
 import com.github.sladecek.maze.jmaze.geometry.Point2D;
-import com.github.sladecek.maze.jmaze.model3d.MEdge;
+import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MEdge;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
 
 /**
- * A {@code WallEnd} is the end of a touching the pilar..
+ * A {@code WallEnd} is the end of a wall touching the pilar..
  */
-public class WallEnd extends Beam {
-
-
+public class WallEnd  {
     public WallEnd(MWall wall, WallShape wallShape, boolean reversed) {
         this.wall = wall;
         this.wallShape = wallShape;
@@ -18,9 +16,7 @@ public class WallEnd extends Beam {
 
     public Point2D getCenterPoint() {
         return getPoint(!reversed);
-
     }
-
 
     private Point2D getPoint(boolean whichPoint) {
         if (whichPoint) {
@@ -28,7 +24,6 @@ public class WallEnd extends Beam {
         } else {
             return wallShape.getP2();
         }
-
     }
 
     public Point2D getOtherPoint() {

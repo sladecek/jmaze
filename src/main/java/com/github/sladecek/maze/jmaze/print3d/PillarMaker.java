@@ -1,10 +1,10 @@
-package com.github.sladecek.maze.jmaze.maze3d;
+package com.github.sladecek.maze.jmaze.print3d;
 
 import com.github.sladecek.maze.jmaze.geometry.Point2D;
 import com.github.sladecek.maze.jmaze.geometry.Point3D;
-import com.github.sladecek.maze.jmaze.model3d.MEdge;
-import com.github.sladecek.maze.jmaze.model3d.MPoint;
-import com.github.sladecek.maze.jmaze.print3d.IMaze3DMapper;
+import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MEdge;
+import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MPoint;
+import com.github.sladecek.maze.jmaze.print3d.maze3dmodel.*;
 import com.github.sladecek.maze.jmaze.shapes.WallType;
 
 import java.util.ArrayList;
@@ -70,7 +70,7 @@ public class PillarMaker {
         for (int i = 0; i < size; i++) {
             int j = (i + 1) % size;
             Point3D in = computeIntersection(walls.get(i).getCenterPoint(), walls.get(j).getCenterPoint());
-            MPoint mpin = new FloorPoint(in.getX(), in.getY());
+            MPoint mpin = new ProjectedPoint(in.getX(), in.getY());
             intersections.add(mpin);
 
             if (i > 0) {

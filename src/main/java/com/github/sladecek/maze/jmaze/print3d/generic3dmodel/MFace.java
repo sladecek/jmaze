@@ -1,4 +1,4 @@
-package com.github.sladecek.maze.jmaze.model3d;
+package com.github.sladecek.maze.jmaze.print3d.generic3dmodel;
 
 import java.util.ArrayList;
 
@@ -21,5 +21,6 @@ public class MFace {
     public void addEdge(MEdge edge) {
         this.edges.add(edge);
     }
+
     private ArrayList<MEdge> edges = new ArrayList<>();
 }

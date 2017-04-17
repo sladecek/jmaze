@@ -1,36 +1,30 @@
-package com.github.sladecek.maze.jmaze.model3d;
-
-import com.github.sladecek.maze.jmaze.geometry.Point3D;
+package com.github.sladecek.maze.jmaze.print3d.generic3dmodel;
 
 /**
  * Edge in a 3D model. An edge connects two points.
  */
 public class MEdge {
 
-
-    public MPoint getP1() {
-        return p1;
-    }
-
     public MEdge(MPoint p1, MPoint p2) {
         this.p1 = p1;
         this.p2 = p2;
+    }
+
+    public MPoint getP1() {
+        return p1;
     }
 
     public MPoint getP2() {
         return p2;
     }
 
-    private final MPoint p1;
-    private final MPoint p2;
-
-    private MFace leftFace;
-    private MFace rightFace;
-
     public MFace getLeftFace() {
         return leftFace;
     }
 
+    /**
+     * Left face setter. Can be set only once.
+     */
     public void setLeftFace(MFace leftFace) {
         assert this.leftFace == null;
         this.leftFace = leftFace;
@@ -44,4 +38,8 @@ public class MEdge {
         assert this.rightFace == null;
         this.rightFace = rightFace;
     }
+    private final MPoint p1;
+    private final MPoint p2;
+    private MFace leftFace;
+    private MFace rightFace;
 }

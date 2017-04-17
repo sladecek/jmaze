@@ -1,13 +1,9 @@
-package com.github.sladecek.maze.jmaze.maze3d;
+package com.github.sladecek.maze.jmaze.print3d;
 
 import com.github.sladecek.maze.jmaze.geometry.Point2D;
 import com.github.sladecek.maze.jmaze.geometry.Point3D;
-import com.github.sladecek.maze.jmaze.model3d.MEdge;
-import com.github.sladecek.maze.jmaze.model3d.MFace;
-import com.github.sladecek.maze.jmaze.model3d.MPoint;
-import com.github.sladecek.maze.jmaze.model3d.Model3d;
-import com.github.sladecek.maze.jmaze.print3d.IMaze3DMapper;
-import com.github.sladecek.maze.jmaze.print3d.Maze3DSizes;
+import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.*;
+import com.github.sladecek.maze.jmaze.print3d.maze3dmodel.*;
 import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
 import com.github.sladecek.maze.jmaze.shapes.FloorShape;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
@@ -34,13 +30,14 @@ public class ModelFromShapes {
     }
 
     private Model3d make() {
-
+        // create 2d floor projection of the maze using ExtrudablePoints
         makeRooms();
         collectWallsForPillars();
         makePillars();
-
         copyFloorPlanToModel();
 
+        // extrude the floor plan to 3D
+        extrudeEdges();
         extrudeBlocks();
         return m;
     }
@@ -124,13 +121,13 @@ public class ModelFromShapes {
 
     private void copyFloorPlanToModel() {
         m = new Model3d();
-        for (MPillar p: pillars) {
+        for (MPillar p : pillars) {
             m.addFace(p);
             m.addEdges(p.getEdges());
             m.addPoints(p.getIntersections());
         }
 
-        for (MWall w: walls) {
+        for (MWall w : walls) {
             m.addFace(w);
             w.finishEdges();
             m.addEdge(w.getE2());
@@ -138,20 +135,20 @@ public class ModelFromShapes {
             // points and edges e1, e3 have already been provided by pillars
         }
 
-        for (MRoom r: rooms.values()) {
+        for (MRoom r : rooms.values()) {
             m.addFace(r);
             r.finishEdges();
             // no new points or edges
         }
     }
 
-    private void extrudeBlocks() {
+    private void extrudeEdges() {
 
         // visit all edges
-        for(MEdge e: m.getEdges()) {
+        for (MEdge e : m.getEdges()) {
             // edge endpoints
-            FloorPoint fp1 = (FloorPoint) e.getP1();
-            FloorPoint fp2 = (FloorPoint) e.getP2();
+            ProjectedPoint fp1 = (ProjectedPoint) e.getP1();
+            ProjectedPoint fp2 = (ProjectedPoint) e.getP2();
 
             // each edge separates two faces
             FloorFace leftFace = (FloorFace) e.getLeftFace();
@@ -198,6 +195,19 @@ public class ModelFromShapes {
                 vf.addEdge(lowEdge);
                 m.addFace(vf);
             }
+        }
+    }
+
+    private void extrudeBlocks() {
+        for (MFace f : m.getFaces()) {
+            MBlock block = new MBlock();
+            for (MEdge e : f.getEdges()) {
+                ProjectedPoint p = (ProjectedPoint) e.getP1();
+                block.addCeilingPoint(p.getCoord());
+                Point3D pGround = p.mapPoint(mapper, FloorFace.GROUND_ALTITUDE);
+                block.addGroundPoint(pGround);
+            }
+            m.addBlock(block);
         }
     }
 

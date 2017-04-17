@@ -1,6 +1,6 @@
-package com.github.sladecek.maze.jmaze.maze3d;
+package com.github.sladecek.maze.jmaze.print3d.maze3dmodel;
 
-import com.github.sladecek.maze.jmaze.model3d.MEdge;
+import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MEdge;
 
 /**
  * Wall in 3D model.

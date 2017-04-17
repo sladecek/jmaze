@@ -1,4 +1,4 @@
-package com.github.sladecek.maze.jmaze.model3d;
+package com.github.sladecek.maze.jmaze.print3d.generic3dmodel;
 
 import java.util.Collection;
 
