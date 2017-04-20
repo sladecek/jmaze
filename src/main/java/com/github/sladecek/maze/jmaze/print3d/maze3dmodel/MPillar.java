@@ -15,5 +15,6 @@ public class MPillar extends FloorFace {
     public void setIntersections(ArrayList<MPoint> intersections) {
         this.intersections = intersections;
     }
+
     private ArrayList<MPoint> intersections = new ArrayList<>();
 }

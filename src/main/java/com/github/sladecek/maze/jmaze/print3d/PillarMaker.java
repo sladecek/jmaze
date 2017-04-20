@@ -69,7 +69,7 @@ public class PillarMaker {
         final int size = walls.size();
         for (int i = 0; i < size; i++) {
             int j = (i + 1) % size;
-            Point3D in = computeIntersection(walls.get(i).getCenterPoint(), walls.get(j).getCenterPoint());
+            Point3D in = computeIntersection(walls.get(i).getNonPillarPoint(), walls.get(j).getNonPillarPoint());
             MPoint mpin = new ProjectedPoint(in.getX(), in.getY());
             intersections.add(mpin);
 
@@ -85,7 +85,7 @@ public class PillarMaker {
     private void addEdge(WallEnd wallEnd, MPoint p1, MPoint p2) {
         MEdge edge = new MEdge(p1, p2);
         edge.setLeftFace(base);
-        edge.setRightFace(wallEnd.getWall());
+        edge.setRightFace(wallEnd.getMWall());
         base.addEdge(edge);
         wallEnd.addEdge(edge);
     }

@@ -1,6 +1,7 @@
 package com.github.sladecek.maze.jmaze.print3d.maze3dmodel;
 
 
+import com.github.sladecek.maze.jmaze.geometry.LeftRight;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MEdge;
 
 import java.util.ArrayList;
@@ -26,10 +27,10 @@ public class MRoom extends FloorFace {
         RoomCorner current = first;
         for (; ; ) {
             unfinished.remove(current);
-            MEdge e1 = current.getWall1().getWall().getSideEdge(false);
+            MEdge e1 = current.getWall1().getMWall().getSideEdge(LeftRight.right);
             e1.setRightFace(this);
             addEdge(e1);
-            MEdge e2 = current.getWall2().getWall().getSideEdge(true);
+            MEdge e2 = current.getWall2().getMWall().getSideEdge(LeftRight.left);
             addEdge(e2);
             e2.setRightFace(this);
 

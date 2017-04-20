@@ -89,10 +89,10 @@ public class ModelFromShapes {
     }
 
     private void addWallToPilar(WallEnd end) {
-        Set<WallEnd> s = wallsForPillars.get(end.getCenterPoint());
+        Set<WallEnd> s = wallsForPillars.get(end.getNonPillarPoint());
         if (s == null) {
             s = new HashSet<WallEnd>();
-            wallsForPillars.put(end.getCenterPoint(), s);
+            wallsForPillars.put(end.getNonPillarPoint(), s);
         }
         s.add(end);
     }

@@ -5,19 +5,36 @@ import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MEdge;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
 
 /**
- * A {@code WallEnd} is the end of a wall touching the pilar..
+ * A {@code WallEnd} is the end of a mWall touching the pilar.
  */
-public class WallEnd  {
-    public WallEnd(MWall wall, WallShape wallShape, boolean reversed) {
-        this.wall = wall;
+public class WallEnd {
+    /**
+     * WallEnd constructor.
+     *
+     * @param mWall
+     * @param wallShape
+     * @param p1IsPilar true if wallShape.p1 touches the pillar. Otherwise p2 touches the pillar.
+     */
+    public WallEnd(MWall mWall, WallShape wallShape, boolean p1IsPilar) {
+        this.mWall = mWall;
         this.wallShape = wallShape;
-        this.reversed = reversed;
+        this.p1IsPilar = p1IsPilar;
     }
 
-    public Point2D getCenterPoint() {
-        return getPoint(!reversed);
+    public Point2D getNonPillarPoint() {
+        return getPoint(!p1IsPilar);
     }
 
+    public Point2D getPillarPoint() {
+        return getPoint(p1IsPilar);
+    }
+
+    /**
+     * Returns on of the points of the mWall.
+     *
+     * @param whichPoint if 'true' returns the rear point (p1). If 'false' returns the front point (p2).
+     * @return
+     */
     private Point2D getPoint(boolean whichPoint) {
         if (whichPoint) {
             return wallShape.getP1();
@@ -25,11 +42,6 @@ public class WallEnd  {
             return wallShape.getP2();
         }
     }
-
-    public Point2D getOtherPoint() {
-        return getPoint(reversed);
-    }
-
 
     public int getFaceId(boolean whichFace) {
         if (whichFace) {
@@ -40,31 +52,30 @@ public class WallEnd  {
     }
 
     public int getLeftFaceId() {
-        return getFaceId(!reversed);
+        return getFaceId(p1IsPilar);
     }
 
     public int getRightFaceId() {
-        return getFaceId(reversed);
+        return getFaceId(!p1IsPilar);
     }
 
     public void addEdge(MEdge edge) {
-        wall.addEndEdge(edge, reversed);
+        mWall.addEndEdge(edge, p1IsPilar);
     }
 
-    private final MWall wall;
-
-    public MWall getWall() {
-        return wall;
+    public MWall getMWall() {
+        return mWall;
     }
 
     public WallShape getWallShape() {
         return wallShape;
     }
 
-    public boolean isReversed() {
-        return reversed;
+    public boolean isP1IsPilar() {
+        return p1IsPilar;
     }
 
+    private final MWall mWall;
     private WallShape wallShape;
-    private boolean reversed;
+    private boolean p1IsPilar;
 }

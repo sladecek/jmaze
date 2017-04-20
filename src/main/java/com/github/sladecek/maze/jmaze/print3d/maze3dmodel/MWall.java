@@ -1,26 +1,38 @@
 package com.github.sladecek.maze.jmaze.print3d.maze3dmodel;
 
+import com.github.sladecek.maze.jmaze.geometry.LeftRight;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MEdge;
 
 /**
  * Wall in 3D model.
+ *
+ * Wall has 4 edges. The edges e1 and e3 are oriented towards pillars. Edges e2 and e4 close the circle.
  */
 public class MWall extends FloorFace {
 
-
-    public void addEndEdge(MEdge edge, boolean reversed) {
-        if (reversed) {
-            assert (e3 == null);
-            e3 = edge;
-        } else {
+    /**
+     * Adds an edge to the pillar.
+     * @param edge
+     * @param edgeAtP1 if true the edge is added to the 'p1' side of the wall. Otherwise to the p2 side.
+     */
+    public void addEndEdge(MEdge edge, boolean edgeAtP1) {
+        if (edge.getLeftFace() == null) {
+            edge.setLeftFace(this);
+        }
+        if (edge.getLeftFace() != this) {
+            throw new IllegalArgumentException("The left face of the edge added to a face must be the face to which the edge is being added.");
+        }
+        if (edgeAtP1) {
             assert (e1 == null);
             e1 = edge;
+        } else {
+            assert (e3 == null);
+            e3 = edge;
         }
     }
 
-    public MEdge getSideEdge(boolean leftSide) {
-        return leftSide ? e2 : e4;
-        // TODO zkontrolovat
+    public MEdge getSideEdge(LeftRight side) {
+        return side == LeftRight.left ? e4 : e2;
     }
 
     public MEdge getE1() {
@@ -45,18 +57,17 @@ public class MWall extends FloorFace {
         assert (getEdges().size() == 0);
 
         addEdge(e1);
-        e2 = new MEdge(e1.getP2(), e3.getP2());
+        e2 = new MEdge(e1.getP2(), e3.getP1());
         e2.setLeftFace(this);
         addEdge(e2);
         addEdge(e3);
-        e4 = new MEdge(e1.getP1(), e3.getP1());
+        e4 = new MEdge(e3.getP2(), e1.getP1());
         e4.setLeftFace(this);
         addEdge(e4);
-
     }
 
-    MEdge e1;
-    MEdge e3;
-    MEdge e2;
-    MEdge e4;
+    private MEdge e1;
+    private MEdge e3;
+    private MEdge e2;
+    private MEdge e4;
 }
