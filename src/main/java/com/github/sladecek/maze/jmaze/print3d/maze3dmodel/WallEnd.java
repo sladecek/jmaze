@@ -71,7 +71,7 @@ public class WallEnd {
         return wallShape;
     }
 
-    public boolean isP1IsPilar() {
+    public boolean isP1Pilar() {
         return p1IsPilar;
     }
 
