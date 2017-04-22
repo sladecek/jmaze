@@ -12,23 +12,23 @@ public class RoomCorner {
         return floorId;
     }
 
-    public WallEnd getWall1() {
-        return wall1;
+    public WallEnd getWallEnd1() {
+        return wallEnd1;
     }
 
-    public void setWall1(WallEnd wall1) {
-        this.wall1 = wall1;
+    public void setWallEnd1(WallEnd wallEnd1) {
+        this.wallEnd1 = wallEnd1;
     }
 
-    public WallEnd getWall2() {
-        return wall2;
+    public WallEnd getWallEnd2() {
+        return wallEnd2;
     }
 
-    public void setWall2(WallEnd wall2) {
-        this.wall2 = wall2;
+    public void setWallEnd2(WallEnd wallEnd2) {
+        this.wallEnd2 = wallEnd2;
     }
 
     private int floorId;
-    private WallEnd wall1;
-    private WallEnd wall2;
+    private WallEnd wallEnd1;
+    private WallEnd wallEnd2;
 }

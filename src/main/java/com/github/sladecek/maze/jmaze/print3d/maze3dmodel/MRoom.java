@@ -18,6 +18,9 @@ public class MRoom extends FloorFace {
         corners.add(c);
     }
 
+    /* Creates new face from existing edges inner taken from MWals. MWals are visited in circular order,
+     Assigns face id to the edges.
+      */
     public void finishEdges() {
         if (corners.isEmpty()) {
             return;
@@ -27,20 +30,17 @@ public class MRoom extends FloorFace {
         RoomCorner current = first;
         for (; ; ) {
             unfinished.remove(current);
-            MEdge e1 = current.getWall1().getMWall().getSideEdge(LeftRight.right);
-            e1.setRightFace(this);
-            addEdge(e1);
-            MEdge e2 = current.getWall2().getMWall().getSideEdge(LeftRight.left);
-            addEdge(e2);
+            final MWall w2 = current.getWallEnd2().getMWall();
+            MEdge e2 = w2.getSideEdge(LeftRight.right);
             e2.setRightFace(this);
+            addEdge(e2);
 
             if (unfinished.isEmpty()) {
                 break;
             }
 
-            final WallEnd w2 = current.getWall2();
             Optional<RoomCorner> next =
-                    unfinished.stream().filter((co) -> co.getWall1() == w2).findFirst();
+                    unfinished.stream().filter((co) -> co.getWallEnd1().getMWall() == w2).findFirst();
 
             if (!next.isPresent()) {
                 throw new InternalError("Room face edges are not cyclic");

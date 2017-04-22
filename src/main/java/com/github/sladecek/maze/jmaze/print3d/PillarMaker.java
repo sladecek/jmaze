@@ -53,14 +53,14 @@ public class PillarMaker {
                 Optional<WallEnd> r = findFollower(current);
                 if (r.isPresent()) {
                     current = r.get();
-                    corner.setWall2(current);
+                    corner.setWallEnd2(current);
                 } else {
                     throw new IllegalArgumentException("Walls for pillar " + center + " are not consistent");
                 }
                 unsortedWalls.remove(current);
                 corner = addWallAndCreateCorner(current);
             }
-            corner.setWall2(first);
+            corner.setWallEnd2(first);
         }
     }
 
@@ -126,7 +126,7 @@ public class PillarMaker {
         walls.add(current);
         RoomCorner rc = new RoomCorner(current.getLeftFaceId());
         corners.add(rc);
-        rc.setWall1(current);
+        rc.setWallEnd1(current);
         return rc;
     }
 
