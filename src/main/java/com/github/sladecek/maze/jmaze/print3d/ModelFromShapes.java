@@ -103,7 +103,8 @@ public class ModelFromShapes {
             Point3D c3d = new Point3D(center.getX(), center.getY(), 0);
             double wallWidthInMm = mapper.inverselyMapLengthAt(c3d,
                     sizes.getInnerWallToCellRatio() * sizes.getCellSizeInmm());
-            PillarMaker pm = new PillarMaker(center, wallsForPillars.get(center), wallWidthInMm, mapper);
+            List<WallEnd> walls = new LinkedList<>(wallsForPillars.get(center));
+            PillarMaker pm = new PillarMaker(center, walls, wallWidthInMm);
             pm.makePillar();
             pillars.add(pm.getBase());
             takeRoomCornersFromPillar(pm.getCorners());

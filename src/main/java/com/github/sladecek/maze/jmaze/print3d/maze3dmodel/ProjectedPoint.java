@@ -79,6 +79,14 @@ public class ProjectedPoint extends MPoint {
         return lowAltitude;
     }
 
+    public double getPlanarX() {
+        return planarX;
+    }
+
+    public double getPlanarY() {
+        return planarY;
+    }
+
     public int getHighAltitude() {
         return highAltitude;
     }

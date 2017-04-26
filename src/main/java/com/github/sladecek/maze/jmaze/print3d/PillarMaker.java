@@ -7,33 +7,30 @@ import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MPoint;
 import com.github.sladecek.maze.jmaze.print3d.maze3dmodel.*;
 import com.github.sladecek.maze.jmaze.shapes.WallType;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Set;
-import java.util.Optional;
+import java.util.*;
 
 
 /**
  * Creates pillars from walls.
  */
 public class PillarMaker {
-    public PillarMaker(Point2D center, Set<WallEnd> wallShapes, double wallWidthInMm, IMaze3DMapper mapper) {
+    public PillarMaker(Point2D center, List<WallEnd> wallEnds, double wallWidthInMm) {
         this.center = center;
-        this.wallEnds = wallShapes;
+        this.wallEnds = wallEnds;
         this.unsortedWalls = new LinkedList<WallEnd>();
-        unsortedWalls.addAll(wallShapes);
+        unsortedWalls.addAll(wallEnds);
         this.wallWidthInMm = wallWidthInMm;
-        this.mapper = mapper;
+
     }
 
     public void makePillar() {
-        createBasePillar();
+        createPillarBase();
         sortWalls();
         computeIntersections();
         base.setIntersections(intersections);
     }
 
-    private void createBasePillar() {
+    private void createPillarBase() {
         base = new MPillar();
         int altitude = FloorFace.CEILING_ALTITUDE;
         if (wallEnds.stream().allMatch((we) -> we.getWallShape().getWallType() == WallType.noWall)) {
@@ -70,22 +67,20 @@ public class PillarMaker {
         for (int i = 0; i < size; i++) {
             int j = (i + 1) % size;
             Point3D in = computeIntersection(walls.get(i).getNonPillarPoint(), walls.get(j).getNonPillarPoint());
-            MPoint mpin = new ProjectedPoint(in.getX(), in.getY());
-            intersections.add(mpin);
-
-            if (i > 0) {
-                addEdge(walls.get(i), intersections.get(i - 1), mpin);
-            }
+            intersections.add(new ProjectedPoint(in.getX(), in.getY()));
         }
 
-        // close loop
-        addEdge(walls.get(0), intersections.get(size - 1), intersections.get(0));
+        for (int iTo = 0; iTo < size; iTo++) {
+            final int iFrom = (size + iTo - 1) % size;
+            addEdge(walls.get(iTo), intersections.get(iFrom), intersections.get(iTo));
+        }
+
     }
 
     private void addEdge(WallEnd wallEnd, MPoint p1, MPoint p2) {
         MEdge edge = new MEdge(p1, p2);
-        edge.setLeftFace(base);
-        edge.setRightFace(wallEnd.getMWall());
+        edge.setRightFace(base);
+        edge.setLeftFace(wallEnd.getMWall());
         base.addEdge(edge);
         wallEnd.addEdge(edge);
     }
@@ -110,10 +105,11 @@ public class PillarMaker {
         double k2 = (c1 * dy - dx * s1) / det;
         double px = k1 * c1 + dx1;
         double py = k1 * s1 + dy1;
-        double px2 = k2 * c2 + dx2;
-        double py2 = k2 * s2 + dy2;
+        double px2 = k2 * c2 - dx2;
+        double py2 = k2 * s2 - dy2;
         assert Math.abs(px - px2) < 0.000001 : "PillarMaker intersection solutions not equal x";
         assert Math.abs(py - py2) < 0.000001 : "PillarMaker intersection solutions not equal y";
+        System.out.println("p1=" + p1 + " p2=" + p2 + " px=" + px + " py=" + py);
         return new Point3D(px, py, FloorFace.GROUND_ALTITUDE);
     }
 
@@ -143,8 +139,7 @@ public class PillarMaker {
         return Optional.empty();
     }
 
-    private final IMaze3DMapper mapper;
-    private Set<WallEnd> wallEnds;
+    private List<WallEnd> wallEnds;
     private LinkedList<WallEnd> unsortedWalls;
     private Point2D center;
     private double wallWidthInMm;

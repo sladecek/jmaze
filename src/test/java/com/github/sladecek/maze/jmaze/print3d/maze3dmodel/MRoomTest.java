@@ -56,6 +56,8 @@ public class MRoomTest {
         rc3.setWallEnd1(we32);
         rc3.setWallEnd2(we31);
 
+        assertEquals(floorId, rc1.getFloorId());
+
         // Create the romm
         MRoom r = new MRoom();
 
