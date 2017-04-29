@@ -74,7 +74,6 @@ public class PillarMaker {
             final int iFrom = (size + iTo - 1) % size;
             addEdge(walls.get(iTo), intersections.get(iFrom), intersections.get(iTo));
         }
-
     }
 
     private void addEdge(WallEnd wallEnd, MPoint p1, MPoint p2) {
@@ -86,10 +85,12 @@ public class PillarMaker {
     }
 
     Point3D computeIntersection(Point2D p1, Point2D p2) {
-        double l1 = p1.getCartesianLength();
-        double l2 = p2.getCartesianLength();
-        double phi1 = p1.getCartesianAngle();
-        double phi2 = p2.getCartesianAngle();
+        Point2D p1centered = p1.minus(center);
+        Point2D p2centered = p2.minus(center);
+        double l1 = p1centered.getCartesianLength();
+        double l2 = p2centered.getCartesianLength();
+        double phi1 = p1centered.getCartesianAngle();
+        double phi2 = p2centered.getCartesianAngle();
         double c1 = Math.cos(phi1);
         double s1 = Math.sin(phi1);
         double c2 = Math.cos(phi2);
@@ -109,8 +110,8 @@ public class PillarMaker {
         double py2 = k2 * s2 - dy2;
         assert Math.abs(px - px2) < 0.000001 : "PillarMaker intersection solutions not equal x";
         assert Math.abs(py - py2) < 0.000001 : "PillarMaker intersection solutions not equal y";
-        System.out.println("p1=" + p1 + " p2=" + p2 + " px=" + px + " py=" + py);
-        return new Point3D(px, py, FloorFace.GROUND_ALTITUDE);
+        System.out.println("p1=" + p1centered + " p2=" + p2centered + " px=" + px + " py=" + py);
+        return new Point3D(px + center.getX(), py + center.getY(), FloorFace.GROUND_ALTITUDE);
     }
 
     public MPillar getBase() {

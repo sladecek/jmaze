@@ -50,6 +50,7 @@ public final class Point3D {
         return "Point [x=" + x + ", y=" + y + ", z=" + z + "]";
     }
 
+
     private double x;
     private double y;
     private double z;

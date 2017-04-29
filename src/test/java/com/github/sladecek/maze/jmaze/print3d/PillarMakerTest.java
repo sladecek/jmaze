@@ -21,14 +21,23 @@ import static org.junit.Assert.*;
  */
 public class PillarMakerTest {
     @Test
-    public void makePillar() throws Exception {
+    public void makePillarAtOrigin() throws Exception {
+        testOneOffset(0,0);
+    }
+
+    @Test
+    public void makePillarAtDistance() throws Exception {
+        testOneOffset(100,-100);
+    }
+
+    void testOneOffset(int dx, int dy) {
         final int[][] endpoints = {{-7, 7}, {-7, 0}, {0, -7}, {7, 7}, {0, 7}};
-        Point2D center = new Point2D(0, 0);
+        Point2D center = new Point2D(dx, dy);
         ArrayList<WallEnd> walls = new ArrayList<>();
         final int cnt = endpoints.length;
         for (int i = 0; i < cnt; ++i) {
             MWall mw = new MWall();
-            Point2D p1 = new Point2D(endpoints[i][0], endpoints[i][1]);
+            Point2D p1 = new Point2D(dx+endpoints[i][0], dy+endpoints[i][1]);
             final int leftId = (i + 1) % cnt;
             final int rightId = i;
             WallShape ws = WallShape.newInnerWall(0, center, p1, leftId, rightId);
@@ -56,9 +65,9 @@ public class PillarMakerTest {
             System.out.println(i);
             ProjectedPoint pp = (ProjectedPoint) baseEdges.get(i).getP1();
             System.out.println("x ");
-            assertEquals(expected[i][0], pp.getPlanarX(), epsilon);
+            assertEquals(expected[i][0]+dx, pp.getPlanarX(), epsilon);
             System.out.println("y ");
-            assertEquals(expected[i][1], pp.getPlanarY(), epsilon);
+            assertEquals(expected[i][1]+dy, pp.getPlanarY(), epsilon);
         }
 
         assertEquals(5, pm.getBase().getIntersections().size());

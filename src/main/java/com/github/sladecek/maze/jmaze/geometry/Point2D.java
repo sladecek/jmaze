@@ -13,7 +13,9 @@ public final class Point2D {
         this.y = y;
     }
 
-    public static final int ANGLE_2PI = 0x1000000;
+    public Point2D minus(Point2D other) {
+        return new Point2D(x - other.x, y - other.y);
+    }
 
     public int getX() {
         return x;
@@ -23,9 +25,13 @@ public final class Point2D {
         return y;
     }
 
-    public double getCartesianLength() { return Math.sqrt(x*x+y*y); }
+    public double getCartesianLength() {
+        return Math.sqrt(x * x + y * y);
+    }
 
-    public double getCartesianAngle() { return Math.atan2(y,x); }
+    public double getCartesianAngle() {
+        return Math.atan2(y, x);
+    }
 
     public int getAngle() {
         return x;
@@ -43,7 +49,7 @@ public final class Point2D {
     public String toString() {
         return "Point2D(x=" + x + ", " + "y=" + y + ")";
     }
-
+    public static final int ANGLE_2PI = 0x1000000;
     private int x;
 
     private int y;
