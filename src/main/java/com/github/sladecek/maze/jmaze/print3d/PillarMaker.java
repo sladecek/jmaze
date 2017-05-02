@@ -32,6 +32,7 @@ public class PillarMaker {
 
     private void createPillarBase() {
         base = new MPillar();
+        base.setCenter(center);
         int altitude = FloorFace.CEILING_ALTITUDE;
         if (wallEnds.stream().allMatch((we) -> we.getWallShape().getWallType() == WallType.noWall)) {
             altitude = FloorFace.FLOOR_ALTITUDE;

@@ -2,19 +2,29 @@ package com.github.sladecek.maze.jmaze.print3d;
 
 import com.github.sladecek.maze.jmaze.geometry.Point2D;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.Model3d;
+import com.github.sladecek.maze.jmaze.print3d.maze3dmodel.MPillar;
+import com.github.sladecek.maze.jmaze.print3d.maze3dmodel.ProjectedPoint;
 import com.github.sladecek.maze.jmaze.printstyle.DefaultPrintStyle;
 import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
 import com.github.sladecek.maze.jmaze.shapes.*;
 import org.junit.Test;
 import org.springframework.ui.Model;
 
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+
+import static java.util.Comparator.comparingInt;
 import static org.junit.Assert.*;
 
 /**
  * Tests ModelFromShapes class.
  */
 public class ModelFromShapesTest {
-    //@Test
+    final double epsilon = 1e-7;
+
+    @Test
     public void make() throws Exception {
 
 
@@ -47,11 +57,34 @@ public class ModelFromShapesTest {
         IMaze3DMapper mapper = new PlanarMapper();
         Model3d r = ModelFromShapes.make(sc, mapper, sizes, colors);
 
-        assertEquals(15, r.getBlocks().size());
+        List<MPillar> pillars = r.getFaces()
+                .stream()
+                .filter((f)-> (f instanceof MPillar) )
+                .map((f)->(MPillar)f)
+                .sorted( Comparator
+                        .comparingInt((MPillar po)->po.getCenter().getY())
+                        .thenComparingInt((MPillar po)->po.getCenter().getX()))
+                .collect(Collectors.toList());
+
+        assertEquals(6, pillars.size());
+
+
+        checkPillar(pillars.get(0), new double[][] {{50.2, 10.2}, {49.8, 9.8}} );
+
+/* TODO odkomentovat        assertEquals(15, r.getBlocks().size());
         assertEquals(0, r.getEdges());
         assertEquals(0, r.getFaces());
         assertEquals(0, r.getPoints());
+*/
+    }
 
+    private void checkPillar(MPillar p, double[][] expectedIntersections) {
+        assertEquals(expectedIntersections.length, p.getIntersections().size());
+        for (int i = 0; i < expectedIntersections.length; i++) {
+            final ProjectedPoint intersect = (ProjectedPoint) p.getIntersections().get(i);
+            assertEquals(expectedIntersections[i][0], intersect.getPlanarX(), epsilon);
+            assertEquals(expectedIntersections[i][1], intersect.getPlanarY(), epsilon);
+        }
     }
 
 }

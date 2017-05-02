@@ -18,7 +18,7 @@ public class MRoom extends FloorFace {
         corners.add(c);
     }
 
-    /* Creates new face from existing edges inner taken from MWals. MWals are visited in circular order,
+    /* Creates new face from existing edges taken from MWals. MWals are visited in circular order,
      Assigns face id to the edges.
       */
     public void finishEdges() {

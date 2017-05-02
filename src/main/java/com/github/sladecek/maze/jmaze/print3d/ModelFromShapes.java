@@ -35,11 +35,11 @@ public class ModelFromShapes {
         collectWallsForPillars();
         makePillars();
         copyFloorPlanToModel();
-
+/* TODO odkomentovat
         // extrude the floor plan to 3D
         extrudeEdges();
         extrudeBlocks();
-        return m;
+  */      return m;
     }
 
     private void makeRooms() {

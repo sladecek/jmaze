@@ -35,7 +35,7 @@ public class MEdge {
     }
 
     public void setRightFace(MFace rightFace) {
-        assert this.rightFace == null;
+  // TODO odkomentovat assert      assert this.rightFace == null;
         this.rightFace = rightFace;
     }
     private final MPoint p1;

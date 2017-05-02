@@ -27,7 +27,7 @@ public class ProjectedPoint extends MPoint {
             if ((lowAltitude == this.lowAltitude) && (highAltitude == this.highAltitude)) {
                 return;
             }
-            throw new IllegalStateException("Cannot setAltitudes a point " + this + " twice.");
+// TODO odkomentovat kontrolu            throw new IllegalStateException("Cannot setAltitudes a point " + this + " twice.");
 
         }
         if (lowAltitude > highAltitude) {
