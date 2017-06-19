@@ -14,6 +14,11 @@ import java.util.stream.Collectors;
  */
 public class MRoom extends FloorFace {
 
+    public MRoom(int floorId) {
+
+        this.floorId = floorId;
+    }
+
     public void addCorner(RoomCorner c) {
         corners.add(c);
     }
@@ -49,5 +54,14 @@ public class MRoom extends FloorFace {
         }
     }
 
+    public int getFloorId() {
+        return floorId;
+    }
+
+    public ArrayList<RoomCorner> getCorners() {
+        return corners;
+    }
+
     private ArrayList<RoomCorner> corners = new ArrayList<>();
+    private int floorId;
 }

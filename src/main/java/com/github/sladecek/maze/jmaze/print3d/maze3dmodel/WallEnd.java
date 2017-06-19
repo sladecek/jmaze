@@ -3,11 +3,12 @@ package com.github.sladecek.maze.jmaze.print3d.maze3dmodel;
 import com.github.sladecek.maze.jmaze.geometry.Point2D;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MEdge;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
+import org.thymeleaf.cache.ICache;
 
 /**
  * A {@code WallEnd} is the end of a mWall touching the pilar.
  */
-public class WallEnd {
+public class WallEnd implements Comparable<WallEnd> {
     /**
      * WallEnd constructor.
      *
@@ -73,6 +74,15 @@ public class WallEnd {
 
     public boolean isP1Pilar() {
         return p1IsPilar;
+    }
+
+    @Override
+    public int compareTo(WallEnd wallEnd) {
+        int pp = this.getPillarPoint().compareTo(wallEnd.getPillarPoint());
+        if (pp == 0) {
+            return this.getNonPillarPoint().compareTo(wallEnd.getNonPillarPoint());
+        }
+        return pp;
     }
 
     private final MWall mWall;

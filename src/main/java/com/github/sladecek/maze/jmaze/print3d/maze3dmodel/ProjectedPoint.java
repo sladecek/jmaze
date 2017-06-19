@@ -21,6 +21,11 @@ public class ProjectedPoint extends MPoint {
         this.planarY = planarY;
     }
 
+    @Override
+    public String toString() {
+        return "{" + planarX + ", " + planarY + '}';
+    }
+
     public void setAltitudes(IMaze3DMapper mapper, int lowAltitude, int highAltitude) {
         if (isExtruded()) {
             // when the point has been extruded already, only validate the altitudes

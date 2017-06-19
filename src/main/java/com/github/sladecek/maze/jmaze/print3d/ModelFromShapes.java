@@ -58,7 +58,7 @@ public class ModelFromShapes {
     private MRoom makeRoom(int floorId, int altitude) {
         MRoom room = rooms.get(floorId);
         if (room == null) {
-            room = new MRoom();
+            room = new MRoom(floorId);
             room.setAltitude(altitude);
             rooms.put(floorId, room);
         }
@@ -66,7 +66,7 @@ public class ModelFromShapes {
     }
 
     private void collectWallsForPillars() {
-        wallsForPillars = new HashMap<>();
+        wallsForPillars = new TreeMap<>();
         shapes.getShapes().forEach((shape) -> {
             if (shape instanceof WallShape) {
                 WallShape wallShape = (WallShape) shape;
@@ -91,7 +91,7 @@ public class ModelFromShapes {
     private void addWallToPilar(WallEnd end) {
         Set<WallEnd> s = wallsForPillars.get(end.getPillarPoint());
         if (s == null) {
-            s = new HashSet<WallEnd>();
+            s = new TreeSet<WallEnd>();
             wallsForPillars.put(end.getPillarPoint(), s);
         }
         s.add(end);
@@ -217,7 +217,7 @@ public class ModelFromShapes {
     private IPrintStyle style;
     private IMaze3DMapper mapper;
     private Model3d m;
-    private HashMap<Point2D, Set<WallEnd>> wallsForPillars;
+    private TreeMap<Point2D, Set<WallEnd>> wallsForPillars;
     private ArrayList<MWall> walls = new ArrayList<>();
     private ArrayList<MPillar> pillars = new ArrayList<>();
     private TreeMap<Integer, MRoom> rooms = new TreeMap<>();

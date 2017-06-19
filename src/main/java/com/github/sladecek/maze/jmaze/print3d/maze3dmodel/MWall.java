@@ -5,13 +5,14 @@ import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MEdge;
 
 /**
  * Wall in 3D model.
- *
+ * <p>
  * Wall has 4 edges. The edges e1 and e3 are oriented towards pillars. Edges e2 and e4 close the circle.
  */
 public class MWall extends FloorFace {
 
     /**
      * Adds an edge to the pillar.
+     *
      * @param edge
      * @param edgeAtP1 if true the edge is added to the 'p1' side of the wall. Otherwise to the p2 side.
      */
@@ -64,6 +65,16 @@ public class MWall extends FloorFace {
         e4 = new MEdge(e3.getP2(), e1.getP1());
         e4.setLeftFace(this);
         addEdge(e4);
+    }
+
+    public double getKeyForSortingInTests() {
+        ProjectedPoint pr11 = ((ProjectedPoint) getE1().getP1());
+        ProjectedPoint pr12 = ((ProjectedPoint) getE1().getP2());
+        ProjectedPoint pr31 = ((ProjectedPoint) getE3().getP1());
+        ProjectedPoint pr32 = ((ProjectedPoint) getE3().getP2());
+        double x = pr11.getPlanarX() + pr12.getPlanarX() + pr31.getPlanarX() + pr32.getPlanarX();
+        double y = pr11.getPlanarY() + pr12.getPlanarY() + pr31.getPlanarY() + pr32.getPlanarY();
+        return 1000 * y + x;
     }
 
     private MEdge e1;

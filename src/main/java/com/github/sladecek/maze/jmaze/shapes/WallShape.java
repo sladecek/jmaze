@@ -24,6 +24,10 @@ public final class WallShape implements IMazeShape2D {
         return new WallShape(-1, WallType.outerWall, p1, p2, leftFaceId, rightFaceId);
     }
 
+    public int getWallId() {
+        return wallId;
+    }
+
     protected WallShape(int wallId, WallType type, Point2D p1, Point2D p2, int leftFaceId, int rightFaceId) {
         this.wallId = wallId;
         this.wallType = type;

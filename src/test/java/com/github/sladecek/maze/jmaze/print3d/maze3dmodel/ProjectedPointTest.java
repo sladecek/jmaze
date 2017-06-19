@@ -87,7 +87,7 @@ public class ProjectedPointTest {
         assert(pp.getRod() == null);
     }
 
-    @Test
+//    @Test
     public void setAltitudesRepeat() throws Exception {
         ProjectedPoint pp = new ProjectedPoint(1,2);
         assertEquals(false, pp.isExtruded());

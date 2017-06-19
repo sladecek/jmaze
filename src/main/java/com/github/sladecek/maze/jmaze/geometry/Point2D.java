@@ -6,7 +6,7 @@ import com.github.sladecek.maze.jmaze.shapes.MarkShape;
  * 2D point either in rectangular or polar coordinates. In case of polar coordinates, x is used for
  * angle, y for diameter.
  */
-public final class Point2D {
+public final class Point2D implements  Comparable<Point2D> {
     public Point2D(int x, int y) {
         super();
         this.x = x;
@@ -49,6 +49,16 @@ public final class Point2D {
     public String toString() {
         return "Point2D(x=" + x + ", " + "y=" + y + ")";
     }
+
+    @Override
+    public int compareTo(Point2D p) {
+        int cx = Integer.compare(this.getY(), p.getY());
+        if (cx == 0) {
+            return Integer.compare(this.getX(), p.getX());
+        }
+        return cx;
+    }
+
     public static final int ANGLE_2PI = 0x1000000;
     private int x;
 

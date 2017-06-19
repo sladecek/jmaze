@@ -20,7 +20,6 @@ public class PillarMaker {
         this.unsortedWalls = new LinkedList<WallEnd>();
         unsortedWalls.addAll(wallEnds);
         this.wallWidthInMm = wallWidthInMm;
-
     }
 
     public void makePillar() {
@@ -37,14 +36,15 @@ public class PillarMaker {
         if (wallEnds.stream().allMatch((we) -> we.getWallShape().getWallType() == WallType.noWall)) {
             altitude = FloorFace.FLOOR_ALTITUDE;
         }
-        base.setAltitude(FloorFace.CEILING_ALTITUDE);
+        base.setAltitude(altitude);
     }
 
     private void sortWalls() {
         walls = new ArrayList<>();
         if (!unsortedWalls.isEmpty()) {
-
+            System.out.println("sortingWalls center="+base.getCenter());
             WallEnd first = unsortedWalls.pop();
+            System.out.println(" first="+first.getNonPillarPoint());
             WallEnd current = first;
             RoomCorner corner = addWallAndCreateCorner(current);
             while (!unsortedWalls.isEmpty()) {

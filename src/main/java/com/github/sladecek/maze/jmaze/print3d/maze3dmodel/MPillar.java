@@ -21,6 +21,14 @@ public class MPillar extends FloorFace {
         this.center = center;
     }
 
+    @Override
+    public String toString() {
+        return "MPillar{" +
+                "intersections=" + intersections +
+                ", center=" + center +
+                '}';
+    }
+
     private ArrayList<MPoint> intersections = new ArrayList<>();
     private Point2D center = new Point2D(0,0);
 
