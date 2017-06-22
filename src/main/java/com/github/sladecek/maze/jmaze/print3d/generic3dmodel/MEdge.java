@@ -38,6 +38,15 @@ public class MEdge {
   // TODO odkomentovat assert      assert this.rightFace == null;
         this.rightFace = rightFace;
     }
+
+    @Override
+    public String toString() {
+        return "MEdge{" +
+                "p1=" + p1 +
+                ", p2=" + p2 +
+                '}';
+    }
+
     private final MPoint p1;
     private final MPoint p2;
     private MFace leftFace;

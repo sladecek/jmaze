@@ -10,8 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.ui.Model;
 
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -110,10 +109,9 @@ public class ModelFromShapesTest {
     }
 
 
-
     @Test
-    public void testPillars() throws  Exception {
-    assertEquals(6, pillars.size());
+    public void testPillars() throws Exception {
+        assertEquals(6, pillars.size());
         checkPillar(pillars.get(0), new double[][]{{50.2, 10.2}, {49.8, 9.8}});
         checkPillar(pillars.get(1), new double[][]{{60.0, 9.8}, {60.2, 10.2}, {59.8, 10.2}});
         checkPillar(pillars.get(2), new double[][]{{70.2, 9.8}, {69.8, 10.2}});
@@ -122,17 +120,33 @@ public class ModelFromShapesTest {
         checkPillar(pillars.get(5), new double[][]{{70.2, 20.2}, {69.8, 19.8}});
     }
 
-    //@Test
+    @Test
     public void testRooms() {
         assertEquals(3, rooms.size());
         chechRoom(rooms.get(0))
                 .checkFloorId(-1)
                 .checkCornerCount(6)
-                .checkCorner(0, -1, ws01, ws50, walls.get(2), walls.get(0));
+//                .checkCorner(0, -1, ws01, ws50, walls.get(2), walls.get(0))
+        ;
+
+        chechRoom(rooms.get(1))
+                .checkFloorId(0)
+                .checkCornerCount(4)
+        //             .checkCorner(0, -1, ws01, ws50, walls.get(2), walls.get(0))
+        ;
+
+        chechRoom(rooms.get(2))
+                .checkFloorId(1)
+                .checkCornerCount(4)
+        //     .checkCorner(0, -1, ws01, ws50, walls.get(2), walls.get(0))
+        ;
+
     }
 
     @Test
     public void testWalls() {
+        //printWalls();
+        printCorners();
         assertEquals(7, walls.size());
         checkWall(walls.get(0), ws01, new double[]{49.8, 9.8, 50.2, 10.2, 59.8, 10.2, 60.0, 9.8});
         checkWall(walls.get(1), ws12, new double[]{60.0, 9.8, 60.2, 10.2, 69.8, 10.2, 70.2, 9.8});
@@ -141,6 +155,21 @@ public class ModelFromShapesTest {
         checkWall(walls.get(4), ws23, new double[]{70.2, 9.8, 69.8, 10.2, 69.8, 19.8, 70.2, 20.2});
         checkWall(walls.get(5), ws45, new double[]{60.0, 20.2, 59.8, 19.8, 50.2, 19.8, 49.8, 20.2});
         checkWall(walls.get(6), ws34, new double[]{70.2, 20.2, 69.8, 19.8, 60.2, 19.8, 60.0, 20.2});
+    }
+
+
+    private void printWalls() {
+        System.out.println("--WALLS----------");
+        for (MWall mw: walls) {
+            System.out.println(mw);
+        }
+    }
+
+    private void printCorners() {
+        System.out.println("--CORNERS----------");
+        for (RoomCorner co: corners) {
+            System.out.println(co);
+        }
     }
 
 
@@ -179,27 +208,45 @@ testovanou mface jako levou pravou
         for (double d : points) {
             System.out.print(d + ", ");
         }
-        System.out.println();
+
         for (int i = 0; i < 8; i++) {
             assertEquals(expected[i], points[i], epsilon);
         }
 
-        Stream<WallEnd> s1 =corners.stream().map((c)->c.getWallEnd1()).filter((we)->we.getMWall() == w);
-        assertEquals(1, s1.count());
-        WallEnd e1 = s1.collect(Collectors.toList()).get(0);
+        // check that MWall has been constructed from the provided wall shape
 
-        Stream<WallEnd> s2 =corners.stream().map((c)->c.getWallEnd2()).filter((we)->we.getMWall() == w);
-        assertEquals(1, s2.count());
-        WallEnd e2 = s2.collect(Collectors.toList()).get(0);
 
-        assertEquals(ws, e1.getWallShape());
-        assertEquals(ws, e2.getWallShape());
-        assert(e1.isP1Pilar() != e2.isP1Pilar());
+        final Set<WallEnd> s1 = corners
+                .stream()
+                .map((c) -> c.getWallEnd1())
+                .filter((we) -> we.getMWall() == w)
+                .collect(Collectors.toSet());
+        assertEquals(2, s1.size());
+        for (WallEnd we: s1) {
+            assertEquals(ws, we.getWallShape());
+        }
+
+        final Set<WallEnd> s2 = corners
+                .stream()
+                .map((c) -> c.getWallEnd2())
+                .filter((we) -> we.getMWall() == w)
+                .collect(Collectors.toSet());
+        assertEquals(2, s2.size());
+        for (WallEnd we: s2) {
+            assertEquals(ws, we.getWallShape());
+        }
+
+        Set<WallEnd> allWallEnds = new TreeSet<>();
+        allWallEnds.addAll(s1);
+        allWallEnds.addAll(s2);
+
+        // each wall has two wall ends linked to 4 corners
+        assertEquals(2, allWallEnds.size());
+
     }
 
 
     private void checkPillar(MPillar p, double[][] expectedIntersections) {
-        System.out.println(p);
         assertEquals(FloorFace.CEILING_ALTITUDE, p.getAltitude());
         assertEquals(expectedIntersections.length, p.getIntersections().size());
         for (int i = 0; i < expectedIntersections.length; i++) {

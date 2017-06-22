@@ -42,9 +42,7 @@ public class PillarMaker {
     private void sortWalls() {
         walls = new ArrayList<>();
         if (!unsortedWalls.isEmpty()) {
-            System.out.println("sortingWalls center="+base.getCenter());
             WallEnd first = unsortedWalls.pop();
-            System.out.println(" first="+first.getNonPillarPoint());
             WallEnd current = first;
             RoomCorner corner = addWallAndCreateCorner(current);
             while (!unsortedWalls.isEmpty()) {
@@ -111,7 +109,6 @@ public class PillarMaker {
         double py2 = k2 * s2 - dy2;
         assert Math.abs(px - px2) < 0.000001 : "PillarMaker intersection solutions not equal x";
         assert Math.abs(py - py2) < 0.000001 : "PillarMaker intersection solutions not equal y";
-        System.out.println("p1=" + p1centered + " p2=" + p2centered + " px=" + px + " py=" + py);
         return new Point3D(px + center.getX(), py + center.getY(), FloorFace.GROUND_ALTITUDE);
     }
 

@@ -85,6 +85,15 @@ public class WallEnd implements Comparable<WallEnd> {
         return pp;
     }
 
+    @Override
+    public String toString() {
+        return "WallEnd{" +
+                "mWall=" + mWall +
+                ", wallShape=" + wallShape +
+                ", p1IsPilar=" + p1IsPilar +
+                '}';
+    }
+
     private final MWall mWall;
     private WallShape wallShape;
     private boolean p1IsPilar;

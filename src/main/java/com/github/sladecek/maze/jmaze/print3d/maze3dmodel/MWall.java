@@ -77,6 +77,17 @@ public class MWall extends FloorFace {
         return 1000 * y + x;
     }
 
+
+    @Override
+    public String toString() {
+        return "MWall{" +
+                "e1=" + e1 +
+                ", e3=" + e3 +
+                ", e2=" + e2 +
+                ", e4=" + e4 +
+                '}';
+    }
+
     private MEdge e1;
     private MEdge e3;
     private MEdge e2;

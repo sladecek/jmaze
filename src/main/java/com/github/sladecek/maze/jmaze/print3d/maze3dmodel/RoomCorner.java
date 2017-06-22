@@ -28,6 +28,15 @@ public class RoomCorner {
         this.wallEnd2 = wallEnd2;
     }
 
+    @Override
+    public String toString() {
+        return "RoomCorner{" +
+                "floorId=" + floorId +
+                ", wallEnd1=" + wallEnd1 +
+                ", wallEnd2=" + wallEnd2 +
+                '}';
+    }
+
     private int floorId;
     private WallEnd wallEnd1;
     private WallEnd wallEnd2;
