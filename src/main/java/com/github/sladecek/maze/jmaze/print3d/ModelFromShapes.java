@@ -26,20 +26,29 @@ public class ModelFromShapes {
 
     static public Model3d make(ShapeContainer shapes, IMaze3DMapper mapper, Maze3DSizes sizes, IPrintStyle style) {
         ModelFromShapes mfs = new ModelFromShapes(shapes, mapper, sizes, style);
-        return mfs.make();
+        mfs.makePlanarProjection();
+        mfs.extrudeTo3D();
+        return mfs.m;
     }
 
-    private Model3d make() {
+    static public Model3d makeWithoutExtrusionForUnitTesting(ShapeContainer shapes, IMaze3DMapper mapper, Maze3DSizes sizes, IPrintStyle style) {
+        ModelFromShapes mfs = new ModelFromShapes(shapes, mapper, sizes, style);
+        mfs.makePlanarProjection();
+        return mfs.m;
+    }
+
+    private void makePlanarProjection() {
         // create 2d floor projection of the maze using ExtrudablePoints
         makeRooms();
         collectWallsForPillars();
         makePillars();
         copyFloorPlanToModel();
-/* TODO odkomentovat
+    }
+
+    private void extrudeTo3D() {
         // extrude the floor plan to 3D
         extrudeEdges();
         extrudeBlocks();
-  */      return m;
     }
 
     private void makeRooms() {
@@ -221,4 +230,5 @@ public class ModelFromShapes {
     private ArrayList<MWall> walls = new ArrayList<>();
     private ArrayList<MPillar> pillars = new ArrayList<>();
     private TreeMap<Integer, MRoom> rooms = new TreeMap<>();
+
 }

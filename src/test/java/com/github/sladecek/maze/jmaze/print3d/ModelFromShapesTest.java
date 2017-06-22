@@ -1,7 +1,7 @@
 package com.github.sladecek.maze.jmaze.print3d;
 
 import com.github.sladecek.maze.jmaze.geometry.Point2D;
-import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.Model3d;
+import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.*;
 import com.github.sladecek.maze.jmaze.print3d.maze3dmodel.*;
 import com.github.sladecek.maze.jmaze.printstyle.DefaultPrintStyle;
 import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
@@ -28,8 +28,8 @@ public class ModelFromShapesTest {
     @Before
     public void setUp() throws Exception {
         ShapeContainer sc = setUpInput();
-        Model3d r = compute3dModel(sc);
-        collectOutputs(r);
+        model3d = compute3dModel(sc);
+        collectOutputs(model3d);
     }
 
     private ShapeContainer setUpInput() {
@@ -70,11 +70,9 @@ public class ModelFromShapesTest {
     private Model3d compute3dModel(ShapeContainer sc) {
         Maze3DSizes sizes = new Maze3DSizes();
         sizes.setCellSizeInmm(2);
-
         IPrintStyle colors = new DefaultPrintStyle();
-
         IMaze3DMapper mapper = new PlanarMapper();
-        return ModelFromShapes.make(sc, mapper, sizes, colors);
+        return ModelFromShapes.makeWithoutExtrusionForUnitTesting(sc, mapper, sizes, colors);
     }
 
     private void collectOutputs(Model3d r) {
@@ -126,7 +124,7 @@ public class ModelFromShapesTest {
         chechRoom(rooms.get(0))
                 .checkFloorId(-1)
                 .checkCornerCount(6)
-//                .printCorners()
+//               .printCorners()
                 .checkCorner(0, -1, ws50, ws01, walls.get(2), walls.get(0))
                 .checkCorner(1, -1, ws01, ws12, walls.get(0), walls.get(1))
                 .checkCorner(2, -1, ws12, ws23, walls.get(1), walls.get(4))
@@ -140,7 +138,7 @@ public class ModelFromShapesTest {
         chechRoom(rooms.get(1))
                 .checkFloorId(0)
                 .checkCornerCount(4)
-             //   .printCorners()
+                //   .printCorners()
                 .checkCorner(0, 0, ws01, ws50, walls.get(0), walls.get(2))
                 .checkCorner(1, 0, ws14, ws01, walls.get(3), walls.get(0))
                 .checkCorner(2, 0, ws50, ws45, walls.get(2), walls.get(5))
@@ -150,7 +148,7 @@ public class ModelFromShapesTest {
         chechRoom(rooms.get(2))
                 .checkFloorId(1)
                 .checkCornerCount(4)
-             //   .printCorners()
+                //   .printCorners()
                 .checkCorner(0, 1, ws12, ws14, walls.get(1), walls.get(3))
                 .checkCorner(1, 1, ws23, ws12, walls.get(4), walls.get(1))
                 .checkCorner(2, 1, ws14, ws34, walls.get(3), walls.get(6))
@@ -175,20 +173,6 @@ public class ModelFromShapesTest {
     }
 
 
-    private void printWalls() {
-        System.out.println("--WALLS----------");
-        for (MWall mw: walls) {
-            System.out.println(mw);
-        }
-    }
-
-    private void printCorners() {
-        System.out.println("--CORNERS----------");
-        for (RoomCorner co: corners) {
-            System.out.println(co);
-        }
-    }
-
 
 /*
 
@@ -198,13 +182,19 @@ testovanou mface jako levou pravou
 
 */
 
+    @Test
+    public void testElementCounts() {
 
-/* TODO odkomentovat        assertEquals(15, r.getBlocks().size());
-        assertEquals(0, r.getEdges());
-        assertEquals(0, r.getFaces());
-        assertEquals(0, r.getPoints());
-*/
+        printBlocks();
+        printEdges();
+        printFaces();
+        printPoints();
+        assertEquals(0, model3d.getBlocks().size());
 
+        assertEquals(28, model3d.getEdges().size());
+        assertEquals(16, model3d.getFaces().size());
+        assertEquals(14, model3d.getPoints().size());
+    }
 
     private void checkWall(MWall w, WallShape ws, double[] expected) {
 
@@ -221,26 +211,20 @@ testovanou mface jako levou pravou
         ProjectedPoint pr32 = ((ProjectedPoint) w.getE3().getP2());
         points[6] = pr32.getPlanarX();
         points[7] = pr32.getPlanarY();
-/*
-        for (double d : points) {
-            System.out.print(d + ", ");
-        }
-        System.out.println();
-*/
+        // printPointArray(points);
+
         for (int i = 0; i < 8; i++) {
             assertEquals(expected[i], points[i], epsilon);
         }
 
         // check that MWall has been constructed from the provided wall shape
-
-
         final Set<WallEnd> s1 = corners
                 .stream()
                 .map((c) -> c.getWallEnd1())
                 .filter((we) -> we.getMWall() == w)
                 .collect(Collectors.toSet());
         assertEquals(2, s1.size());
-        for (WallEnd we: s1) {
+        for (WallEnd we : s1) {
             assertEquals(ws, we.getWallShape());
         }
 
@@ -250,17 +234,22 @@ testovanou mface jako levou pravou
                 .filter((we) -> we.getMWall() == w)
                 .collect(Collectors.toSet());
         assertEquals(2, s2.size());
-        for (WallEnd we: s2) {
+        for (WallEnd we : s2) {
             assertEquals(ws, we.getWallShape());
         }
 
+        // each wall has two wall ends linked to 4 corners
         Set<WallEnd> allWallEnds = new TreeSet<>();
         allWallEnds.addAll(s1);
         allWallEnds.addAll(s2);
-
-        // each wall has two wall ends linked to 4 corners
         assertEquals(2, allWallEnds.size());
+    }
 
+    private void printPointArray(double[] points) {
+        for (double d : points) {
+            System.out.print(d + ", ");
+        }
+        System.out.println();
     }
 
 
@@ -304,16 +293,57 @@ testovanou mface jako levou pravou
         }
 
         public RoomAuditor printCorners() {
-            System.out.println("--CORNERS for "+r+"----");
-            for (RoomCorner c: r.getCorners()) {
+            System.out.println("--CORNERS for " + r + "----");
+            for (RoomCorner c : r.getCorners()) {
                 System.out.println(c);
             }
             System.out.println();
             return this;
         }
 
-
         MRoom r;
+    }
+
+    private void printWalls() {
+        System.out.println("--WALLS----------");
+        for (MWall mw : walls) {
+            System.out.println(mw);
+        }
+    }
+
+    private void printCorners() {
+        System.out.println("--CORNERS----------");
+        for (RoomCorner co : corners) {
+            System.out.println(co);
+        }
+    }
+
+    private void printPoints() {
+        System.out.println("--POINTS----------");
+        for (MPoint p: model3d.getPoints()) {
+            System.out.println(p);
+        }
+    }
+
+    private void printFaces() {
+        System.out.println("--FACES----------");
+        for (MFace f: model3d.getFaces()) {
+            System.out.println(f);
+        }
+    }
+
+    private void printEdges() {
+        System.out.println("--EDGES----------");
+        for (MEdge e: model3d.getEdges()) {
+            System.out.println(e);
+        }
+    }
+
+    private void printBlocks() {
+        System.out.println("--BLOCKS----------");
+        for (MBlock b: model3d.getBlocks()) {
+            System.out.println(b);
+        }
     }
 
     final double epsilon = 1e-7;
@@ -329,6 +359,7 @@ testovanou mface jako levou pravou
     private WallShape ws14;
 
 
+    private Model3d model3d;
     private List<MPillar> pillars;
     private List<MWall> walls;
     private List<MRoom> rooms;
