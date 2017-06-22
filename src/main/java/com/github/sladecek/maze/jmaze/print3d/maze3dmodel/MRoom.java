@@ -62,6 +62,13 @@ public class MRoom extends FloorFace {
         return corners;
     }
 
+    @Override
+    public String toString() {
+        return "MRoom{" +
+                "floorId=" + floorId +
+                '}';
+    }
+
     private ArrayList<RoomCorner> corners = new ArrayList<>();
     private int floorId;
 }

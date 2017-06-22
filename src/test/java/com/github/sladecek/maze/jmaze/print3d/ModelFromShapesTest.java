@@ -126,19 +126,36 @@ public class ModelFromShapesTest {
         chechRoom(rooms.get(0))
                 .checkFloorId(-1)
                 .checkCornerCount(6)
-//                .checkCorner(0, -1, ws01, ws50, walls.get(2), walls.get(0))
+//                .printCorners()
+                .checkCorner(0, -1, ws50, ws01, walls.get(2), walls.get(0))
+                .checkCorner(1, -1, ws01, ws12, walls.get(0), walls.get(1))
+                .checkCorner(2, -1, ws12, ws23, walls.get(1), walls.get(4))
+                .checkCorner(4, -1, ws34, ws45, walls.get(6), walls.get(5))
+                .checkCorner(3, -1, ws45, ws50, walls.get(5), walls.get(2))
+                .checkCorner(5, -1, ws23, ws34, walls.get(4), walls.get(6))
+
+
         ;
 
         chechRoom(rooms.get(1))
                 .checkFloorId(0)
                 .checkCornerCount(4)
-        //             .checkCorner(0, -1, ws01, ws50, walls.get(2), walls.get(0))
+             //   .printCorners()
+                .checkCorner(0, 0, ws01, ws50, walls.get(0), walls.get(2))
+                .checkCorner(1, 0, ws14, ws01, walls.get(3), walls.get(0))
+                .checkCorner(2, 0, ws50, ws45, walls.get(2), walls.get(5))
+                .checkCorner(3, 0, ws45, ws14, walls.get(5), walls.get(3))
         ;
 
         chechRoom(rooms.get(2))
                 .checkFloorId(1)
                 .checkCornerCount(4)
-        //     .checkCorner(0, -1, ws01, ws50, walls.get(2), walls.get(0))
+             //   .printCorners()
+                .checkCorner(0, 1, ws12, ws14, walls.get(1), walls.get(3))
+                .checkCorner(1, 1, ws23, ws12, walls.get(4), walls.get(1))
+                .checkCorner(2, 1, ws14, ws34, walls.get(3), walls.get(6))
+                .checkCorner(3, 1, ws34, ws23, walls.get(6), walls.get(4))
+
         ;
 
     }
@@ -146,7 +163,7 @@ public class ModelFromShapesTest {
     @Test
     public void testWalls() {
         //printWalls();
-        printCorners();
+        //printCorners();
         assertEquals(7, walls.size());
         checkWall(walls.get(0), ws01, new double[]{49.8, 9.8, 50.2, 10.2, 59.8, 10.2, 60.0, 9.8});
         checkWall(walls.get(1), ws12, new double[]{60.0, 9.8, 60.2, 10.2, 69.8, 10.2, 70.2, 9.8});
@@ -204,11 +221,12 @@ testovanou mface jako levou pravou
         ProjectedPoint pr32 = ((ProjectedPoint) w.getE3().getP2());
         points[6] = pr32.getPlanarX();
         points[7] = pr32.getPlanarY();
-
+/*
         for (double d : points) {
             System.out.print(d + ", ");
         }
-
+        System.out.println();
+*/
         for (int i = 0; i < 8; i++) {
             assertEquals(expected[i], points[i], epsilon);
         }
@@ -284,6 +302,16 @@ testovanou mface jako levou pravou
             assertEquals(m2, c.getWallEnd2().getMWall());
             return this;
         }
+
+        public RoomAuditor printCorners() {
+            System.out.println("--CORNERS for "+r+"----");
+            for (RoomCorner c: r.getCorners()) {
+                System.out.println(c);
+            }
+            System.out.println();
+            return this;
+        }
+
 
         MRoom r;
     }
