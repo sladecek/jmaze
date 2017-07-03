@@ -46,9 +46,15 @@ public class ModelFromShapes {
     }
 
     private void extrudeTo3D() {
-        // extrude the floor plan to 3D
-        extrudeEdges();
-        extrudeBlocks();
+
+        // compute and set altitudes
+        computeAltitudes();
+
+        // extrude blocks first - the model will be modified by addVerticalFacesOnEdgesWithAltitudeStep()
+        createBlocks();
+
+        // add vertical faces
+        addVerticalFacesOnEdgesWithAltitudeStep();
     }
 
     private void makeRooms() {
@@ -152,7 +158,7 @@ public class ModelFromShapes {
         }
     }
 
-    private void extrudeEdges() {
+    private void computeAltitudes() {
 
         // visit all edges
         for (MEdge e : m.getEdges()) {
@@ -161,8 +167,8 @@ public class ModelFromShapes {
             ProjectedPoint fp2 = (ProjectedPoint) e.getP2();
 
             // each edge separates two faces
-            FloorFace leftFace = (FloorFace) e.getLeftFace();
-            FloorFace rightFace = (FloorFace) e.getRightFace();
+            FloorFace leftFace = (FloorFace) e.getRightFace();
+            FloorFace rightFace = (FloorFace) e.getLeftFace();
 
             // compare altitude of the faces along the edge
             int a1 = leftFace.getAltitude();
@@ -175,8 +181,27 @@ public class ModelFromShapes {
             }
 
             // set altitude of the left face to the base level
-            fp1.setAltitudes(mapper, lowAltitude, highAltitude);
-            fp2.setAltitudes(mapper, lowAltitude, highAltitude);
+            fp1.setAltitudesUsingMapper(mapper, lowAltitude, highAltitude);
+            fp2.setAltitudesUsingMapper(mapper, lowAltitude, highAltitude);
+        }
+    }
+
+    private void addVerticalFacesOnEdgesWithAltitudeStep() {
+        List<MEdge> newEdges = new ArrayList<>();
+
+        // visit all edges
+        for (MEdge e : m.getEdges()) {
+            // edge endpoints
+            ProjectedPoint fp1 = (ProjectedPoint) e.getP1();
+            ProjectedPoint fp2 = (ProjectedPoint) e.getP2();
+
+            // each edge separates two faces
+            FloorFace leftFace = (FloorFace) e.getRightFace();
+            FloorFace rightFace = (FloorFace) e.getLeftFace();
+
+            // compare altitude of the faces along the edge
+            int a1 = leftFace.getAltitude();
+            int a2 = rightFace.getAltitude();
 
             // if the altitude is the same in both faces, we are done
 
@@ -191,7 +216,7 @@ public class ModelFromShapes {
                 rightFace.replaceEdge(e, lowEdge);
 
                 // add new edge to the model
-                m.addEdge(lowEdge);
+                newEdges.add(lowEdge);
 
                 // add the new points to the model
                 m.addPoint(fp1low);
@@ -206,14 +231,20 @@ public class ModelFromShapes {
                 m.addFace(vf);
             }
         }
+        m.addEdges(newEdges);
     }
 
-    private void extrudeBlocks() {
+
+    private void createBlocks() {
         for (MFace f : m.getFaces()) {
             MBlock block = new MBlock();
             for (MEdge e : f.getEdges()) {
+                // Take  the first point from each edge.
                 ProjectedPoint p = (ProjectedPoint) e.getP1();
+                assert p.areAltitudesDefined() : "Points must have altitudes already defined when making blocks.";
+                // Ceiling altitude is defined in the point.
                 block.addCeilingPoint(p.getCoord());
+                // Floor altitude is always the same for all points.
                 Point3D pGround = p.mapPoint(mapper, FloorFace.GROUND_ALTITUDE);
                 block.addGroundPoint(pGround);
             }

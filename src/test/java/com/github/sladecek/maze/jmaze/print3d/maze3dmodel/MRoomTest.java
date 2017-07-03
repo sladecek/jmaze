@@ -72,13 +72,13 @@ public class MRoomTest {
         // Check resulting edges and their connection to the room face.
         assertEquals(3, r.getEdges().size());
 
-        assertEquals(mw12.getE2(), r.getEdges().get(0));
-        assertEquals(mw23.getE2(), r.getEdges().get(1));
-        assertEquals(mw31.getE2(), r.getEdges().get(2));
+        assertEquals(mw12.getE4(), r.getEdges().get(0));
+        assertEquals(mw23.getE4(), r.getEdges().get(1));
+        assertEquals(mw31.getE4(), r.getEdges().get(2));
 
-        assertEquals(r, r.getEdges().get(0).getRightFace());
-        assertEquals(r, r.getEdges().get(1).getRightFace());
-        assertEquals(r, r.getEdges().get(2).getRightFace());
+        assertEquals(r, r.getEdges().get(0).getLeftFace());
+        assertEquals(r, r.getEdges().get(1).getLeftFace());
+        assertEquals(r, r.getEdges().get(2).getLeftFace());
 
     }
 
@@ -94,8 +94,8 @@ public class MRoomTest {
         MEdge e1 = new MEdge(p41, p12);
         MEdge e3 = new MEdge(p23, p34);
 
-        w.addEndEdge(e1, true);
-        w.addEndEdge(e3, false);
+        w.addEdgeToHead(e1, true);
+        w.addEdgeToHead(e3, false);
         w.finishEdges();
         return w;
     }

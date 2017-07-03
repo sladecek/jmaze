@@ -77,8 +77,8 @@ public class PillarMaker {
 
     private void addEdge(WallEnd wallEnd, MPoint p1, MPoint p2) {
         MEdge edge = new MEdge(p1, p2);
-        edge.setRightFace(base);
-        edge.setLeftFace(wallEnd.getMWall());
+        edge.setLeftFace(base);
+        edge.setRightFace(wallEnd.getMWall());
         base.addEdge(edge);
         wallEnd.addEdge(edge);
     }

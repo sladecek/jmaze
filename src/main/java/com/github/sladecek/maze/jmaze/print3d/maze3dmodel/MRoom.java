@@ -15,7 +15,6 @@ import java.util.stream.Collectors;
 public class MRoom extends FloorFace {
 
     public MRoom(int floorId) {
-
         this.floorId = floorId;
     }
 
@@ -23,7 +22,7 @@ public class MRoom extends FloorFace {
         corners.add(c);
     }
 
-    /* Creates new face from existing edges taken from MWals. MWals are visited in circular order,
+    /** Creates new face from existing edges taken from walls. Walls are visited in circular order,
      Assigns face id to the edges.
       */
     public void finishEdges() {
@@ -35,9 +34,11 @@ public class MRoom extends FloorFace {
         RoomCorner current = first;
         for (; ; ) {
             unfinished.remove(current);
-            final MWall w2 = current.getWallEnd2().getMWall();
-            MEdge e2 = w2.getSideEdge(LeftRight.right);
-            e2.setRightFace(this);
+            final WallEnd wallEnd2 = current.getWallEnd2();
+            final LeftRight centralSide = wallEnd2.isP1Pilar() ? LeftRight.left : LeftRight.right;
+            final MWall w2 = wallEnd2.getMWall();
+            MEdge e2 = w2.getSideEdge(centralSide);
+            e2.setLeftFace(this);
             addEdge(e2);
 
             if (unfinished.isEmpty()) {

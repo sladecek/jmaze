@@ -10,7 +10,7 @@ import com.github.sladecek.maze.jmaze.print3d.IMaze3DMapper;
  * Point in the planar projection of the maze. It is created with two unmapped coordinates [x,y] and
  * then moved to the appropriate altitude or extruded into a vertical edge reaching two altitudes.
  * After extrusion the ProjectedPoint obtains the coordinates of the point with the higher altitude
- * and a new MPoint is created at the low altitude. After extrusion the point keeps the identity
+ * and a new MPoint is created at the low altitude. After extrusion the point keeps its previous identity
  * so that it remains a member of the original edges.
  */
 public class ProjectedPoint extends MPoint {
@@ -26,13 +26,14 @@ public class ProjectedPoint extends MPoint {
         return "{" + planarX + ", " + planarY + '}';
     }
 
-    public void setAltitudes(IMaze3DMapper mapper, int lowAltitude, int highAltitude) {
-        if (isExtruded()) {
+    public void setAltitudesUsingMapper(IMaze3DMapper mapper, int lowAltitude, int highAltitude) {
+        if (areAltitudesDefined()) {
             // when the point has been extruded already, only validate the altitudes
             if ((lowAltitude == this.lowAltitude) && (highAltitude == this.highAltitude)) {
                 return;
             }
-// TODO odkomentovat kontrolu            throw new IllegalStateException("Cannot setAltitudes a point " + this + " twice.");
+// TODO odkomentovat kontrolu
+// throw new IllegalStateException("Cannot setAltitudesUsingMapper a point " + this + " twice.");
 
         }
         if (lowAltitude > highAltitude) {
@@ -76,7 +77,7 @@ public class ProjectedPoint extends MPoint {
         return rod;
     }
 
-    public boolean isExtruded() {
+    public boolean areAltitudesDefined() {
         return isExtruded;
     }
 

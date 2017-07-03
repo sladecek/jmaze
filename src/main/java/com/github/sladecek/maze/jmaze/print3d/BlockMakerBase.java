@@ -35,9 +35,9 @@ public abstract class BlockMakerBase {
         return blocks;
     }
 
-    public final void printPolyhedron(final ArrayList<Point3D> polyhedron,
+    public final void print8PointPolyhedron(final ArrayList<Point3D> polyhedron,
                                       final String comment, final Color color) {
-        LOG.log(Level.INFO, "printPolyhedron " + comment);
+        LOG.log(Level.INFO, "print8PointPolyhedron " + comment);
         Block b = Block.newPolyhedron(polyhedron, comment, color);
         blocks.add(b);
     }
@@ -85,7 +85,7 @@ public abstract class BlockMakerBase {
         p.add(maze3dMapper.mapPoint(y1, x2, -wy, wx, z));
         p.add(maze3dMapper.mapPoint(y2, x2, wy, wx, 0));
         p.add(maze3dMapper.mapPoint(y2, x2, wy, wx, z));
-        printPolyhedron(p, comment, color);
+        print8PointPolyhedron(p, comment, color);
 
     }
 
@@ -105,7 +105,7 @@ public abstract class BlockMakerBase {
             }
         }
 
-        printPolyhedron(po, "whole floor" + cellX + " " + cellY,
+        print8PointPolyhedron(po, "whole floor" + cellX + " " + cellY,
                 style.getBaseColor());
     }
 
@@ -116,16 +116,16 @@ public abstract class BlockMakerBase {
         ArrayList<Point3D> pn = makeFloorSegmentNorth(pe, pw);
         ArrayList<Point3D> ps = makeFloorSegmentSouth(pe, pw);
 
-        printPolyhedron(pe, "base e " + cellX + " " + cellY,
+        print8PointPolyhedron(pe, "base e " + cellX + " " + cellY,
                 style.getBaseColor());
 
-        printPolyhedron(pn, "base n " + cellX + " " + cellY,
+        print8PointPolyhedron(pn, "base n " + cellX + " " + cellY,
                 style.getBaseColor());
 
-        printPolyhedron(pw, "base w " + cellX + " " + cellY,
+        print8PointPolyhedron(pw, "base w " + cellX + " " + cellY,
                 style.getBaseColor());
 
-        printPolyhedron(ps, "base s " + cellX + " " + cellY,
+        print8PointPolyhedron(ps, "base s " + cellX + " " + cellY,
                 style.getBaseColor());
     }
 
@@ -200,7 +200,7 @@ public abstract class BlockMakerBase {
                 }
             }
         }
-        printPolyhedron(p, "hole", style.getHoleColor());
+        print8PointPolyhedron(p, "hole", style.getHoleColor());
 
     }
 

@@ -86,7 +86,7 @@ public final class MoebiusBlockMaker extends BlockMakerBase implements IBlockMak
 						}
 					}
 				}
-				printPolyhedron(p, "outer wall " + cellX, style.getOuterWallColor());
+				print8PointPolyhedron(p, "outer wall " + cellX, style.getOuterWallColor());
 			}
 		}
 	}

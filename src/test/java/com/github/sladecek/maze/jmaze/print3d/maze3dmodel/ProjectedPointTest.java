@@ -27,10 +27,10 @@ public class ProjectedPointTest {
     @Test
     public void setUnequalAltitudes() throws Exception {
         ProjectedPoint pp = new ProjectedPoint(1,2);
-        assertEquals(false, pp.isExtruded());
+        assertEquals(false, pp.areAltitudesDefined());
 
-        pp.setAltitudes(fakeMapper, 10, 20);
-        assertEquals(true, pp.isExtruded());
+        pp.setAltitudesUsingMapper(fakeMapper, 10, 20);
+        assertEquals(true, pp.areAltitudesDefined());
 
         assertEquals(20, pp.getHighAltitude());
         assertEquals(10, pp.getLowAltitude());
@@ -60,10 +60,10 @@ public class ProjectedPointTest {
     @Test
     public void setEqualAltitudes() throws Exception {
         ProjectedPoint pp = new ProjectedPoint(1,2);
-        assertEquals(false, pp.isExtruded());
+        assertEquals(false, pp.areAltitudesDefined());
 
-        pp.setAltitudes(fakeMapper, 10, 10);
-        assertEquals(true, pp.isExtruded());
+        pp.setAltitudesUsingMapper(fakeMapper, 10, 10);
+        assertEquals(true, pp.areAltitudesDefined());
 
         assertEquals(10, pp.getHighAltitude());
         assertEquals(10, pp.getLowAltitude());
@@ -90,12 +90,12 @@ public class ProjectedPointTest {
 //    @Test
     public void setAltitudesRepeat() throws Exception {
         ProjectedPoint pp = new ProjectedPoint(1,2);
-        assertEquals(false, pp.isExtruded());
+        assertEquals(false, pp.areAltitudesDefined());
 
-        pp.setAltitudes(fakeMapper, 10, 10);
-        pp.setAltitudes(fakeMapper, 10, 10);
+        pp.setAltitudesUsingMapper(fakeMapper, 10, 10);
+        pp.setAltitudesUsingMapper(fakeMapper, 10, 10);
         try {
-            pp.setAltitudes(fakeMapper, 10, 11);
+            pp.setAltitudesUsingMapper(fakeMapper, 10, 11);
         } catch (IllegalStateException e) {
             return;
         }
@@ -106,10 +106,10 @@ public class ProjectedPointTest {
     @Test
     public void setAltitudesReverse() throws Exception {
         ProjectedPoint pp = new ProjectedPoint(1,2);
-        assertEquals(false, pp.isExtruded());
+        assertEquals(false, pp.areAltitudesDefined());
 
         try {
-            pp.setAltitudes(fakeMapper, 20, 11);
+            pp.setAltitudesUsingMapper(fakeMapper, 20, 11);
         } catch (IllegalArgumentException e) {
             return;
         }

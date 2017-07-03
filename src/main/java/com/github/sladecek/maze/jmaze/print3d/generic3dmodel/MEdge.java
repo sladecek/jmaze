@@ -18,25 +18,41 @@ public class MEdge {
         return p2;
     }
 
-    public MFace getLeftFace() {
-        return leftFace;
+    /**
+     * Return 'p1' if 'f' is left face, otherwise p1.
+     *
+     * @param faceThatShouldBeOnLeftSide
+     * @return
+     */
+    public MPoint getBackwardPoint(MFace faceThatShouldBeOnLeftSide) {
+        MPoint result = (faceThatShouldBeOnLeftSide == leftFace) ? p1 : p2;
+        return result;
     }
 
-    /**
-     * Left face setter. Can be set only once.
-     */
-    public void setLeftFace(MFace leftFace) {
-        assert this.leftFace == null;
-        this.leftFace = leftFace;
+    public MPoint getForwardPoint(MFace faceThatShouldBeOnLeftSide) {
+        MPoint result = (faceThatShouldBeOnLeftSide == leftFace) ? p2 : p1;
+        return result;
     }
 
     public MFace getRightFace() {
         return rightFace;
     }
 
+    /**
+     * Right face setter. Can be set only once.
+     */
     public void setRightFace(MFace rightFace) {
-  // TODO odkomentovat assert      assert this.rightFace == null;
+        assert this.rightFace == null;
         this.rightFace = rightFace;
+    }
+
+    public MFace getLeftFace() {
+        return leftFace;
+    }
+
+    public void setLeftFace(MFace leftFace) {
+        assert this.leftFace == null;
+        this.leftFace = leftFace;
     }
 
     @Override
@@ -49,6 +65,6 @@ public class MEdge {
 
     private final MPoint p1;
     private final MPoint p2;
-    private MFace leftFace;
     private MFace rightFace;
+    private MFace leftFace;
 }

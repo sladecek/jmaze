@@ -68,28 +68,58 @@ public final class OpenScadComposer implements java.lang.AutoCloseable {
      * Print polyhedron consisting of 8 points. The points must be ordered by x
      * (most important), then y, then z.
      *
-     * @param polyhedron
+
      * @throws IOException
      */
-    public void printPolyhedron(final ArrayList<Point3D> polyhedron, final String comment, final Color color)
+    public void printPolyhedron(
+            final ArrayList<Point3D> points,
+            final ArrayList<ArrayList<Integer>> faces,
+            final String comment, final Color color)
             throws IOException {
-        final int POLYHEDRON_VERTEX_CNT = 8;
-        if (polyhedron.size() != POLYHEDRON_VERTEX_CNT) {
-            throw new InvalidParameterException("Polyhedrons must have " + POLYHEDRON_VERTEX_CNT + " points");
+        if (comment != null && !comment.isEmpty()) {
+            out.write("/* " + comment + "*/\n");
         }
-        out.write("/* " + comment + "*/\n");
-        out.write("color(" + formatColor(color) + ") polyhedron (points =[");
-        for (int i = 0; i < POLYHEDRON_VERTEX_CNT; i++) {
-            printPoint(polyhedron.get(i));
-            if (i < POLYHEDRON_VERTEX_CNT - 1) {
-                out.write(", ");
+        if (color != null) {
+            out.write("color(" + formatColor(color) + ") ");
+        }
+        out.write("polyhedron (points =[");
+        boolean comma = false;
+        for (Point3D p: points)  {
+            if (comma) {
+                out.write(", \n");
             }
+            printPoint(p);
+            comma = true;
         }
-        out.write("], \n");
-        out.write("faces = [ [0,2,3,1], [0,1,5,4], [5,7,6,4], [6,7,3,2], [1,3,7,5], [6,2,0,4]] \n");
+        out.write("\n], \n");
+        out.write("faces = [ ");
+        comma = false;
+        for (ArrayList<Integer> f: faces)  {
+            if (comma) {
+                out.write(", \n");
+            }
+            printFace(f);
+            comma = true;
+        }
+
+        out.write("\n ] \n");
         out.write("); \n");
 
     }
+
+    private void printFace(ArrayList<Integer> f) throws IOException {
+        out.write("[ ");
+        boolean comma = false;
+        for (Integer i: f)  {
+            if (comma) {
+                out.write(", ");
+            }
+            out.write(String.format("%d",i));
+            comma = true;
+        }
+        out.write("] ");
+    }
+
     private Writer out;
     private OutputStream stream;
 

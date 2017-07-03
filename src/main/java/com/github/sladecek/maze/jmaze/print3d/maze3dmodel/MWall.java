@@ -6,22 +6,22 @@ import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MEdge;
 /**
  * Wall in 3D model.
  * <p>
- * Wall has 4 edges. The edges e1 and e3 are oriented towards pillars. Edges e2 and e4 close the circle.
+ * Wall has 4 edges. The edges e1 and e3 (heads) are oriented towards pillars. Edges e2 and e4 (sides) close the circle.
  */
 public class MWall extends FloorFace {
 
     /**
-     * Adds an edge to the pillar.
+     * Adds an edge to the wall at one of its two pillar positions.
      *
      * @param edge
      * @param edgeAtP1 if true the edge is added to the 'p1' side of the wall. Otherwise to the p2 side.
      */
-    public void addEndEdge(MEdge edge, boolean edgeAtP1) {
-        if (edge.getLeftFace() == null) {
-            edge.setLeftFace(this);
+    public void addEdgeToHead(MEdge edge, boolean edgeAtP1) {
+        if (edge.getRightFace() == null) {
+            edge.setRightFace(this);
         }
-        if (edge.getLeftFace() != this) {
-            throw new IllegalArgumentException("The left face of the edge added to a face must be the face to which the edge is being added.");
+        if (edge.getRightFace() != this) {
+            throw new IllegalArgumentException("The right face of the edge added to a face must be the face to which the edge is being added.");
         }
         if (edgeAtP1) {
             assert (e1 == null);
@@ -59,11 +59,11 @@ public class MWall extends FloorFace {
 
         addEdge(e1);
         e2 = new MEdge(e1.getP2(), e3.getP1());
-        e2.setLeftFace(this);
+        e2.setRightFace(this);
         addEdge(e2);
         addEdge(e3);
         e4 = new MEdge(e3.getP2(), e1.getP1());
-        e4.setLeftFace(this);
+        e4.setRightFace(this);
         addEdge(e4);
     }
 

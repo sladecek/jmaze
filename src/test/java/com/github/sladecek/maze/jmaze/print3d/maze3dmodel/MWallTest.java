@@ -9,8 +9,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 
-import java.awt.*;
-
 import static org.junit.Assert.*;
 
 /**
@@ -32,22 +30,22 @@ public class MWallTest {
 
     @Test
     public void addEndEdgeE1() throws Exception {
-        w.addEndEdge(e1, true);
+        w.addEdgeToHead(e1, true);
         assertEquals(e1, w.getE1());
     }
 
     @Test
     public void addEndEdgeE3() throws Exception {
-        w.addEndEdge(e3, false);
+        w.addEdgeToHead(e3, false);
         assertEquals(e3, w.getE3());
     }
 
 
     @Test
     public void addEndEdgeWithInvalidFace() throws Exception {
-        e3.setLeftFace(new MFace());
+        e3.setRightFace(new MFace());
         try {
-            w.addEndEdge(e3, false);
+            w.addEdgeToHead(e3, false);
         } catch (IllegalArgumentException e) {
             return;
         }
@@ -56,8 +54,8 @@ public class MWallTest {
 
     @Test
     public void finishEdges() throws Exception {
-        w.addEndEdge(e1, true);
-        w.addEndEdge(e3, false);
+        w.addEdgeToHead(e1, true);
+        w.addEdgeToHead(e3, false);
         w.finishEdges();
 
         MEdge e2 = w.getE2();
@@ -69,8 +67,8 @@ public class MWallTest {
         assertEquals(3.4, e4.getP1().getCoord().getX(), epsilon);
         assertEquals(4.1, e4.getP2().getCoord().getX(), epsilon);
 
-        assertEquals(w, e2.getLeftFace());
-        assertEquals(w, e4.getLeftFace());
+        assertEquals(w, e2.getRightFace());
+        assertEquals(w, e4.getRightFace());
 
         assertEquals(e4, w.getSideEdge(LeftRight.left));
         assertEquals(e2, w.getSideEdge(LeftRight.right));

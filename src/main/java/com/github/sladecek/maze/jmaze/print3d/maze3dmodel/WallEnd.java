@@ -3,7 +3,6 @@ package com.github.sladecek.maze.jmaze.print3d.maze3dmodel;
 import com.github.sladecek.maze.jmaze.geometry.Point2D;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MEdge;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
-import org.thymeleaf.cache.ICache;
 
 /**
  * A {@code WallEnd} is the end of a mWall touching the pilar.
@@ -61,7 +60,7 @@ public class WallEnd implements Comparable<WallEnd> {
     }
 
     public void addEdge(MEdge edge) {
-        mWall.addEndEdge(edge, p1IsPilar);
+        mWall.addEdgeToHead(edge, p1IsPilar);
     }
 
     public MWall getMWall() {

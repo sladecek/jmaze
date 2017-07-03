@@ -2,6 +2,7 @@ package com.github.sladecek.maze.jmaze.print3d.output;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.logging.Logger;
 
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.Model3d;
@@ -34,7 +35,7 @@ public class ThreeJs3DPrinter implements IMaze3DPrinter {
             tjs.beginList("blocks");
             for (Block b : blockMaker.getBlocks()) {
                 if (!b.isMark()) {
-                    tjs.printPolyhedron(b.getPolyhedron(), b.getComment(),
+                    tjs.print8PointPolyhedron(b.getPolyhedron(), b.getComment(),
                             b.getColor());
                 }
 
@@ -69,7 +70,7 @@ public class ThreeJs3DPrinter implements IMaze3DPrinter {
     }
 
     @Override
-    public void printModel(Model3d model, FileOutputStream f) {
+    public void printModel(Model3d model, OutputStream f) {
 
     }
 
