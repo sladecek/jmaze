@@ -50,11 +50,11 @@ public class ModelFromShapes {
         // compute and set altitudes
         computeAltitudes();
 
-        // extrude blocks first - the model will be modified by addVerticalFacesOnEdgesWithAltitudeStep()
+        // extrude blocks first - the model will be modified by addVerticalFacesOnEdgesWithAltitudeDifference()
         createBlocks();
 
         // add vertical faces
-        addVerticalFacesOnEdgesWithAltitudeStep();
+        addVerticalFacesOnEdgesWithAltitudeDifference();
     }
 
     private void makeRooms() {
@@ -183,10 +183,15 @@ public class ModelFromShapes {
             // set altitude of the left face to the base level
             fp1.setAltitudesUsingMapper(mapper, lowAltitude, highAltitude);
             fp2.setAltitudesUsingMapper(mapper, lowAltitude, highAltitude);
+/* TODO smazat
+            if (lowAltitude != highAltitude) {
+                System.out.println('*');
+            }
+            */
         }
     }
 
-    private void addVerticalFacesOnEdgesWithAltitudeStep() {
+    private void addVerticalFacesOnEdgesWithAltitudeDifference() {
         List<MEdge> newEdges = new ArrayList<>();
 
         // visit all edges
@@ -237,20 +242,25 @@ public class ModelFromShapes {
 
     private void createBlocks() {
         for (MFace f : m.getFaces()) {
-            MBlock block = new MBlock();
-            for (MEdge e : f.getEdges()) {
-                // Take  the first point from each edge.
-                ProjectedPoint p = (ProjectedPoint) e.getP1();
-                assert p.areAltitudesDefined() : "Points must have altitudes already defined when making blocks.";
-                // Ceiling altitude is defined in the point.
-                block.addCeilingPoint(p.getCoord());
-                // Floor altitude is always the same for all points.
-                Point3D pGround = p.mapPoint(mapper, FloorFace.GROUND_ALTITUDE);
-                block.addGroundPoint(pGround);
+            //TODOif (!(f instanceof MRoom)) continue;
+            int alt = ((FloorFace) f).getAltitude();
+           // TODO if (alt < 0)
+            {
+                MBlock block = new MBlock();
+                for (MEdge e : f.getEdges()) {
+                    // Take  the first point of each edge.
+                    ProjectedPoint p = (ProjectedPoint) e.getP1();
+                    Point3D pGround = p.mapPoint(mapper, FloorFace.GROUND_ALTITUDE);
+                    Point3D pCeiling = p.mapPoint(mapper, alt);
+
+                    block.addCeilingPoint(pCeiling);
+                    block.addGroundPoint(pGround);
+                }
+                m.addBlock(block);
             }
-            m.addBlock(block);
         }
     }
+
 
     private ShapeContainer shapes;
     private Maze3DSizes sizes;

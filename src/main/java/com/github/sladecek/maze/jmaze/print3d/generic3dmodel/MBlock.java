@@ -30,4 +30,11 @@ public class MBlock {
     private ArrayList<Point3D> groundPoints = new ArrayList<>();
     private ArrayList<Point3D> ceilingPoints = new ArrayList<>();
 
+    @Override
+    public String toString() {
+        return "MBlock{" +
+                "groundPoints=" + groundPoints +
+                ", ceilingPoints=" + ceilingPoints +
+                '}';
+    }
 }

@@ -12,7 +12,7 @@ public class PlanarMapper implements IMaze3DMapper {
     }
 
     @Override
-    public Point3D map(Point3D image) {
-        return new Point3D(image);
+    public Point3D map(Point3D src) {
+        return new Point3D(src);
     }
 }

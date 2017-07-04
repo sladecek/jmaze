@@ -28,12 +28,16 @@ public class ProjectedPoint extends MPoint {
 
     public void setAltitudesUsingMapper(IMaze3DMapper mapper, int lowAltitude, int highAltitude) {
         if (areAltitudesDefined()) {
-            // when the point has been extruded already, only validate the altitudes
+            // The point has been extruded already and the coordinates match.
             if ((lowAltitude == this.lowAltitude) && (highAltitude == this.highAltitude)) {
                 return;
             }
-// TODO odkomentovat kontrolu
-// throw new IllegalStateException("Cannot setAltitudesUsingMapper a point " + this + " twice.");
+
+            // The point has been  extruded
+            if (this.lowAltitude != this.highAltitude) {
+                throw new IllegalStateException("Cannot setAltitudesUsingMapper a point " + this + " twice.");
+            }
+            // else reset point altitudes
 
         }
         if (lowAltitude > highAltitude) {

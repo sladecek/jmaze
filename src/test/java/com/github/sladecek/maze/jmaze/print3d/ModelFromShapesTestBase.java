@@ -84,22 +84,10 @@ public class ModelFromShapesTestBase {
 
 
 
-/*
-
-
-obecna kontrola ze edges of MFace jsou cyklicke, cyklus vycerpava vsechno a jedna ze stran (leve, prava) ma
-testovanou mface jako levou pravou
-
-*/
-
-
-    protected void checkEdgesCycle(MFace mface) {
-
-    }
-
-    protected void checkWall(MWall w, WallShape ws, double[] expected) {
+    protected void checkWall(MWall w, WallShape ws, int altitude, double[] expected) {
 
         double[] points = new double[8];
+        assertEquals(altitude, w.getAltitude());
         ProjectedPoint pr11 = ((ProjectedPoint) w.getE1().getP1());
         points[0] = pr11.getPlanarX();
         points[1] = pr11.getPlanarY();
@@ -154,8 +142,8 @@ testovanou mface jako levou pravou
     }
 
 
-    protected void checkPillar(MPillar p, double[][] expectedIntersections) {
-        assertEquals(FloorFace.CEILING_ALTITUDE, p.getAltitude());
+    protected void checkPillar(MPillar p, int altitude, double[][] expectedIntersections) {
+        assertEquals(altitude, p.getAltitude());
         assertEquals(expectedIntersections.length, p.getIntersections().size());
         for (int i = 0; i < expectedIntersections.length; i++) {
             final ProjectedPoint intersect = (ProjectedPoint) p.getIntersections().get(i);
@@ -262,6 +250,11 @@ testovanou mface jako levou pravou
             assertEquals(e2, c.getWallEnd2().getWallShape());
             assertEquals(m1, c.getWallEnd1().getMWall());
             assertEquals(m2, c.getWallEnd2().getMWall());
+            return this;
+        }
+
+        public RoomAuditor checkAltitude(int expectedAltitude) {
+            assertEquals(expectedAltitude, r.getAltitude());
             return this;
         }
 

@@ -1,11 +1,15 @@
 package com.github.sladecek.maze.jmaze.print3d.maze3dmodel;
 
 import com.github.sladecek.maze.jmaze.print3d.*;
+import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MEdge;
+import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MFace;
+import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MPoint;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.Model3d;
 import com.github.sladecek.maze.jmaze.print3d.output.OpenScad3DPrinter;
 import com.github.sladecek.maze.jmaze.printstyle.DefaultPrintStyle;
 import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -36,18 +40,71 @@ public class ModelFromShapeTestExtruded extends ModelFromShapesTestBase {
 
     @Test
     public void testElementCounts() {
-
         printBlocks();
         printEdges();
         printFaces();
         printPoints();
-// 15? 16?        assertEquals(0, model3d.getBlocks().size());
+
 
 // 42?        assertEquals(28, model3d.getEdges().size());
-// 30?        assertEquals(16, model3d.getFaces().size());
+// 30        assertEquals(16, model3d.getFaces().size());
         // 42?    assertEquals(14, model3d.getPoints().size());
+        //    assertEquals(16, model3d.getBlocks().size());
     }
 
+    @Test
+    public void testBlocVertexCount() {
+        printBlocks();
+        assertEquals(1, countBlocksByVertexCount(6));
+        assertEquals(9, countBlocksByVertexCount(4));
+        assertEquals(2, countBlocksByVertexCount(3));
+        assertEquals(4, countBlocksByVertexCount(2));
+    }
+
+    private long countBlocksByVertexCount(int vertexCount) {
+        return model3d.getBlocks().stream()
+                .filter((b) -> b.getCeilingPoints().size() == vertexCount)
+                .filter((b) -> b.getGroundPoints().size() == vertexCount)
+                .count();
+    }
+
+    @Test
+    public void testPointAltitudes() {
+        for (MFace mFace : model3d.getFaces()) {
+            if (mFace instanceof FloorFace) {
+                FloorFace f = (FloorFace) mFace;
+                int alt = f.getAltitude();
+                for (MEdge e : f.getEdges()) {
+                    if (e.getP1() instanceof ProjectedPoint) {
+                        ProjectedPoint p = (ProjectedPoint) e.getP1();
+
+                        assert (p.areAltitudesDefined());
+                        assert (p.getHighAltitude() >= p.getLowAltitude());
+                        assert (p.getHighAltitude() == alt || p.getLowAltitude() == alt);
+                    }
+                }
+            }
+        }
+    }
+
+    @Test
+    public void testBlockAltitudes() {
+        printBlocks();
+        assertEquals(1, countBlocksByCeilingAltitude(6, -1));
+        assertEquals(4, countBlocksByCeilingAltitude(2, 2));
+        assertEquals(2, countBlocksByCeilingAltitude(4, 1));
+        assertEquals(7, countBlocksByCeilingAltitude(4, 2));
+        assertEquals(2, countBlocksByCeilingAltitude(3, 2));
+    }
+
+    private long countBlocksByCeilingAltitude(int vertexCount, int expectedZ) {
+        return model3d.getBlocks().stream()
+                .filter((b) -> b.getCeilingPoints().size() == vertexCount)
+                .filter((b) -> b.getGroundPoints().size() == vertexCount)
+                .filter((b) -> b.getCeilingPoints().stream()
+                        .filter((p) -> p.getZ() == expectedZ).count() == vertexCount)
+                .count();
+    }
 
     @Test
     public void testOpenScadPrint() throws IOException {
@@ -56,7 +113,7 @@ public class ModelFromShapeTestExtruded extends ModelFromShapesTestBase {
         printer.printModel(model3d, stream);
         stream.close();
         String s = stream.toString();
-        assertEquals(834, s.length());
+        assertEquals(4501, s.length());
     }
 
 }
