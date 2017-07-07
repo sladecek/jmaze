@@ -16,25 +16,25 @@ public final class WallShape implements IMazeShape2D {
         return new WallShape(-1, WallType.outerWall, p1, p2, -1, -1);
     }
 
-    public static WallShape newInnerWall(int wallId, Point2D p1, Point2D p2, int leftFaceId, int rightFaceId) {
-        return new WallShape(wallId, WallType.innerWall, p1, p2, leftFaceId, rightFaceId);
+    public static WallShape newInnerWall(int wallId, Point2D p1, Point2D p2, int rightFaceId, int leftFaceId) {
+        return new WallShape(wallId, WallType.innerWall, p1, p2, rightFaceId, leftFaceId);
     }
 
-    public static WallShape newOuterWall(Point2D p1, Point2D p2, int leftFaceId, int rightFaceId) {
-        return new WallShape(-1, WallType.outerWall, p1, p2, leftFaceId, rightFaceId);
+    public static WallShape newOuterWall(Point2D p1, Point2D p2, int rightFaceId, int leftFaceId) {
+        return new WallShape(-1, WallType.outerWall, p1, p2, rightFaceId, leftFaceId);
     }
 
     public int getWallId() {
         return wallId;
     }
 
-    protected WallShape(int wallId, WallType type, Point2D p1, Point2D p2, int leftFaceId, int rightFaceId) {
+    protected WallShape(int wallId, WallType type, Point2D p1, Point2D p2, int rigthFaceId, int leftFaceId) {
         this.wallId = wallId;
         this.wallType = type;
         this.p1 = p1;
         this.p2 = p2;
+        this.rigthFaceId = rigthFaceId;
         this.leftFaceId = leftFaceId;
-        this.rightFaceId = rightFaceId;
     }
 
     public static void weldTwoOuterWalls(WallShape w1, WallShape w2, boolean swap) {
@@ -96,12 +96,12 @@ public final class WallShape implements IMazeShape2D {
         return p2.getY();
     }
 
-    public int getLeftFaceId() {
-        return leftFaceId;
+    public int getRigthFaceId() {
+        return rigthFaceId;
     }
 
-    public int getRightFaceId() {
-        return rightFaceId;
+    public int getLeftFaceId() {
+        return leftFaceId;
     }
 
     @Override
@@ -132,7 +132,7 @@ public final class WallShape implements IMazeShape2D {
 
     private WallType wallType;
     private int wallId;
+    private int rigthFaceId = -1;
     private int leftFaceId = -1;
-    private int rightFaceId = -1;
     private OuterWallWeld weld;
 }

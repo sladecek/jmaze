@@ -45,9 +45,9 @@ public class WallEnd implements Comparable<WallEnd> {
 
     public int getFaceId(boolean whichFace) {
         if (whichFace) {
-            return wallShape.getLeftFaceId();
+            return wallShape.getRigthFaceId();
         } else {
-            return wallShape.getRightFaceId();
+            return wallShape.getLeftFaceId();
         }
     }
 

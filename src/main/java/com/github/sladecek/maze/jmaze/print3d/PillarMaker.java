@@ -8,6 +8,7 @@ import com.github.sladecek.maze.jmaze.print3d.maze3dmodel.*;
 import com.github.sladecek.maze.jmaze.shapes.WallType;
 
 import java.util.*;
+import java.util.logging.Logger;
 
 
 /**
@@ -40,6 +41,11 @@ public class PillarMaker {
     }
 
     private void sortWalls() {
+        LOG.info("sorting walls of "+ getBase().getCenter());
+        for(WallEnd we: unsortedWalls) {
+            LOG.info(" "+we);
+        }
+
         walls = new ArrayList<>();
         if (!unsortedWalls.isEmpty()) {
             WallEnd first = unsortedWalls.pop();
@@ -130,7 +136,9 @@ public class PillarMaker {
     }
 
     private Optional<WallEnd> findFollower(WallEnd current) {
+        LOG.info(".....findFollower  current="+current.getWallShape()+" leftFaceId="+current.getLeftFaceId()+" p1Pillar="+current.isP1Pilar());
         for (WallEnd b : unsortedWalls) {
+            LOG.info("........b="+b.getWallShape()+" rightFaceId="+b.getRightFaceId()+" p1Pillar="+b.isP1Pilar());
             if (current.getLeftFaceId() == b.getRightFaceId()) {
                 return Optional.of(b);
             }
@@ -146,4 +154,8 @@ public class PillarMaker {
     private ArrayList<WallEnd> walls;
     private ArrayList<RoomCorner> corners = new ArrayList<>();
     private ArrayList<MPoint> intersections = new ArrayList<>();
+
+
+    private static final Logger LOG = Logger.getLogger("maze");
+
 }

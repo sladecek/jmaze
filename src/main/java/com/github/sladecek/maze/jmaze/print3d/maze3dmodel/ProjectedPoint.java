@@ -33,9 +33,14 @@ public class ProjectedPoint extends MPoint {
                 return;
             }
 
+            if (lowAltitude == highAltitude && this.highAltitude == highAltitude) {
+                return;
+            }
+
             // The point has been  extruded
             if (this.lowAltitude != this.highAltitude) {
-                throw new IllegalStateException("Cannot setAltitudesUsingMapper a point " + this + " twice.");
+                return;
+                //TODO throw new IllegalStateException("Cannot setAltitudesUsingMapper a point " + this + " twice.");
             }
             // else reset point altitudes
 

@@ -38,6 +38,8 @@ public class TestApp2DBase {
      */
     public final void printTestMaze(final String fileName,
                                     final Supplier<Maze> mazeProvider) {
+        System.setProperty("java.util.logging.SimpleFormatter.format",
+                "%5$s%n");
         LogManager.getLogManager().reset();
         LOG.setLevel(Level.INFO);
         try {
@@ -45,7 +47,6 @@ public class TestApp2DBase {
             FileHandler fh = new FileHandler("maze.log");
             LOG.addHandler(fh);
             fh.setFormatter(new SimpleFormatter());
-
             // construct maze generator
             Maze maze = mazeProvider.get();
 
@@ -75,7 +76,7 @@ public class TestApp2DBase {
             Model3d model = ModelFromShapes.make(shapes, mapper, sizes, colors);
 
             final boolean printInJs = true;
-            final boolean printInScad = false;
+            final boolean printInScad = true;
             final boolean printStl = false;
 
 
@@ -95,7 +96,6 @@ public class TestApp2DBase {
                 fStl.close();
             }
 
-
         } catch (SecurityException | IOException | MazeGenerationException e) {
             e.printStackTrace();
         }
@@ -104,6 +104,6 @@ public class TestApp2DBase {
     /**
      * Logging facility.
      */
-    private static final Logger LOG = Logger.getLogger("maze.jmaze");
+    private static final Logger LOG = Logger.getLogger("maze");
 
 }

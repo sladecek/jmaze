@@ -1,6 +1,7 @@
-package com.github.sladecek.maze.jmaze.print3d;
+package com.github.sladecek.maze.jmaze.print3d.maze3dmodel;
 
 import com.github.sladecek.maze.jmaze.geometry.Point2D;
+import com.github.sladecek.maze.jmaze.print3d.PillarMaker;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MEdge;
 import com.github.sladecek.maze.jmaze.print3d.maze3dmodel.MWall;
 import com.github.sladecek.maze.jmaze.print3d.maze3dmodel.ProjectedPoint;

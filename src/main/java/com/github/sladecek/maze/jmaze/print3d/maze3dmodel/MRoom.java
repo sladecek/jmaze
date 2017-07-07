@@ -7,6 +7,7 @@ import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MEdge;
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.Optional;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 /**
@@ -22,15 +23,21 @@ public class MRoom extends FloorFace {
         corners.add(c);
     }
 
-    /** Creates new face from existing edges taken from walls. Walls are visited in circular order,
-     Assigns face id to the edges.
-      */
+    /**
+     * Creates new face from existing edges taken from walls. Walls are visited in circular order,
+     * Assigns face id to the edges.
+     */
     public void finishEdges() {
+        LOG.info("finishingEdges of " + this);
         if (corners.isEmpty()) {
             return;
         }
         Set<RoomCorner> unfinished = corners.stream().collect(Collectors.toSet());
+        for (RoomCorner rc : unfinished) {
+            LOG.info("  "+rc);
+        }
         RoomCorner first = corners.get(0);
+
         RoomCorner current = first;
         for (; ; ) {
             unfinished.remove(current);
@@ -49,7 +56,7 @@ public class MRoom extends FloorFace {
                     unfinished.stream().filter((co) -> co.getWallEnd1().getMWall() == w2).findFirst();
 
             if (!next.isPresent()) {
-                throw new InternalError("Room face edges are not cyclic");
+                throw new InternalError("Room face edges are not cyclic " + w2);
             }
             current = next.get();
         }
@@ -69,7 +76,8 @@ public class MRoom extends FloorFace {
                 "floorId=" + floorId +
                 '}';
     }
-
+    private static final Logger LOG = Logger.getLogger("maze");
     private ArrayList<RoomCorner> corners = new ArrayList<>();
     private int floorId;
+
 }

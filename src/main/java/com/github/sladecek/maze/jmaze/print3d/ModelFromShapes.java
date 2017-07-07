@@ -134,7 +134,6 @@ public class ModelFromShapes {
         }
     }
 
-
     private void copyFloorPlanToModel() {
         m = new Model3d();
         for (MPillar p : pillars) {
@@ -183,11 +182,7 @@ public class ModelFromShapes {
             // set altitude of the left face to the base level
             fp1.setAltitudesUsingMapper(mapper, lowAltitude, highAltitude);
             fp2.setAltitudesUsingMapper(mapper, lowAltitude, highAltitude);
-/* TODO smazat
-            if (lowAltitude != highAltitude) {
-                System.out.println('*');
-            }
-            */
+
         }
     }
 

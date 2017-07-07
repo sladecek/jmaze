@@ -6,7 +6,7 @@ public final class TestAppRectangular extends TestApp2DBase {
 
     public static void main(String[] args) {
         new TestAppRectangular().printTestMaze("maze-rect", () -> {
-            final int defaultSize = 27;
+            final int defaultSize = 20;
             return new Rectangular2DMaze(defaultSize, defaultSize);
         });
     }

@@ -3,13 +3,11 @@ package com.github.sladecek.maze.jmaze.print3d.maze3dmodel;
 import com.github.sladecek.maze.jmaze.print3d.*;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MEdge;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MFace;
-import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MPoint;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.Model3d;
 import com.github.sladecek.maze.jmaze.print3d.output.OpenScad3DPrinter;
 import com.github.sladecek.maze.jmaze.printstyle.DefaultPrintStyle;
 import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -113,7 +111,7 @@ public class ModelFromShapeTestExtruded extends ModelFromShapesTestBase {
         printer.printModel(model3d, stream);
         stream.close();
         String s = stream.toString();
-        assertEquals(4501, s.length());
+        assertEquals(4507, s.length());
     }
 
 }
