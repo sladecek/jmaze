@@ -5,6 +5,7 @@ import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MEdge;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MFace;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.Model3d;
 import com.github.sladecek.maze.jmaze.print3d.output.OpenScad3DPrinter;
+import com.github.sladecek.maze.jmaze.print3d.output.StlMazePrinter;
 import com.github.sladecek.maze.jmaze.printstyle.DefaultPrintStyle;
 import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
@@ -14,6 +15,7 @@ import org.junit.Test;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
+import static junit.framework.TestCase.assertFalse;
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -95,6 +97,15 @@ public class ModelFromShapeTestExtruded extends ModelFromShapesTestBase {
         assertEquals(2, countBlocksByCeilingAltitude(3, 2));
     }
 
+    @Test
+    public void testFaceEdgesHaveDifferentEndpoints() {
+        for (MFace f: model3d.getFaces()) {
+            for (MEdge e: f.getEdges()) {
+                assertFalse(e.getP1() == e.getP2());
+            }
+        }
+    }
+
     private long countBlocksByCeilingAltitude(int vertexCount, int expectedZ) {
         return model3d.getBlocks().stream()
                 .filter((b) -> b.getCeilingPoints().size() == vertexCount)
@@ -112,6 +123,17 @@ public class ModelFromShapeTestExtruded extends ModelFromShapesTestBase {
         stream.close();
         String s = stream.toString();
         assertEquals(4507, s.length());
+    }
+
+
+    @Test
+    public void testStlPrint() throws IOException {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        StlMazePrinter printer = new StlMazePrinter();
+        printer.printModel(model3d, stream);
+        stream.close();
+        String s = stream.toString();
+        assertEquals(8061, s.length());
     }
 
 }

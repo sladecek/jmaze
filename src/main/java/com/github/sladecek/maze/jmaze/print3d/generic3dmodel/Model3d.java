@@ -2,6 +2,8 @@ package com.github.sladecek.maze.jmaze.print3d.generic3dmodel;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 /**
  * Complete 3d maze model.
@@ -56,9 +58,35 @@ public class Model3d implements IModel3d {
         blocks.add(block);
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    private String name = "";
     private ArrayList<MPoint> points = new ArrayList<>();
     private ArrayList<MEdge> edges = new ArrayList<>();
     private ArrayList<MFace> faces = new ArrayList<>();
     private ArrayList<MBlock> blocks = new ArrayList<>();
 
+    @Override
+    public String toString() {
+        return "Model3d{" +
+                "name='" + name + '\n' +
+                "\n points=" + points +
+                "\n\n edges=" + edges +
+                "\n\n faces=\n" + facesToString() +
+                "\n\n blocks=" + blocks +
+                '}';
+    }
+
+    private String facesToString() {
+        return faces
+                .stream()
+                .map(f->"   "+f.toString())
+                .collect(Collectors.joining("\n"));
+    }
 }

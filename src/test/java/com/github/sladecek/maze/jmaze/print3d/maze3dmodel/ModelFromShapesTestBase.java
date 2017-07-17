@@ -267,6 +267,11 @@ public class ModelFromShapesTestBase {
             return this;
         }
 
+        public RoomAuditor checkEdgeCount(int expectedEdgeCount) {
+            assertEquals(expectedEdgeCount, r.getEdges().size());
+            return this;
+        }
+
         MRoom r;
     }
     final double epsilon = 1e-7;

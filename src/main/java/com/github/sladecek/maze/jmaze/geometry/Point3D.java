@@ -50,7 +50,13 @@ public final class Point3D {
         return "Point [x=" + x + ", y=" + y + ", z=" + z + "]";
     }
 
-
+    public static double computeDistance(Point3D p1, Point3D p2) {
+        return Math.sqrt(
+                Math.pow(p1.getX()-p2.getX(), 2)+
+                Math.pow(p1.getY()-p2.getY(), 2)+
+                Math.pow(p1.getZ()-p2.getZ(), 2)
+        );
+    }
     private double x;
     private double y;
     private double z;

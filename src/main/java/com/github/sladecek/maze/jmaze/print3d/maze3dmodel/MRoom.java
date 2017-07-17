@@ -74,6 +74,7 @@ public class MRoom extends FloorFace {
     public String toString() {
         return "MRoom{" +
                 "floorId=" + floorId +
+                " edges=" + getEdges() +
                 '}';
     }
     private static final Logger LOG = Logger.getLogger("maze");

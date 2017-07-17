@@ -77,7 +77,7 @@ public class TestApp2DBase {
 
             final boolean printInJs = true;
             final boolean printInScad = true;
-            final boolean printStl = false;
+            final boolean printStl = true;
 
 
             if (printInJs) {

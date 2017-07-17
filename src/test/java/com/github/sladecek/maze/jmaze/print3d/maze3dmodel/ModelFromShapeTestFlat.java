@@ -58,6 +58,8 @@ public class ModelFromShapeTestFlat extends ModelFromShapesTestBase {
                 .checkCorner(3, -1, ws45, ws50, walls.get(5), walls.get(2))
                 .checkCorner(5, -1, ws23, ws34, walls.get(4), walls.get(6))
                 .checkAltitude(-1)
+                .checkEdgeCount(6)
+
         ;
 
         chechRoom(rooms.get(1))
@@ -69,7 +71,8 @@ public class ModelFromShapeTestFlat extends ModelFromShapesTestBase {
                 .checkCorner(2, 0, ws50, ws45, walls.get(2), walls.get(5))
                 .checkCorner(3, 0, ws45, ws14, walls.get(5), walls.get(3))
                 .checkAltitude(1)
-                ;
+                .checkEdgeCount(4)
+        ;
 
         chechRoom(rooms.get(2))
                 .checkFloorId(1)
@@ -80,6 +83,8 @@ public class ModelFromShapeTestFlat extends ModelFromShapesTestBase {
                 .checkCorner(2, 1, ws14, ws34, walls.get(3), walls.get(6))
                 .checkCorner(3, 1, ws34, ws23, walls.get(6), walls.get(4))
                 .checkAltitude(1)
+                .checkEdgeCount(4)
+
         ;
 
     }

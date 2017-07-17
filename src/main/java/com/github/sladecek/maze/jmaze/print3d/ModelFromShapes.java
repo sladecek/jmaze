@@ -9,8 +9,10 @@ import com.github.sladecek.maze.jmaze.shapes.FloorShape;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
 import com.github.sladecek.maze.jmaze.shapes.WallType;
+import org.apache.juli.ClassLoaderLogManager;
 
 import java.util.*;
+import java.util.logging.Logger;
 
 /**
  * Creates model from shapes
@@ -27,7 +29,9 @@ public class ModelFromShapes {
     static public Model3d make(ShapeContainer shapes, IMaze3DMapper mapper, Maze3DSizes sizes, IPrintStyle style) {
         ModelFromShapes mfs = new ModelFromShapes(shapes, mapper, sizes, style);
         mfs.makePlanarProjection();
+        LOG.info("BEFORE"+mfs.m.toString()); // TODO smazat
         mfs.extrudeTo3D();
+        LOG.info("AFTER"+mfs.m.toString());  // TODO smazat
         return mfs.m;
     }
 
@@ -209,7 +213,7 @@ public class ModelFromShapes {
             // add vertical face on the low altitude
             if (a1 != a2) {
                 MPoint fp1low = fp1.getLowAltitudePoint();
-                MPoint fp2low = fp1.getLowAltitudePoint();
+                MPoint fp2low = fp2.getLowAltitudePoint();
 
                 // new horizontal edge
                 MEdge lowEdge = new MEdge(fp1low, fp2low);
@@ -229,6 +233,7 @@ public class ModelFromShapes {
                 vf.addEdge(fp2.getRod());
                 vf.addEdge(lowEdge);
                 m.addFace(vf);
+
             }
         }
         m.addEdges(newEdges);
@@ -242,11 +247,15 @@ public class ModelFromShapes {
            // TODO if (alt < 0)
             {
                 MBlock block = new MBlock();
-                for (MEdge e : f.getEdges()) {
+                for (MPoint p: f.visitPointsAroundEdges()) {
+/* TODO smazat                 for (MEdge e : f.getEdges()) {
                     // Take  the first point of each edge.
                     ProjectedPoint p = (ProjectedPoint) e.getP1();
-                    Point3D pGround = p.mapPoint(mapper, FloorFace.GROUND_ALTITUDE);
-                    Point3D pCeiling = p.mapPoint(mapper, alt);
+                    */
+                    assert p instanceof ProjectedPoint;
+                    ProjectedPoint pp = (ProjectedPoint)p;
+                    Point3D pGround = pp.mapPoint(mapper, FloorFace.GROUND_ALTITUDE);
+                    Point3D pCeiling = pp.mapPoint(mapper, alt);
 
                     block.addCeilingPoint(pCeiling);
                     block.addGroundPoint(pGround);
@@ -266,5 +275,7 @@ public class ModelFromShapes {
     private ArrayList<MWall> walls = new ArrayList<>();
     private ArrayList<MPillar> pillars = new ArrayList<>();
     private TreeMap<Integer, MRoom> rooms = new TreeMap<>();
+
+    private static final Logger LOG = Logger.getLogger("maze.jmaze");
 
 }

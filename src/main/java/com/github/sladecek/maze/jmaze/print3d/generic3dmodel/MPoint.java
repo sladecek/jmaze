@@ -17,5 +17,13 @@ public class MPoint {
     protected void setCoord(Point3D coord) {
         this.coord = coord;
     }
+
+    @Override
+    public String toString() {
+        return "MPoint{" +
+                coord +
+                '}';
+    }
+
     private Point3D coord;
 }

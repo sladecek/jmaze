@@ -25,9 +25,17 @@ public final class Egg3dMapper implements IMaze3DMapper {
      * @param cellHorizontal Latitudal room number. Zero index is equator.
      * @return 3D coordinate of south-western corner of the room + offset.
      */
-    // TODO @Override
-    public Point3D mapPoint(int cellVertical, int cellHorizontal, double offsetV,
-                            double offsetH, double offsetA) {
+    @Override
+    public Point3D map(Point3D image) {
+
+        final double x = image.getX();
+        final double y = image.getY();
+        int cellVertical = (int) Math.round(x);
+        int cellHorizontal = (int) Math.round(y);
+
+        double offsetV = x - cellVertical;
+        double offsetH = y - cellHorizontal;
+        double offsetA = image.getZ();
 
         LOG.log(Level.INFO, "mapPoint v=" + cellVertical + " h=" + cellHorizontal
                 + " ov=" + offsetV + " oh=" + offsetH);
@@ -96,55 +104,56 @@ public final class Egg3dMapper implements IMaze3DMapper {
         return result;
     }
 
-    // TODO @Override
-    public Point3D mapCorner(int cellX, EastWest ew, UpDown ud,
-                             SouthNorth snWall, SouthNorth snEdge) {
-        throw new IllegalArgumentException("Egg has no corners");
-    }
-
-    // TODO @Override
-    public int getStepY(int y, int x) {
-        final int eqCnt = maze.getEquatorCellCnt();
-
-        // South hemisphere has separate data structure.
-        SouthNorth sn = SouthNorth.north;
-        int indexH = x;
-        if (x < 0) {
-            sn = SouthNorth.south;
-            indexH = -x;
+    /*
+        // TODO @Override
+        public Point3D mapCorner(int cellX, EastWest ew, UpDown ud,
+                                 SouthNorth snWall, SouthNorth snEdge) {
+            throw new IllegalArgumentException("Egg has no corners");
         }
-        EggMazeHemisphere hem = maze.getHemisphere(sn);
-        final int layerCnt = hem.getCircleCnt();
 
-        assert indexH >= 0 : "Invalid horizontal coordinate - negative";
-        assert indexH <= layerCnt : "Invalid horizontal coordinate - too big";
+        // TODO @Override
+        public int getStepY(int y, int x) {
+            final int eqCnt = maze.getEquatorCellCnt();
 
-        final boolean isPole = indexH > hem.getCircleCnt();
-        final boolean isPolarCircle = indexH == hem.getCircleCnt();
-        if (isPole) {
-            return 1;
-        } else {
-            // polar circle uses room count from last normal layer to form polar cups
-            int where = indexH;
-            if (isPolarCircle) {
-                where = indexH - 1;
+            // South hemisphere has separate data structure.
+            SouthNorth sn = SouthNorth.north;
+            int indexH = x;
+            if (x < 0) {
+                sn = SouthNorth.south;
+                indexH = -x;
             }
-            int roomCntThis = hem.getWallCntOnCircle(where);
-            return eqCnt / roomCntThis;
-        }
-    }
+            EggMazeHemisphere hem = maze.getHemisphere(sn);
+            final int layerCnt = hem.getCircleCnt();
 
+            assert indexH >= 0 : "Invalid horizontal coordinate - negative";
+            assert indexH <= layerCnt : "Invalid horizontal coordinate - too big";
+
+            final boolean isPole = indexH > hem.getCircleCnt();
+            final boolean isPolarCircle = indexH == hem.getCircleCnt();
+            if (isPole) {
+                return 1;
+            } else {
+                // polar circle uses room count from last normal layer to form polar cups
+                int where = indexH;
+                if (isPolarCircle) {
+                    where = indexH - 1;
+                }
+                int roomCntThis = hem.getWallCntOnCircle(where);
+                return eqCnt / roomCntThis;
+            }
+        }
+    */
     @Override
     public double inverselyMapLengthAt(Point3D center, double v) {
-        // TODO
-        return 0;
+        final double epsilon = 0.001;
+        final double epsilonSide = epsilon / Math.sqrt(2);
+        Point3D shifted = new Point3D(center.getX() + epsilonSide, center.getY()+epsilonSide, center.getZ());
+        Point3D p1 = map(center);
+        Point3D p2 = map(shifted);
+        double distance = Point3D.computeDistance(p1, p2);
+        return v*epsilon/distance;
     }
 
-    @Override
-    public Point3D map(Point3D image) {
-        // TODO
-        return null;
-    }
 
     private static final double SMALL_Y_MM = 0.001;
     private static final Logger LOG = Logger.getLogger("maze.jmaze");
