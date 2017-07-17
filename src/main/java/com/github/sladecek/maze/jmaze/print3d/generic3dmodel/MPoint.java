@@ -25,5 +25,9 @@ public class MPoint {
                 '}';
     }
 
+    public double distanceTo(MPoint p1) {
+        return Point3D.computeDistance(p1.getCoord(), coord);
+    }
+
     private Point3D coord;
 }

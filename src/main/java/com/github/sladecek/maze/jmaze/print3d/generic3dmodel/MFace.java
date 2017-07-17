@@ -1,5 +1,9 @@
 package com.github.sladecek.maze.jmaze.print3d.generic3dmodel;
 
+import com.github.sladecek.maze.jmaze.geometry.Point2D;
+import com.github.sladecek.maze.jmaze.print3d.maze3dmodel.MRoom;
+import com.github.sladecek.maze.jmaze.print3d.maze3dmodel.MWall;
+
 import java.util.*;
 
 /**
@@ -23,26 +27,38 @@ public class MFace {
     }
 
     public ArrayList<MPoint> visitPointsAroundEdges() {
+        if (getEdges().size() == 4 && (!(this instanceof MWall)) && (!(this instanceof MRoom))) {
+            System.out.println("*++++");
+        }
         ArrayList<MPoint> result = new ArrayList<>();
-        for (MEdge e : getEdges()) {
-            // for each edge add endpoint that is not contained in the previous edge
-            if (result.isEmpty()) {
-                // starting edge
-                MEdge lastEdge = getEdges().get(getEdges().size() - 1);
-                if (e.getP1() == lastEdge.getP1() || e.getP1() == lastEdge.getP2()) {
-                    result.add(e.getP2());
-                } else {
-                    result.add(e.getP1());
+        ArrayList<MEdge> unfinished = new ArrayList<>();
+        unfinished.addAll(getEdges());
+
+        if (!unfinished.isEmpty()) {
+            MEdge e0 = unfinished.get(0);
+            unfinished.remove(e0);
+            result.add(e0.getP1());
+            while (!unfinished.isEmpty()) {
+                MPoint next = null;
+                for (MEdge e : unfinished) {
+                    // for each edge add endpoint that is not contained in the previous edge
+                    // continue from existing point
+                    MPoint prev = result.get(result.size() - 1);
+                    final double epsilon = 1e-6;
+                    if (prev.distanceTo(e.getP1()) < epsilon) {
+                        next = e.getP2();
+                        unfinished.remove(e);
+                        break;
+                    } else if (prev.distanceTo(e.getP2()) < epsilon) {
+                        next = e.getP1();
+                        unfinished.remove(e);
+                        break;
+                    }
                 }
-            } else {
-                // continue from existing point
-                MPoint prev = result.get(result.size() - 1);
-                if (prev == e.getP1()) {
-                    result.add(e.getP2());
-                } else if (prev == e.getP2()) {
-                    result.add(e.getP1());
-                } else {
+                if (next == null) {
                     throw new InternalError("Edges of a face are not continuous." + toString());
+                } else {
+                    result.add(next);
                 }
             }
         }
@@ -50,12 +66,12 @@ public class MFace {
 
     }
 
-    private ArrayList<MEdge> edges = new ArrayList<>();
-
     @Override
     public String toString() {
         return "MFace{" +
                 "edges=" + edges +
                 '}';
     }
+
+    private ArrayList<MEdge> edges = new ArrayList<>();
 }

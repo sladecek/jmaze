@@ -133,7 +133,7 @@ public class ModelFromShapeTestExtruded extends ModelFromShapesTestBase {
         printer.printModel(model3d, stream);
         stream.close();
         String s = stream.toString();
-        assertEquals(8061, s.length());
+        assertEquals(8073, s.length());
     }
 
 }
