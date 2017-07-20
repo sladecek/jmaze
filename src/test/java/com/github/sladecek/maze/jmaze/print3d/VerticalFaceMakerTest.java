@@ -1,6 +1,5 @@
 package com.github.sladecek.maze.jmaze.print3d;
 
-import com.github.sladecek.maze.jmaze.print3d.VerticalFaceMaker;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MEdge;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.Model3d;
 import com.github.sladecek.maze.jmaze.print3d.maze3dmodel.Altitude;
@@ -27,9 +26,10 @@ public class VerticalFaceMakerTest {
 
     @Test
     public void checkUntouchedModel() {
+        prepareModel(Altitude.FLOOR, Altitude.FLOOR, Altitude.FLOOR);
         assertEquals(5, model.getPoints().size());
-        assertEquals(7, model.getEdges().size());
-        assertEquals(3, model.getFaces().size());
+        assertEquals(8, model.getEdges().size());
+        assertEquals(4, model.getFaces().size());
 
     }
 
@@ -47,8 +47,8 @@ public class VerticalFaceMakerTest {
 
         // no change in element count
         assertEquals(5, model.getPoints().size());
-        assertEquals(7, model.getEdges().size());
-        assertEquals(3, model.getFaces().size());
+        assertEquals(8, model.getEdges().size());
+        assertEquals(4, model.getFaces().size());
 
     }
 
@@ -68,37 +68,57 @@ public class VerticalFaceMakerTest {
         eWS = new MEdge(pWest, pSouth);
         eWN = new MEdge(pWest, pNorth);
         eSE = new MEdge(pSouth, pEast);
+        eNE = new MEdge(pNorth, pEast);
 
         model.addEdge(eCW);
         model.addEdge(eCE);
+        model.addEdge(eNE);
         model.addEdge(eCS);
         model.addEdge(eCN);
         model.addEdge(eWS);
         model.addEdge(eWN);
         model.addEdge(eSE);
 
-        fNorth = new FloorFace();
-        fNorth.addEdge(eCW);
-        fNorth.addEdge(eCN);
-        fNorth.addEdge(eWN);
-        fNorth.setAltitude(an);
+        fNW = new FloorFace();
+        fNW.addEdge(eCW);
+        fNW.addEdge(eCN);
+        fNW.addEdge(eWN);
+        fNW.setAltitude(an);
 
-        fSouth = new FloorFace();
-        fSouth.addEdge(eCW);
-        fSouth.addEdge(eCS);
-        fSouth.addEdge(eWS);
-        fSouth.setAltitude(as);
+        fSW = new FloorFace();
+        fSW.addEdge(eCW);
+        fSW.addEdge(eCS);
+        fSW.addEdge(eWS);
+        fSW.setAltitude(as);
 
-        fEast = new FloorFace();
-        fEast.addEdge(eCE);
-        fEast.addEdge(eCS);
-        fEast.addEdge(eSE);
-        fEast.setAltitude(ae);
+        fSE = new FloorFace();
+        fSE.addEdge(eCE);
+        fSE.addEdge(eCS);
+        fSE.addEdge(eSE);
+        fSE.setAltitude(ae);
 
+        fNE = new FloorFace();
+        fNE.addEdge(eCE);
+        fNE.addEdge(eCN);
+        fNE.addEdge(eNE);
+        fNE.setAltitude(ae);
 
-        model.addFace(fNorth);
-        model.addFace(fSouth);
-        model.addFace(fEast);
+        model.addFace(fNW);
+        model.addFace(fSW);
+        model.addFace(fSE);
+        model.addFace(fNE);
+
+        eCN.setLeftFace(fNW);
+        eCN.setRightFace(fNE);
+
+        eCW.setLeftFace(fSW);
+        eCW.setRightFace(fNW);
+
+        eCS.setLeftFace(fSE);
+        eCS.setRightFace(fSW);
+
+        eCE.setLeftFace(fSE);
+        eCE.setRightFace(fNE);
 
     }
 
@@ -112,6 +132,7 @@ public class VerticalFaceMakerTest {
 
     MEdge eCW;
     MEdge eCE;
+    MEdge eNE;
     MEdge eCS;
     MEdge eCN;
 
@@ -120,9 +141,10 @@ public class VerticalFaceMakerTest {
     MEdge eSE;
 
 
-    FloorFace fNorth;
-    FloorFace fSouth;
-    FloorFace fEast;
+    FloorFace fNW;
+    FloorFace fSW;
+    FloorFace fSE;
+    FloorFace fNE;
 
     VerticalFaceMaker maker;
 
