@@ -24,8 +24,10 @@ public class StlMazePrinter implements IMaze3DPrinter {
         try (PrintWriter pw = new PrintWriter(f)) {
             pw.print("solid ");
             pw.println(model.getName());
+            int i = 0;
             for (MFace face : model.getFaces()) {
                 printFace(pw, face);
+                i++;
             }
             pw.print("endsolid ");
             pw.println(model.getName());

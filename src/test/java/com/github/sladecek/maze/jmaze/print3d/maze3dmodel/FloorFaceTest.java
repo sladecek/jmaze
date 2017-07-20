@@ -11,8 +11,9 @@ public class FloorFaceTest {
     @Test
     public void setAltitude() throws Exception {
         FloorFace ff = new FloorFace();
-        assertEquals(FloorFace.FLOOR_ALTITUDE, ff.getAltitude());
-        ff.setAltitude(27);
-        assertEquals(27, ff.getAltitude());
+        assertEquals(Altitude.FLOOR, ff.getAltitude());
+        ff.setAltitude(Altitude.FRAME);
+        assertEquals(Altitude.FRAME, ff.getAltitude());
+        assertEquals(Altitude.FRAME.getValue(), ff.getAltitude().getValue());
     }
 }

@@ -34,16 +34,18 @@ public class MFace {
         ArrayList<MEdge> unfinished = new ArrayList<>();
         unfinished.addAll(getEdges());
 
+        System.out.println("------------------------------------------");
         if (!unfinished.isEmpty()) {
             MEdge e0 = unfinished.get(0);
             unfinished.remove(e0);
             result.add(e0.getP1());
             while (!unfinished.isEmpty()) {
+                MPoint prev = result.get(result.size() - 1);
+                System.out.println("--"+prev);
                 MPoint next = null;
                 for (MEdge e : unfinished) {
                     // for each edge add endpoint that is not contained in the previous edge
                     // continue from existing point
-                    MPoint prev = result.get(result.size() - 1);
                     final double epsilon = 1e-6;
                     if (prev.distanceTo(e.getP1()) < epsilon) {
                         next = e.getP2();

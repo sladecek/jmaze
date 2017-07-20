@@ -73,14 +73,14 @@ public class ModelFromShapeTestExtruded extends ModelFromShapesTestBase {
         for (MFace mFace : model3d.getFaces()) {
             if (mFace instanceof FloorFace) {
                 FloorFace f = (FloorFace) mFace;
-                int alt = f.getAltitude();
+                Altitude alt = f.getAltitude();
                 for (MEdge e : f.getEdges()) {
                     if (e.getP1() instanceof ProjectedPoint) {
                         ProjectedPoint p = (ProjectedPoint) e.getP1();
 
                         assert (p.areAltitudesDefined());
                         assert (p.getHighAltitude() >= p.getLowAltitude());
-                        assert (p.getHighAltitude() == alt || p.getLowAltitude() == alt);
+                        assert (p.getHighAltitude() == alt.getValue() || p.getLowAltitude() == alt.getValue());
                     }
                 }
             }

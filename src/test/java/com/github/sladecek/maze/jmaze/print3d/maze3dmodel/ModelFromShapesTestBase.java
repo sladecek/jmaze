@@ -87,7 +87,7 @@ public class ModelFromShapesTestBase {
     protected void checkWall(MWall w, WallShape ws, int altitude, double[] expected) {
 
         double[] points = new double[8];
-        assertEquals(altitude, w.getAltitude());
+        assertEquals(altitude, w.getAltitude().getValue());
         ProjectedPoint pr11 = ((ProjectedPoint) w.getE1().getP1());
         points[0] = pr11.getPlanarX();
         points[1] = pr11.getPlanarY();
@@ -143,7 +143,7 @@ public class ModelFromShapesTestBase {
 
 
     protected void checkPillar(MPillar p, int altitude, double[][] expectedIntersections) {
-        assertEquals(altitude, p.getAltitude());
+        assertEquals(altitude, p.getAltitude().getValue());
         assertEquals(expectedIntersections.length, p.getIntersections().size());
         for (int i = 0; i < expectedIntersections.length; i++) {
             final ProjectedPoint intersect = (ProjectedPoint) p.getIntersections().get(i);
@@ -254,7 +254,7 @@ public class ModelFromShapesTestBase {
         }
 
         public RoomAuditor checkAltitude(int expectedAltitude) {
-            assertEquals(expectedAltitude, r.getAltitude());
+            assertEquals(expectedAltitude, r.getAltitude().getValue());
             return this;
         }
 

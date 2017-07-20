@@ -23,7 +23,7 @@ public class ProjectedPoint extends MPoint {
 
     @Override
     public String toString() {
-        return "{" + planarX + ", " + planarY + '}';
+        return "{" + planarX + ", " + planarY + ","+ getCoord().getZ() + "} " ;
     }
 
     public void setAltitudesUsingMapper(IMaze3DMapper mapper, int lowAltitude, int highAltitude) {

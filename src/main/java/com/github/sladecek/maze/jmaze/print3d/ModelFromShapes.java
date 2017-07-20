@@ -9,7 +9,6 @@ import com.github.sladecek.maze.jmaze.shapes.FloorShape;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
 import com.github.sladecek.maze.jmaze.shapes.WallType;
-import org.apache.juli.ClassLoaderLogManager;
 
 import java.util.*;
 import java.util.logging.Logger;
@@ -65,16 +64,16 @@ public class ModelFromShapes {
         shapes.getShapes().forEach((shape) -> {
             if (shape instanceof FloorShape) {
                 FloorShape floorShape = (FloorShape) shape;
-                int altitude = FloorFace.FLOOR_ALTITUDE;
+                Altitude altitude = Altitude.FLOOR;
                 if (floorShape.isHole()) {
-                    altitude = FloorFace.GROUND_ALTITUDE;
+                    altitude = Altitude.GROUND;
                 }
                 makeRoom(floorShape.getRoomId(), altitude);
             }
         });
     }
 
-    private MRoom makeRoom(int floorId, int altitude) {
+    private MRoom makeRoom(int floorId, Altitude altitude) {
         MRoom room = rooms.get(floorId);
         if (room == null) {
             room = new MRoom(floorId);
@@ -90,9 +89,9 @@ public class ModelFromShapes {
             if (shape instanceof WallShape) {
                 WallShape wallShape = (WallShape) shape;
                 MWall wall = new MWall();
-                int altitude = FloorFace.CEILING_ALTITUDE;
+                Altitude altitude = Altitude.CEILING;
                 if (wallShape.getWallType() == WallType.noWall) {
-                    altitude = FloorFace.FLOOR_ALTITUDE;
+                    altitude = Altitude.FLOOR;
                 }
                 wall.setAltitude(altitude);
                 walls.add(wall);
@@ -133,7 +132,7 @@ public class ModelFromShapes {
     private void takeRoomCornersFromPillar(Collection<RoomCorner> corners) {
         for (RoomCorner c : corners) {
             int floorId = c.getFloorId();
-            MRoom room = makeRoom(floorId, FloorFace.FRAME_ALTITUDE);
+            MRoom room = makeRoom(floorId, Altitude.FRAME);
             room.addCorner(c);
         }
     }
@@ -174,8 +173,8 @@ public class ModelFromShapes {
             FloorFace rightFace = (FloorFace) e.getLeftFace();
 
             // compare altitude of the faces along the edge
-            int a1 = leftFace.getAltitude();
-            int a2 = rightFace.getAltitude();
+            int a1 = leftFace.getAltitude().getValue();
+            int a2 = rightFace.getAltitude().getValue();
             int lowAltitude = a1;
             int highAltitude = a2;
             if (a1 > a2) {
@@ -204,8 +203,8 @@ public class ModelFromShapes {
             FloorFace rightFace = (FloorFace) e.getLeftFace();
 
             // compare altitude of the faces along the edge
-            int a1 = leftFace.getAltitude();
-            int a2 = rightFace.getAltitude();
+            int a1 = leftFace.getAltitude().getValue();
+            int a2 = rightFace.getAltitude().getValue();
 
             // if the altitude is the same in both faces, we are done
 
@@ -217,7 +216,11 @@ public class ModelFromShapes {
 
                 // new horizontal edge
                 MEdge lowEdge = new MEdge(fp1low, fp2low);
-                rightFace.replaceEdge(e, lowEdge);
+                MFace lowFace = leftFace;
+                if (a1 > a2) {
+                    lowFace = rightFace;
+                }
+                lowFace.replaceEdge(e, lowEdge);
 
                 // add new edge to the model
                 newEdges.add(lowEdge);
@@ -243,7 +246,7 @@ public class ModelFromShapes {
     private void createBlocks() {
         for (MFace f : m.getFaces()) {
             //TODOif (!(f instanceof MRoom)) continue;
-            int alt = ((FloorFace) f).getAltitude();
+            int alt = ((FloorFace) f).getAltitude().getValue();
            // TODO if (alt < 0)
             {
                 MBlock block = new MBlock();
@@ -254,7 +257,7 @@ public class ModelFromShapes {
                     */
                     assert p instanceof ProjectedPoint;
                     ProjectedPoint pp = (ProjectedPoint)p;
-                    Point3D pGround = pp.mapPoint(mapper, FloorFace.GROUND_ALTITUDE);
+                    Point3D pGround = pp.mapPoint(mapper, Altitude.GROUND.getValue());
                     Point3D pCeiling = pp.mapPoint(mapper, alt);
 
                     block.addCeilingPoint(pCeiling);

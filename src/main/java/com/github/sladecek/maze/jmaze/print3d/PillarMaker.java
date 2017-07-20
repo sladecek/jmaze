@@ -18,7 +18,7 @@ public class PillarMaker {
     public PillarMaker(Point2D center, List<WallEnd> wallEnds, double wallWidthInMm) {
         this.center = center;
         this.wallEnds = wallEnds;
-        this.unsortedWalls = new LinkedList<WallEnd>();
+        this.unsortedWalls = new LinkedList<>();
         unsortedWalls.addAll(wallEnds);
         this.wallWidthInMm = wallWidthInMm;
     }
@@ -33,9 +33,9 @@ public class PillarMaker {
     private void createPillarBase() {
         base = new MPillar();
         base.setCenter(center);
-        int altitude = FloorFace.CEILING_ALTITUDE;
+        Altitude altitude = Altitude.CEILING;
         if (wallEnds.stream().allMatch((we) -> we.getWallShape().getWallType() == WallType.noWall)) {
-            altitude = FloorFace.FLOOR_ALTITUDE;
+            altitude = Altitude.FLOOR;
         }
         base.setAltitude(altitude);
     }
@@ -89,11 +89,9 @@ public class PillarMaker {
         wallEnd.addEdge(edge);
     }
 
-    Point3D computeIntersection(Point2D p1, Point2D p2) {
+    private Point3D computeIntersection(Point2D p1, Point2D p2) {
         Point2D p1centered = p1.minus(center);
         Point2D p2centered = p2.minus(center);
-        double l1 = p1centered.getCartesianLength();
-        double l2 = p2centered.getCartesianLength();
         double phi1 = p1centered.getCartesianAngle();
         double phi2 = p2centered.getCartesianAngle();
         double c1 = Math.cos(phi1);
@@ -115,7 +113,7 @@ public class PillarMaker {
         double py2 = k2 * s2 - dy2;
         assert Math.abs(px - px2) < 0.000001 : "PillarMaker intersection solutions not equal x";
         assert Math.abs(py - py2) < 0.000001 : "PillarMaker intersection solutions not equal y";
-        return new Point3D(px + center.getX(), py + center.getY(), FloorFace.GROUND_ALTITUDE);
+        return new Point3D(px + center.getX(), py + center.getY(), Altitude.GROUND.getValue());
     }
 
     public MPillar getBase() {
@@ -131,7 +129,7 @@ public class PillarMaker {
         return rc;
     }
 
-    public ArrayList<RoomCorner> getCorners() {
+    ArrayList<RoomCorner> getCorners() {
         return corners;
     }
 
