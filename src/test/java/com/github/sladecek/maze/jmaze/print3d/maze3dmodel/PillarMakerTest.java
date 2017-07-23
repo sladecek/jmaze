@@ -3,18 +3,11 @@ package com.github.sladecek.maze.jmaze.print3d.maze3dmodel;
 import com.github.sladecek.maze.jmaze.geometry.Point2D;
 import com.github.sladecek.maze.jmaze.print3d.PillarMaker;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MEdge;
-import com.github.sladecek.maze.jmaze.print3d.maze3dmodel.MWall;
-import com.github.sladecek.maze.jmaze.print3d.maze3dmodel.ProjectedPoint;
-import com.github.sladecek.maze.jmaze.print3d.maze3dmodel.WallEnd;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
 import org.junit.Test;
-import scala.collection.mutable.LinkedList;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 
-import static javafx.scene.input.KeyCode.L;
 import static org.junit.Assert.*;
 
 /**
@@ -64,7 +57,7 @@ public class PillarMakerTest {
 
         for (int i = 0; i < baseEdges.size(); ++i) {
             System.out.println(i);
-            ProjectedPoint pp = (ProjectedPoint) baseEdges.get(i).getP1();
+            TelescopicPoint pp = (TelescopicPoint) baseEdges.get(i).getP1();
             System.out.println("x ");
             assertEquals(expected[i][0]+dx, pp.getPlanarX(), epsilon);
             System.out.println("y ");

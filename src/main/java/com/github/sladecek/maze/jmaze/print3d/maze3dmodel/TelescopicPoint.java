@@ -5,16 +5,18 @@ import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MEdge;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MPoint;
 import com.github.sladecek.maze.jmaze.print3d.IMaze3DMapper;
 
+import java.util.EnumMap;
+
 
 /**
  * Point in the planar projection of the maze. It is created with two unmapped coordinates [x,y] and
  * then moved to the appropriate altitude or extruded into a vertical edge reaching two altitudes.
- * After extrusion the ProjectedPoint obtains the coordinates of the point with the higher altitude
+ * After extrusion the TelescopicPoint obtains the coordinates of the point with the higher altitude
  * and a new MPoint is created at the low altitude. After extrusion the point keeps its previous identity
  * so that it remains a member of the original edges.
  */
-public class ProjectedPoint extends MPoint {
-    public ProjectedPoint(double planarX, double planarY) {
+public class TelescopicPoint extends MPoint {
+    public TelescopicPoint(double planarX, double planarY) {
         super(new Point3D(0, 0, 0));
         this.isExtruded = false;
         this.planarX = planarX;
@@ -23,7 +25,7 @@ public class ProjectedPoint extends MPoint {
 
     @Override
     public String toString() {
-        return "{" + planarX + ", " + planarY + ","+ getCoord().getZ() + "} " ;
+        return "{" + planarX + ", " + planarY + "," + getCoord().getZ() + "} ";
     }
 
     public void setAltitudesUsingMapper(IMaze3DMapper mapper, int lowAltitude, int highAltitude) {
@@ -106,16 +108,73 @@ public class ProjectedPoint extends MPoint {
         return highAltitude;
     }
 
+    public Altitude getMinAltitude() {
+        return minAltitude;
+    }
+
+    public Altitude getMaxAltitude() {
+        return maxAltitude;
+    }
+
+    public void setOwnAltitude(IMaze3DMapper mapper) {
+        setCoord(mapPoint(mapper, maxAltitude));
+    }
+
+    public Point3D mapPoint(IMaze3DMapper mapper, Altitude altitude) {
+        return mapPoint(mapper, altitude.getValue());
+    }
 
     public Point3D mapPoint(IMaze3DMapper mapper, int altitude) {
         return mapper.map(new Point3D(planarX, planarY, altitude));
     }
 
+    public void stretchAltitude(Altitude a) {
+        if (a.getValue() < minAltitude.getValue()) {
+            minAltitude = a;
+        }
+        if (a.getValue() > maxAltitude.getValue()) {
+            maxAltitude = a;
+        }
+    }
+
+    public void addSection(Altitude aa, MPoint p, MEdge rod) {
+        assert !points.containsKey(aa);
+        points.put(aa, new Section(rod, p));
+    }
+
+    public MPoint getPointAt(Altitude aa) {
+        return points.get(aa).lowPoint;
+    }
+
+    public MEdge getRodAt(Altitude aa)
+    {
+        return points.get(aa).rod;
+    }
+
+    public boolean hasSectionAt(Altitude altitude) {
+        return points.containsKey(altitude);
+    }
+
+    private class Section {
+        public Section(MEdge rod, MPoint lowPoint) {
+            this.rod = rod;
+            this.lowPoint = lowPoint;
+        }
+
+        MEdge rod; // upward rod, null at upper point
+        MPoint lowPoint;
+    }
     private double planarX;
     private double planarY;
-    private int lowAltitude;
-    private int highAltitude;
+    private int lowAltitude;  // TODO smazat
+    private int highAltitude; // TODO smazat
     private MEdge rod;
     private boolean isExtruded;
+
+    private Altitude minAltitude = Altitude.MAX;
+    private Altitude maxAltitude = Altitude.MIN;
+
+    ;
+    private EnumMap<Altitude, Section> points = new EnumMap<Altitude, Section>(Altitude.class);
 
 }

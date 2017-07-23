@@ -2,7 +2,6 @@ package com.github.sladecek.maze.jmaze.print3d.maze3dmodel;
 
 import com.github.sladecek.maze.jmaze.geometry.Point2D;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.*;
-import com.github.sladecek.maze.jmaze.print3d.maze3dmodel.*;
 import com.github.sladecek.maze.jmaze.shapes.*;
 
 import java.util.*;
@@ -88,16 +87,16 @@ public class ModelFromShapesTestBase {
 
         double[] points = new double[8];
         assertEquals(altitude, w.getAltitude().getValue());
-        ProjectedPoint pr11 = ((ProjectedPoint) w.getE1().getP1());
+        TelescopicPoint pr11 = ((TelescopicPoint) w.getE1().getP1());
         points[0] = pr11.getPlanarX();
         points[1] = pr11.getPlanarY();
-        ProjectedPoint pr12 = ((ProjectedPoint) w.getE1().getP2());
+        TelescopicPoint pr12 = ((TelescopicPoint) w.getE1().getP2());
         points[2] = pr12.getPlanarX();
         points[3] = pr12.getPlanarY();
-        ProjectedPoint pr31 = ((ProjectedPoint) w.getE3().getP1());
+        TelescopicPoint pr31 = ((TelescopicPoint) w.getE3().getP1());
         points[4] = pr31.getPlanarX();
         points[5] = pr31.getPlanarY();
-        ProjectedPoint pr32 = ((ProjectedPoint) w.getE3().getP2());
+        TelescopicPoint pr32 = ((TelescopicPoint) w.getE3().getP2());
         points[6] = pr32.getPlanarX();
         points[7] = pr32.getPlanarY();
         // printPointArray(points);
@@ -146,7 +145,7 @@ public class ModelFromShapesTestBase {
         assertEquals(altitude, p.getAltitude().getValue());
         assertEquals(expectedIntersections.length, p.getIntersections().size());
         for (int i = 0; i < expectedIntersections.length; i++) {
-            final ProjectedPoint intersect = (ProjectedPoint) p.getIntersections().get(i);
+            final TelescopicPoint intersect = (TelescopicPoint) p.getIntersections().get(i);
             assertEquals(expectedIntersections[i][0], intersect.getPlanarX(), epsilon);
             assertEquals(expectedIntersections[i][1], intersect.getPlanarY(), epsilon);
         }

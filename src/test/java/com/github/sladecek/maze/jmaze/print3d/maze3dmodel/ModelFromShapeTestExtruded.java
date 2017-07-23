@@ -75,8 +75,8 @@ public class ModelFromShapeTestExtruded extends ModelFromShapesTestBase {
                 FloorFace f = (FloorFace) mFace;
                 Altitude alt = f.getAltitude();
                 for (MEdge e : f.getEdges()) {
-                    if (e.getP1() instanceof ProjectedPoint) {
-                        ProjectedPoint p = (ProjectedPoint) e.getP1();
+                    if (e.getP1() instanceof TelescopicPoint) {
+                        TelescopicPoint p = (TelescopicPoint) e.getP1();
 
                         assert (p.areAltitudesDefined());
                         assert (p.getHighAltitude() >= p.getLowAltitude());

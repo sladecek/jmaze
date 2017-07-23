@@ -4,8 +4,9 @@ import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MEdge;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MFace;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MPoint;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.Model3d;
+import com.github.sladecek.maze.jmaze.print3d.maze3dmodel.Altitude;
 import com.github.sladecek.maze.jmaze.print3d.maze3dmodel.FloorFace;
-import com.github.sladecek.maze.jmaze.print3d.maze3dmodel.ProjectedPoint;
+import com.github.sladecek.maze.jmaze.print3d.maze3dmodel.TelescopicPoint;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,30 +15,107 @@ import java.util.List;
  * Creates vertical surfaces by extruding floor faces to proper altitude.
  */
 public class VerticalFaceMaker {
-    public VerticalFaceMaker(Model3d m) {
+    public VerticalFaceMaker(Model3d m, IMaze3DMapper mapper) {
         this.m = m;
+        this.mapper = mapper;
         newEdges = new ArrayList<>();
-    }
+        newPoints = new ArrayList<>();
 
-    public void makeVerticalShapes() {
+    }
+    
+    /**
+     * Set maximal/minimal altitudes of a TelescopicPoint.
+     */
+    public void stretchTelescopicPoints() {
         for (MEdge e : m.getEdges()) {
-            processEdge(e);
+            stretchOneEdge(e);
         }
     }
 
-    public void addNewEdgesBackToModel() {
+    /**
+     * Make vertical edges including newly created points.
+     */
+    public void makeVerticalEdges() {
+        for (MPoint p: m.getPoints()) {
+            assert p instanceof TelescopicPoint;
+            TelescopicPoint tp = (TelescopicPoint)p;
+            makeVerticalEdgesOnePoint(tp);
+        }
+        
+        
+    }
+
+    private void makeVerticalEdgesOnePoint(TelescopicPoint tp) {
+
+        // Max altitude defines the z coordinate of the TelescopicPoint itself.
+        tp.setOwnAltitude(mapper);
+
+        MPoint upperPoint = tp;
+        Altitude upperAlt = tp.getMaxAltitude();
+        tp.addSection(upperAlt, tp, null);
+
+        // loop over all altitudes of the point
+        while (upperAlt.hasPrev() && upperAlt.prev().getValue() >= tp.getMinAltitude().getValue()) {
+            Altitude aa = upperAlt.prev();
+            MPoint p = new MPoint(tp.mapPoint(mapper, aa));
+            MEdge rod = new MEdge(upperPoint, p);
+            newPoints.add(p);
+            newEdges.add(rod);
+            tp.addSection(aa, p, rod);
+
+            upperAlt = aa;
+        }
+    }
+
+    public void makeVerticalEdgesAndFacesShapes() {
+        for (MEdge e : m.getEdges()) {
+            makeVerticalEdgesAndFacesOneEdge(e);
+        }
+    }
+
+
+    public void addNewObjectsBackToModel() {
         m.addEdges(newEdges);
+        m.addPoints(newPoints);
+    }
+
+
+
+    /**
+     * Set maximal/minimal altitudes of TelescopicPoint. This method exists for internal usage
+     * by unit testx.
+     *
+     * @param e
+     */
+    public void stretchOneEdge(MEdge e) {
+        // edge endpoints
+        TelescopicPoint fp1 = (TelescopicPoint) e.getP1();
+        TelescopicPoint fp2 = (TelescopicPoint) e.getP2();
+
+        // each edge separates two faces
+        FloorFace leftFace = (FloorFace) e.getRightFace();
+        FloorFace rightFace = (FloorFace) e.getLeftFace();
+
+        Altitude a1 = leftFace.getAltitude();
+        Altitude a2 = rightFace.getAltitude();
+
+        fp1.stretchAltitude(a1);
+        fp1.stretchAltitude(a2);
+        fp2.stretchAltitude(a1);
+        fp2.stretchAltitude(a2);
+
     }
 
     /**
      * Make vertical shapes induced by one edge. This method exists for internal usage
      * by unit testx.
+     *
      * @param e
      */
-    void processEdge(MEdge e) {
+    void makeVerticalEdgesAndFacesOneEdge(MEdge e) {
         // edge endpoints
-        ProjectedPoint fp1 = (ProjectedPoint) e.getP1();
-        ProjectedPoint fp2 = (ProjectedPoint) e.getP2();
+        TelescopicPoint fp1 = (TelescopicPoint) e.getP1();
+        TelescopicPoint fp2 = (TelescopicPoint) e.getP2();
 
         // each edge separates two faces
         FloorFace leftFace = (FloorFace) e.getRightFace();
@@ -47,41 +125,53 @@ public class VerticalFaceMaker {
         int a1 = leftFace.getAltitude().getValue();
         int a2 = rightFace.getAltitude().getValue();
 
+
         // if the altitude is the same in both faces, we are done
 
         // if the faces are on different altitudes, it is necessary to
-        // add vertical face on the low altitude
+        // connect them with vertical faces and connecting edges
         if (a1 != a2) {
-            MPoint fp1low = fp1.getLowAltitudePoint();
-            MPoint fp2low = fp2.getLowAltitudePoint();
+            Altitude upperAltitude = leftFace.getAltitude();
+            Altitude lowerAltitude = rightFace.getAltitude();
+            MFace lowFace = rightFace;
 
-            // new horizontal edge
-            MEdge lowEdge = new MEdge(fp1low, fp2low);
-            MFace lowFace = leftFace;
-            if (a1 > a2) {
-                lowFace = rightFace;
+            if (a1 < a2) {
+                upperAltitude = rightFace.getAltitude();
+                lowerAltitude = leftFace.getAltitude();
+                lowFace = leftFace;
             }
-            lowFace.replaceEdge(e, lowEdge);
 
-            // add new edge to the model
-            newEdges.add(lowEdge);
 
-            // add the new points to the model
-            m.addPoint(fp1low);
-            m.addPoint(fp2low);
+            MEdge upperEdge = e;
 
-            // create new vertical face
-            MFace vf = new MFace();
-            vf.addEdge(e);
-            vf.addEdge(fp1.getRod());
-            vf.addEdge(fp2.getRod());
-            vf.addEdge(lowEdge);
-            m.addFace(vf);
+
+            // loop over all altitudes between two faces
+            while (upperAltitude.hasPrev() && upperAltitude.prev().getValue() >= lowerAltitude.getValue()) {
+                Altitude aa = upperAltitude.prev();
+                MEdge newEdge = new MEdge(fp1.getPointAt(aa), fp2.getPointAt(aa));
+                newEdges.add(newEdge);
+
+                MFace newFace = new MFace();
+                newFace.addEdge(upperEdge);
+                newFace.addEdge(fp1.getRodAt(aa));
+                newFace.addEdge(newEdge);
+                newFace.addEdge(fp2.getRodAt(aa));
+                m.addFace(newFace);
+
+                upperAltitude = aa;
+                upperEdge = newEdge;
+            }
+
+            lowFace.replaceEdge(e, upperEdge);
 
         }
     }
 
+
+    private final IMaze3DMapper mapper;
+
     private Model3d m;
 
     private List<MEdge> newEdges;
+    private List<MPoint> newPoints;
 }

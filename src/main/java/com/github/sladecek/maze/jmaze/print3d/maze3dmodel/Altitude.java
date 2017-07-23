@@ -13,9 +13,21 @@ public enum Altitude {
         return value;
     }
 
+    public boolean hasPrev() {
+        return this != MIN;
+    }
+
+    public Altitude prev() {
+        return values()[ordinal()-1];
+    }
+
+
     private int value;
 
     Altitude(int value) {
         this.value = value;
     }
+
+    public static Altitude MIN=FRAME;
+    public static Altitude MAX=CEILING;
 }

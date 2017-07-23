@@ -7,9 +7,9 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- * Test class for ProjectedPoint.
+ * Test class for TelescopicPoint.
  */
-public class ProjectedPointTest {
+public class TelescopicPointTest {
 
     private IMaze3DMapper fakeMapper = new IMaze3DMapper() {
         @Override
@@ -26,7 +26,7 @@ public class ProjectedPointTest {
 
     @Test
     public void setUnequalAltitudes() throws Exception {
-        ProjectedPoint pp = new ProjectedPoint(1,2);
+        TelescopicPoint pp = new TelescopicPoint(1,2);
         assertEquals(false, pp.areAltitudesDefined());
 
         pp.setAltitudesUsingMapper(fakeMapper, 10, 20);
@@ -59,7 +59,7 @@ public class ProjectedPointTest {
 
     @Test
     public void setEqualAltitudes() throws Exception {
-        ProjectedPoint pp = new ProjectedPoint(1,2);
+        TelescopicPoint pp = new TelescopicPoint(1,2);
         assertEquals(false, pp.areAltitudesDefined());
 
         pp.setAltitudesUsingMapper(fakeMapper, 10, 10);
@@ -89,7 +89,7 @@ public class ProjectedPointTest {
 
 //    @Test
     public void setAltitudesRepeat() throws Exception {
-        ProjectedPoint pp = new ProjectedPoint(1,2);
+        TelescopicPoint pp = new TelescopicPoint(1,2);
         assertEquals(false, pp.areAltitudesDefined());
 
         pp.setAltitudesUsingMapper(fakeMapper, 10, 10);
@@ -105,7 +105,7 @@ public class ProjectedPointTest {
 
     @Test
     public void setAltitudesReverse() throws Exception {
-        ProjectedPoint pp = new ProjectedPoint(1,2);
+        TelescopicPoint pp = new TelescopicPoint(1,2);
         assertEquals(false, pp.areAltitudesDefined());
 
         try {

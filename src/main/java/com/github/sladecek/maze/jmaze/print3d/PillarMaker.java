@@ -72,7 +72,7 @@ public class PillarMaker {
         for (int i = 0; i < size; i++) {
             int j = (i + 1) % size;
             Point3D in = computeIntersection(walls.get(i).getNonPillarPoint(), walls.get(j).getNonPillarPoint());
-            intersections.add(new ProjectedPoint(in.getX(), in.getY()));
+            intersections.add(new TelescopicPoint(in.getX(), in.getY()));
         }
 
         for (int iTo = 0; iTo < size; iTo++) {

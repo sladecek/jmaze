@@ -28,9 +28,9 @@ public class ModelFromShapes {
     static public Model3d make(ShapeContainer shapes, IMaze3DMapper mapper, Maze3DSizes sizes, IPrintStyle style) {
         ModelFromShapes mfs = new ModelFromShapes(shapes, mapper, sizes, style);
         mfs.makePlanarProjection();
-        LOG.info("BEFORE"+mfs.m.toString()); // TODO smazat
+        LOG.info("BEFORE" + mfs.m.toString()); // TODO smazat
         mfs.extrudeTo3D();
-        LOG.info("AFTER"+mfs.m.toString());  // TODO smazat
+        LOG.info("AFTER" + mfs.m.toString());  // TODO smazat
         return mfs.m;
     }
 
@@ -49,15 +49,26 @@ public class ModelFromShapes {
     }
 
     private void extrudeTo3D() {
+        if (false) {
+            // compute and set altitudes
+            computeAltitudes();
 
-        // compute and set altitudes
-        computeAltitudes();
+            // extrude blocks first - the model will be modified by adding vertical faces
+            createBlocks();
 
-        // extrude blocks first - the model will be modified by addVerticalFacesOnEdgesWithAltitudeDifference()
-        createBlocks();
+            // add vertical faces
+            addVerticalFacesOnEdgesWithAltitudeDifference();
+        } else {
 
-        // add vertical faces
-        addVerticalFacesOnEdgesWithAltitudeDifference();
+            createBlocks();
+
+            VerticalFaceMaker maker = new VerticalFaceMaker(m, mapper);
+            maker.stretchTelescopicPoints();
+            maker.makeVerticalEdges();
+            maker.makeVerticalEdgesAndFacesShapes();
+            maker.addNewObjectsBackToModel();
+        }
+
     }
 
     private void makeRooms() {
@@ -165,8 +176,8 @@ public class ModelFromShapes {
         // visit all edges
         for (MEdge e : m.getEdges()) {
             // edge endpoints
-            ProjectedPoint fp1 = (ProjectedPoint) e.getP1();
-            ProjectedPoint fp2 = (ProjectedPoint) e.getP2();
+            TelescopicPoint fp1 = (TelescopicPoint) e.getP1();
+            TelescopicPoint fp2 = (TelescopicPoint) e.getP2();
 
             // each edge separates two faces
             FloorFace leftFace = (FloorFace) e.getRightFace();
@@ -195,8 +206,8 @@ public class ModelFromShapes {
         // visit all edges
         for (MEdge e : m.getEdges()) {
             // edge endpoints
-            ProjectedPoint fp1 = (ProjectedPoint) e.getP1();
-            ProjectedPoint fp2 = (ProjectedPoint) e.getP2();
+            TelescopicPoint fp1 = (TelescopicPoint) e.getP1();
+            TelescopicPoint fp2 = (TelescopicPoint) e.getP2();
 
             // each edge separates two faces
             FloorFace leftFace = (FloorFace) e.getRightFace();
@@ -245,30 +256,23 @@ public class ModelFromShapes {
 
     private void createBlocks() {
         for (MFace f : m.getFaces()) {
-            //TODOif (!(f instanceof MRoom)) continue;
+            assert f instanceof FloorFace;
             int alt = ((FloorFace) f).getAltitude().getValue();
-           // TODO if (alt < 0)
-            {
-                MBlock block = new MBlock();
-                for (MPoint p: f.visitPointsAroundEdges()) {
-/* TODO smazat                 for (MEdge e : f.getEdges()) {
-                    // Take  the first point of each edge.
-                    ProjectedPoint p = (ProjectedPoint) e.getP1();
-                    */
-                    assert p instanceof ProjectedPoint;
-                    ProjectedPoint pp = (ProjectedPoint)p;
-                    Point3D pGround = pp.mapPoint(mapper, Altitude.GROUND.getValue());
-                    Point3D pCeiling = pp.mapPoint(mapper, alt);
+            MBlock block = new MBlock();
+            for (MPoint p : f.visitPointsAroundEdges()) {
+                assert p instanceof TelescopicPoint;
+                TelescopicPoint pp = (TelescopicPoint) p;
+                Point3D pGround = pp.mapPoint(mapper, Altitude.GROUND.getValue());
+                Point3D pCeiling = pp.mapPoint(mapper, alt);
 
-                    block.addCeilingPoint(pCeiling);
-                    block.addGroundPoint(pGround);
-                }
-                m.addBlock(block);
+                block.addCeilingPoint(pCeiling);
+                block.addGroundPoint(pGround);
             }
+            m.addBlock(block);
         }
     }
 
-
+    private static final Logger LOG = Logger.getLogger("maze.jmaze");
     private ShapeContainer shapes;
     private Maze3DSizes sizes;
     private IPrintStyle style;
@@ -278,7 +282,5 @@ public class ModelFromShapes {
     private ArrayList<MWall> walls = new ArrayList<>();
     private ArrayList<MPillar> pillars = new ArrayList<>();
     private TreeMap<Integer, MRoom> rooms = new TreeMap<>();
-
-    private static final Logger LOG = Logger.getLogger("maze.jmaze");
 
 }

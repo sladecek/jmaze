@@ -68,10 +68,10 @@ public class MWall extends FloorFace {
     }
 
     public double getKeyForSortingInTests() {
-        ProjectedPoint pr11 = ((ProjectedPoint) getE1().getP1());
-        ProjectedPoint pr12 = ((ProjectedPoint) getE1().getP2());
-        ProjectedPoint pr31 = ((ProjectedPoint) getE3().getP1());
-        ProjectedPoint pr32 = ((ProjectedPoint) getE3().getP2());
+        TelescopicPoint pr11 = ((TelescopicPoint) getE1().getP1());
+        TelescopicPoint pr12 = ((TelescopicPoint) getE1().getP2());
+        TelescopicPoint pr31 = ((TelescopicPoint) getE3().getP1());
+        TelescopicPoint pr32 = ((TelescopicPoint) getE3().getP2());
         double x = pr11.getPlanarX() + pr12.getPlanarX() + pr31.getPlanarX() + pr32.getPlanarX();
         double y = pr11.getPlanarY() + pr12.getPlanarY() + pr31.getPlanarY() + pr32.getPlanarY();
         return 1000 * y + x;
