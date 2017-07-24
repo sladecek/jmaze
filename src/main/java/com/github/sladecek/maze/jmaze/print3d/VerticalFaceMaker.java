@@ -118,53 +118,56 @@ public class VerticalFaceMaker {
         TelescopicPoint fp2 = (TelescopicPoint) e.getP2();
 
         // each edge separates two faces
-        FloorFace leftFace = (FloorFace) e.getRightFace();
-        FloorFace rightFace = (FloorFace) e.getLeftFace();
+        FloorFace rightFace = (FloorFace) e.getRightFace();
+        FloorFace leftFace = (FloorFace) e.getLeftFace();
 
         // compare altitude of the faces along the edge
-        int a1 = leftFace.getAltitude().getValue();
-        int a2 = rightFace.getAltitude().getValue();
+        int a1 = rightFace.getAltitude().getValue();
+        int a2 = leftFace.getAltitude().getValue();
 
+        Altitude upperAltitude = rightFace.getAltitude();
+        Altitude lowerAltitude = leftFace.getAltitude();
+        MFace lowFace = leftFace;
 
-        // if the altitude is the same in both faces, we are done
+        if (a1 < a2) {
+            upperAltitude = leftFace.getAltitude();
+            lowerAltitude = rightFace.getAltitude();
+            lowFace = rightFace;
+        }
 
         // if the faces are on different altitudes, it is necessary to
         // connect them with vertical faces and connecting edges
         if (a1 != a2) {
-            Altitude upperAltitude = leftFace.getAltitude();
-            Altitude lowerAltitude = rightFace.getAltitude();
-            MFace lowFace = rightFace;
-
-            if (a1 < a2) {
-                upperAltitude = rightFace.getAltitude();
-                lowerAltitude = leftFace.getAltitude();
-                lowFace = leftFace;
-            }
-
-
-            MEdge upperEdge = e;
-
-
-            // loop over all altitudes between two faces
-            while (upperAltitude.hasPrev() && upperAltitude.prev().getValue() >= lowerAltitude.getValue()) {
-                Altitude aa = upperAltitude.prev();
-                MEdge newEdge = new MEdge(fp1.getPointAt(aa), fp2.getPointAt(aa));
-                newEdges.add(newEdge);
-
-                MFace newFace = new MFace();
-                newFace.addEdge(upperEdge);
-                newFace.addEdge(fp1.getRodAt(aa));
-                newFace.addEdge(newEdge);
-                newFace.addEdge(fp2.getRodAt(aa));
-                m.addFace(newFace);
-
-                upperAltitude = aa;
-                upperEdge = newEdge;
-            }
-
-            lowFace.replaceEdge(e, upperEdge);
-
+            fixUnevenAltitudes(e, fp1, fp2, upperAltitude, lowerAltitude, lowFace);
         }
+
+        // replace endpoints of the upper edge so that they are both at the proper level
+        e.setP1(fp1.getPointAt(upperAltitude));
+        e.setP2(fp2.getPointAt(upperAltitude));
+    }
+
+    private void fixUnevenAltitudes(MEdge e, TelescopicPoint fp1, TelescopicPoint fp2, Altitude upperAltitude, Altitude lowerAltitude, MFace lowFace) {
+        MEdge upperEdge = e;
+
+        // loop over all altitudes between two faces
+        Altitude alt = upperAltitude;
+        while (alt.hasPrev() && alt.prev().getValue() >= lowerAltitude.getValue()) {
+            Altitude oneBelow = alt.prev();
+            MEdge newEdge = new MEdge(fp1.getPointAt(oneBelow), fp2.getPointAt(oneBelow));
+            newEdges.add(newEdge);
+
+            MFace newFace = new MFace();
+            newFace.addEdge(upperEdge);
+            newFace.addEdge(fp1.getRodAt(oneBelow));
+            newFace.addEdge(newEdge);
+            newFace.addEdge(fp2.getRodAt(oneBelow));
+            m.addFace(newFace);
+
+            alt = oneBelow;
+            upperEdge = newEdge;
+        }
+
+        lowFace.replaceEdge(e, upperEdge);
     }
 
 

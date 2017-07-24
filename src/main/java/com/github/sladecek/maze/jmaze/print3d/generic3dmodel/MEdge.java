@@ -66,9 +66,16 @@ public class MEdge {
                 '}';
     }
 
+    public void setP1(MPoint value) {
+        this.p1 = value;
+    }
 
-    private final MPoint p1;
-    private final MPoint p2;
+    public void setP2(MPoint value) {
+        this.p2 = value;
+    }
+
+    MPoint p1;
+    MPoint p2;
     private MFace rightFace;
     private MFace leftFace;
 }

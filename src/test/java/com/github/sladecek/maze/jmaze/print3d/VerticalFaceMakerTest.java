@@ -137,14 +137,22 @@ public class VerticalFaceMakerTest {
         assertEquals(4 + 2, model.getFaces().size());
 
         System.out.println(model);
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        StlMazePrinter printer = new StlMazePrinter();
-        printer.printModel(model, stream);
-        stream.close();
-        String s = stream.toString();
 
+        assertEquals(2, pCenter.getCoord().getZ(), epsilon);
+        assertEquals(2, pNorth.getCoord().getZ(), epsilon);
+        assertEquals(2, pWest.getCoord().getZ(), epsilon);
+        assertEquals(1, pEast.getCoord().getZ(), epsilon);
+        assertEquals(1, pSouth.getCoord().getZ(), epsilon);
 
+        assertEquals(1, eCE.getP1().getCoord().getZ(), epsilon);
+        assertEquals(1, eCE.getP2().getCoord().getZ(), epsilon);
+        assertEquals(1, eCS.getP1().getCoord().getZ(), epsilon);
+        assertEquals(1, eCS.getP2().getCoord().getZ(), epsilon);
 
+        assertEquals(2, eCN.getP1().getCoord().getZ(), epsilon);
+        assertEquals(2, eCN.getP2().getCoord().getZ(), epsilon);
+        assertEquals(2, eCW.getP1().getCoord().getZ(), epsilon);
+        assertEquals(2, eCW.getP2().getCoord().getZ(), epsilon);
     }
 
 
