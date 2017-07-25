@@ -50,6 +50,7 @@ public class ModelFromShapes {
 
     private void extrudeTo3D() {
         if (false) {
+            // TODO smazat
             // compute and set altitudes
             computeAltitudes();
 
@@ -65,7 +66,7 @@ public class ModelFromShapes {
             VerticalFaceMaker maker = new VerticalFaceMaker(m, mapper);
             maker.stretchTelescopicPoints();
             maker.makeVerticalEdges();
-            maker.makeVerticalEdgesAndFacesShapes();
+            maker.makeVerticalFaces();
             maker.addNewObjectsBackToModel();
         }
 

@@ -22,7 +22,7 @@ public class VerticalFaceMaker {
         newPoints = new ArrayList<>();
 
     }
-    
+
     /**
      * Set maximal/minimal altitudes of a TelescopicPoint.
      */
@@ -36,16 +36,19 @@ public class VerticalFaceMaker {
      * Make vertical edges including newly created points.
      */
     public void makeVerticalEdges() {
-        for (MPoint p: m.getPoints()) {
+        for (MPoint p : m.getPoints()) {
             assert p instanceof TelescopicPoint;
-            TelescopicPoint tp = (TelescopicPoint)p;
+            TelescopicPoint tp = (TelescopicPoint) p;
             makeVerticalEdgesOnePoint(tp);
         }
-        
-        
+
+
     }
 
     private void makeVerticalEdgesOnePoint(TelescopicPoint tp) {
+        if (tp.getPlanarX() == 60  && tp.getPlanarY() == 9.8 ) {
+            System.out.println("***");
+        }
 
         // Max altitude defines the z coordinate of the TelescopicPoint itself.
         tp.setOwnAltitude(mapper);
@@ -64,12 +67,13 @@ public class VerticalFaceMaker {
             tp.addSection(aa, p, rod);
 
             upperAlt = aa;
+            upperPoint = p;
         }
     }
 
-    public void makeVerticalEdgesAndFacesShapes() {
+    public void makeVerticalFaces() {
         for (MEdge e : m.getEdges()) {
-            makeVerticalEdgesAndFacesOneEdge(e);
+            makeVerticalFacesOneEdge(e);
         }
     }
 
@@ -78,7 +82,6 @@ public class VerticalFaceMaker {
         m.addEdges(newEdges);
         m.addPoints(newPoints);
     }
-
 
 
     /**
@@ -107,12 +110,14 @@ public class VerticalFaceMaker {
     }
 
     /**
-     * Make vertical shapes induced by one edge. This method exists for internal usage
+     * Make vertical shapes induced by one edge. This method is public due to internal usage
      * by unit testx.
      *
      * @param e
      */
-    void makeVerticalEdgesAndFacesOneEdge(MEdge e) {
+    void makeVerticalFacesOneEdge(MEdge e) {
+
+
         // edge endpoints
         TelescopicPoint fp1 = (TelescopicPoint) e.getP1();
         TelescopicPoint fp2 = (TelescopicPoint) e.getP2();

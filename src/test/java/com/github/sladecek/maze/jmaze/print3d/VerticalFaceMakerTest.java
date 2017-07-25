@@ -5,11 +5,8 @@ import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.Model3d;
 import com.github.sladecek.maze.jmaze.print3d.maze3dmodel.Altitude;
 import com.github.sladecek.maze.jmaze.print3d.maze3dmodel.FloorFace;
 import com.github.sladecek.maze.jmaze.print3d.maze3dmodel.TelescopicPoint;
-import com.github.sladecek.maze.jmaze.print3d.output.StlMazePrinter;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.io.ByteArrayOutputStream;
 
 import static junit.framework.TestCase.assertFalse;
 import static junit.framework.TestCase.assertNull;
@@ -49,7 +46,7 @@ public class VerticalFaceMakerTest {
         MEdge[] myEdges = {eCE, eCN, eCS, eCW};
         for (MEdge e : myEdges) maker.stretchOneEdge(e);
         maker.makeVerticalEdges();
-        for (MEdge e : myEdges) maker.makeVerticalEdgesAndFacesOneEdge(e);
+        for (MEdge e : myEdges) maker.makeVerticalFacesOneEdge(e);
         maker.addNewObjectsBackToModel();
 
         // no change in element count
@@ -129,7 +126,7 @@ public class VerticalFaceMakerTest {
         assertEquals(pWest.getPointAt(Altitude.FLOOR), pWest.getRodAt(Altitude.FLOOR).getP2());
 
 
-        for (MEdge e : myEdges) maker.makeVerticalEdgesAndFacesOneEdge(e);
+        for (MEdge e : myEdges) maker.makeVerticalFacesOneEdge(e);
         maker.addNewObjectsBackToModel();
 
         assertEquals(5 + 3, model.getPoints().size());
@@ -156,7 +153,117 @@ public class VerticalFaceMakerTest {
     }
 
 
-    private void prepareModel(Altitude anw, Altitude asw, Altitude ase, Altitude ane) {
+    @Test
+    public void allLevels() throws Exception {
+
+        prepareModel(Altitude.CEILING, Altitude.GROUND, Altitude.FLOOR, Altitude.FRAME);
+
+        System.out.println(model);
+
+        maker = new VerticalFaceMaker(model, mapper);
+        // process the central edges only to insulate tested algorithm. Otherwise the frame
+        // edges would be extruded to.
+        // process the central edges only, to insulate tested algorithm. Otherwise the frame
+        // edges would be extruded too.
+        MEdge[] myEdges = {eCE, eCN, eCS, eCW};
+        for (MEdge e : myEdges) maker.stretchOneEdge(e);
+
+        assertEquals(Altitude.CEILING, pCenter.getMaxAltitude());
+        assertEquals(Altitude.CEILING, pNorth.getMaxAltitude());
+        assertEquals(Altitude.FLOOR, pEast.getMaxAltitude());
+        assertEquals(Altitude.FLOOR, pSouth.getMaxAltitude());
+        assertEquals(Altitude.CEILING, pWest.getMaxAltitude());
+
+        assertEquals(Altitude.FRAME, pCenter.getMinAltitude());
+        assertEquals(Altitude.GROUND, pNorth.getMinAltitude());
+        assertEquals(Altitude.GROUND, pEast.getMinAltitude());
+        assertEquals(Altitude.FRAME, pSouth.getMinAltitude());
+        assertEquals(Altitude.FRAME, pWest.getMinAltitude());
+
+        maker.makeVerticalEdges();
+
+        final double epsilon = 1e-8;
+        assertEquals(2, pCenter.getCoord().getZ(), epsilon);
+        assertEquals(2, pNorth.getCoord().getZ(), epsilon);
+        assertEquals(1, pEast.getCoord().getZ(), epsilon);
+        assertEquals(1, pSouth.getCoord().getZ(), epsilon);
+        assertEquals(2, pWest.getCoord().getZ(), epsilon);
+
+        assertTrue(pCenter.hasSectionAt(Altitude.CEILING));
+        assertTrue(pCenter.hasSectionAt(Altitude.FLOOR));
+        assertTrue(pCenter.hasSectionAt(Altitude.GROUND));
+        assertTrue(pCenter.hasSectionAt(Altitude.FRAME));
+
+        assertTrue(pNorth.hasSectionAt(Altitude.CEILING));
+        assertTrue(pNorth.hasSectionAt(Altitude.FLOOR));
+        assertTrue(pNorth.hasSectionAt(Altitude.GROUND));
+        assertFalse(pNorth.hasSectionAt(Altitude.FRAME));
+
+        assertFalse(pEast.hasSectionAt(Altitude.CEILING));
+        assertTrue(pEast.hasSectionAt(Altitude.FLOOR));
+        assertTrue(pEast.hasSectionAt(Altitude.GROUND));
+        assertFalse(pEast.hasSectionAt(Altitude.FRAME));
+
+        assertFalse(pSouth.hasSectionAt(Altitude.CEILING));
+        assertTrue(pSouth.hasSectionAt(Altitude.FLOOR));
+        assertTrue(pSouth.hasSectionAt(Altitude.GROUND));
+        assertTrue(pSouth.hasSectionAt(Altitude.FRAME));
+
+        assertTrue(pWest.hasSectionAt(Altitude.CEILING));
+        assertTrue(pWest.hasSectionAt(Altitude.FLOOR));
+        assertTrue(pWest.hasSectionAt(Altitude.GROUND));
+        assertTrue(pWest.hasSectionAt(Altitude.FRAME));
+
+        assertNotNull(pCenter.getPointAt(Altitude.CEILING));
+        assertNotNull(pCenter.getPointAt(Altitude.FLOOR));
+        assertNotNull(pCenter.getPointAt(Altitude.GROUND));
+        assertNotNull(pCenter.getPointAt(Altitude.FRAME));
+        assertNull(pCenter.getRodAt(Altitude.CEILING));
+        assertNotNull(pCenter.getRodAt(Altitude.FLOOR));
+        assertNotNull(pCenter.getRodAt(Altitude.GROUND));
+        assertNotNull(pCenter.getRodAt(Altitude.FRAME));
+
+        assertEquals(pCenter, pCenter.getPointAt(Altitude.CEILING));
+        assertEquals(pCenter, pCenter.getRodAt(Altitude.FLOOR).getP1());
+        assertEquals(pCenter.getPointAt(Altitude.FLOOR), pCenter.getRodAt(Altitude.FLOOR).getP2());
+        assertEquals(pCenter, pCenter.getRodAt(Altitude.GROUND).getP1());
+        assertEquals(pCenter.getPointAt(Altitude.GROUND), pCenter.getRodAt(Altitude.GROUND).getP2());
+        assertEquals(pCenter, pCenter.getRodAt(Altitude.FLOOR).getP1());
+        assertEquals(pCenter.getPointAt(Altitude.FLOOR), pCenter.getRodAt(Altitude.FLOOR).getP2());
+
+
+        for (MEdge e : myEdges) maker.makeVerticalFacesOneEdge(e);
+        maker.addNewObjectsBackToModel();
+
+        assertEquals(5 + 3 + 3 + 2 + 1 + 2, model.getPoints().size());
+        assertEquals(8 + (3 + 3 + 2 + 1 + 2) + (3 + 2 + 1 + 2), model.getEdges().size());
+        assertEquals(4 + (3+2+1+2), model.getFaces().size());
+
+        System.out.println(model);
+
+        assertEquals(2, pCenter.getCoord().getZ(), epsilon);
+        assertEquals(2, pNorth.getCoord().getZ(), epsilon);
+        assertEquals(2, pWest.getCoord().getZ(), epsilon);
+        assertEquals(1, pEast.getCoord().getZ(), epsilon);
+        assertEquals(1, pSouth.getCoord().getZ(), epsilon);
+
+        assertEquals(1, eCE.getP1().getCoord().getZ(), epsilon);
+        assertEquals(1, eCE.getP2().getCoord().getZ(), epsilon);
+        assertEquals(1, eCS.getP1().getCoord().getZ(), epsilon);
+        assertEquals(1, eCS.getP2().getCoord().getZ(), epsilon);
+
+        assertEquals(2, eCN.getP1().getCoord().getZ(), epsilon);
+        assertEquals(2, eCN.getP2().getCoord().getZ(), epsilon);
+        assertEquals(2, eCW.getP1().getCoord().getZ(), epsilon);
+        assertEquals(2, eCW.getP2().getCoord().getZ(), epsilon);
+
+//        for(MEdge e: model.getEdges()) {
+//            testSkewEdge(e);
+//        }
+
+    }
+
+    private void prepareModel(Altitude anw, Altitude ane, Altitude ase, Altitude asw) {
         model = new Model3d();
         model.addPoint(pCenter);
         model.addPoint(pEast);
@@ -225,6 +332,16 @@ public class VerticalFaceMakerTest {
         eCE.setRightFace(fNE);
 
     }
+
+    void testSkewEdge(MEdge e) {
+        double dz = Math.abs(e.getP1().getCoord().getZ() - e.getP2().getCoord().getZ());
+        double dx = Math.abs(e.getP1().getCoord().getX() - e.getP2().getCoord().getX());
+        double dy = Math.abs(e.getP1().getCoord().getY() - e.getP2().getCoord().getY());
+        double dxy = Math.sqrt((dx*dx+dy*dy));
+        final double epsilon = 1e-6;
+        assertTrue(dz < epsilon || dxy < epsilon);
+    }
+
 
     IMaze3DMapper mapper = new PlanarMapper();
     Model3d model;

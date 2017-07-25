@@ -67,7 +67,7 @@ public class ModelFromShapeTestExtruded extends ModelFromShapesTestBase {
                 .filter((b) -> b.getGroundPoints().size() == vertexCount)
                 .count();
     }
-
+/* TODO smazat
     @Test
     public void testPointAltitudes() {
         for (MFace mFace : model3d.getFaces()) {
@@ -86,7 +86,7 @@ public class ModelFromShapeTestExtruded extends ModelFromShapesTestBase {
             }
         }
     }
-
+*/
     @Test
     public void testBlockAltitudes() {
         printBlocks();
@@ -122,7 +122,7 @@ public class ModelFromShapeTestExtruded extends ModelFromShapesTestBase {
         printer.printModel(model3d, stream);
         stream.close();
         String s = stream.toString();
-        assertEquals(4507, s.length());
+        assertEquals(4503, s.length());
     }
 
 
@@ -133,7 +133,7 @@ public class ModelFromShapeTestExtruded extends ModelFromShapesTestBase {
         printer.printModel(model3d, stream);
         stream.close();
         String s = stream.toString();
-        assertEquals(8073, s.length());
+        assertEquals(11757, s.length());
     }
 
 }

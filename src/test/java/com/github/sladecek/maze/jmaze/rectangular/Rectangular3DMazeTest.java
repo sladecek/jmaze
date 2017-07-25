@@ -33,9 +33,7 @@ public class Rectangular3DMazeTest {
     @Before
     public void setUp() throws Exception {
 
-
         maze = new Rectangular2DMaze(2, 2);
-
 
         final Random randomGenerator = new Random();
         randomGenerator.setSeed(0);
@@ -53,18 +51,10 @@ public class Rectangular3DMazeTest {
 
         mapper = new PlanarMapper();
         model = ModelFromShapes.make(shapes, mapper, sizes, colors);
-
-
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        StlMazePrinter printer = new StlMazePrinter();
-        printer.printModel(model, stream);
-        stream.close();
-        String s = stream.toString();
-        assertEquals(8073, s.length());
     }
 
 
-    // TODO @Test
+    @Test
     public void testStl() throws IOException {
         IMaze3DMapper mapper = new PlanarMapper();
         model = ModelFromShapes.make(shapes, mapper, sizes, colors);
@@ -75,7 +65,7 @@ public class Rectangular3DMazeTest {
         printer.printModel(model, stream);
         stream.close();
         String s = stream.toString();
-        assertEquals(8073, s.length());
+        assertEquals(29087, s.length());
 
 
     }
