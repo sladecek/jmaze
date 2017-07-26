@@ -226,7 +226,6 @@ public class VerticalFaceMakerTest {
         assertEquals(pCenter, pCenter.getPointAt(Altitude.CEILING));
         assertEquals(pCenter, pCenter.getRodAt(Altitude.FLOOR).getP1());
         assertEquals(pCenter.getPointAt(Altitude.FLOOR), pCenter.getRodAt(Altitude.FLOOR).getP2());
-        assertEquals(pCenter, pCenter.getRodAt(Altitude.GROUND).getP1());
         assertEquals(pCenter.getPointAt(Altitude.GROUND), pCenter.getRodAt(Altitude.GROUND).getP2());
         assertEquals(pCenter, pCenter.getRodAt(Altitude.FLOOR).getP1());
         assertEquals(pCenter.getPointAt(Altitude.FLOOR), pCenter.getRodAt(Altitude.FLOOR).getP2());
