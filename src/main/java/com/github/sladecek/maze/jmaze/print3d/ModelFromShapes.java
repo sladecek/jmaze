@@ -49,11 +49,14 @@ public class ModelFromShapes {
     }
 
     private void extrudeTo3D() {
-            createBlocks();
-
             VerticalFaceMaker maker = new VerticalFaceMaker(m, mapper);
             maker.stretchTelescopicPoints();
             maker.setTelescopicPointAltitude();
+
+            // blocks must be created after the telescopic point coordinates were established
+            // but before adding any new edges to the model
+            createBlocks();
+
             maker.makeVerticalEdges();
             maker.makeVerticalFaces();
             maker.addNewObjectsBackToModel();
