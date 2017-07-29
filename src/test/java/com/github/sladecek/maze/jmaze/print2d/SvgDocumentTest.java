@@ -15,12 +15,12 @@ import javax.xml.transform.TransformerFactoryConfigurationError;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.w3c.dom.Document;
 
-import com.github.sladecek.maze.jmaze.geometry.Point2D;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContext;
 
 
@@ -40,15 +40,15 @@ public class SvgDocumentTest {
 
 		IMaze2DMapper map = d.getMapper();
 
-		Point2D zp = map.mapPoint(new Point2D(0, 0));
+		Point2DInt zp = map.mapPoint(new Point2DInt(0, 0));
 		assertEquals(10, zp.getX());
 		assertEquals(10, zp.getY());
 
-		Point2D px = map.mapPoint(new Point2D(10, 0));
+		Point2DInt px = map.mapPoint(new Point2DInt(10, 0));
 		assertEquals(20, px.getX());
 		assertEquals(10, px.getY());
 
-		Point2D py = map.mapPoint(new Point2D(0, 10));
+		Point2DInt py = map.mapPoint(new Point2DInt(0, 10));
 		assertEquals(10, py.getX());
 		assertEquals(20, py.getY());
 	}
@@ -64,11 +64,11 @@ public class SvgDocumentTest {
 
 		IMaze2DMapper map = d.getMapper();
 
-		Point2D zp = map.mapPoint(new Point2D(0, 0));
+		Point2DInt zp = map.mapPoint(new Point2DInt(0, 0));
 		assertEquals(110, zp.getX());
 		assertEquals(60, zp.getY());
 
-		Point2D px = map.mapPoint(new Point2D(Point2D.ANGLE_2PI / 4, 10));
+		Point2DInt px = map.mapPoint(new Point2DInt(Point2DInt.ANGLE_2PI / 4, 10));
 		assertEquals(110, px.getX());
 		assertEquals(70, px.getY());
 	}
@@ -89,7 +89,7 @@ public class SvgDocumentTest {
 	public void testPrintLine() throws TransformerConfigurationException, TransformerFactoryConfigurationError, TransformerException {
 		boolean isPolarCoordinates = false;
 		SvgDocument d = createTestDocument(isPolarCoordinates);
-		d.printLine(new Point2D(20, 30), new Point2D(40, 50), "style");
+		d.printLine(new Point2DInt(20, 30), new Point2DInt(40, 50), "style");
 		
 		Document document = d.getDocument();
 		
@@ -101,7 +101,7 @@ public class SvgDocumentTest {
 	public void testPrintArcSegment() throws TransformerConfigurationException, TransformerFactoryConfigurationError, TransformerException {
 		boolean isPolarCoordinates = false;
 		SvgDocument d = createTestDocument(isPolarCoordinates);
-		d.printArcSegment(new Point2D(20, 30), new Point2D(40, 30), "style");
+		d.printArcSegment(new Point2DInt(20, 30), new Point2DInt(40, 30), "style");
 		
 		Document document = d.getDocument();
 		
@@ -113,14 +113,14 @@ public class SvgDocumentTest {
 	public void testPrintArcSegmentShouldThrowEception() throws TransformerConfigurationException, TransformerFactoryConfigurationError, TransformerException {
 		boolean isPolarCoordinates = false;
 		SvgDocument d = createTestDocument(isPolarCoordinates);
-		d.printArcSegment(new Point2D(20, 30), new Point2D(40, 31), "style");
+		d.printArcSegment(new Point2DInt(20, 30), new Point2DInt(40, 31), "style");
 	}
 
 	@Test
 	public void testPrintMark() throws TransformerConfigurationException, TransformerFactoryConfigurationError, TransformerException {
 		boolean isPolarCoordinates = false;
 		SvgDocument d = createTestDocument(isPolarCoordinates);
-		d.printMark(new Point2D(20, 30), "fill", 9);
+		d.printMark(new Point2DInt(20, 30), "fill", 9);
 		
 		Document document = d.getDocument();
 		
@@ -132,7 +132,7 @@ public class SvgDocumentTest {
 	public void testPrintCircle() throws TransformerConfigurationException, TransformerFactoryConfigurationError, TransformerException {
 		boolean isPolarCoordinates = false;
 		SvgDocument d = createTestDocument(isPolarCoordinates);
-		d.printCircle(new Point2D(20, 30), "fill", 9,true, "style");
+		d.printCircle(new Point2DInt(20, 30), "fill", 9,true, "style");
 		
 		Document document = d.getDocument();
 		

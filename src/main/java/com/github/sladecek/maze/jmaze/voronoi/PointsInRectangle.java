@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.Random;
 import java.util.logging.Logger;
 
-import com.github.sladecek.maze.jmaze.geometry.Point2D;
+import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 
 /***
  * 
@@ -64,10 +64,10 @@ public class PointsInRectangle {
 		roomCenterY = y;
 	}
 
-	public Point2D getIntegerPoint(int i) {
+	public Point2DInt getIntegerPoint(int i) {
 		int x = (int) Math.floor(roomCenterX[i]);
 		int y = (int) Math.floor(roomCenterY[i]);
-		return new Point2D(x, y);
+		return new Point2DInt(x, y);
 	}
 
 	

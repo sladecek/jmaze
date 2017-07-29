@@ -1,7 +1,7 @@
 package com.github.sladecek.maze.jmaze.shapes;
 
 import com.github.sladecek.maze.jmaze.generator.MazeRealization;
-import com.github.sladecek.maze.jmaze.geometry.Point2D;
+import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 import com.github.sladecek.maze.jmaze.print2d.I2DDocument;
 import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
 
@@ -16,7 +16,7 @@ public final class MarkShape implements IMazeShape2D {
     private MarkType markType;
     private int roomId;
 
-    public MarkShape(int roomId, Point2D position) {
+    public MarkShape(int roomId, Point2DInt position) {
         this.roomId = roomId;
         this.center = position;
         this.markType = MarkType.none;
@@ -63,7 +63,7 @@ public final class MarkShape implements IMazeShape2D {
     }
 
 
-    private Point2D center;
+    private Point2DInt center;
 /*
     private int offsetXPercent = 50;
     private int offsetYPercent = 50;

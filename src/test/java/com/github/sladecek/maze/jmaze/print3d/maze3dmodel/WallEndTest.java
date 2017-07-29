@@ -1,6 +1,6 @@
 package com.github.sladecek.maze.jmaze.print3d.maze3dmodel;
 
-import com.github.sladecek.maze.jmaze.geometry.Point2D;
+import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 import com.github.sladecek.maze.jmaze.geometry.Point3D;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MEdge;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MPoint;
@@ -18,7 +18,7 @@ public class WallEndTest {
     @Before
     public void setUp() throws Exception {
         mw = new MWall();
-        ws = WallShape.newInnerWall(0, new Point2D(1, 1), new Point2D(2, 2), leftId, rightId);
+        ws = WallShape.newInnerWall(0, new Point2DInt(1, 1), new Point2DInt(2, 2), leftId, rightId);
     }
 
     @Test

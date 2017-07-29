@@ -1,23 +1,23 @@
 package com.github.sladecek.maze.jmaze.print2d;
 
-import com.github.sladecek.maze.jmaze.geometry.Point2D;
+import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 
 /*
  * Polar mapping from 2D coordinates used by shapes to svg coordinates (for circular maze).
  */
 public class Polar2DMapper implements IMaze2DMapper {
 
-    public Polar2DMapper(Point2D zeroPoint, int resolution) {
+    public Polar2DMapper(Point2DInt zeroPoint, int resolution) {
         this.zeroPoint = zeroPoint;
         this.resolution = resolution;
     }
 
     @Override
-    public Point2D mapPoint(Point2D p) {
+    public Point2DInt mapPoint(Point2DInt p) {
         int r = mapLength(p.getY());
         double x = r * Math.cos(p.getAngleRad()) + zeroPoint.getX();
         double y = r * Math.sin(p.getAngleRad()) + zeroPoint.getY();
-        return new Point2D((int) Math.floor(x), (int) Math.floor(y));
+        return new Point2DInt((int) Math.floor(x), (int) Math.floor(y));
     }
 
     @Override
@@ -25,7 +25,7 @@ public class Polar2DMapper implements IMaze2DMapper {
         return l * resolution;
     }
 
-    private Point2D zeroPoint;
+    private Point2DInt zeroPoint;
     private int resolution;
 
 }

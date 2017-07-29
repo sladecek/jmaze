@@ -1,6 +1,6 @@
 package com.github.sladecek.maze.jmaze.circular;
 
-import com.github.sladecek.maze.jmaze.geometry.Point2D;
+import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 import com.github.sladecek.maze.jmaze.maze.IMazeStructure;
 import com.github.sladecek.maze.jmaze.maze.Maze;
 import com.github.sladecek.maze.jmaze.shapes.MarkShape;
@@ -109,7 +109,7 @@ public class Circular2DMaze extends Maze implements IMazeStructure {
                 y = (computeRadius(layer) + computeRadius(layer - 1)) / 2;
             }
 
-            Point2D center = new Point2D(mapPhiD(phi * roomRatio + roomRatio * 0.5), y);
+            Point2DInt center = new Point2DInt(mapPhiD(phi * roomRatio + roomRatio * 0.5), y);
 
             final MarkShape floor = new MarkShape(room, center);
 
@@ -123,7 +123,7 @@ public class Circular2DMaze extends Maze implements IMazeStructure {
 
 
     private int mapPhiD(double phi) {
-        return (int) Math.floor((phi * Point2D.ANGLE_2PI) / roomCntInOuterLayer());
+        return (int) Math.floor((phi * Point2DInt.ANGLE_2PI) / roomCntInOuterLayer());
     }
 
     private void generateConcentricWalls() {
@@ -155,8 +155,8 @@ public class Circular2DMaze extends Maze implements IMazeStructure {
         final int roomMapRatio = outerCnt / roomCntThisLayer;
         final int rphi1 = (phi1 * roomMapRatio) % outerCnt;
         final int rphi2 = (phi2 * roomMapRatio) % outerCnt;
-        addShape(WallShape.newInnerWall(id, new Point2D(mapPhiD(rphi1), r1)
-                , new Point2D(mapPhiD(rphi2), r2)));
+        addShape(WallShape.newInnerWall(id, new Point2DInt(mapPhiD(rphi1), r1)
+                , new Point2DInt(mapPhiD(rphi2), r2)));
     }
 
 
@@ -183,7 +183,7 @@ public class Circular2DMaze extends Maze implements IMazeStructure {
     private void generateOuterWalls() {
 
         int r = computeRadius(layerCount - 1);
-        addShape(WallShape.newOuterWall(new Point2D(0, r), new Point2D(0, r)));
+        addShape(WallShape.newOuterWall(new Point2DInt(0, r), new Point2DInt(0, r)));
     }
 
     private static final Logger LOGGER = Logger.getLogger("maze.jmaze");

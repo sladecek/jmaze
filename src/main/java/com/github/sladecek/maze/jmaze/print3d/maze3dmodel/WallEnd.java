@@ -1,6 +1,6 @@
 package com.github.sladecek.maze.jmaze.print3d.maze3dmodel;
 
-import com.github.sladecek.maze.jmaze.geometry.Point2D;
+import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MEdge;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
 
@@ -21,11 +21,11 @@ public class WallEnd implements Comparable<WallEnd> {
         this.p1IsPilar = p1IsPilar;
     }
 
-    public Point2D getNonPillarPoint() {
+    public Point2DInt getNonPillarPoint() {
         return getPoint(!p1IsPilar);
     }
 
-    public Point2D getPillarPoint() {
+    public Point2DInt getPillarPoint() {
         return getPoint(p1IsPilar);
     }
 
@@ -35,7 +35,7 @@ public class WallEnd implements Comparable<WallEnd> {
      * @param whichPoint if 'true' returns the rear point (p1). If 'false' returns the front point (p2).
      * @return
      */
-    private Point2D getPoint(boolean whichPoint) {
+    private Point2DInt getPoint(boolean whichPoint) {
         if (whichPoint) {
             return wallShape.getP1();
         } else {

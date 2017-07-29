@@ -1,26 +1,26 @@
 package com.github.sladecek.maze.jmaze.shapes;
 
 import com.github.sladecek.maze.jmaze.generator.MazeRealization;
-import com.github.sladecek.maze.jmaze.geometry.Point2D;
+import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 import com.github.sladecek.maze.jmaze.print2d.I2DDocument;
 import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
 
 public final class WallShape implements IMazeShape2D {
 
 
-    public static WallShape newInnerWall(int wallId, Point2D p1, Point2D p2) {
+    public static WallShape newInnerWall(int wallId, Point2DInt p1, Point2DInt p2) {
         return new WallShape(wallId, WallType.innerWall, p1, p2, -1, -1);
     }
 
-    public static WallShape newOuterWall(Point2D p1, Point2D p2) {
+    public static WallShape newOuterWall(Point2DInt p1, Point2DInt p2) {
         return new WallShape(-1, WallType.outerWall, p1, p2, -1, -1);
     }
 
-    public static WallShape newInnerWall(int wallId, Point2D p1, Point2D p2, int rightFaceId, int leftFaceId) {
+    public static WallShape newInnerWall(int wallId, Point2DInt p1, Point2DInt p2, int rightFaceId, int leftFaceId) {
         return new WallShape(wallId, WallType.innerWall, p1, p2, rightFaceId, leftFaceId);
     }
 
-    public static WallShape newOuterWall(Point2D p1, Point2D p2, int rightFaceId, int leftFaceId) {
+    public static WallShape newOuterWall(Point2DInt p1, Point2DInt p2, int rightFaceId, int leftFaceId) {
         return new WallShape(-1, WallType.outerWall, p1, p2, rightFaceId, leftFaceId);
     }
 
@@ -28,7 +28,7 @@ public final class WallShape implements IMazeShape2D {
         return wallId;
     }
 
-    protected WallShape(int wallId, WallType type, Point2D p1, Point2D p2, int rigthFaceId, int leftFaceId) {
+    protected WallShape(int wallId, WallType type, Point2DInt p1, Point2DInt p2, int rigthFaceId, int leftFaceId) {
         this.wallId = wallId;
         this.wallType = type;
         this.p1 = p1;
@@ -70,7 +70,7 @@ public final class WallShape implements IMazeShape2D {
         if (!style.isEmpty()) {
             if (doc.getContext().isPolarCoordinates() && p1.getY() == p2.getY()) {
                 if (p1.getX() == 0 && p2.getX() == 0) {
-                    doc.printCircle(new Point2D(0, 0), "none", p1.getY(), false, style);
+                    doc.printCircle(new Point2DInt(0, 0), "none", p1.getY(), false, style);
                 } else {
                     doc.printArcSegment(p1, p2, style);
                 }
@@ -119,12 +119,12 @@ public final class WallShape implements IMazeShape2D {
         }
     }
 
-    public Point2D getP1() { return p1; }
-    public Point2D getP2() { return p2; }
+    public Point2DInt getP1() { return p1; }
+    public Point2DInt getP2() { return p2; }
 
 
-    private Point2D p1;
-    private Point2D p2;
+    private Point2DInt p1;
+    private Point2DInt p2;
 
     public WallType getWallType() {
         return wallType;

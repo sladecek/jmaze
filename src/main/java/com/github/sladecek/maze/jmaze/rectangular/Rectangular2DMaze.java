@@ -1,6 +1,6 @@
 package com.github.sladecek.maze.jmaze.rectangular;
 
-import com.github.sladecek.maze.jmaze.geometry.Point2D;
+import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 import com.github.sladecek.maze.jmaze.maze.IMazeStructure;
 import com.github.sladecek.maze.jmaze.maze.Maze;
 import com.github.sladecek.maze.jmaze.shapes.FloorShape;
@@ -40,7 +40,7 @@ public final class Rectangular2DMaze extends Maze implements
                 assert roomId == y * width + x : "Inconsistent room numbering";
                 final int x1 = x * rsp + rsp / 2;
                 final int y1 = y * rsp + rsp / 2;
-                final Point2D position = new Point2D(x1, y1);
+                final Point2DInt position = new Point2DInt(x1, y1);
                 final MarkShape mark = new MarkShape(roomId, position);
                 addShape(mark);
                 final FloorShape floor = new FloorShape(roomId, position);
@@ -53,8 +53,8 @@ public final class Rectangular2DMaze extends Maze implements
             for (int x = -1; x < width; x++) {
                 int roomIdWest = y * width + x;
                 int roomIdEast = roomIdWest + 1;
-                final Point2D p1 = new Point2D(rsp * (x + 1), rsp * y);
-                final Point2D p2 = new Point2D(rsp * (x + 1), rsp * (y + 1));
+                final Point2DInt p1 = new Point2DInt(rsp * (x + 1), rsp * y);
+                final Point2DInt p2 = new Point2DInt(rsp * (x + 1), rsp * (y + 1));
 
                 if (x >= width - 1) {
                     // east outer wall
@@ -78,8 +78,8 @@ public final class Rectangular2DMaze extends Maze implements
             for (int x = 0; x < width; x++) {
                 int roomIdNorth = y * width + x;
                 int roomIdSouth = roomIdNorth + width;
-                final Point2D p1 = new Point2D(rsp * x, rsp * (y + 1));
-                final Point2D p2 = new Point2D(rsp * (x + 1), rsp * (y + 1));
+                final Point2DInt p1 = new Point2DInt(rsp * x, rsp * (y + 1));
+                final Point2DInt p2 = new Point2DInt(rsp * (x + 1), rsp * (y + 1));
 
                 if (y < 0) {
                     addShape(WallShape.newOuterWall(p1, p2, roomIdSouth, -1));

@@ -6,8 +6,6 @@ import com.github.sladecek.maze.jmaze.shapes.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.github.sladecek.maze.jmaze.geometry.Point2D;
-
 
 public class MazeTest {
 
@@ -51,7 +49,7 @@ public class MazeTest {
 
 	@Test
 	public void applyRealizationShouldReturnStartRoom() {		
-		FloorShape fs = new FloorShape(new Point2D(0, 0), false, 0,0);
+		FloorShape fs = new FloorShape(new Point2DInt(0, 0), false, 0,0);
 		maze.linkRoomToFloor(2, fs);
 		maze.setStartRoom(2);
 		
@@ -65,7 +63,7 @@ public class MazeTest {
 
 	@Test
 	public void applyRealizationShouldReturnTargetRoom() {		
-		FloorShape fs = new FloorShape(new Point2D(0, 0), false,0,0);
+		FloorShape fs = new FloorShape(new Point2DInt(0, 0), false,0,0);
 		maze.linkRoomToFloor(2, fs);
 		maze.setTargetRoom(2);
 		
@@ -79,14 +77,14 @@ public class MazeTest {
 
 	@Test
 	public void applyRealizationShouldReturnSolutionWithoutStartAndTargetRooms() {		
-		FloorShape fsS = new FloorShape(new Point2D(0, 0), false,0,0);
+		FloorShape fsS = new FloorShape(new Point2DInt(0, 0), false,0,0);
 		maze.linkRoomToFloor(0, fsS);
 		maze.setStartRoom(0);
 
-		FloorShape fs = new FloorShape(new Point2D(0, 0), false,0,0);
+		FloorShape fs = new FloorShape(new Point2DInt(0, 0), false,0,0);
 		maze.linkRoomToFloor(1, fs);
 
-		FloorShape fsT = new FloorShape(new Point2D(0, 0), false,0,0);
+		FloorShape fsT = new FloorShape(new Point2DInt(0, 0), false,0,0);
 		maze.linkRoomToFloor(7, fsT);
 		maze.setTargetRoom(7);
 
@@ -108,7 +106,7 @@ public class MazeTest {
 	
 	@Test
 	public void testGetShapes() {
-		maze.addShape(new FloorShape(new Point2D(1, 1), false,0,0));
+		maze.addShape(new FloorShape(new Point2DInt(1, 1), false,0,0));
 		Vector<IMazeShape2D> s = maze.getShapes().getShapes();
 		assertEquals(1, s.size());
 	}

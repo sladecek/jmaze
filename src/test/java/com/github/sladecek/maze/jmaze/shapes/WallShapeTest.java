@@ -4,8 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-import com.github.sladecek.maze.jmaze.geometry.Point2D;
-
 
 public class WallShapeTest {
 
@@ -24,8 +22,8 @@ public class WallShapeTest {
 		WallType shapeType = WallType.hole;
 		callPrint2D(mockedDocument, isPolarCoordinates, shapeType, 3, 4);
 		
-		ArgumentCaptor<Point2D> p1 = ArgumentCaptor.forClass(Point2D.class);
-		ArgumentCaptor<Point2D> p2 = ArgumentCaptor.forClass(Point2D.class);
+		ArgumentCaptor<Point2DInt> p1 = ArgumentCaptor.forClass(Point2DInt.class);
+		ArgumentCaptor<Point2DInt> p2 = ArgumentCaptor.forClass(Point2DInt.class);
 		ArgumentCaptor<String> style = ArgumentCaptor.forClass(String.class);
 
 		verify(mockedDocument).printLine(p1.capture(), p2.capture(), style.capture());
@@ -49,8 +47,8 @@ public class WallShapeTest {
 		WallType shapeType = WallType.hole;
 		callPrint2D(mockedDocument, isPolarCoordinates, shapeType, 5, 0);
 		
-		ArgumentCaptor<Point2D> p1 = ArgumentCaptor.forClass(Point2D.class);
-		ArgumentCaptor<Point2D> p2 = ArgumentCaptor.forClass(Point2D.class);
+		ArgumentCaptor<Point2DInt> p1 = ArgumentCaptor.forClass(Point2DInt.class);
+		ArgumentCaptor<Point2DInt> p2 = ArgumentCaptor.forClass(Point2DInt.class);
 		ArgumentCaptor<String> style = ArgumentCaptor.forClass(String.class);
 
 		verify(mockedDocument).printLine(p1.capture(), p2.capture(), style.capture());
@@ -74,8 +72,8 @@ public class WallShapeTest {
 		WallType shapeType = WallType.hole;
 		callPrint2D(mockedDocument, isPolarCoordinates, shapeType, 1, 5);
 		
-		ArgumentCaptor<Point2D> p1 = ArgumentCaptor.forClass(Point2D.class);
-		ArgumentCaptor<Point2D> p2 = ArgumentCaptor.forClass(Point2D.class);
+		ArgumentCaptor<Point2DInt> p1 = ArgumentCaptor.forClass(Point2DInt.class);
+		ArgumentCaptor<Point2DInt> p2 = ArgumentCaptor.forClass(Point2DInt.class);
 		ArgumentCaptor<String> style = ArgumentCaptor.forClass(String.class);
 		verify(mockedDocument).printArcSegment(p1.capture(), p2.capture(), style.capture());
 		
@@ -97,7 +95,7 @@ public class WallShapeTest {
 		WallType shapeType = WallType.hole;
 		callPrint2D(mockedDocument, isPolarCoordinates, shapeType, 1, 0);
 		
-		ArgumentCaptor<Point2D> center = ArgumentCaptor.forClass(Point2D.class);
+		ArgumentCaptor<Point2DInt> center = ArgumentCaptor.forClass(Point2DInt.class);
 		ArgumentCaptor<String> fill = ArgumentCaptor.forClass(String.class);
 		ArgumentCaptor<String> style = ArgumentCaptor.forClass(String.class);
 		ArgumentCaptor<Integer> perimeter = ArgumentCaptor.forClass(Integer.class);
@@ -154,8 +152,8 @@ public class WallShapeTest {
 		boolean isPolarCoordinates = false;
 		callPrint2D(mockedDocument, isPolarCoordinates, shapeType, 3, 0);
 		
-		ArgumentCaptor<Point2D> p1 = ArgumentCaptor.forClass(Point2D.class);
-		ArgumentCaptor<Point2D> p2 = ArgumentCaptor.forClass(Point2D.class);
+		ArgumentCaptor<Point2DInt> p1 = ArgumentCaptor.forClass(Point2DInt.class);
+		ArgumentCaptor<Point2DInt> p2 = ArgumentCaptor.forClass(Point2DInt.class);
 		ArgumentCaptor<String> style = ArgumentCaptor.forClass(String.class);
 
 		verify(mockedDocument).printLine(p1.capture(), p2.capture(), style.capture());

@@ -1,9 +1,7 @@
 package com.github.sladecek.maze.jmaze.print3d.generic3dmodel;
 
-import com.github.sladecek.maze.jmaze.geometry.Point2D;
 import com.github.sladecek.maze.jmaze.geometry.Point3D;
 import org.junit.Test;
-import org.neo4j.cypher.internal.compiler.v2_2.InvalidArgumentException;
 
 import java.util.ArrayList;
 

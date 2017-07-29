@@ -3,8 +3,6 @@ package com.github.sladecek.maze.jmaze.shapes;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-import com.github.sladecek.maze.jmaze.geometry.Point2D;
-
 
 /* TODO opravit
 public class MarkShapeTest {
@@ -96,7 +94,7 @@ public class MarkShapeTest {
 		
 		m.print2D(mockedDocument, mockedPrintStyle);
 				
-		ArgumentCaptor<Point2D> center = ArgumentCaptor.forClass(Point2D.class);
+		ArgumentCaptor<Point2DInt> center = ArgumentCaptor.forClass(Point2DInt.class);
 		ArgumentCaptor<String> fill = ArgumentCaptor.forClass(String.class);
 		ArgumentCaptor<Integer> size = ArgumentCaptor.forClass(Integer.class);
 

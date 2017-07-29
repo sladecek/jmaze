@@ -1,6 +1,6 @@
 package com.github.sladecek.maze.jmaze.triangular;
 
-import com.github.sladecek.maze.jmaze.geometry.Point2D;
+import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 import com.github.sladecek.maze.jmaze.maze.IMazeStructure;
 import com.github.sladecek.maze.jmaze.maze.Maze;
 import com.github.sladecek.maze.jmaze.shapes.MarkShape;
@@ -28,9 +28,9 @@ public class Triangular2DMaze extends Maze implements IMazeStructure {
 
         // outer walls
 /*
-        addShape(WallShape.newOuterWall(new Point2D(rsx * size, 0), new Point2D(0, rsy * size)));
-        addShape(WallShape.newOuterWall(new Point2D(0, rsy * size), new Point2D(2 * size * rsx, rsy * size)));
-        addShape(WallShape.newOuterWall(new Point2D(2 * size * rsx, rsy * size), new Point2D(rsx * size, 0)));
+        addShape(WallShape.newOuterWall(new Point2DInt(rsx * size, 0), new Point2DInt(0, rsy * size)));
+        addShape(WallShape.newOuterWall(new Point2DInt(0, rsy * size), new Point2DInt(2 * size * rsx, rsy * size)));
+        addShape(WallShape.newOuterWall(new Point2DInt(2 * size * rsx, rsy * size), new Point2DInt(rsx * size, 0)));
 */
         int prevFirst = -1;
         int lastRoom = -1;
@@ -66,7 +66,7 @@ public class Triangular2DMaze extends Maze implements IMazeStructure {
                         LOGGER.info("addRoom " + r + " y=" + y + " j=" + j + " prevRoom=" + prevRoom + " myFirst=" + myFirst + " prevFirst=" + prevFirst + " lastRoom=" + lastRoom);
 
 
-                        final MarkShape floor = new MarkShape(r, new Point2D(rsx * x2, rsy * y + rsy / 2));
+                        final MarkShape floor = new MarkShape(r, new Point2DInt(rsx * x2, rsy * y + rsy / 2));
                         addShape(floor);
                     }
 
@@ -101,8 +101,8 @@ public class Triangular2DMaze extends Maze implements IMazeStructure {
     private void addWallAndShape(int prevRoom, int room, int x1, int x2,
                                  int y1, int y2) {
 
-        final Point2D p1 = new Point2D(rsx * x1, rsy * y1);
-        final Point2D p2 = new Point2D(rsx * x2, rsy * y2);
+        final Point2DInt p1 = new Point2DInt(rsx * x1, rsy * y1);
+        final Point2DInt p2 = new Point2DInt(rsx * x2, rsy * y2);
         if (prevRoom >= 0 && room >= 0) {
             int id = addWall(prevRoom, room);
             addShape(WallShape.newInnerWall(id, p1, p2));

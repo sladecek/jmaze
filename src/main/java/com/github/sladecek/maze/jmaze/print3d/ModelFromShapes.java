@@ -1,6 +1,6 @@
 package com.github.sladecek.maze.jmaze.print3d;
 
-import com.github.sladecek.maze.jmaze.geometry.Point2D;
+import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 import com.github.sladecek.maze.jmaze.geometry.Point3D;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.*;
 import com.github.sladecek.maze.jmaze.print3d.maze3dmodel.*;
@@ -120,7 +120,7 @@ public class ModelFromShapes {
 
 
     private void makePillars() {
-        for (Point2D center : wallsForPillars.keySet()) {
+        for (Point2DInt center : wallsForPillars.keySet()) {
             Point3D c3d = new Point3D(center.getX(), center.getY(), 0);
             double wallWidthInMm = mapper.inverselyMapLengthAt(c3d,
                     sizes.getInnerWallToPixelRatio() * sizes.getCellSizeInmm());
@@ -275,7 +275,7 @@ public class ModelFromShapes {
     private IPrintStyle style;
     private IMaze3DMapper mapper;
     private Model3d m;
-    private TreeMap<Point2D, Set<WallEnd>> wallsForPillars;
+    private TreeMap<Point2DInt, Set<WallEnd>> wallsForPillars;
     private ArrayList<MWall> walls = new ArrayList<>();
     private ArrayList<MPillar> pillars = new ArrayList<>();
     private TreeMap<Integer, MRoom> rooms = new TreeMap<>();

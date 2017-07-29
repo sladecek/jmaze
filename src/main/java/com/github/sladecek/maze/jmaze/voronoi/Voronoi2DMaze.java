@@ -1,7 +1,7 @@
 package com.github.sladecek.maze.jmaze.voronoi;
 
 import be.humphreys.simplevoronoi.GraphEdge;
-import com.github.sladecek.maze.jmaze.geometry.Point2D;
+import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 import com.github.sladecek.maze.jmaze.maze.IMazeStructure;
 import com.github.sladecek.maze.jmaze.maze.Maze;
 import com.github.sladecek.maze.jmaze.shapes.MarkShape;
@@ -35,7 +35,7 @@ public class Voronoi2DMaze extends Maze implements IMazeStructure {
         PointsInRectangle p0 = PointsInRectangle.newRandom(width, height, roomCount, randomGenerator);
 
         for (int i = 0; i < p0.getRoomCount(); i++) {
-            Point2D pt = p0.getIntegerPoint(i);
+            Point2DInt pt = p0.getIntegerPoint(i);
             LOGGER.info("random room center [" + i + "]=" + pt);
         }
 
@@ -57,7 +57,7 @@ public class Voronoi2DMaze extends Maze implements IMazeStructure {
         p1.sortByLongerCoordinate();
 
         for (int i = 0; i < roomCount; i++) {
-            Point2D pt = p1.getIntegerPoint(i);
+            Point2DInt pt = p1.getIntegerPoint(i);
             LOGGER.info("room center [" + i + "]=" + pt);
             int r = addRoom();
             final MarkShape floor = new MarkShape(r, pt);
@@ -72,7 +72,7 @@ public class Voronoi2DMaze extends Maze implements IMazeStructure {
             if (e.length() < 0.5) continue;
             int id = addWall(e.site1, e.site2);
             addShape(WallShape.newInnerWall(id,
-                    new Point2D((int) e.x1, (int) e.y1), new Point2D((int) e.x2, (int) e.y2)));
+                    new Point2DInt((int) e.x1, (int) e.y1), new Point2DInt((int) e.x2, (int) e.y2)));
 
 
             LOGGER.info("wall id=" + id + " " + e);
@@ -85,10 +85,10 @@ public class Voronoi2DMaze extends Maze implements IMazeStructure {
 
     private void createOuterWalls() {
 
-        addShape(WallShape.newOuterWall(new Point2D(0, 0), new Point2D(width, 0)));
-        addShape(WallShape.newOuterWall(new Point2D(0, 0), new Point2D(0, height)));
-        addShape(WallShape.newOuterWall(new Point2D(0, height), new Point2D(width, height)));
-        addShape(WallShape.newOuterWall(new Point2D(width, 0), new Point2D(width, height)));
+        addShape(WallShape.newOuterWall(new Point2DInt(0, 0), new Point2DInt(width, 0)));
+        addShape(WallShape.newOuterWall(new Point2DInt(0, 0), new Point2DInt(0, height)));
+        addShape(WallShape.newOuterWall(new Point2DInt(0, height), new Point2DInt(width, height)));
+        addShape(WallShape.newOuterWall(new Point2DInt(width, 0), new Point2DInt(width, height)));
 
     }
 

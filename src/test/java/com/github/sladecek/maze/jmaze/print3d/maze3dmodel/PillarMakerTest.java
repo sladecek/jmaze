@@ -1,6 +1,6 @@
 package com.github.sladecek.maze.jmaze.print3d.maze3dmodel;
 
-import com.github.sladecek.maze.jmaze.geometry.Point2D;
+import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 import com.github.sladecek.maze.jmaze.print3d.PillarMaker;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MEdge;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
@@ -26,12 +26,12 @@ public class PillarMakerTest {
 
     void testOneOffset(int dx, int dy) {
         final int[][] endpoints = {{-7, 7}, {-7, 0}, {0, -7}, {7, 7}, {0, 7}};
-        Point2D center = new Point2D(dx, dy);
+        Point2DInt center = new Point2DInt(dx, dy);
         ArrayList<WallEnd> walls = new ArrayList<>();
         final int cnt = endpoints.length;
         for (int i = 0; i < cnt; ++i) {
             MWall mw = new MWall();
-            Point2D p1 = new Point2D(dx+endpoints[i][0], dy+endpoints[i][1]);
+            Point2DInt p1 = new Point2DInt(dx+endpoints[i][0], dy+endpoints[i][1]);
             final int leftId = (i + 1) % cnt;
             final int rightId = i;
             WallShape ws = WallShape.newInnerWall(0, center, p1, leftId, rightId);

@@ -1,6 +1,6 @@
 package com.github.sladecek.maze.jmaze.hexagonal;
 
-import com.github.sladecek.maze.jmaze.geometry.Point2D;
+import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 import com.github.sladecek.maze.jmaze.maze.IMazeStructure;
 import com.github.sladecek.maze.jmaze.maze.Maze;
 import com.github.sladecek.maze.jmaze.shapes.MarkShape;
@@ -52,7 +52,7 @@ public class Hexagonal2DMaze extends Maze implements IMazeStructure {
                 int r = addRoom();
                 mapXY2room.add(r);
 
-                Point2D center = computeRoomCenter(x, isOdd, y);
+                Point2DInt center = computeRoomCenter(x, isOdd, y);
 
                 LOGGER.info("addRoom " + r + " y=" + y + " x=" + x + " center=" + center);
 
@@ -98,7 +98,7 @@ public class Hexagonal2DMaze extends Maze implements IMazeStructure {
         setTargetRoom(lastRoom);
     }
 
-    private void makeFloor(int r, Point2D center) {
+    private void makeFloor(int r, Point2DInt center) {
         final MarkShape floor = new MarkShape(r, center);
 
         addShape(floor);
@@ -111,14 +111,14 @@ public class Hexagonal2DMaze extends Maze implements IMazeStructure {
         setContext(new ShapeContext(isPolar, height, width));
     }
 
-    private Point2D computeRoomCenter(int x, boolean isOdd, int y) {
+    private Point2DInt computeRoomCenter(int x, boolean isOdd, int y) {
         // compute centre of the room
         int xc = (hP * (2 + x * 3)) / 2;
         int yc = hH * (2 * y + 1);
         if (isOdd) {
             yc += hH;
         }
-        Point2D center = new Point2D(xc, yc);
+        Point2DInt center = new Point2DInt(xc, yc);
         return center;
     }
 
@@ -128,11 +128,11 @@ public class Hexagonal2DMaze extends Maze implements IMazeStructure {
 
         LOGGER.info(
                 "addWallAndShape room1=" + r + " room2=" + r2 + " y1=" + y1 + " y2=" + y2 + " x1=" + x1 + " x2=" + x2);
-        addShape(WallShape.newInnerWall(id, new Point2D(x1, y1), new Point2D(x2, y2)));
+        addShape(WallShape.newInnerWall(id, new Point2DInt(x1, y1), new Point2DInt(x2, y2)));
     }
 
     private void addOuterWall(int x1, int y1, int x2, int y2) {
-        addShape(WallShape.newOuterWall(new Point2D(x1, y1), new Point2D(x2, y2)));
+        addShape(WallShape.newOuterWall(new Point2DInt(x1, y1), new Point2DInt(x2, y2)));
     }
 
     private boolean areRoomCoordinatesValid(final int roomsPerRow, int ox, int oy) {

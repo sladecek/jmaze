@@ -4,7 +4,7 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.github.sladecek.maze.jmaze.geometry.Point2D;
+import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 import com.github.sladecek.maze.jmaze.geometry.SouthNorth;
 import com.github.sladecek.maze.jmaze.maze.IMazeStructure;
 import com.github.sladecek.maze.jmaze.maze.Maze;
@@ -146,7 +146,7 @@ public final class EggMaze extends Maze implements IMazeStructure {
                 // polar layers have only one room
                 r = addRoom();
             }
-            Point2D center = new Point2D(ix, iy * roomMapRatio);
+            Point2DInt center = new Point2DInt(ix, iy * roomMapRatio);
             final MarkShape floor = new MarkShape(r, center);
 
             addShape(floor);
@@ -199,7 +199,7 @@ public final class EggMaze extends Maze implements IMazeStructure {
         final int roomMapRatio = equatorCellCnt / roomCntThisLayer;
         final int y1 = (yr1 * roomMapRatio) % equatorCellCnt;
         final int y2 = (yr2 * roomMapRatio) % equatorCellCnt;
-        addShape(WallShape.newInnerWall(id, new Point2D(x1, y1), new Point2D(x2, y2)));
+        addShape(WallShape.newInnerWall(id, new Point2DInt(x1, y1), new Point2DInt(x2, y2)));
     }
 
     private void generateMeridianWalls(SouthNorth sn) {

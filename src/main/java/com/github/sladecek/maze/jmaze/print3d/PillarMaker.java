@@ -1,6 +1,6 @@
 package com.github.sladecek.maze.jmaze.print3d;
 
-import com.github.sladecek.maze.jmaze.geometry.Point2D;
+import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 import com.github.sladecek.maze.jmaze.geometry.Point3D;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MEdge;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MPoint;
@@ -15,7 +15,7 @@ import java.util.logging.Logger;
  * Creates pillars from walls.
  */
 public class PillarMaker {
-    public PillarMaker(Point2D center, List<WallEnd> wallEnds, double wallWidthInMm) {
+    public PillarMaker(Point2DInt center, List<WallEnd> wallEnds, double wallWidthInMm) {
         this.center = center;
         this.wallEnds = wallEnds;
         this.unsortedWalls = new LinkedList<>();
@@ -89,9 +89,9 @@ public class PillarMaker {
         wallEnd.addEdge(edge);
     }
 
-    private Point3D computeIntersection(Point2D p1, Point2D p2) {
-        Point2D p1centered = p1.minus(center);
-        Point2D p2centered = p2.minus(center);
+    private Point3D computeIntersection(Point2DInt p1, Point2DInt p2) {
+        Point2DInt p1centered = p1.minus(center);
+        Point2DInt p2centered = p2.minus(center);
         double phi1 = p1centered.getCartesianAngle();
         double phi2 = p2centered.getCartesianAngle();
         double c1 = Math.cos(phi1);
@@ -146,7 +146,7 @@ public class PillarMaker {
 
     private List<WallEnd> wallEnds;
     private LinkedList<WallEnd> unsortedWalls;
-    private Point2D center;
+    private Point2DInt center;
     private double wallWidthInMm;
     private MPillar base;
     private ArrayList<WallEnd> walls;

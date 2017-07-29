@@ -1,7 +1,7 @@
 package com.github.sladecek.maze.jmaze.shapes;
 
 import com.github.sladecek.maze.jmaze.generator.MazeRealization;
-import com.github.sladecek.maze.jmaze.geometry.Point2D;
+import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 
 import com.github.sladecek.maze.jmaze.print2d.I2DDocument;
 import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
@@ -12,7 +12,7 @@ import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
  */
 /* TODO tohle nebude 2D  */
 public class FloorShape implements IMazeShape2D {
-    public FloorShape(int roomId, Point2D position) {
+    public FloorShape(int roomId, Point2DInt position) {
         this.position = position;
         this.roomId = roomId;
         this.isHole = false;
@@ -41,7 +41,7 @@ public class FloorShape implements IMazeShape2D {
             this.wallType.put(wd, wallType);
         }
     */
-    public Point2D getPosition() {
+    public Point2DInt getPosition() {
         return position;
     }
 
@@ -85,7 +85,7 @@ public class FloorShape implements IMazeShape2D {
 
     }
 
-    private Point2D position;
+    private Point2DInt position;
     /*
     private EnumMap<Direction, Integer> wallId = new EnumMap<Direction, Integer>(Direction.class);
     private EnumMap<Direction, WallType> wallType = new EnumMap<Direction, WallType>(Direction.class);

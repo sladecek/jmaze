@@ -1,6 +1,6 @@
 package com.github.sladecek.maze.jmaze.print3d.maze3dmodel;
 
-import com.github.sladecek.maze.jmaze.geometry.Point2D;
+import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.*;
 import com.github.sladecek.maze.jmaze.shapes.*;
 
@@ -16,15 +16,15 @@ public class ModelFromShapesTestBase {
 
     protected ShapeContainer setUpInput() {
         ShapeContainer sc = new ShapeContainer(new ShapeContext(false, 100, 100));
-        sc.add(new FloorShape(0, new Point2D(55, 15)));
-        sc.add(new FloorShape(1, new Point2D(65, 15)));
+        sc.add(new FloorShape(0, new Point2DInt(55, 15)));
+        sc.add(new FloorShape(1, new Point2DInt(65, 15)));
 
-        Point2D p0 = new Point2D(50, 10);
-        Point2D p1 = new Point2D(60, 10);
-        Point2D p2 = new Point2D(70, 10);
-        Point2D p3 = new Point2D(70, 20);
-        Point2D p4 = new Point2D(60, 20);
-        Point2D p5 = new Point2D(50, 20);
+        Point2DInt p0 = new Point2DInt(50, 10);
+        Point2DInt p1 = new Point2DInt(60, 10);
+        Point2DInt p2 = new Point2DInt(70, 10);
+        Point2DInt p3 = new Point2DInt(70, 20);
+        Point2DInt p4 = new Point2DInt(60, 20);
+        Point2DInt p5 = new Point2DInt(50, 20);
 
         ws01 = WallShape.newOuterWall(p0, p1, 0, -1);
         sc.add(ws01);

@@ -1,6 +1,6 @@
 package com.github.sladecek.maze.jmaze.print3d.maze3dmodel;
 
-import com.github.sladecek.maze.jmaze.geometry.Point2D;
+import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 import com.github.sladecek.maze.jmaze.geometry.Point3D;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MEdge;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MPoint;
@@ -18,9 +18,9 @@ public class MRoomTest {
         final int floorId = 27;
 
         // Pillar centers
-        Point2D pp1 = new Point2D(1,1);
-        Point2D pp2 = new Point2D(2,2);
-        Point2D pp3 = new Point2D(3,3);
+        Point2DInt pp1 = new Point2DInt(1,1);
+        Point2DInt pp2 = new Point2DInt(2,2);
+        Point2DInt pp3 = new Point2DInt(3,3);
 
         // Walls connecting the pillars
         WallShape ws12 = WallShape.newInnerWall(12, pp1, pp2);

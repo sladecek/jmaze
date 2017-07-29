@@ -1,6 +1,6 @@
 package com.github.sladecek.maze.jmaze.print2d;
 
-import com.github.sladecek.maze.jmaze.geometry.Point2D;
+import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContext;
 import org.apache.batik.dom.svg.SVGDOMImplementation;
 import org.w3c.dom.DOMImplementation;
@@ -16,14 +16,14 @@ public class SvgDocument implements I2DDocument {
     }
 
     @Override
-    public void printLine(Point2D p1, Point2D p2, String style) {
+    public void printLine(Point2DInt p1, Point2DInt p2, String style) {
         String svgNS = SVGDOMImplementation.SVG_NAMESPACE_URI;
         Element line = doc.createElementNS(svgNS, "line");
         Element svgRoot = doc.getDocumentElement();
         svgRoot.appendChild(line);
 
-        Point2D mp1 = mapper.mapPoint(p1);
-        Point2D mp2 = mapper.mapPoint(p2);
+        Point2DInt mp1 = mapper.mapPoint(p1);
+        Point2DInt mp2 = mapper.mapPoint(p2);
 
         line.setAttributeNS(null, "x1", String.valueOf(mp1.getX()));
         line.setAttributeNS(null, "y1", String.valueOf(mp1.getY()));
@@ -35,7 +35,7 @@ public class SvgDocument implements I2DDocument {
     }
 
     @Override
-    public void printArcSegment(Point2D p1, Point2D p2, String style) {
+    public void printArcSegment(Point2DInt p1, Point2DInt p2, String style) {
 
         if (p1.getY() != p2.getY()) {
             throw new IllegalArgumentException("arc segment must be defined on the same diameter");
@@ -45,8 +45,8 @@ public class SvgDocument implements I2DDocument {
         Element svgRoot = doc.getDocumentElement();
         svgRoot.appendChild(path);
 
-        Point2D mp1 = mapper.mapPoint(p1);
-        Point2D mp2 = mapper.mapPoint(p2);
+        Point2DInt mp1 = mapper.mapPoint(p1);
+        Point2DInt mp2 = mapper.mapPoint(p2);
         int r = mapper.mapLength(p1.getY());
 
         String pth = "M" + mp1.getX() + " " + mp1.getY() + " A" + r + " " + r + " 0 0 1 " + mp2.getX() + " "
@@ -60,14 +60,14 @@ public class SvgDocument implements I2DDocument {
 
 
     @Override
-    public void printMark(Point2D center, String fill, int sizePercent) {
+    public void printMark(Point2DInt center, String fill, int sizePercent) {
 
         printCircle(center, fill, sizePercent, true, new String());
 
     }
 
     @Override
-    public void printCircle(Point2D center, String fill,  int perimeter,
+    public void printCircle(Point2DInt center, String fill, int perimeter,
                             boolean isPerimeterAbsolute, String style) {
         String svgNS = SVGDOMImplementation.SVG_NAMESPACE_URI;
 
@@ -76,7 +76,7 @@ public class SvgDocument implements I2DDocument {
         Element svgRoot = doc.getDocumentElement();
         svgRoot.appendChild(circle);
 
-        Point2D mc = mapper.mapPoint(center);
+        Point2DInt mc = mapper.mapPoint(center);
 
 
         circle.setAttributeNS(null, "cx", String.valueOf(mc.getX()));
@@ -131,12 +131,12 @@ public class SvgDocument implements I2DDocument {
         canvasHeight = 2 * margin + context.getPictureHeight();
 
         if (context.isPolarCoordinates()) {
-            Point2D zeroPoint = new Point2D(
+            Point2DInt zeroPoint = new Point2DInt(
                     margin + context.getPictureWidth()  / 2,
                     margin + context.getPictureHeight() / 2);
             mapper = new Polar2DMapper(zeroPoint, 1);
         } else {
-            Point2D zeroPoint = new Point2D(margin, margin);
+            Point2DInt zeroPoint = new Point2DInt(margin, margin);
 
             mapper = new Cartesian2DMapper(zeroPoint, 1,1);
         }
