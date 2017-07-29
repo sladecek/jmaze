@@ -3,6 +3,7 @@ package com.github.sladecek.maze.jmaze.triangular;
 import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 import com.github.sladecek.maze.jmaze.maze.IMazeStructure;
 import com.github.sladecek.maze.jmaze.maze.Maze;
+import com.github.sladecek.maze.jmaze.shapes.FloorShape;
 import com.github.sladecek.maze.jmaze.shapes.MarkShape;
 
 import com.github.sladecek.maze.jmaze.shapes.ShapeContext;
@@ -61,7 +62,10 @@ public class Triangular2DMaze extends Maze implements IMazeStructure {
                                 " myFirst=" + myFirst + " prevFirst=" + prevFirst + " lastRoom=" + lastRoom);
 
 
-                        final MarkShape floor = new MarkShape(r, new Point2DInt(rsx * x2, rsy * y + rsy / 2));
+                        final Point2DInt position = new Point2DInt(rsx * x2, rsy * y + rsy / 2);
+                        final MarkShape mark = new MarkShape(r, position);
+                        addShape(mark);
+                        final FloorShape floor = new FloorShape(r, position);
                         addShape(floor);
                     }
 
