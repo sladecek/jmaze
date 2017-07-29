@@ -65,7 +65,7 @@ public class Rectangular3DMazeTest {
         printer.printModel(model, stream);
         stream.close();
         String s = stream.toString();
-        assertEquals(22863, s.length());
+        assertEquals(19191, s.length());
 
 
     }

@@ -8,12 +8,12 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
- * Test for pillar maker.
+ * Test for pillar maker - errors found in triangular maze.
  */
-public class PillarMakerTest extends PillarMakerTestBase {
+public class PillarMakerTestTriangularMaze extends PillarMakerTestBase {
     @Test
     public void makePillarAtOrigin() throws Exception {
         testOneOffset(0,0);
@@ -37,6 +37,7 @@ public class PillarMakerTest extends PillarMakerTestBase {
         final int expectedBaseEdgesSize = 5;
         testOneComputation(dx, dy, endpoints, expectedIntersectionCount, expected, expectedBaseEdgesSize);
     }
+
 
 
 }

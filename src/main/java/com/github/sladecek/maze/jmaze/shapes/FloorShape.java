@@ -75,7 +75,7 @@ public class FloorShape implements IMazeShape2D {
         }
     */
 
-        isHole = !mr.isWallClosed(roomId);
+        // TODO isHole = !mr.isWallClosed(roomId);
 
     }
 

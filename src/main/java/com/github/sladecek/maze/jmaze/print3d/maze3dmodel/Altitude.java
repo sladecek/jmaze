@@ -9,6 +9,10 @@ public enum Altitude {
     FLOOR(1),
     CEILING(2);
 
+    Altitude(int value) {
+        this.value = value;
+    }
+
     public int getValue() {
         return value;
     }
@@ -18,16 +22,9 @@ public enum Altitude {
     }
 
     public Altitude prev() {
-        return values()[ordinal()-1];
+        return values()[ordinal() - 1];
     }
-
-
+    public static Altitude MIN = FRAME;
+    public static Altitude MAX = CEILING;
     private int value;
-
-    Altitude(int value) {
-        this.value = value;
-    }
-
-    public static Altitude MIN=FRAME;
-    public static Altitude MAX=CEILING;
 }

@@ -73,7 +73,8 @@ public class TestApp2DBase {
 
             IPrintStyle colors = new DefaultPrintStyle();
 
-            IMaze3DMapper mapper = new PlanarMapper();
+            PlanarMapper mapper = new PlanarMapper();
+            mapper.configureAltitudes(sizes);
             Model3d model = ModelFromShapes.make(shapes, mapper, sizes, colors);
             System.out.println(model);
 

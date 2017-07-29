@@ -49,6 +49,6 @@ public final class Maze3DSizes {
     private double baseThicknessInmm = 1;
     private double innerWallToPixelRatio = 0.2;
     private double outerWallToPixelRatio = 0.4;
-    private double wallHeightInmm = 5;
+    private double wallHeightInmm = 10;
 
 }
