@@ -2,6 +2,7 @@ package com.github.sladecek.maze.jmaze.spheric;
 
 import com.github.sladecek.maze.jmaze.geometry.*;
 import com.github.sladecek.maze.jmaze.print3d.IMaze3DMapper;
+import com.github.sladecek.maze.jmaze.print3d.maze3dmodel.Altitude;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,7 +27,7 @@ public final class Egg3dMapper implements IMaze3DMapper {
      * @return 3D coordinate of south-western corner of the room + offset.
      */
     @Override
-    public Point3D map(Point3D image) {
+    public Point3D map(Point2DDbl image, Altitude altitude) {
 
         final double x = image.getX();
         final double y = image.getY();
@@ -35,7 +36,7 @@ public final class Egg3dMapper implements IMaze3DMapper {
 
         double offsetV = x - cellVertical;
         double offsetH = y - cellHorizontal;
-        double offsetA = image.getZ();
+        double offsetA = altitude.getValue();
 
         LOG.log(Level.INFO, "mapPoint v=" + cellVertical + " h=" + cellHorizontal
                 + " ov=" + offsetV + " oh=" + offsetH);
@@ -143,15 +144,17 @@ public final class Egg3dMapper implements IMaze3DMapper {
             }
         }
     */
+
     @Override
-    public double inverselyMapLengthAt(Point3D center, double v) {
+    public double inverselyMapLengthAt(Point2DDbl center, double v) {
         final double epsilon = 0.001;
         final double epsilonSide = epsilon / Math.sqrt(2);
-        Point3D shifted = new Point3D(center.getX() + epsilonSide, center.getY()+epsilonSide, center.getZ());
-        Point3D p1 = map(center);
-        Point3D p2 = map(shifted);
+        Point2DDbl shifted = new Point2DDbl(center.getX() + epsilonSide, center.getY()+epsilonSide);
+        Point3D p1 = map(center, Altitude.GROUND);
+        Point3D p2 = map(shifted, Altitude.GROUND);
         double distance = Point3D.computeDistance(p1, p2);
         return v*epsilon/distance;
+
     }
 
 

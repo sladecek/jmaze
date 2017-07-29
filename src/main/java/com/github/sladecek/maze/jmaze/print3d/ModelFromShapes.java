@@ -1,5 +1,6 @@
 package com.github.sladecek.maze.jmaze.print3d;
 
+import com.github.sladecek.maze.jmaze.geometry.Point2DDbl;
 import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 import com.github.sladecek.maze.jmaze.geometry.Point3D;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.*;
@@ -121,8 +122,8 @@ public class ModelFromShapes {
 
     private void makePillars() {
         for (Point2DInt center : wallsForPillars.keySet()) {
-            Point3D c3d = new Point3D(center.getX(), center.getY(), 0);
-            double wallWidthInMm = mapper.inverselyMapLengthAt(c3d,
+            Point2DDbl c = new Point2DDbl(center.getX(), center.getY());
+            double wallWidthInMm = mapper.inverselyMapLengthAt(c,
                     sizes.getInnerWallToPixelRatio() * sizes.getCellSizeInmm());
             List<WallEnd> walls = new LinkedList<>(wallsForPillars.get(center));
             PillarMaker pm = new PillarMaker(center, walls, wallWidthInMm);
@@ -162,7 +163,7 @@ public class ModelFromShapes {
             // no new points or edges
         }
     }
-
+/* TODO smazat
     private void computeAltitudes() {
 
         // visit all edges
@@ -191,7 +192,7 @@ public class ModelFromShapes {
 
         }
     }
-
+*/
     private void addVerticalFacesOnEdgesWithAltitudeDifference() {
         List<MEdge> newEdges = new ArrayList<>();
 
@@ -255,12 +256,12 @@ public class ModelFromShapes {
 
     public static MBlock createOneBlockFromFace(MFace f, IMaze3DMapper mapper) {
         assert f instanceof FloorFace;
-        int alt = ((FloorFace) f).getAltitude().getValue();
+        Altitude alt = ((FloorFace) f).getAltitude();
         MBlock block = new MBlock();
         for (MPoint p : f.visitPointsAroundEdges()) {
             assert p instanceof TelescopicPoint;
             TelescopicPoint pp = (TelescopicPoint) p;
-            Point3D pGround = pp.mapPoint(mapper, Altitude.GROUND.getValue());
+            Point3D pGround = pp.mapPoint(mapper, Altitude.GROUND);
             Point3D pCeiling = pp.mapPoint(mapper, alt);
 
             block.addCeilingPoint(pCeiling);

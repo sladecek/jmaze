@@ -1,5 +1,6 @@
 package com.github.sladecek.maze.jmaze.print3d.maze3dmodel;
 
+import com.github.sladecek.maze.jmaze.geometry.Point2DDbl;
 import com.github.sladecek.maze.jmaze.geometry.Point3D;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MEdge;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MPoint;
@@ -19,15 +20,14 @@ public class TelescopicPoint extends MPoint {
     public TelescopicPoint(double planarX, double planarY) {
         super(new Point3D(0, 0, 0));
         this.isExtruded = false;
-        this.planarX = planarX;
-        this.planarY = planarY;
+        this.planar = new Point2DDbl(planarX, planarY);
     }
 
     @Override
     public String toString() {
-        return "{" + planarX + ", " + planarY + "," + getCoord().getZ() + "} ";
+        return "{" + planar.getX() + ", " + planar.getY() + "," + getCoord().getZ() + "} ";
     }
-
+/* TODO smazat
     public void setAltitudesUsingMapper(IMaze3DMapper mapper, int lowAltitude, int highAltitude) {
         if (areAltitudesDefined()) {
             // The point has been extruded already and the coordinates match.
@@ -61,7 +61,7 @@ public class TelescopicPoint extends MPoint {
             rod = new MEdge(this, new MPoint(mapPoint(mapper, lowAltitude)));
         }
     }
-
+*/
 
     public MPoint getOppositeRodPoint() {
         if (rod == null) {
@@ -92,21 +92,15 @@ public class TelescopicPoint extends MPoint {
         return isExtruded;
     }
 
-    public int getLowAltitude() {
-        return lowAltitude;
-    }
 
     public double getPlanarX() {
-        return planarX;
+        return planar.getX();
     }
 
     public double getPlanarY() {
-        return planarY;
+        return planar.getY();
     }
 
-    public int getHighAltitude() {
-        return highAltitude;
-    }
 
     public Altitude getMinAltitude() {
         return minAltitude;
@@ -121,11 +115,7 @@ public class TelescopicPoint extends MPoint {
     }
 
     public Point3D mapPoint(IMaze3DMapper mapper, Altitude altitude) {
-        return mapPoint(mapper, altitude.getValue());
-    }
-
-    public Point3D mapPoint(IMaze3DMapper mapper, int altitude) {
-        return mapper.map(new Point3D(planarX, planarY, altitude));
+        return mapper.map(planar, altitude);
     }
 
     public void stretchAltitude(Altitude a) {
@@ -164,11 +154,12 @@ public class TelescopicPoint extends MPoint {
         MEdge rod; // upward rod, null at upper point
         MPoint lowPoint;
     }
-    private double planarX;
-    private double planarY;
-    private int lowAltitude;  // TODO smazat
+   // private double planarX;
+    //private double planarY;
+    private Point2DDbl planar;
+/*    private int lowAltitude;  // TODO smazat
     private int highAltitude; // TODO smazat
-    private MEdge rod;
+ */   private MEdge rod;
     private boolean isExtruded;
 
     private Altitude minAltitude = Altitude.MAX;

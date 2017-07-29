@@ -5,6 +5,7 @@ import java.security.InvalidParameterException;
 import com.github.sladecek.maze.jmaze.geometry.*;
 import com.github.sladecek.maze.jmaze.print3d.IMaze3DMapper;
 import com.github.sladecek.maze.jmaze.print3d.Maze3DSizes;
+import com.github.sladecek.maze.jmaze.print3d.maze3dmodel.Altitude;
 
 public final class Moebius3dMapper implements IMaze3DMapper {
 
@@ -67,18 +68,17 @@ public final class Moebius3dMapper implements IMaze3DMapper {
         return 1;
     }
 
+    @Override
+    public Point3D map(Point2DDbl image, Altitude altitude) {
+        return null;
+    }
 
     @Override
-    public double inverselyMapLengthAt(Point3D center, double v) {
-        // TODO
+    public double inverselyMapLengthAt(Point2DDbl center, double v) {
         return 0;
     }
 
-    @Override
-    public Point3D map(Point3D image) {
-        // TODO
-        return null;
-    }
+
     private MoebiusStripGeometry geometry;
     private Maze3DSizes sizes;
     private int height;
