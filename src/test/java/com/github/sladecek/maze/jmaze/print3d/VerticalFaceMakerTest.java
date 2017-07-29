@@ -45,6 +45,7 @@ public class VerticalFaceMakerTest {
         // edges would be extruded too.
         MEdge[] myEdges = {eCE, eCN, eCS, eCW};
         for (MEdge e : myEdges) maker.stretchOneEdge(e);
+        maker.setTelescopicPointAltitude();
         maker.makeVerticalEdges();
         for (MEdge e : myEdges) maker.makeVerticalFacesOneEdge(e);
         maker.addNewObjectsBackToModel();
@@ -83,6 +84,7 @@ public class VerticalFaceMakerTest {
         assertEquals(Altitude.FLOOR, pEast.getMinAltitude());
         assertEquals(Altitude.FLOOR, pWest.getMinAltitude());
 
+        maker.setTelescopicPointAltitude();
         maker.makeVerticalEdges();
 
         final double epsilon = 1e-8;
@@ -180,6 +182,7 @@ public class VerticalFaceMakerTest {
         assertEquals(Altitude.FRAME, pSouth.getMinAltitude());
         assertEquals(Altitude.FRAME, pWest.getMinAltitude());
 
+        maker.setTelescopicPointAltitude();
         maker.makeVerticalEdges();
 
         final double epsilon = 1e-8;

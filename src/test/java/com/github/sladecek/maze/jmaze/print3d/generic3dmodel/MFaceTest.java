@@ -5,6 +5,8 @@ import com.github.sladecek.maze.jmaze.geometry.Point3D;
 import org.junit.Test;
 import org.neo4j.cypher.internal.compiler.v2_2.InvalidArgumentException;
 
+import java.util.ArrayList;
+
 import static org.junit.Assert.*;
 
 /**
@@ -52,4 +54,21 @@ public class MFaceTest {
         fail("Exception expected");
     }
 
+    @Test
+    public void testVisit()
+    {
+        MFace f = new MFace();
+        f.addEdge(new MEdge(new MPoint(new Point3D(1.0, 1.0,2.0)), new MPoint(new Point3D(-1.0, -1.0,2.0))));
+        f.addEdge(new MEdge(new MPoint(new Point3D(-1.0, 20.0,2.0)), new MPoint(new Point3D(1.0, 19.0,2.0))));
+        f.addEdge(new MEdge(new MPoint(new Point3D(-1.0, -1.0,2.0)), new MPoint(new Point3D(-1.0, 20.0,2.0))));
+        f.addEdge(new MEdge(new MPoint(new Point3D(1.0, 19.0,2.0)), new MPoint(new Point3D(1.0, 1.0,2.0))));
+        ArrayList<MPoint> p = f.visitPointsAroundEdges();
+        assertEquals(p.size(), 4);
+        final double epsilon=1e-6;
+        assertEquals(0, Point3D.computeDistance( new Point3D(1.0, 1.0,2.0), p.get(0).getCoord()), epsilon);
+        assertEquals(0, Point3D.computeDistance( new Point3D(1.0, 19.0,2.0), p.get(1).getCoord()), epsilon);
+        assertEquals(0, Point3D.computeDistance( new Point3D(-1.0, 20.0,2.0), p.get(2).getCoord()), epsilon);
+        assertEquals(0, Point3D.computeDistance( new Point3D(-1.0, -1.0,2.0), p.get(3).getCoord()), epsilon);
+
+    }
 }

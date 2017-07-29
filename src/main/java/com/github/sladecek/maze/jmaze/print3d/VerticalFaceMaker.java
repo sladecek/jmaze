@@ -41,18 +41,26 @@ public class VerticalFaceMaker {
             TelescopicPoint tp = (TelescopicPoint) p;
             makeVerticalEdgesOnePoint(tp);
         }
-
-
     }
 
-    private void makeVerticalEdgesOnePoint(TelescopicPoint tp) {
-        if (tp.getPlanarX() == 60  && tp.getPlanarY() == 9.8 ) {
-            System.out.println("***");
+    public void setTelescopicPointAltitude() {
+        for (MPoint p : m.getPoints()) {
+            assert p instanceof TelescopicPoint;
+            TelescopicPoint tp = (TelescopicPoint) p;
+            setTelescopicPointAltitudeOnePoint(tp);
         }
+    }
 
+    private void setTelescopicPointAltitudeOnePoint(TelescopicPoint tp) {
         // Max altitude defines the z coordinate of the TelescopicPoint itself.
         tp.setOwnAltitude(mapper);
+    }
 
+
+    private void makeVerticalEdgesOnePoint(TelescopicPoint tp) {
+    /* TODO smazat    // Max altitude defines the z coordinate of the TelescopicPoint itself.
+        tp.setOwnAltitude(mapper);
+*/
         MPoint upperPoint = tp;
         Altitude upperAlt = tp.getMaxAltitude();
         tp.addSection(upperAlt, tp, null);
@@ -176,7 +184,7 @@ public class VerticalFaceMaker {
     }
 
 
-    private final IMaze3DMapper mapper;
+        private final IMaze3DMapper mapper;
 
     private Model3d m;
 

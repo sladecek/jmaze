@@ -36,39 +36,38 @@ public final class Rectangular2DMaze extends Maze implements
         // rooms
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                int id = addRoom();
-                assert id == y * width + x : "Inconsistent room numbering";
+                int roomId = addRoom();
+                assert roomId == y * width + x : "Inconsistent room numbering";
                 final int x1 = x * rsp + rsp / 2;
                 final int y1 = y * rsp + rsp / 2;
                 final Point2D position = new Point2D(x1, y1);
-              final MarkShape mark = new MarkShape(id, position);
+                final MarkShape mark = new MarkShape(roomId, position);
                 addShape(mark);
-/* TODO         final FloorShape floor = new FloorShape(id, position);
+                final FloorShape floor = new FloorShape(roomId, position);
                 addShape(floor);
-                */
             }
         }
 
         // walls - east/west
         for (int y = 0; y < height; y++) {
             for (int x = -1; x < width; x++) {
-                int roomWest = y * width + x;
-                int roomEast = roomWest + 1;
+                int roomIdWest = y * width + x;
+                int roomIdEast = roomIdWest + 1;
                 final Point2D p1 = new Point2D(rsp * (x + 1), rsp * y);
                 final Point2D p2 = new Point2D(rsp * (x + 1), rsp * (y + 1));
 
                 if (x >= width - 1) {
                     // east outer wall
-                    addShape(WallShape.newOuterWall(p1, p2, roomWest, -1));
+                    addShape(WallShape.newOuterWall(p1, p2, roomIdWest, -1));
 
                 } else if (x < 0) {
                     // west outer wall
-                    addShape(WallShape.newOuterWall(p1, p2, -1, roomEast));
+                    addShape(WallShape.newOuterWall(p1, p2, -1, roomIdEast));
                 } else {
 
                     // inner wall
-                    int id = addWall(roomWest, roomEast);
-                    addShape(WallShape.newInnerWall(id, p1, p2, roomWest, roomEast));
+                    int id = addWall(roomIdWest, roomIdEast);
+                    addShape(WallShape.newInnerWall(id, p1, p2, roomIdWest, roomIdEast));
 
                 }
             }
@@ -77,20 +76,20 @@ public final class Rectangular2DMaze extends Maze implements
         // walls - south/north
         for (int y = -1; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                int roomNorth = y * width + x;
-                int roomSouth = roomNorth + width;
+                int roomIdNorth = y * width + x;
+                int roomIdSouth = roomIdNorth + width;
                 final Point2D p1 = new Point2D(rsp * x, rsp * (y + 1));
                 final Point2D p2 = new Point2D(rsp * (x + 1), rsp * (y + 1));
 
                 if (y < 0) {
-                    addShape(WallShape.newOuterWall(p1, p2, roomSouth, -1));
+                    addShape(WallShape.newOuterWall(p1, p2, roomIdSouth, -1));
                 } else if (y >= height - 1) {
                     // south outer wall
-                    addShape(WallShape.newOuterWall(p1, p2, -1, roomNorth));
+                    addShape(WallShape.newOuterWall(p1, p2, -1, roomIdNorth));
                 } else {
                     // inner wall
-                    int id = addWall(roomNorth, roomSouth);
-                    addShape(WallShape.newInnerWall(id, p1, p2, roomSouth, roomNorth));
+                    int id = addWall(roomIdNorth, roomIdSouth);
+                    addShape(WallShape.newInnerWall(id, p1, p2, roomIdSouth, roomIdNorth));
                 }
             }
         }

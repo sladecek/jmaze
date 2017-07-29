@@ -56,7 +56,7 @@ public class MRoom extends FloorFace {
                     unfinished.stream().filter((co) -> co.getWallEnd1().getMWall() == w2).findFirst();
 
             if (!next.isPresent()) {
-                throw new InternalError("Room face edges are not cyclic " + w2);
+                throw new InternalError("Room edges are not cyclic " + w2);
             }
             current = next.get();
         }

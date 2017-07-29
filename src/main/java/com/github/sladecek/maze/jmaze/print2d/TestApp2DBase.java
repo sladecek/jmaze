@@ -68,14 +68,16 @@ public class TestApp2DBase {
             // print 3D
             double approxRoomSizeInmm = 3;
             Maze3DSizes sizes = new Maze3DSizes();
+            sizes.setInnerWallToPixelRatio(1);
             sizes.setCellSizeInmm(2);  // TODO
 
             IPrintStyle colors = new DefaultPrintStyle();
 
             IMaze3DMapper mapper = new PlanarMapper();
             Model3d model = ModelFromShapes.make(shapes, mapper, sizes, colors);
+            System.out.println(model);
 
-            final boolean printInJs = true;
+            final boolean printInJs = false;
             final boolean printInScad = true;
             final boolean printStl = true;
 

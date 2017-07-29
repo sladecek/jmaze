@@ -27,14 +27,10 @@ public class MFace {
     }
 
     public ArrayList<MPoint> visitPointsAroundEdges() {
-        if (getEdges().size() == 4 && (!(this instanceof MWall)) && (!(this instanceof MRoom))) {
-            System.out.println("*++++");
-        }
         ArrayList<MPoint> result = new ArrayList<>();
         ArrayList<MEdge> unfinished = new ArrayList<>();
         unfinished.addAll(getEdges());
 
-        System.out.println("------------------------------------------");
         if (!unfinished.isEmpty()) {
             MEdge e0 = unfinished.get(0);
             unfinished.remove(e0);

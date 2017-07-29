@@ -16,8 +16,8 @@ public final class Moebius3dMapper implements IMaze3DMapper {
             throw new InvalidParameterException(
                     "GridMapper - maze width must be even");
         }
-        innerWallThicknessInmm = sizes.getCellSizeInmm() * sizes.getInnerWallToCellRatio();
-        outerWallThicknessInmm = sizes.getCellSizeInmm() * sizes.getOuterWallToCellRatio();
+        innerWallThicknessInmm = sizes.getCellSizeInmm() * sizes.getInnerWallToPixelRatio();
+        outerWallThicknessInmm = sizes.getCellSizeInmm() * sizes.getOuterWallToPixelRatio();
         heightInmm = sizes.getCellSizeInmm() * height + innerWallThicknessInmm
                 * (height - 1) + 2 * outerWallThicknessInmm;
 

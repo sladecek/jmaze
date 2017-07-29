@@ -49,26 +49,14 @@ public class ModelFromShapes {
     }
 
     private void extrudeTo3D() {
-        if (false) {
-            // TODO smazat
-            // compute and set altitudes
-            computeAltitudes();
-
-            // extrude blocks first - the model will be modified by adding vertical faces
-            createBlocks();
-
-            // add vertical faces
-            addVerticalFacesOnEdgesWithAltitudeDifference();
-        } else {
-
             createBlocks();
 
             VerticalFaceMaker maker = new VerticalFaceMaker(m, mapper);
             maker.stretchTelescopicPoints();
+            maker.setTelescopicPointAltitude();
             maker.makeVerticalEdges();
             maker.makeVerticalFaces();
             maker.addNewObjectsBackToModel();
-        }
 
     }
 
@@ -132,7 +120,7 @@ public class ModelFromShapes {
         for (Point2D center : wallsForPillars.keySet()) {
             Point3D c3d = new Point3D(center.getX(), center.getY(), 0);
             double wallWidthInMm = mapper.inverselyMapLengthAt(c3d,
-                    sizes.getInnerWallToCellRatio() * sizes.getCellSizeInmm());
+                    sizes.getInnerWallToPixelRatio() * sizes.getCellSizeInmm());
             List<WallEnd> walls = new LinkedList<>(wallsForPillars.get(center));
             PillarMaker pm = new PillarMaker(center, walls, wallWidthInMm);
             pm.makePillar();
@@ -257,20 +245,25 @@ public class ModelFromShapes {
 
     private void createBlocks() {
         for (MFace f : m.getFaces()) {
-            assert f instanceof FloorFace;
-            int alt = ((FloorFace) f).getAltitude().getValue();
-            MBlock block = new MBlock();
-            for (MPoint p : f.visitPointsAroundEdges()) {
-                assert p instanceof TelescopicPoint;
-                TelescopicPoint pp = (TelescopicPoint) p;
-                Point3D pGround = pp.mapPoint(mapper, Altitude.GROUND.getValue());
-                Point3D pCeiling = pp.mapPoint(mapper, alt);
-
-                block.addCeilingPoint(pCeiling);
-                block.addGroundPoint(pGround);
-            }
+            MBlock block = createOneBlockFromFace(f, mapper);
             m.addBlock(block);
         }
+    }
+
+    public static MBlock createOneBlockFromFace(MFace f, IMaze3DMapper mapper) {
+        assert f instanceof FloorFace;
+        int alt = ((FloorFace) f).getAltitude().getValue();
+        MBlock block = new MBlock();
+        for (MPoint p : f.visitPointsAroundEdges()) {
+            assert p instanceof TelescopicPoint;
+            TelescopicPoint pp = (TelescopicPoint) p;
+            Point3D pGround = pp.mapPoint(mapper, Altitude.GROUND.getValue());
+            Point3D pCeiling = pp.mapPoint(mapper, alt);
+
+            block.addCeilingPoint(pCeiling);
+            block.addGroundPoint(pGround);
+        }
+        return block;
     }
 
     private static final Logger LOG = Logger.getLogger("maze.jmaze");

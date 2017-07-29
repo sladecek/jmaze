@@ -1,3 +1,5 @@
+// TODO odstranit nepouzite vlastnosti po zmene 3d mapperu
+
 package com.github.sladecek.maze.jmaze.print3d;
 
 public final class Maze3DSizes {
@@ -18,20 +20,20 @@ public final class Maze3DSizes {
         this.baseThicknessInmm = baseThicknessInmm;
     }
 
-    public double getInnerWallToCellRatio() {
-        return innerWallToCellRatio;
+    public double getInnerWallToPixelRatio() {
+        return innerWallToPixelRatio;
     }
 
-    public void setInnerWallToCellRatio(double innerWallToCellRatio) {
-        this.innerWallToCellRatio = innerWallToCellRatio;
+    public void setInnerWallToPixelRatio(double innerWallToPixelRatio) {
+        this.innerWallToPixelRatio = innerWallToPixelRatio;
     }
 
-    public double getOuterWallToCellRatio() {
-        return outerWallToCellRatio;
+    public double getOuterWallToPixelRatio() {
+        return outerWallToPixelRatio;
     }
 
-    public void setOuterWallToCellRatio(double outerWallToCellRatio) {
-        this.outerWallToCellRatio = outerWallToCellRatio;
+    public void setOuterWallToPixelRatio(double outerWallToPixelRatio) {
+        this.outerWallToPixelRatio = outerWallToPixelRatio;
     }
 
     public double getWallHeightInmm() {
@@ -45,8 +47,8 @@ public final class Maze3DSizes {
 
     private double cellSizeInmm = 4;
     private double baseThicknessInmm = 1;
-    private double innerWallToCellRatio = 0.2;
-    private double outerWallToCellRatio = 0.4;
+    private double innerWallToPixelRatio = 0.2;
+    private double outerWallToPixelRatio = 0.4;
     private double wallHeightInmm = 5;
 
 }

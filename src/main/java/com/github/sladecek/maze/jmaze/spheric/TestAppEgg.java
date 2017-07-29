@@ -16,7 +16,6 @@ import com.github.sladecek.maze.jmaze.generator.MazeRealization;
 import com.github.sladecek.maze.jmaze.print3d.IMaze3DMapper;
 import com.github.sladecek.maze.jmaze.print3d.Maze3DSizes;
 import com.github.sladecek.maze.jmaze.print3d.ModelFromShapes;
-import com.github.sladecek.maze.jmaze.print3d.PlanarMapper;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.Model3d;
 import com.github.sladecek.maze.jmaze.print3d.output.OpenScad3DPrinter;
 import com.github.sladecek.maze.jmaze.print3d.output.StlMazePrinter;
@@ -25,7 +24,6 @@ import com.github.sladecek.maze.jmaze.printstyle.DefaultPrintStyle;
 import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
-import com.github.sladecek.maze.jmaze.util.MazeGenerationException;
 
 
 final class TestAppEgg {
@@ -61,7 +59,7 @@ final class TestAppEgg {
             sizes.setCellSizeInmm(0.1);
             sizes.setBaseThicknessInmm(0.03);
             sizes.setWallHeightInmm(0.3);
-            sizes.setInnerWallToCellRatio(0.05);
+            sizes.setInnerWallToPixelRatio(0.05);
 
             IPrintStyle colors = new DefaultPrintStyle();
 
