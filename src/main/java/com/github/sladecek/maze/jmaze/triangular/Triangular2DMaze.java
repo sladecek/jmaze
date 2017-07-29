@@ -23,15 +23,8 @@ public class Triangular2DMaze extends Maze implements IMazeStructure {
         final int height = size;
         final int width = 2 * size;
         final boolean isPolar = false;
-        setContext(new ShapeContext(isPolar, rsy * height, rsx * width/*, 12, 20*/));
+        setContext(new ShapeContext(isPolar, rsy * height, rsx * width));
 
-
-        // outer walls
-/*
-        addShape(WallShape.newOuterWall(new Point2DInt(rsx * size, 0), new Point2DInt(0, rsy * size)));
-        addShape(WallShape.newOuterWall(new Point2DInt(0, rsy * size), new Point2DInt(2 * size * rsx, rsy * size)));
-        addShape(WallShape.newOuterWall(new Point2DInt(2 * size * rsx, rsy * size), new Point2DInt(rsx * size, 0)));
-*/
         int prevFirst = -1;
         int lastRoom = -1;
         int myFirst = -1;
@@ -44,15 +37,16 @@ public class Triangular2DMaze extends Maze implements IMazeStructure {
 
                 // make a row of rooms  and vertical walls among them
                 for (int j = 0; j < roomsInRow + 1; j++) {
-
                     int x1 = size + j - y - 1;
                     int x2 = size + j - y;
                     int y1 = y;
                     int y2 = y;
+                    boolean newRoomIsRight = true;
                     if (j % 2 == 0) {
                         y1++;
                     } else {
                         y2++;
+                        newRoomIsRight = false;
                     }
 
                     int r = -1;
@@ -63,20 +57,23 @@ public class Triangular2DMaze extends Maze implements IMazeStructure {
                             myFirst = r;
                         }
                         lastRoom = r;
-                        LOGGER.info("addRoom " + r + " y=" + y + " j=" + j + " prevRoom=" + prevRoom + " myFirst=" + myFirst + " prevFirst=" + prevFirst + " lastRoom=" + lastRoom);
+                        LOGGER.info("addRoom " + r + " y=" + y + " j=" + j + " prevRoom=" + prevRoom +
+                                " myFirst=" + myFirst + " prevFirst=" + prevFirst + " lastRoom=" + lastRoom);
 
 
                         final MarkShape floor = new MarkShape(r, new Point2DInt(rsx * x2, rsy * y + rsy / 2));
                         addShape(floor);
                     }
 
-                    //if (prevRoom != 0)
-                    {
-                        addWallAndShape(prevRoom, r, x1, x2, y1, y2);
+                    if (newRoomIsRight) {
+                        addWallAndWallShape(r, prevRoom, x1, x2, y1, y2);
+                    } else {
+                        addWallAndWallShape(prevRoom, r, x1, x2, y1, y2);
                     }
-
                     prevRoom = r;
                 }
+            } else {
+                prevFirst = myFirst;
             }
             // connect rooms to upper row by horizontal walls
             if (prevFirst >= 0) {
@@ -85,9 +82,9 @@ public class Triangular2DMaze extends Maze implements IMazeStructure {
                     int x = size + j - y - 1;
                     int r = -1;
                     if (y < size) {
-                        r=myFirst + j;
+                        r = myFirst + j;
                     }
-                    addWallAndShape(prevFirst + i, r, x, x + 2, y, y);
+                    addWallAndWallShape(r, prevFirst + i, x, x + 2, y, y);
                     i += 2;
                 }
             }
@@ -98,23 +95,26 @@ public class Triangular2DMaze extends Maze implements IMazeStructure {
         setTargetRoom(lastRoom);
     }
 
-    private void addWallAndShape(int prevRoom, int room, int x1, int x2,
-                                 int y1, int y2) {
+    private void addWallAndWallShape(int roomLeft, int roomRight, int x1, int x2,
+                                     int y1, int y2) {
 
         final Point2DInt p1 = new Point2DInt(rsx * x1, rsy * y1);
         final Point2DInt p2 = new Point2DInt(rsx * x2, rsy * y2);
-        if (prevRoom >= 0 && room >= 0) {
-            int id = addWall(prevRoom, room);
-            addShape(WallShape.newInnerWall(id, p1, p2));
-            LOGGER.info("addWallAndShape room1=" + prevRoom + " room2=" + room + " y1=" + y1 + " y2=" + y2 + " x1=" + x1 + " x2=" + x2);
+        LOGGER.info("addWallAndWallShape roomRight=" + roomRight + " roomLeft=" +
+                roomLeft + " y1=" + y1 + " y2=" + y2 + " x1=" + x1 + " x2=" + x2);
+
+        if (roomRight >= 0 && roomLeft >= 0) {
+            int id = addWall(roomRight, roomLeft);
+            addShape(WallShape.newInnerWall(id, p1, p2, roomRight, roomLeft));
         } else {
-            addShape(WallShape.newOuterWall(p1, p2));
+            addShape(WallShape.newOuterWall(p1, p2, roomRight, roomLeft));
         }
     }
 
     public int getSize() {
         return size;
     }
+
     private static final Logger LOGGER = Logger.getLogger("maze.jmaze");
     private final int rsx = 12;
     private final int rsy = 20;
