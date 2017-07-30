@@ -47,6 +47,20 @@ public final class Point2DDbl {
                 Math.pow(p1.getY()-p2.getY(), 2)
         );
     }
+
+    public Point2DDbl minus(Point2DDbl other) {
+        return new Point2DDbl(x - other.x, y - other.y);
+    }
+
+
+    public double getCartesianLength() {
+        return Math.sqrt(x * x + y * y);
+    }
+
+    public double getCartesianAngle() {
+        return Math.atan2(y, x);
+    }
+
     private double x;
     private double y;
 

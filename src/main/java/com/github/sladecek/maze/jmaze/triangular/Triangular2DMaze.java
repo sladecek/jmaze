@@ -123,4 +123,5 @@ public class Triangular2DMaze extends Maze implements IMazeStructure {
     private final int rsx = 12;
     private final int rsy = 20;
     private int size;
+
 }

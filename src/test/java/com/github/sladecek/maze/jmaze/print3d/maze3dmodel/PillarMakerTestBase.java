@@ -3,6 +3,9 @@ package com.github.sladecek.maze.jmaze.print3d.maze3dmodel;
 import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 import com.github.sladecek.maze.jmaze.print3d.PillarMaker;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MEdge;
+import com.github.sladecek.maze.jmaze.print3d.maze3dmodel.MWall;
+import com.github.sladecek.maze.jmaze.print3d.maze3dmodel.TelescopicPoint;
+import com.github.sladecek.maze.jmaze.print3d.maze3dmodel.WallEnd;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
 
 import java.util.ArrayList;
@@ -28,7 +31,7 @@ public class PillarMakerTestBase {
             walls.add(w);
         }
         final double wallWidthInMm = 1.5;
-        PillarMaker pm = new PillarMaker(center, walls, wallWidthInMm);
+        PillarMaker pm = new PillarMaker(new TrivialCoordinateSystem(), center, walls, wallWidthInMm);
         pm.makePillar();
 
         ArrayList<MEdge> baseEdges = pm.getBase().getEdges();

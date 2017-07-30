@@ -56,8 +56,8 @@ public class ModelFromShapesTestBase {
                 .filter((f) -> (f instanceof MPillar))
                 .map((f) -> (MPillar) f)
                 .sorted(Comparator
-                        .comparingInt((MPillar po) -> po.getCenter().getY())
-                        .thenComparingInt((MPillar po) -> po.getCenter().getX()))
+                        .comparingDouble((MPillar po) -> po.getCenter().getY())
+                        .thenComparingDouble((MPillar po) -> po.getCenter().getX()))
                 .collect(Collectors.toList());
 
         walls = r.getFaces()

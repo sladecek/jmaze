@@ -103,17 +103,4 @@ public class Triangular2DMazeTest {
 		*/
 	}
 
-/*
- * TODO
-	@Test
-	public void testGetShapes() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetContext() {
-		fail("Not yet implemented");
-	}
-
-*/
 }

@@ -6,6 +6,8 @@ import com.github.sladecek.maze.jmaze.geometry.*;
 import com.github.sladecek.maze.jmaze.print3d.IMaze3DMapper;
 import com.github.sladecek.maze.jmaze.print3d.Maze3DSizes;
 import com.github.sladecek.maze.jmaze.print3d.maze3dmodel.Altitude;
+import com.github.sladecek.maze.jmaze.print3d.maze3dmodel.ILocalCoordinateSystem;
+import com.github.sladecek.maze.jmaze.print3d.maze3dmodel.TrivialCoordinateSystem;
 
 public final class Moebius3dMapper implements IMaze3DMapper {
 
@@ -76,6 +78,11 @@ public final class Moebius3dMapper implements IMaze3DMapper {
     @Override
     public double inverselyMapLengthAt(Point2DDbl center, double v) {
         return 0;
+    }
+
+    @Override
+    public ILocalCoordinateSystem createLocalCoordinateSystem(Point2DInt center) {
+        return new TrivialCoordinateSystem();
     }
 
 

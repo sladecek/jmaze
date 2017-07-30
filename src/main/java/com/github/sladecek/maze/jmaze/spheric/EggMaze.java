@@ -144,7 +144,7 @@ public final class EggMaze extends Maze implements IMazeStructure {
                 // polar layers have only one room
                 r = addRoom();
             }
-            Point2DInt center = new Point2DInt(ix, iy * roomMapRatio);
+            Point2DInt center = new Point2DInt(ix*res+res/2, (iy * roomMapRatio)*res+res/2);
             final MarkShape mark = new MarkShape(r, center);
             addShape(mark);
             final FloorShape floor = new FloorShape(r, center);
@@ -194,7 +194,6 @@ public final class EggMaze extends Maze implements IMazeStructure {
             int id = addWall(leftRoom, rightRoom);
             addWallShape(equatorCellCnt, i, i + 1, 0, 0, id, rightRoom, leftRoom);
         }
-
     }
 
 
@@ -234,8 +233,8 @@ public final class EggMaze extends Maze implements IMazeStructure {
         final int roomMapRatio = equatorCellCnt / roomCntThisLayer;
         final int y1 = (yr1 * roomMapRatio) % equatorCellCnt;
         final int y2 = (yr2 * roomMapRatio) % equatorCellCnt;
-        final Point2DInt p1 = new Point2DInt(x1, y1);
-        final Point2DInt p2 = new Point2DInt(x2, y2);
+        final Point2DInt p1 = new Point2DInt(x1*res, y1*res);
+        final Point2DInt p2 = new Point2DInt(x2*res, y2*res);
         LOG.log(Level.INFO, "addWallShape p1="+p1+" p2="+p2+" right="+rightRoom+" left="+leftRoom);
         addShape(WallShape.newInnerWall(id, p1, p2, rightRoom, leftRoom));
     }
@@ -264,4 +263,6 @@ public final class EggMaze extends Maze implements IMazeStructure {
     private EggMazeHemisphere south;
     private double baseRoomSizeInmm;
 
+
+    public static int res = 10;
 }

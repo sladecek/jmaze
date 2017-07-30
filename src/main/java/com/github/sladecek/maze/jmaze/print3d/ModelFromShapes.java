@@ -126,7 +126,7 @@ public class ModelFromShapes {
             double wallWidthInMm = mapper.inverselyMapLengthAt(c,
                     sizes.getInnerWallToPixelRatio() * sizes.getCellSizeInmm());
             List<WallEnd> walls = new LinkedList<>(wallsForPillars.get(center));
-            PillarMaker pm = new PillarMaker(center, walls, wallWidthInMm);
+            PillarMaker pm = new PillarMaker(mapper.createLocalCoordinateSystem(center), center, walls, wallWidthInMm);
             pm.makePillar();
             pillars.add(pm.getBase());
             takeRoomCornersFromPillar(pm.getCorners());

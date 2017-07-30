@@ -3,6 +3,7 @@ package com.github.sladecek.maze.jmaze.spheric;
 import com.github.sladecek.maze.jmaze.geometry.*;
 import com.github.sladecek.maze.jmaze.print3d.IMaze3DMapper;
 import com.github.sladecek.maze.jmaze.print3d.maze3dmodel.Altitude;
+import com.github.sladecek.maze.jmaze.print3d.maze3dmodel.ILocalCoordinateSystem;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,17 +30,15 @@ public final class Egg3dMapper implements IMaze3DMapper {
     @Override
     public Point3D map(Point2DDbl image, Altitude altitude) {
 
-        final double x = image.getX();
-        final double y = image.getY();
-        int cellVertical = (int) Math.round(x);
-        int cellHorizontal = (int) Math.round(y);
+        final double x = image.getX()/EggMaze.res;
+        final double y = image.getY()/EggMaze.res;
+        int cellVertical = (int) Math.round(y);
+        int cellHorizontal = (int) Math.round(x);
 
-        double offsetV = x - cellVertical;
-        double offsetH = y - cellHorizontal;
+        double offsetV = y - cellVertical;
+        double offsetH = x - cellHorizontal;
         double offsetA = altitude.getValue();
 
-        LOG.log(Level.INFO, "mapPoint v=" + cellVertical + " h=" + cellHorizontal
-                + " ov=" + offsetV + " oh=" + offsetH);
         final int eqCnt = maze.getEquatorCellCnt();
 
         // South hemisphere has separate data structure.
@@ -102,6 +101,10 @@ public final class Egg3dMapper implements IMaze3DMapper {
         double zzzz = -yyy * Math.sin(angle) - offsetV * Math.cos(angle);
         Point3D result = new Point3D(xxx, yyyy, zzzz);
 
+
+        LOG.log(Level.INFO, "mapPoint "+image+" v=" + cellVertical + "+"+ offsetV+" h=" + cellHorizontal
+                + " +" + offsetH+" =>"+result);
+
         return result;
     }
 
@@ -155,6 +158,37 @@ public final class Egg3dMapper implements IMaze3DMapper {
         double distance = Point3D.computeDistance(p1, p2);
         return v*epsilon/distance;
 
+    }
+
+    class EggLocalCoordinateSystem implements ILocalCoordinateSystem {
+        public EggLocalCoordinateSystem(Point2DInt center, int eqCnt) {
+            this.center = center;
+            this.maxY = eqCnt*EggMaze.res;
+        }
+
+        @Override
+        public Point2DDbl transformToLocal(Point2DDbl image) {
+            // There is a sew at y = 0. Any positive coordinate y can be also represented as negative y-maxY.
+            // Select the nearest one.
+            double deltaY = image.getY() - center.getY();
+            if (deltaY > maxY/2) {
+                return new Point2DDbl(image.getX(), image.getY()-maxY);
+            }
+            if (deltaY < -maxY/2 ) {
+                return new Point2DDbl(image.getX(), image.getY()+maxY);
+            }
+            return new Point2DDbl(image);
+        }
+
+        private Point2DInt center;
+        private double maxY;
+    }
+
+    @Override
+    public ILocalCoordinateSystem createLocalCoordinateSystem(Point2DInt center) {
+
+        final int eqCnt = maze.getEquatorCellCnt();
+        return new EggLocalCoordinateSystem(center, eqCnt);
     }
 
 

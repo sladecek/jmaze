@@ -1,5 +1,6 @@
 package com.github.sladecek.maze.jmaze.print3d;
 
+import com.github.sladecek.maze.jmaze.geometry.Point2DDbl;
 import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 import com.github.sladecek.maze.jmaze.geometry.Point3D;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MEdge;
@@ -15,8 +16,9 @@ import java.util.logging.Logger;
  * Creates pillars from walls.
  */
 public class PillarMaker {
-    public PillarMaker(Point2DInt center, List<WallEnd> wallEnds, double wallWidthInMm) {
-        this.center = center;
+    public PillarMaker(ILocalCoordinateSystem cs, Point2DInt center, List<WallEnd> wallEnds, double wallWidthInMm) {
+        this.cs = cs;
+        this.center = center.toDouble();
         this.wallEnds = wallEnds;
         this.unsortedWalls = new LinkedList<>();
         unsortedWalls.addAll(wallEnds);
@@ -52,7 +54,7 @@ public class PillarMaker {
             WallEnd current = first;
             RoomCorner corner = addWallAndCreateCorner(current);
             while (!unsortedWalls.isEmpty()) {
-                Optional<WallEnd> r = findFollower(current);
+                Optional<WallEnd> r = findTheOtherWallInTheSameRoom(current);
                 if (r.isPresent()) {
                     current = r.get();
                     corner.setWallEnd2(current);
@@ -90,10 +92,10 @@ public class PillarMaker {
     }
 
     private Point3D computeIntersection(Point2DInt p1, Point2DInt p2) {
-        Point2DInt p1centered = p1.minus(center);
-        Point2DInt p2centered = p2.minus(center);
-        double phi1 = p1centered.getCartesianAngle();
-        double phi2 = p2centered.getCartesianAngle();
+        Point2DDbl p1local = cs.transformToLocal(p1.toDouble()).minus(center);
+        Point2DDbl p2local = cs.transformToLocal(p2.toDouble()).minus(center);
+        double phi1 = p1local.getCartesianAngle();
+        double phi2 = p2local.getCartesianAngle();
         double c1 = Math.cos(phi1);
         double s1 = Math.sin(phi1);
         double c2 = Math.cos(phi2);
@@ -133,8 +135,8 @@ public class PillarMaker {
         return corners;
     }
 
-    private Optional<WallEnd> findFollower(WallEnd current) {
-        LOG.info(".....findFollower  current="+current.getWallShape()+" leftFaceId="+current.getLeftFaceId()+" p1Pillar="+current.isP1Pilar());
+    private Optional<WallEnd> findTheOtherWallInTheSameRoom(WallEnd current) {
+        LOG.info(".....findTheOtherWallInTheSameRoom  current="+current.getWallShape()+" leftFaceId="+current.getLeftFaceId()+" p1Pillar="+current.isP1Pilar());
         for (WallEnd b : unsortedWalls) {
             LOG.info("........b="+b.getWallShape()+" rightFaceId="+b.getRightFaceId()+" p1Pillar="+b.isP1Pilar());
             if (current.getLeftFaceId() == b.getRightFaceId()) {
@@ -144,9 +146,11 @@ public class PillarMaker {
         return Optional.empty();
     }
 
+    private final ILocalCoordinateSystem cs;
+
     private List<WallEnd> wallEnds;
     private LinkedList<WallEnd> unsortedWalls;
-    private Point2DInt center;
+    private Point2DDbl center;
     private double wallWidthInMm;
     private MPillar base;
     private ArrayList<WallEnd> walls;
@@ -154,6 +158,6 @@ public class PillarMaker {
     private ArrayList<MPoint> intersections = new ArrayList<>();
 
 
-    private static final Logger LOG = Logger.getLogger("maze");
+    private static final Logger LOG = Logger.getLogger("maze.jmaze");
 
 }

@@ -59,7 +59,8 @@ final class TestAppEgg {
             sizes.setCellSizeInmm(0.1);
             sizes.setBaseThicknessInmm(0.03);
             sizes.setWallHeightInmm(0.3);
-            sizes.setInnerWallToPixelRatio(0.05);
+
+            sizes.setInnerWallToPixelRatio(5);
 
             IPrintStyle colors = new DefaultPrintStyle();
 

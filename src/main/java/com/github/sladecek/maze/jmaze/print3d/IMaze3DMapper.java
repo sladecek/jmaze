@@ -2,6 +2,7 @@ package com.github.sladecek.maze.jmaze.print3d;
 
 import com.github.sladecek.maze.jmaze.geometry.*;
 import com.github.sladecek.maze.jmaze.print3d.maze3dmodel.Altitude;
+import com.github.sladecek.maze.jmaze.print3d.maze3dmodel.ILocalCoordinateSystem;
 
 /**
  * Map planar maze coordinates into 3D points.
@@ -9,4 +10,6 @@ import com.github.sladecek.maze.jmaze.print3d.maze3dmodel.Altitude;
 public interface IMaze3DMapper {
     Point3D map(Point2DDbl image, Altitude altitude);
     double inverselyMapLengthAt(Point2DDbl center, double v);
+
+    ILocalCoordinateSystem createLocalCoordinateSystem(Point2DInt center);
 }

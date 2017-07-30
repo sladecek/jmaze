@@ -19,6 +19,10 @@ import java.util.EnumMap;
 public class TelescopicPoint extends MPoint {
     public TelescopicPoint(double planarX, double planarY) {
         super(new Point3D(0, 0, 0));
+        if (Double.isInfinite(planarX) || Double.isInfinite(planarY)) {
+            throw new IllegalArgumentException("Coordinates must be finite.");
+        }
+
         this.isExtruded = false;
         this.planar = new Point2DDbl(planarX, planarY);
     }

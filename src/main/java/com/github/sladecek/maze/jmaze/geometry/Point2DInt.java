@@ -23,14 +23,6 @@ public final class Point2DInt implements  Comparable<Point2DInt> {
         return y;
     }
 
-    public double getCartesianLength() {
-        return Math.sqrt(x * x + y * y);
-    }
-
-    public double getCartesianAngle() {
-        return Math.atan2(y, x);
-    }
-
     public int getAngle() {
         return x;
     }
@@ -55,6 +47,10 @@ public final class Point2DInt implements  Comparable<Point2DInt> {
             return Integer.compare(this.getX(), p.getX());
         }
         return cx;
+    }
+
+    public Point2DDbl toDouble() {
+        return new Point2DDbl(x,y);
     }
 
     public static final int ANGLE_2PI = 0x1000000;

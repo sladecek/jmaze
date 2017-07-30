@@ -1,14 +1,6 @@
 package com.github.sladecek.maze.jmaze.print3d.maze3dmodel;
 
-import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
-import com.github.sladecek.maze.jmaze.print3d.PillarMaker;
-import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MEdge;
-import com.github.sladecek.maze.jmaze.shapes.WallShape;
 import org.junit.Test;
-
-import java.util.ArrayList;
-
-import static org.junit.Assert.*;
 
 /**
  * Test for pillar maker.
