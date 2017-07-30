@@ -8,15 +8,14 @@ import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 import com.github.sladecek.maze.jmaze.geometry.SouthNorth;
 import com.github.sladecek.maze.jmaze.maze.IMazeStructure;
 import com.github.sladecek.maze.jmaze.maze.Maze;
+import com.github.sladecek.maze.jmaze.shapes.FloorShape;
 import com.github.sladecek.maze.jmaze.shapes.MarkShape;
 
 import com.github.sladecek.maze.jmaze.shapes.ShapeContext;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
 
 /**
- * 
  * Rooms and walls of a maze on an egg-like shape.
- *
  */
 public final class EggMaze extends Maze implements IMazeStructure {
 
@@ -37,8 +36,7 @@ public final class EggMaze extends Maze implements IMazeStructure {
         }
 
         // Build topological structure of the maze and maze shapes at the same
-        // time.
-        // all walls will be generated
+        // time. All walls will be generated.
         buildMaze();
 
     }
@@ -134,7 +132,7 @@ public final class EggMaze extends Maze implements IMazeStructure {
     }
 
     private void generateRowOfRooms(EggMazeHemisphere hemisphere, int ix, int cntThis, int cntNext,
-            boolean isPolarLayer) {
+                                    boolean isPolarLayer) {
         final int thisNextRatio = cntThis / cntNext;
         final int roomMapRatio = equatorCellCnt / cntThis;
         for (int iy = 0; iy < cntThis; iy++) {
@@ -147,10 +145,10 @@ public final class EggMaze extends Maze implements IMazeStructure {
                 r = addRoom();
             }
             Point2DInt center = new Point2DInt(ix, iy * roomMapRatio);
-            final MarkShape floor = new MarkShape(r, center);
-
+            final MarkShape mark = new MarkShape(r, center);
+            addShape(mark);
+            final FloorShape floor = new FloorShape(r, center);
             addShape(floor);
-
         }
 
     }
@@ -172,8 +170,14 @@ public final class EggMaze extends Maze implements IMazeStructure {
             for (int roomNext = 0; roomNext < roomCntNext; roomNext++) {
                 for (int j = 0; j < roomCntRatio; j++) {
                     int roomThis = roomNext * roomCntRatio + j;
-                    int id = addWall(gRoomThis + roomThis, gRoomNext + roomNext);
-                    addWallShape(roomCntThis, roomThis, roomThis + 1, x, x, id);
+                    final int r1 = gRoomThis + roomThis;
+                    final int r2 = gRoomNext + roomNext;
+                    int id = addWall(r1, r2);
+                    if (sn == SouthNorth.south) {
+                        addWallShape(roomCntThis, roomThis, roomThis + 1, x, x, id, r1, r2);
+                    } else {
+                        addWallShape(roomCntThis, roomThis, roomThis + 1, x, x, id, r2, r1);
+                    }
                 }
             }
         }
@@ -185,22 +189,14 @@ public final class EggMaze extends Maze implements IMazeStructure {
         final int gRoomSouth = south.getGreenwichRoom(0);
         LOG.log(Level.INFO, "generateParallelWallsOnEquator");
         for (int i = 0; i < equatorCellCnt; i++) {
-            int id = addWall(gRoomNorth + i, gRoomSouth + i);
-            addWallShape(equatorCellCnt, i, i + 1, 0, 0, id);
+            final int rightRoom = gRoomNorth + i;
+            final int leftRoom = gRoomSouth + i;
+            int id = addWall(leftRoom, rightRoom);
+            addWallShape(equatorCellCnt, i, i + 1, 0, 0, id, rightRoom, leftRoom);
         }
 
     }
 
-    public int getEquatorCellCnt() {
-        return equatorCellCnt;
-    }
-
-    private void addWallShape(int roomCntThisLayer, int yr1, int yr2, int x1, int x2, int id) {
-        final int roomMapRatio = equatorCellCnt / roomCntThisLayer;
-        final int y1 = (yr1 * roomMapRatio) % equatorCellCnt;
-        final int y2 = (yr2 * roomMapRatio) % equatorCellCnt;
-        addShape(WallShape.newInnerWall(id, new Point2DInt(x1, y1), new Point2DInt(x2, y2)));
-    }
 
     private void generateMeridianWalls(SouthNorth sn) {
         EggMazeHemisphere h = getHemisphere(sn);
@@ -214,23 +210,38 @@ public final class EggMaze extends Maze implements IMazeStructure {
 
             final int gr = h.getGreenwichRoom(i);
             for (int j = 0; j < cnt; j++) {
-                int id = addWall(gr + j, gr + (j + 1) % cnt);
+                final int rightRoom = gr + j;
+                final int leftRooom = gr + (j + 1) % cnt;
+                int id = addWall(rightRoom, leftRooom);
                 // strange wall naming convention - wall 0 is between room 0 and
                 // 1
                 int jj = (j + 1) % cnt;
                 if (sn == SouthNorth.north) {
-                    addWallShape(cnt, jj, jj, i, i + 1, id);
+                    addWallShape(cnt, jj, jj, i, i + 1, id, rightRoom, leftRooom);
                 } else {
-                    addWallShape(cnt, jj, jj, -i - 1, -i, id);
+                    addWallShape(cnt, jj, jj, -i - 1, -i, id, rightRoom, leftRooom);
                 }
             }
-
         }
+    }
 
+
+    public int getEquatorCellCnt() {
+        return equatorCellCnt;
+    }
+
+    private void addWallShape(int roomCntThisLayer, int yr1, int yr2, int x1, int x2, int id, int rightRoom, int leftRoom) {
+        final int roomMapRatio = equatorCellCnt / roomCntThisLayer;
+        final int y1 = (yr1 * roomMapRatio) % equatorCellCnt;
+        final int y2 = (yr2 * roomMapRatio) % equatorCellCnt;
+        final Point2DInt p1 = new Point2DInt(x1, y1);
+        final Point2DInt p2 = new Point2DInt(x2, y2);
+        LOG.log(Level.INFO, "addWallShape p1="+p1+" p2="+p2+" right="+rightRoom+" left="+leftRoom);
+        addShape(WallShape.newInnerWall(id, p1, p2, rightRoom, leftRoom));
     }
 
     private boolean isPowerOfTwo(int n) {
-        for (;;) {
+        for (; ; ) {
             if (n == 1 || n == 0) {
                 return true;
             }
@@ -246,15 +257,11 @@ public final class EggMaze extends Maze implements IMazeStructure {
     }
 
     private static final Logger LOG = Logger.getLogger("maze.jmaze");
-
+    private static final int MINIMAL_ROOM_COUNT_ON_EGG_MAZE_EQUATOR = 4;
     private EggGeometry egg;
     private int equatorCellCnt;
-
     private EggMazeHemisphere north;
     private EggMazeHemisphere south;
-
     private double baseRoomSizeInmm;
-
-    private static final int MINIMAL_ROOM_COUNT_ON_EGG_MAZE_EQUATOR = 4;
 
 }
