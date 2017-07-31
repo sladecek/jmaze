@@ -1,6 +1,6 @@
 package com.github.sladecek.maze.jmaze.rectangular;
 
-import com.github.sladecek.maze.jmaze.print2d.TestApp2DBase;
+import com.github.sladecek.maze.jmaze.app.TestApp2DBase;
 
 public final class TestAppRectangular extends TestApp2DBase {
 

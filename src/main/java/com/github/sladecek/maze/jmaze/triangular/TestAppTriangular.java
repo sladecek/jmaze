@@ -1,6 +1,6 @@
 package com.github.sladecek.maze.jmaze.triangular;
 
-import com.github.sladecek.maze.jmaze.print2d.TestApp2DBase;
+import com.github.sladecek.maze.jmaze.app.TestApp2DBase;
 
 public class TestAppTriangular extends TestApp2DBase {
 

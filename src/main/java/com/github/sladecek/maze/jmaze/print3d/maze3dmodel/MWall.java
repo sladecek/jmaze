@@ -10,6 +10,12 @@ import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MEdge;
  */
 public class MWall extends FloorFace {
 
+    static int glId = 0;
+    private int id = 0;
+    public MWall() {
+        id = glId++;
+    }
+
     /**
      * Adds an edge to the wall at one of its two pillar positions.
      *
@@ -80,7 +86,7 @@ public class MWall extends FloorFace {
 
     @Override
     public String toString() {
-        return "MWall{" +
+        return "MWall["+id+"]{" +
                 "e1=" + e1 +
                 ", e3=" + e3 +
                 ", e2=" + e2 +

@@ -10,9 +10,7 @@ import com.github.sladecek.maze.jmaze.shapes.FloorShape;
 import com.github.sladecek.maze.jmaze.shapes.*;
 
 /**
- * 2D rectangular maze on Moebius strip. Rooms and walls (including holes) are
- * numbered first by rows (x, width), then by columns (y, height). East/west walls are numbered before
- * south/north ones. Holes are numbered after south/north walls.
+ * 2D rectangular maze on Moebius strip.
  */
 public final class MoebiusMaze extends Maze implements IMazeStructure {
 
@@ -36,7 +34,6 @@ public final class MoebiusMaze extends Maze implements IMazeStructure {
 
 
     public void buildMaze() {
-
         ShapeContainer result = new ShapeContainer(context);
 
         expectedRoomCount = width * height;
@@ -102,7 +99,7 @@ public final class MoebiusMaze extends Maze implements IMazeStructure {
                 int id = addWall(roomEast, roomWest);
                 addShape(WallShape.newInnerWall(id,
                         new Point2DInt(x,y), new Point2DInt(x,y+1),
-                        roomWest, roomEast)
+                        roomEast, roomWest)
                 );
                 assert id == mapXYToRoomId(y, x) : "Inconsistent wall numbering - east/west";
             }
@@ -115,8 +112,8 @@ public final class MoebiusMaze extends Maze implements IMazeStructure {
                 int roomNorth = mapXYToRoomId(y, x);
                 int roomSouth = mapXYToRoomId(y + 1, x);
                 int id = addWall(roomNorth, roomSouth);
-                addShape(WallShape.newInnerWall(id, new Point2DInt(x,y), new Point2DInt(x+1,y),
-                        roomNorth, roomSouth
+                addShape(WallShape.newInnerWall(id, new Point2DInt((x-1+width)%width,y+1), new Point2DInt(x,y+1),
+                        roomSouth, roomNorth
                         )
                 );
                 assert id == firstHorizontalWall + mapXYToRoomId(y, x) : "Inconsistent wall numbering - south/north";
@@ -124,12 +121,12 @@ public final class MoebiusMaze extends Maze implements IMazeStructure {
         }
 
         // outer walls - south/north
-
         for (int x = 0; x < width; x++) {
             int roomNorth = mapXYToRoomId(0, x);
-            addShape(WallShape.newInnerWall(-1, new Point2DInt(x,0), new Point2DInt(x+1,0), -1, roomNorth));
+            int xx = (x-1+width)%width;
+            addShape(WallShape.newOuterWall(new Point2DInt(xx,0), new Point2DInt(x,0), roomNorth, -1));
             int roomSouth = mapXYToRoomId(height-1, x);
-            addShape(WallShape.newInnerWall(-1, new Point2DInt(x,height-1), new Point2DInt(x+1,height-1), roomSouth, -1));
+            addShape(WallShape.newOuterWall(new Point2DInt(xx,height), new Point2DInt(x,height), -1, roomSouth));
         }
 
         // floors

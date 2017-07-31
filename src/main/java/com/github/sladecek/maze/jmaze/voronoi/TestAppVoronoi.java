@@ -2,7 +2,7 @@ package com.github.sladecek.maze.jmaze.voronoi;
 
 import java.util.Random;
 
-import com.github.sladecek.maze.jmaze.print2d.TestApp2DBase;
+import com.github.sladecek.maze.jmaze.app.TestApp2DBase;
 
 /**
  * Ad-hoc test of Voronou maze.

@@ -107,6 +107,7 @@ public class ModelFromShapes {
     }
 
     private WallEnd makeWallEnd(MWall wall, WallShape wallShape, boolean reversed) {
+        System.out.println("C645 wall="+wall+" wallShape="+wallShape);
         return new WallEnd(wall, wallShape, reversed);
     }
 
@@ -158,8 +159,9 @@ public class ModelFromShapes {
         }
 
         for (MRoom r : rooms.values()) {
-            m.addFace(r);
-            r.finishEdges();
+
+                m.addFace(r);
+                r.finishEdges();
             // no new points or edges
         }
     }

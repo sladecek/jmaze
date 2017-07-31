@@ -8,6 +8,8 @@ import com.github.sladecek.maze.jmaze.print3d.Maze3DSizes;
 import com.github.sladecek.maze.jmaze.print3d.maze3dmodel.Altitude;
 import com.github.sladecek.maze.jmaze.print3d.maze3dmodel.ILocalCoordinateSystem;
 import com.github.sladecek.maze.jmaze.print3d.maze3dmodel.TrivialCoordinateSystem;
+import com.github.sladecek.maze.jmaze.spheric.Egg3dMapper;
+import com.github.sladecek.maze.jmaze.spheric.EggMaze;
 
 public final class Moebius3dMapper implements IMaze3DMapper {
 
@@ -15,6 +17,7 @@ public final class Moebius3dMapper implements IMaze3DMapper {
         super();
         this.sizes = sizes;
         this.height = height;
+        this.width = width;
         if (width % 2 != 0) {
             throw new InvalidParameterException(
                     "GridMapper - maze width must be even");
@@ -80,15 +83,42 @@ public final class Moebius3dMapper implements IMaze3DMapper {
         return 0;
     }
 
+
+    class MoebiusLocalCoordinateSystem implements ILocalCoordinateSystem {
+        public MoebiusLocalCoordinateSystem(Point2DInt center, int eqCnt) {
+            this.center = center;
+            this.maxX = eqCnt* EggMaze.res;
+        }
+
+        @Override
+        public Point2DDbl transformToLocal(Point2DDbl image) {
+            // There is a sew at x = 0. Any positive coordinate x can be also represented as negative x-maxX.
+            // Select the nearest one.
+            double deltaX = image.getX() - center.getX();
+            if (deltaX > maxX/2) {
+                return new Point2DDbl(image.getX()-maxX, image.getY());
+            }
+            if (deltaX < -maxX/2 ) {
+                return new Point2DDbl(image.getX()+maxX, image.getY());
+            }
+            return new Point2DDbl(image);
+        }
+
+        private Point2DInt center;
+        private double maxX;
+
+    }
+
     @Override
     public ILocalCoordinateSystem createLocalCoordinateSystem(Point2DInt center) {
-        return new TrivialCoordinateSystem();
+        return new Moebius3dMapper.MoebiusLocalCoordinateSystem(center, width);
     }
 
 
     private MoebiusStripGeometry geometry;
     private Maze3DSizes sizes;
     private int height;
+    private int width;
     private double lengthInmm;
     private double heightInmm;
     private double innerWallThicknessInmm;

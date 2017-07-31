@@ -29,6 +29,10 @@ public final class WallShape implements IMazeShape2D {
     }
 
     protected WallShape(int wallId, WallType type, Point2DInt p1, Point2DInt p2, int rigthFaceId, int leftFaceId) {
+        if (type == WallType.innerWall && wallId < 0) {
+            throw new IllegalArgumentException("Inner wall must have positive wallId.");
+        }
+
         this.wallId = wallId;
         this.wallType = type;
         this.p1 = p1;
@@ -106,8 +110,10 @@ public final class WallShape implements IMazeShape2D {
 
     @Override
     public String toString() {
-        return "WallShape [ wallType=" + wallType + ", x1=" + getX1() + ", x2=" + getX2() + ", y1=" + getY1()
-                + ", y2=" + getY2() + "]";
+        return "WallShape [ wallType=" + wallType + ", x1=" + getX1() + ", x2=" + getX2()
+                + ", y1=" + getY1() + ", y2=" + getY2()
+                + ", right=" + getRigthFaceId() + ", left=" + getLeftFaceId()
+                + "]";
     }
 
     @Override

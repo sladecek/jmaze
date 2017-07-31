@@ -11,6 +11,7 @@ import com.github.sladecek.maze.jmaze.print3d.ModelFromShapes;
 import com.github.sladecek.maze.jmaze.print3d.*;
 import com.github.sladecek.maze.jmaze.printstyle.DefaultPrintStyle;
 import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
+import com.github.sladecek.maze.jmaze.shapes.IMazeShape2D;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
 
 import java.io.FileOutputStream;
@@ -23,7 +24,8 @@ import java.util.logging.*;
 public final class TestAppMoebius {
 
     public static void main(final String[] args) {
-
+        System.setProperty("java.util.logging.SimpleFormatter.format",
+                "%5$s%n");
         LogManager.getLogManager().reset();
         LOG.setLevel(Level.INFO);
         try {
@@ -32,7 +34,7 @@ public final class TestAppMoebius {
             fh.setFormatter(new SimpleFormatter());
 
             final int widthCells = 4;
-            final int lengthCells = 30;
+            final int lengthCells = 4;
             MoebiusMaze maze = new MoebiusMaze(widthCells, lengthCells);
             final Random randomGenerator = new Random();
             randomGenerator.setSeed(0);
@@ -46,14 +48,17 @@ public final class TestAppMoebius {
 
 //maze.setDebug(true);
             ShapeContainer shapes = maze.applyRealization(r);
+            for (IMazeShape2D sh: shapes.getShapes()) {
+                System.out.println(sh);
+            }
 
             double approxRoomSizeInmm = 3;
             IMaze3DMapper mapper = new Moebius3dMapper(sizes, widthCells, lengthCells);
             Model3d model = ModelFromShapes.make(shapes, mapper, sizes, colors);
 
             final boolean printInJs = true;
-            final boolean printInScad = false;
-            final boolean printStl = false;
+            final boolean printInScad = true;
+            final boolean printStl = true;
 
 
             if (printInJs) {
