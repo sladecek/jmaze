@@ -15,6 +15,9 @@ public class MPoint {
     }
 
     protected void setCoord(Point3D coord) {
+        if (coord == null) {
+            throw new IllegalArgumentException("Coordinates may not be null");
+        }
         this.coord = coord;
     }
 

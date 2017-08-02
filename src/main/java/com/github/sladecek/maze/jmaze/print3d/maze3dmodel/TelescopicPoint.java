@@ -8,22 +8,20 @@ import com.github.sladecek.maze.jmaze.print3d.IMaze3DMapper;
 
 import java.util.EnumMap;
 
-
 /**
  * Point in the planar projection of the maze. It is created with two unmapped coordinates [x,y] and
- * then moved to the appropriate altitude or extruded into a vertical edge reaching two altitudes.
- * After extrusion the TelescopicPoint obtains the coordinates of the point with the higher altitude
- * and a new MPoint is created at the low altitude. After extrusion the point keeps its previous identity
+ * then moved to the appropriate altitude or extruded into a set of vertical edges..
+ * After extrusion  the TelescopicPoint obtains the coordinates of the point with the higher altitude
+ * and new MPoints are created at low altitudes. After extrusion the point keeps its previous identity
  * so that it remains a member of the original edges.
  */
 public class TelescopicPoint extends MPoint {
+
     public TelescopicPoint(double planarX, double planarY) {
         super(new Point3D(0, 0, 0));
         if (Double.isInfinite(planarX) || Double.isInfinite(planarY)) {
             throw new IllegalArgumentException("Coordinates must be finite.");
         }
-
-        this.isExtruded = false;
         this.planar = new Point2DDbl(planarX, planarY);
     }
 
@@ -31,71 +29,6 @@ public class TelescopicPoint extends MPoint {
     public String toString() {
         return "{" + planar.getX() + ", " + planar.getY() + "," + getCoord().getZ() + "} ";
     }
-/* TODO smazat
-    public void setAltitudesUsingMapper(IMaze3DMapper mapper, int lowAltitude, int highAltitude) {
-        if (areAltitudesDefined()) {
-            // The point has been extruded already and the coordinates match.
-            if ((lowAltitude == this.lowAltitude) && (highAltitude == this.highAltitude)) {
-                return;
-            }
-
-            if (lowAltitude == highAltitude && this.highAltitude == highAltitude) {
-                return;
-            }
-
-            // The point has been  extruded
-            if (this.lowAltitude != this.highAltitude) {
-                return;
-                //TODO throw new IllegalStateException("Cannot setAltitudesUsingMapper a point " + this + " twice.");
-            }
-            // else reset point altitudes
-
-        }
-        if (lowAltitude > highAltitude) {
-            throw new IllegalArgumentException(" lowAltitude must not be larger than highAltitude");
-        }
-        isExtruded = true;
-        this.lowAltitude = lowAltitude;
-        this.highAltitude = highAltitude;
-
-        setCoord(mapPoint(mapper, highAltitude));
-
-        if (lowAltitude != highAltitude) {
-            // extrude
-            rod = new MEdge(this, new MPoint(mapPoint(mapper, lowAltitude)));
-        }
-    }
-*/
-
-    public MPoint getOppositeRodPoint() {
-        if (rod == null) {
-            return this;
-        }
-        return rod.getP2();
-    }
-
-    public MPoint getLowAltitudePoint() {
-        if (rod == null) {
-            return this;
-        }
-        return rod.getP2();
-    }
-
-    public MPoint getHighAltitudePoint() {
-        if (rod == null) {
-            return this;
-        }
-        return rod.getP1();
-    }
-
-    public MEdge getRod() {
-        return rod;
-    }
-
-    public boolean areAltitudesDefined() {
-        return isExtruded;
-    }
-
 
     public double getPlanarX() {
         return planar.getX();
@@ -140,8 +73,7 @@ public class TelescopicPoint extends MPoint {
         return points.get(aa).lowPoint;
     }
 
-    public MEdge getRodAt(Altitude aa)
-    {
+    public MEdge getRodAt(Altitude aa) {
         return points.get(aa).rod;
     }
 
@@ -155,21 +87,13 @@ public class TelescopicPoint extends MPoint {
             this.lowPoint = lowPoint;
         }
 
-        MEdge rod; // upward rod, null at upper point
-        MPoint lowPoint;
+        final MEdge rod; // upward rod, null at upper point
+        final MPoint lowPoint;
     }
-   // private double planarX;
-    //private double planarY;
-    private Point2DDbl planar;
-/*    private int lowAltitude;  // TODO smazat
-    private int highAltitude; // TODO smazat
- */   private MEdge rod;
-    private boolean isExtruded;
 
+    private final EnumMap<Altitude, Section> points = new EnumMap<>(Altitude.class);
+    private Point2DDbl planar;
     private Altitude minAltitude = Altitude.MAX;
     private Altitude maxAltitude = Altitude.MIN;
-
-    ;
-    private EnumMap<Altitude, Section> points = new EnumMap<Altitude, Section>(Altitude.class);
 
 }

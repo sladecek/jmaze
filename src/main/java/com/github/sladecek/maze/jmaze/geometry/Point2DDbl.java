@@ -13,14 +13,7 @@ public final class Point2DDbl {
 
     public Point2DDbl(Point2DDbl image) {
         this(image.getX(), image.getY());
-    }
-/* TODO smazat
-    public static Point2DDbl midpoint(Point2DDbl p1, Point2DDbl p2) {
-        return new Point2DDbl((p1.x + p2.x) / 2, (p1.y + p2.y) / 2,
-                (p1.z + p2.z) / 2);
-    }
-*/
-    public double getX() {
+    }public double getX() {
         return x;
     }
 

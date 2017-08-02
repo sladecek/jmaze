@@ -4,7 +4,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-import java.security.InvalidParameterException;
+
 import java.util.ArrayList;
 
 import com.github.sladecek.maze.jmaze.geometry.Point3D;
@@ -68,7 +68,7 @@ public final class ThreeJsComposer implements java.lang.AutoCloseable {
             final String comment, final Color color) throws IOException {
         final int POLYHEDRON_VERTEX_CNT = 8;
         if (polyhedron.size() != POLYHEDRON_VERTEX_CNT) {
-            throw new InvalidParameterException("Polyhedrons must have "
+            throw new IllegalArgumentException("Polyhedrons must have "
                     + POLYHEDRON_VERTEX_CNT + " points");
         }
         // TODO out.write("/* " + comment + "*/\n");

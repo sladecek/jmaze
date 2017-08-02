@@ -1,6 +1,6 @@
 package com.github.sladecek.maze.jmaze.moebius;
 
-import java.security.InvalidParameterException;
+
 
 import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 import com.github.sladecek.maze.jmaze.maze.IMazeStructure;
@@ -19,11 +19,11 @@ public final class MoebiusMaze extends Maze implements IMazeStructure {
         this.height = height;
 
         if (width % 2 != 0) {
-            throw new InvalidParameterException(
+            throw new IllegalArgumentException(
                     "Moebius maze must have even width");
         }
         if (height % 2 != 0) {
-            throw new InvalidParameterException(
+            throw new IllegalArgumentException(
                     "Moebius maze must have even height");
         }
         eastWestWallCount = width * height;
@@ -126,7 +126,7 @@ public final class MoebiusMaze extends Maze implements IMazeStructure {
             int xx = (x-1+width)%width;
             addShape(WallShape.newOuterWall(new Point2DInt(xx,0), new Point2DInt(x,0), roomNorth, -1));
             int roomSouth = mapXYToRoomId(height-1, x);
-            addShape(WallShape.newOuterWall(new Point2DInt(xx,height), new Point2DInt(x,height), -1, roomSouth));
+            addShape(WallShape.newOuterWall(new Point2DInt(xx,height), new Point2DInt(x,height), -2, roomSouth));
         }
 
         // floors

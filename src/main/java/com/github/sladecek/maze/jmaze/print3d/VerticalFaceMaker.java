@@ -107,7 +107,7 @@ public class VerticalFaceMaker {
         FloorFace leftFace = (FloorFace) e.getRightFace();
         FloorFace rightFace = (FloorFace) e.getLeftFace();
 
-      
+
         Altitude a1 = leftFace.getAltitude();
         Altitude a2 = rightFace.getAltitude();
 

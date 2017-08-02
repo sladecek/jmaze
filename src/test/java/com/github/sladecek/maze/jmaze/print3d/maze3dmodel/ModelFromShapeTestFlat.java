@@ -27,6 +27,7 @@ public class ModelFromShapeTestFlat extends ModelFromShapesTestBase {
     protected Model3d compute3dModel(ShapeContainer sc) {
         Maze3DSizes sizes = new Maze3DSizes();
         sizes.setCellSizeInmm(2);
+        sizes.setInnerWallToPixelRatio(0.2);
         IPrintStyle colors = new DefaultPrintStyle();
         IMaze3DMapper mapper = new PlanarMapper();
         return ModelFromShapes.makeWithoutExtrusionForUnitTesting(sc, mapper, sizes, colors);

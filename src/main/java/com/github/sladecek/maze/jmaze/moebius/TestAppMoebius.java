@@ -33,8 +33,8 @@ public final class TestAppMoebius {
             LOG.addHandler(fh);
             fh.setFormatter(new SimpleFormatter());
 
-            final int widthCells = 4;
-            final int lengthCells = 4;
+            final int widthCells = 8;
+            final int lengthCells = 40;
             MoebiusMaze maze = new MoebiusMaze(widthCells, lengthCells);
             final Random randomGenerator = new Random();
             randomGenerator.setSeed(0);
@@ -56,7 +56,7 @@ public final class TestAppMoebius {
             IMaze3DMapper mapper = new Moebius3dMapper(sizes, widthCells, lengthCells);
             Model3d model = ModelFromShapes.make(shapes, mapper, sizes, colors);
 
-            final boolean printInJs = true;
+            final boolean printInJs = false;
             final boolean printInScad = true;
             final boolean printStl = true;
 

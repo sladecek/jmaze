@@ -1,5 +1,7 @@
 package com.github.sladecek.maze.jmaze.print3d.generic3dmodel;
 
+import org.neo4j.cypher.InvalidArgumentException;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.stream.Collector;
@@ -31,6 +33,9 @@ public class Model3d implements IModel3d {
     }
 
     public void addFace(MFace f) {
+        if (f == null) {
+            throw new IllegalArgumentException("Model cannot have null faces.");
+        }
         faces.add(f);
     }
 

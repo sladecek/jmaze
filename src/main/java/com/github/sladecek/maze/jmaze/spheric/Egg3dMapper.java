@@ -148,7 +148,7 @@ public final class Egg3dMapper implements IMaze3DMapper {
         }
     */
 
-    @Override
+/*    @Override
     public double inverselyMapLengthAt(Point2DDbl center, double v) {
         final double epsilon = 0.001;
         final double epsilonSide = epsilon / Math.sqrt(2);
@@ -159,7 +159,7 @@ public final class Egg3dMapper implements IMaze3DMapper {
         return v*epsilon/distance;
 
     }
-
+*/
     class EggLocalCoordinateSystem implements ILocalCoordinateSystem {
         public EggLocalCoordinateSystem(Point2DInt center, int eqCnt) {
             this.center = center;

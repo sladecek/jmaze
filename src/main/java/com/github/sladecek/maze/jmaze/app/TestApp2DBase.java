@@ -71,9 +71,7 @@ public class TestApp2DBase {
             // print 3D
             double approxRoomSizeInmm = 3;
             Maze3DSizes sizes = new Maze3DSizes();
-            sizes.setInnerWallToPixelRatio(1);
-            sizes.setCellSizeInmm(2);  // TODO
-
+      
             IPrintStyle colors = new DefaultPrintStyle();
 
             PlanarMapper mapper = new PlanarMapper();
