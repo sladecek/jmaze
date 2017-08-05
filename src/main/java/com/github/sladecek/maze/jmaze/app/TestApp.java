@@ -1,32 +1,29 @@
 package com.github.sladecek.maze.jmaze.app;
 
+import com.fasterxml.jackson.databind.deser.Deserializers;
 import com.github.sladecek.maze.jmaze.generator.DepthFirstMazeGenerator;
 import com.github.sladecek.maze.jmaze.generator.IMazeGenerator;
 import com.github.sladecek.maze.jmaze.generator.MazeRealization;
+import com.github.sladecek.maze.jmaze.maze.BaseMaze;
 import com.github.sladecek.maze.jmaze.maze.IMaze;
-import com.github.sladecek.maze.jmaze.maze.Irrengarten;
 import com.github.sladecek.maze.jmaze.print2d.MazeOutputFormat;
 import com.github.sladecek.maze.jmaze.print2d.SvgMazePrinter;
 import com.github.sladecek.maze.jmaze.print3d.IMaze3DMapper;
 import com.github.sladecek.maze.jmaze.print3d.Maze3DSizes;
 import com.github.sladecek.maze.jmaze.print3d.ModelFromShapes;
-import com.github.sladecek.maze.jmaze.print3d.PlanarMapper;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.Model3d;
 import com.github.sladecek.maze.jmaze.print3d.output.OpenScad3DPrinter;
 import com.github.sladecek.maze.jmaze.print3d.output.StlMazePrinter;
 import com.github.sladecek.maze.jmaze.print3d.output.ThreeJs3DPrinter;
 import com.github.sladecek.maze.jmaze.printstyle.DefaultPrintStyle;
 import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
-import com.github.sladecek.maze.jmaze.properties.MazeProperties;
-import com.github.sladecek.maze.jmaze.rectangular.RectangularIrrengarten;
+
 import com.github.sladecek.maze.jmaze.rectangular.RectangularMaze;
-import com.github.sladecek.maze.jmaze.rectangular.TestAppRectangular;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
 import com.github.sladecek.maze.jmaze.util.MazeGenerationException;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Properties;
 import java.util.Random;
 import java.util.function.Supplier;
 import java.util.logging.*;
@@ -42,7 +39,7 @@ public class TestApp {
      * @param fileName     name of the output file.
      * @param mazeProvider external function that generates the maze.
      */
-    public final void printTestMaze(final Supplier<IMaze> mazeProvider) {
+    public final void printTestMaze(final Supplier<BaseMaze> mazeProvider) {
         System.setProperty("java.util.logging.SimpleFormatter.format",
                 "%5$s%n");
         LogManager.getLogManager().reset();
@@ -53,16 +50,8 @@ public class TestApp {
             LOG.addHandler(fh);
             fh.setFormatter(new SimpleFormatter());
             // construct maze generator
-            IMaze maze = mazeProvider.get();
-            maze.buildMaze();
-
-            final Random randomGenerator = new Random();
-            randomGenerator.setSeed(0);
-            IMazeGenerator g = new DepthFirstMazeGenerator(randomGenerator);
-
-            // generate
-            MazeRealization realization = g.generateMaze(maze.getGraph());
-            ShapeContainer shapes = maze.getFlatModel().applyRealization(realization);
+            BaseMaze maze = mazeProvider.get();
+            maze.makeMazeAllSteps(true);
 
             final String fileName = "maze-" + maze.getName();
             // print 2D
@@ -70,23 +59,13 @@ public class TestApp {
                 SvgMazePrinter printer = new SvgMazePrinter();
 
                 FileOutputStream sSvg = new FileOutputStream(fileName + ".svg");
-                printer.printShapes(shapes, MazeOutputFormat.svg, sSvg);
+                printer.printShapes(maze.getRealisedModel(), MazeOutputFormat.svg, sSvg);
                 FileOutputStream fPdf = new FileOutputStream(fileName+ ".pdf");
-                printer.printShapes(shapes, MazeOutputFormat.pdf, fPdf);
+                printer.printShapes(maze.getRealisedModel(), MazeOutputFormat.pdf, fPdf);
             }
 
             IMaze3DMapper mapper = maze.create3DMapper();
             if (mapper != null) {
-                // print 3D
-                double approxRoomSizeInmm = 3;
-                Maze3DSizes sizes = new Maze3DSizes();
-
-                IPrintStyle colors = new DefaultPrintStyle();
-
-             //   mapper.configureAltitudes(sizes);
-                Model3d model = ModelFromShapes.make(shapes, mapper, sizes, colors);
-                System.out.println(model);
-
                 final boolean printInJs = false;
                 final boolean printInScad = true;
                 final boolean printStl = true;
@@ -94,17 +73,17 @@ public class TestApp {
 
                 if (printInJs) {
                     FileOutputStream fJs = new FileOutputStream(fileName + ".js");
-                    new ThreeJs3DPrinter().printModel(model, fJs);
+                    new ThreeJs3DPrinter().printModel(maze.getModel3d(), fJs);
                     fJs.close();
                 }
                 if (printInScad) {
                     FileOutputStream fScad = new FileOutputStream(fileName + ".scad");
-                    new OpenScad3DPrinter().printModel(model, fScad);
+                    new OpenScad3DPrinter().printModel(maze.getModel3d(), fScad);
                     fScad.close();
                 }
                 if (printStl) {
                     FileOutputStream fStl = new FileOutputStream(fileName + ".stl");
-                    new StlMazePrinter().printModel(model, fStl);
+                    new StlMazePrinter().printModel(maze.getModel3d(), fStl);
                     fStl.close();
                 }
             }
@@ -121,13 +100,9 @@ public class TestApp {
     public static void main(String[] args) {
         new TestApp().printTestMaze( () -> {
 
-            IMaze m = new RectangularMaze();
-            MazeProperties p = m.getDefaultProperties();
-            p.put("width", 2);
-            p.put("height", 2);
-            m.setProperties(p);
-            return m;
+            return new RectangularMaze(2, 2);
         });
     }
+
 
 }

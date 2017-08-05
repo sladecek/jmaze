@@ -5,23 +5,27 @@ import static org.junit.Assert.assertEquals;
 import java.util.Collections;
 import java.util.Vector;
 
+import com.github.sladecek.maze.jmaze.maze.IMaze;
 import org.junit.Before;
 import org.junit.Test;
 
 public class Rectangular2DMazeTest {
 
-	private RectangularIrrengarten maze;
+	private RectangularMaze maze;
 	
 	@Before
 	public void setUp() throws Exception {
-		maze = new RectangularIrrengarten(3, 5);
-		
+		maze = new RectangularMaze(5, 3);
+		maze.makeMazeAllSteps(false);
+
+
+
 	}
 
 
 	@Test
 	public void testGetRoomCount() {
-		assertEquals(15, maze.getRoomCount());
+		assertEquals(15, maze.getGraph().getRoomCount());
 	}
 
 
@@ -29,7 +33,7 @@ public class Rectangular2DMazeTest {
 	@Test
 	public void testGetShapes() {
 		int cnt = 0;
-		for (IMazeShape2D ms: maze.getShapes()) {
+		for (IMazeShape2D ms: maze.getGraph().getShapes()) {
 			cnt++;
 			assertEquals("class com.github.sladecek.maze.jmaze.shapes.WallShape", ms.getClass().toString());
 		}
@@ -39,12 +43,12 @@ public class Rectangular2DMazeTest {
 
 	@Test
 	public void testGetStartRoom() {
-		assertEquals(0, maze.getStartRoom());
+		assertEquals(0, maze.getGraph().getStartRoom());
 	}
 
 	@Test
 	public void testGetTargetRoom() {
-		assertEquals(14, maze.getTargetRoom());
+		assertEquals(14, maze.getGraph().getTargetRoom());
 	}
 	
 	@Test
@@ -91,7 +95,7 @@ public class Rectangular2DMazeTest {
 
 	
 	private void testGetWalls(int room, int[] walls) {
-		Vector<Integer> v = (Vector<Integer>) maze.getWalls(room);
+		Vector<Integer> v = (Vector<Integer>) maze.getGraph().getWalls(room);
 		Collections.sort(v);
 		assertEquals(walls.length, v.size());				
 		int cnt = Math.min(walls.length, v.size());
@@ -102,32 +106,32 @@ public class Rectangular2DMazeTest {
 
 	@Test(expected=IllegalArgumentException.class)
 	public void testGetOtherRoom_invalid() {
-		assertEquals(1, maze.getRoomBehindWall(0, 2));
+		assertEquals(1, maze.getGraph().getRoomBehindWall(0, 2));
 	}
 
 	@Test
 	public void testGetOtherRoom_0() {
-		assertEquals(1, maze.getRoomBehindWall(0, 0));
-		assertEquals(0, maze.getRoomBehindWall(1, 0));
+		assertEquals(1, maze.getGraph().getRoomBehindWall(0, 0));
+		assertEquals(0, maze.getGraph().getRoomBehindWall(1, 0));
 
 	}
 
 	@Test
 	public void testGetOtherRoom_12() {
-		assertEquals(5, maze.getRoomBehindWall(0, 12));
-		assertEquals(0, maze.getRoomBehindWall(5, 12));
+		assertEquals(5, maze.getGraph().getRoomBehindWall(0, 12));
+		assertEquals(0, maze.getGraph().getRoomBehindWall(5, 12));
 	}
 
 	@Test
 	public void testGetOtherRoom_11() {
-		assertEquals(13, maze.getRoomBehindWall(14, 11));
-		assertEquals(14, maze.getRoomBehindWall(13, 11));
+		assertEquals(13, maze.getGraph().getRoomBehindWall(14, 11));
+		assertEquals(14, maze.getGraph().getRoomBehindWall(13, 11));
 	}
 
 	@Test
 	public void testGetOtherRoom_21() {
-		assertEquals(9, maze.getRoomBehindWall(14, 21));
-		assertEquals(14, maze.getRoomBehindWall(9, 21));
+		assertEquals(9, maze.getGraph().getRoomBehindWall(14, 21));
+		assertEquals(14, maze.getGraph().getRoomBehindWall(9, 21));
 	}
 	
 }

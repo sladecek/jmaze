@@ -6,7 +6,10 @@ import com.github.sladecek.maze.jmaze.maze.GenericMazeStructure;
 import com.github.sladecek.maze.jmaze.print3d.IMaze3DMapper;
 import com.github.sladecek.maze.jmaze.print3d.PlanarMapper;
 import com.github.sladecek.maze.jmaze.properties.MazeProperties;
-import com.github.sladecek.maze.jmaze.shapes.*;
+import com.github.sladecek.maze.jmaze.shapes.FloorShape;
+import com.github.sladecek.maze.jmaze.shapes.MarkShape;
+import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
+import com.github.sladecek.maze.jmaze.shapes.WallShape;
 
 /**
  * 2D rectangular maze. Both rooms and walls are numbered first by rows, then by
@@ -14,8 +17,15 @@ import com.github.sladecek.maze.jmaze.shapes.*;
  */
 public class RectangularMaze extends BaseMaze {
 
-    public RectangularMaze()
-    {
+    public RectangularMaze(int width, int height) {
+        this();
+        MazeProperties p = getDefaultProperties();
+        p.put("width", width);
+        p.put("height", height);
+        setProperties(p);
+    }
+
+    public RectangularMaze() {
         super();
         defaultProperties.put("name", "rect");
         defaultProperties.put("width", 20);
@@ -23,9 +33,10 @@ public class RectangularMaze extends BaseMaze {
         properties = defaultProperties.clone();
 
     }
+
     @Override
     public void buildMaze() {
-       final boolean isPolar = false;
+        final boolean isPolar = false;
         final int height = properties.getInt("height");
         final int width = properties.getInt("width");
 
@@ -101,7 +112,6 @@ public class RectangularMaze extends BaseMaze {
     }
 
 
-
     @Override
     public IMaze3DMapper create3DMapper() {
         PlanarMapper m = new PlanarMapper();
@@ -113,9 +123,6 @@ public class RectangularMaze extends BaseMaze {
     public boolean canBePrintedIn2D() {
         return true;
     }
-
-
-
 
 
     /**

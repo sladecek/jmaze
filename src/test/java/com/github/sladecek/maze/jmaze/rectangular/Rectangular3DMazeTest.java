@@ -26,48 +26,21 @@ public class Rectangular3DMazeTest {
     @Before
     public void setUp() throws Exception {
 
-        maze = new RectangularIrrengarten(2, 2);
-
-        final Random randomGenerator = new Random();
-        randomGenerator.setSeed(0);
-        IMazeGenerator g = new DepthFirstMazeGenerator(randomGenerator);
-
-        // generate
-        realization = g.generateMaze(maze);
-        shapes = maze.applyRealization(realization);
-
-        double approxRoomSizeInmm = 3;
-        sizes = new Maze3DSizes();
-        sizes.setCellSizeInmm(2);  // TODO
-
-        colors = new DefaultPrintStyle();
-
-        mapper = new PlanarMapper();
-        model = ModelFromShapes.make(shapes, mapper, sizes, colors);
+        maze = new RectangularMaze(2, 2);
+        maze.makeMazeAllSteps(true);
     }
 
 
     @Test
     public void testStl() throws IOException {
-        IMaze3DMapper mapper = new PlanarMapper();
-        model = ModelFromShapes.make(shapes, mapper, sizes, colors);
-
-
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         StlMazePrinter printer = new StlMazePrinter();
-        printer.printModel(model, stream);
+        printer.printModel(maze.getModel3d(), stream);
         stream.close();
         String s = stream.toString();
-        assertEquals(22863, s.length());
+        assertEquals(23007, s.length());
 
 
     }
-    private RectangularIrrengarten maze;
-    private Model3d model;
-
-    private Maze3DSizes sizes;
-    private IPrintStyle colors;
-    private IMaze3DMapper mapper;
-    private ShapeContainer shapes;
-    private MazeRealization realization;
+    private RectangularMaze maze;
 }
