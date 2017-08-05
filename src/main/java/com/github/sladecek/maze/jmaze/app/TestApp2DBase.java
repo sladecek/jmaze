@@ -13,7 +13,7 @@ import java.util.logging.SimpleFormatter;
 import com.github.sladecek.maze.jmaze.generator.DepthFirstMazeGenerator;
 import com.github.sladecek.maze.jmaze.generator.IMazeGenerator;
 import com.github.sladecek.maze.jmaze.generator.MazeRealization;
-import com.github.sladecek.maze.jmaze.maze.Maze;
+import com.github.sladecek.maze.jmaze.maze.Irrengarten;
 import com.github.sladecek.maze.jmaze.print2d.MazeOutputFormat;
 import com.github.sladecek.maze.jmaze.print2d.SvgMazePrinter;
 import com.github.sladecek.maze.jmaze.print3d.output.OpenScad3DPrinter;
@@ -24,7 +24,6 @@ import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.Model3d;
 import com.github.sladecek.maze.jmaze.print3d.*;
 import com.github.sladecek.maze.jmaze.printstyle.DefaultPrintStyle;
 import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
-import com.github.sladecek.maze.jmaze.shapes.IMazeShape2D;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
 import com.github.sladecek.maze.jmaze.util.MazeGenerationException;
 
@@ -40,7 +39,7 @@ public class TestApp2DBase {
      * @param mazeProvider external function that generates the maze.
      */
     public final void printTestMaze(final String fileName,
-                                    final Supplier<Maze> mazeProvider) {
+                                    final Supplier<Irrengarten> mazeProvider) {
         System.setProperty("java.util.logging.SimpleFormatter.format",
                 "%5$s%n");
         LogManager.getLogManager().reset();
@@ -51,7 +50,7 @@ public class TestApp2DBase {
             LOG.addHandler(fh);
             fh.setFormatter(new SimpleFormatter());
             // construct maze generator
-            Maze maze = mazeProvider.get();
+            Irrengarten maze = mazeProvider.get();
 
             final Random randomGenerator = new Random();
             randomGenerator.setSeed(0);

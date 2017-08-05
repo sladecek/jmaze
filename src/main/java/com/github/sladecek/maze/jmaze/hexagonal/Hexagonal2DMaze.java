@@ -2,7 +2,7 @@ package com.github.sladecek.maze.jmaze.hexagonal;
 
 import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 import com.github.sladecek.maze.jmaze.maze.IMazeStructure;
-import com.github.sladecek.maze.jmaze.maze.Maze;
+import com.github.sladecek.maze.jmaze.maze.Irrengarten;
 import com.github.sladecek.maze.jmaze.shapes.MarkShape;
 
 import com.github.sladecek.maze.jmaze.shapes.ShapeContext;
@@ -11,7 +11,7 @@ import com.github.sladecek.maze.jmaze.shapes.WallShape;
 import java.util.Vector;
 import java.util.logging.Logger;
 
-public class Hexagonal2DMaze extends Maze implements IMazeStructure {
+public class Hexagonal2DMaze extends Irrengarten implements IMazeStructure {
 
     private int size;
 

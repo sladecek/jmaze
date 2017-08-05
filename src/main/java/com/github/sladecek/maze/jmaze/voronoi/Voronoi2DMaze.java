@@ -3,7 +3,7 @@ package com.github.sladecek.maze.jmaze.voronoi;
 import be.humphreys.simplevoronoi.GraphEdge;
 import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 import com.github.sladecek.maze.jmaze.maze.IMazeStructure;
-import com.github.sladecek.maze.jmaze.maze.Maze;
+import com.github.sladecek.maze.jmaze.maze.Irrengarten;
 import com.github.sladecek.maze.jmaze.shapes.MarkShape;
 
 import com.github.sladecek.maze.jmaze.shapes.ShapeContext;
@@ -12,7 +12,7 @@ import com.github.sladecek.maze.jmaze.shapes.WallShape;
 import java.util.Random;
 import java.util.logging.Logger;
 
-public class Voronoi2DMaze extends Maze implements IMazeStructure {
+public class Voronoi2DMaze extends Irrengarten implements IMazeStructure {
 
 
     public Voronoi2DMaze(int width, int height, int roomCount, int loydCnt, Random randomGenerator, boolean debug) {

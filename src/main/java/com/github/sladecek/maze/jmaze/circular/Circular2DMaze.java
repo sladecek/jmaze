@@ -2,7 +2,7 @@ package com.github.sladecek.maze.jmaze.circular;
 
 import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 import com.github.sladecek.maze.jmaze.maze.IMazeStructure;
-import com.github.sladecek.maze.jmaze.maze.Maze;
+import com.github.sladecek.maze.jmaze.maze.Irrengarten;
 import com.github.sladecek.maze.jmaze.shapes.MarkShape;
 
 import com.github.sladecek.maze.jmaze.shapes.ShapeContext;
@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 /**
  * Generates circular maze.
  */
-public class Circular2DMaze extends Maze implements IMazeStructure {
+public class Circular2DMaze extends Irrengarten implements IMazeStructure {
 
     /**
      * Creates new instance of circular maze..

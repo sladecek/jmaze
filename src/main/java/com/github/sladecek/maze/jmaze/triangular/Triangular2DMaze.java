@@ -2,7 +2,7 @@ package com.github.sladecek.maze.jmaze.triangular;
 
 import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 import com.github.sladecek.maze.jmaze.maze.IMazeStructure;
-import com.github.sladecek.maze.jmaze.maze.Maze;
+import com.github.sladecek.maze.jmaze.maze.Irrengarten;
 import com.github.sladecek.maze.jmaze.shapes.FloorShape;
 import com.github.sladecek.maze.jmaze.shapes.MarkShape;
 
@@ -11,7 +11,7 @@ import com.github.sladecek.maze.jmaze.shapes.WallShape;
 
 import java.util.logging.Logger;
 
-public class Triangular2DMaze extends Maze implements IMazeStructure {
+public class Triangular2DMaze extends Irrengarten implements IMazeStructure {
 
 
     public Triangular2DMaze(int size) {

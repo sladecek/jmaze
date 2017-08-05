@@ -5,17 +5,16 @@ import static org.junit.Assert.assertEquals;
 import java.util.Collections;
 import java.util.Vector;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 public class Rectangular2DMazeTest {
 
-	private Rectangular2DMaze maze;
+	private RectangularIrrengarten maze;
 	
 	@Before
 	public void setUp() throws Exception {
-		maze = new Rectangular2DMaze(3, 5);
+		maze = new RectangularIrrengarten(3, 5);
 		
 	}
 

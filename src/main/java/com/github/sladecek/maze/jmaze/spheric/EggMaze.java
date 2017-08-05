@@ -7,7 +7,7 @@ import java.util.logging.Logger;
 import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 import com.github.sladecek.maze.jmaze.geometry.SouthNorth;
 import com.github.sladecek.maze.jmaze.maze.IMazeStructure;
-import com.github.sladecek.maze.jmaze.maze.Maze;
+import com.github.sladecek.maze.jmaze.maze.Irrengarten;
 import com.github.sladecek.maze.jmaze.shapes.FloorShape;
 import com.github.sladecek.maze.jmaze.shapes.MarkShape;
 
@@ -17,7 +17,7 @@ import com.github.sladecek.maze.jmaze.shapes.WallShape;
 /**
  * Rooms and walls of a maze on an egg-like shape.
  */
-public final class EggMaze extends Maze implements IMazeStructure {
+public final class EggMaze extends Irrengarten implements IMazeStructure {
 
     public EggMaze(EggGeometry egg, int equatorCellCnt) {
         this.egg = egg;
@@ -28,7 +28,7 @@ public final class EggMaze extends Maze implements IMazeStructure {
 
         if (this.equatorCellCnt < MINIMAL_ROOM_COUNT_ON_EGG_MAZE_EQUATOR) {
             throw new IllegalArgumentException(
-                    "Maze must have at least " + MINIMAL_ROOM_COUNT_ON_EGG_MAZE_EQUATOR + "cells.");
+                    "Irrengarten must have at least " + MINIMAL_ROOM_COUNT_ON_EGG_MAZE_EQUATOR + "cells.");
         }
 
         if (!isPowerOfTwo(this.equatorCellCnt)) {

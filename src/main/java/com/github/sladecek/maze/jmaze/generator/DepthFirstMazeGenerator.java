@@ -20,21 +20,21 @@ public final class DepthFirstMazeGenerator implements IMazeGenerator {
     }
 
     @Override
-    public MazeRealization generateMaze(final IMazeStructure maze) {
-        MazeRealization result = new MazeRealization(maze.getWallCount(), maze.getStartRoom(), maze.getTargetRoom());
+    public MazeRealization generateMaze(final IMazeStructure graph) {
+        MazeRealization result = new MazeRealization(graph.getWallCount(), graph.getStartRoom(), graph.getTargetRoom());
         Vector<Integer> solution = null;
-        int allRoomsCnt = maze.getRoomCount();
+        int allRoomsCnt = graph.getRoomCount();
         visitedRooms = new BitSet(allRoomsCnt);
 
         stack = new Stack<>();
-        visitRoom(maze.getStartRoom());
+        visitRoom(graph.getStartRoom());
         while (!stack.isEmpty()) {
 
             int room = stack.peek();
             LOGGER.log(Level.INFO, " observing room: " + room);
-            if (room == maze.getTargetRoom()) {
+            if (room == graph.getTargetRoom()) {
                 // save solution
-                assert solution == null : "Maze cannot have two solutions";
+                assert solution == null : "Irrengarten cannot have two solutions";
                 solution = new Vector<>();
                 for (Integer i : stack) {
                     solution.add(i);
@@ -46,7 +46,7 @@ public final class DepthFirstMazeGenerator implements IMazeGenerator {
                 stack.pop();
                 continue;
             }
-            Vector<Integer> candidates = findAllPossibleNextRooms(maze, result,
+            Vector<Integer> candidates = findAllPossibleNextRooms(graph, result,
                     room);
             if (candidates.isEmpty()) {
                 // backtrace - no way to go
@@ -65,7 +65,7 @@ public final class DepthFirstMazeGenerator implements IMazeGenerator {
             int wall = candidates.elementAt(choice);
             LOGGER.log(Level.INFO, " opening wall " + wall);
             result.setWallClosed(wall, false);
-            int otherRoom = maze.getRoomBehindWall(room, wall);
+            int otherRoom = graph.getRoomBehindWall(room, wall);
             visitRoom(otherRoom);
 
         }

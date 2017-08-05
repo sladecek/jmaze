@@ -3,13 +3,13 @@ package com.github.sladecek.maze.jmaze.moebius;
 
 import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 import com.github.sladecek.maze.jmaze.maze.IMazeStructure;
-import com.github.sladecek.maze.jmaze.maze.Maze;
+import com.github.sladecek.maze.jmaze.maze.Irrengarten;
 import com.github.sladecek.maze.jmaze.shapes.*;
 
 /**
  * 2D rectangular maze on Moebius strip.
  */
-public final class MoebiusMaze extends Maze implements IMazeStructure {
+public final class MoebiusMaze extends Irrengarten implements IMazeStructure {
 
     public MoebiusMaze(final int height, final int width) {
         this.width = width;
