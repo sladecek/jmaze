@@ -1,10 +1,12 @@
 package com.github.sladecek.maze.jmaze.circular;
 
 import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
-import com.github.sladecek.maze.jmaze.maze.IMazeStructure;
-import com.github.sladecek.maze.jmaze.maze.Irrengarten;
+import com.github.sladecek.maze.jmaze.maze.BaseMaze;
+import com.github.sladecek.maze.jmaze.print3d.IMaze3DMapper;
+import com.github.sladecek.maze.jmaze.properties.MazeProperties;
 import com.github.sladecek.maze.jmaze.shapes.MarkShape;
 
+import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContext;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
 
@@ -15,7 +17,7 @@ import java.util.logging.Logger;
 /**
  * Generates circular maze.
  */
-public class Circular2DMaze extends Irrengarten implements IMazeStructure {
+public class Circular2DMaze extends BaseMaze {
 
     /**
      * Creates new instance of circular maze..
@@ -23,23 +25,44 @@ public class Circular2DMaze extends Irrengarten implements IMazeStructure {
      * @param layerCount number of layers in the maze.
      */
     public Circular2DMaze(int layerCount) {
-        super();
-        this.layerCount = layerCount;
-        buildMaze();
+        this();
+        MazeProperties p = getDefaultProperties();
+        p.put("layerCount", layerCount);
+        setProperties(p);
     }
 
-    private void buildMaze() {
+    public Circular2DMaze() {
+        super();
+        defaultProperties.put("name", "circ");
+        defaultProperties.put("layerCount", 8);
+        properties = defaultProperties.clone();
+
+
+    }
+
+    public void buildMaze() {
+        layerCount= properties.getInt("layerCount");
         computeRoomCounts();
         firstRoomInLayer = new Vector<>();
         firstRoomInLayer.setSize(layerCount);
 
-        createContext();
+        createModel();
 
         generateRooms();
         generateConcentricWalls();
         generateRadialWalls();
         generateOuterWalls();
         setStartAndTargetRooms();
+    }
+
+    @Override
+    public IMaze3DMapper create3DMapper() {
+        return null;
+    }
+
+    @Override
+    public boolean canBePrintedIn2D() {
+        return true;
     }
 
     private void computeRoomCounts() {
@@ -75,17 +98,17 @@ public class Circular2DMaze extends Irrengarten implements IMazeStructure {
         return zeroLayerRadius + i * layerSize;
     }
 
-    private void createContext() {
+    private void createModel() {
         final int rMax = computeRadius(layerCount);
         final int height = 2 * rMax;
         final int width = 2 * rMax;
         final boolean isPolar = true;
-        setContext(new ShapeContext(isPolar, height, width/*, 2, 2*/));
+        flatModel = new ShapeContainer(isPolar, height, width);
     }
 
     private void setStartAndTargetRooms() {
-        setStartRoom(0);
-        setTargetRoom(getRoomCount() - 1);
+        getGraph().setStartRoom(0);
+        getGraph().setTargetRoom(getGraph().getRoomCount() - 1);
     }
 
     private void generateRooms() {
@@ -99,7 +122,7 @@ public class Circular2DMaze extends Irrengarten implements IMazeStructure {
         final int cntThis = roomCounts.get(layer);
         final int roomRatio = cntMax / cntThis;
         for (int phi = 0; phi < cntThis; phi++) {
-            int room = addRoom();
+            int room = getGraph().addRoom();
             if (phi == 0) {
                 firstRoomInLayer.set(layer, room);
             }
@@ -113,7 +136,7 @@ public class Circular2DMaze extends Irrengarten implements IMazeStructure {
 
             final MarkShape floor = new MarkShape(room, center);
 
-            addShape(floor);
+            getFlatModel().add(floor);
         }
     }
 
@@ -142,7 +165,7 @@ public class Circular2DMaze extends Irrengarten implements IMazeStructure {
             for (int roomInner = 0; roomInner < roomCntInner; roomInner++) {
                 for (int j = 0; j < roomCntRatio; j++) {
                     int roomOuter = roomInner * roomCntRatio + j;
-                    int id = addWall(gRoomInner + roomInner, gRoomOuter + roomOuter);
+                    int id = getGraph().addWall(gRoomInner + roomInner, gRoomOuter + roomOuter);
                     final int r = computeRadius(layer);
                     addWallShape(roomCntOuter, r, r, roomOuter, roomOuter + 1, id);
                 }
@@ -155,7 +178,7 @@ public class Circular2DMaze extends Irrengarten implements IMazeStructure {
         final int roomMapRatio = outerCnt / roomCntThisLayer;
         final int rPhi1 = (phi1 * roomMapRatio) % outerCnt;
         final int rPhi2 = (phi2 * roomMapRatio) % outerCnt;
-        addShape(WallShape.newInnerWall(id, new Point2DInt(mapPhiD(rPhi1), r1)
+        getFlatModel().add(WallShape.newInnerWall(id, new Point2DInt(mapPhiD(rPhi1), r1)
                 , new Point2DInt(mapPhiD(rPhi2), r2)));
     }
 
@@ -171,7 +194,7 @@ public class Circular2DMaze extends Irrengarten implements IMazeStructure {
 
             final int gr = firstRoomInLayer.get(layer);
             for (int j = 0; j < cnt; j++) {
-                int id = addWall(gr + j, gr + (j + 1) % cnt);
+                int id = getGraph().addWall(gr + j, gr + (j + 1) % cnt);
                 // strange wall naming convention - wall 0 is between room 0 and
                 // 1
                 int phi = (j + 1) % cnt;
@@ -183,15 +206,15 @@ public class Circular2DMaze extends Irrengarten implements IMazeStructure {
     private void generateOuterWalls() {
 
         int r = computeRadius(layerCount - 1);
-        addShape(WallShape.newOuterWall(new Point2DInt(0, r), new Point2DInt(0, r)));
+        getFlatModel().add(WallShape.newOuterWall(new Point2DInt(0, r), new Point2DInt(0, r)));
     }
 
     private static final Logger LOGGER = Logger.getLogger("maze");
+    private int layerCount;
     private final int zeroLayerRadius = 20;
     private final int roomCountInZeroLayer = 4;
     private final int minimalRoomLength = 15;
     private final int layerSize = 30;
-    private final int layerCount;
     private Vector<Integer> roomCounts;
     private Vector<Integer> roomCountRatio;
     private Vector<Integer> firstRoomInLayer;

@@ -89,7 +89,7 @@ public abstract class BaseMaze implements IMaze {
 
     }
 
-    protected GenericMazeStructure graph;
+    protected GenericMazeStructure graph = new GenericMazeStructure();
     protected ShapeContainer flatModel;
     protected ShapeContainer realisedModel;
     protected MazeRealization realization;

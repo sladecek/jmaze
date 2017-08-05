@@ -45,7 +45,7 @@ public class RectangularMaze extends BaseMaze {
         final int w = rsp * width;
 
         flatModel = new ShapeContainer(isPolar, h, w);
-        graph = new GenericMazeStructure();
+
 
         // rooms
         for (int y = 0; y < height; y++) {

@@ -1,6 +1,7 @@
 package com.github.sladecek.maze.jmaze.app;
 
 import com.fasterxml.jackson.databind.deser.Deserializers;
+import com.github.sladecek.maze.jmaze.circular.Circular2DMaze;
 import com.github.sladecek.maze.jmaze.generator.DepthFirstMazeGenerator;
 import com.github.sladecek.maze.jmaze.generator.IMazeGenerator;
 import com.github.sladecek.maze.jmaze.generator.MazeRealization;
@@ -49,7 +50,7 @@ public class TestApp {
             FileHandler fh = new FileHandler("maze.log");
             LOG.addHandler(fh);
             fh.setFormatter(new SimpleFormatter());
-            // construct maze generator
+
             BaseMaze maze = mazeProvider.get();
             maze.makeMazeAllSteps(true);
 
@@ -100,7 +101,8 @@ public class TestApp {
     public static void main(String[] args) {
         new TestApp().printTestMaze( () -> {
 
-            return new RectangularMaze(2, 2);
+            // return new RectangularMaze(2, 2);
+            return new Circular2DMaze(4);
         });
     }
 
