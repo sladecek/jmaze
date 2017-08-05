@@ -92,7 +92,7 @@ public class GenericMazeStructure implements IMazeStructure {
         return 1;
     }
 
-    private static final Logger LOGGER = Logger.getLogger("maze.jmaze");
+    private static final Logger LOGGER = Logger.getLogger("maze");
 
     private int startRoom;
     private int targetRoom;

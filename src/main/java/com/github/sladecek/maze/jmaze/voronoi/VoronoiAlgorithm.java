@@ -36,6 +36,6 @@ public final class VoronoiAlgorithm {
     /**
      * Logging facility.
      */
-    private static final Logger LOGGER = Logger.getLogger("maze.jmaze");
+    private static final Logger LOGGER = Logger.getLogger("maze");
 
 }

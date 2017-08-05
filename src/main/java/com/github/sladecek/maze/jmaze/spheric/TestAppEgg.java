@@ -30,7 +30,7 @@ final class TestAppEgg {
     private TestAppEgg() {
     }
 
-    private static final Logger LOG = Logger.getLogger("maze.jmaze");
+    private static final Logger LOG = Logger.getLogger("maze");
 
     public static void main(final String[] args) {
         System.setProperty("java.util.logging.SimpleFormatter.format",
@@ -57,7 +57,6 @@ final class TestAppEgg {
 
             Maze3DSizes sizes = new Maze3DSizes();
             sizes.setCellSizeInmm(0.1);
-            sizes.setBaseThicknessInmm(0.03);
             sizes.setWallHeightInmm(0.3);
 
             sizes.setInnerWallToPixelRatio(5);
@@ -77,7 +76,7 @@ final class TestAppEgg {
 
 
             IMaze3DMapper mapper = new Egg3dMapper(egg, maze);
-            Model3d model = ModelFromShapes.make(shapes, mapper, sizes, colors);
+            Model3d model = ModelFromShapes.make(shapes, mapper, sizes, colors, false);
 
 
             final boolean printInJs = true;

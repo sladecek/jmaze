@@ -5,7 +5,7 @@ import com.github.sladecek.maze.jmaze.print3d.maze3dmodel.Altitude;
 import com.github.sladecek.maze.jmaze.print3d.maze3dmodel.ILocalCoordinateSystem;
 
 /**
- * Map planar maze coordinates into 3D points.
+ * Maps planar maze coordinates into 3D points.
  */
 public interface IMaze3DMapper {
     Point3D map(Point2DDbl image, Altitude altitude);
@@ -22,6 +22,6 @@ public interface IMaze3DMapper {
         Point3D p1 = map(center, Altitude.GROUND);
         Point3D p2 = map(shifted, Altitude.GROUND);
         double distance = Point3D.computeDistance(p1, p2);
-        return v*epsilon/distance;
+        return v*epsilon/distance*0+0.5;
     }
 }

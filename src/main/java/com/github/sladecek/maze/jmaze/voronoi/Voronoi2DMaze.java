@@ -92,7 +92,7 @@ public class Voronoi2DMaze extends Maze implements IMazeStructure {
 
     }
 
-    private static final Logger LOGGER = Logger.getLogger("maze.jmaze");
+    private static final Logger LOGGER = Logger.getLogger("maze");
     /**
      * Approximate room size in pixels.
      */

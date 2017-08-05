@@ -49,7 +49,7 @@ public class ModelFromShapesBlockMakingTest {
 
 
 
-        MBlock b = ModelFromShapes.createOneBlockFromFace(f, mapper);
+        MBlock b = ModelFromShapes.createOneBlockFromFace(f, mapper, false);
         assertEquals(4, b.getCeilingPoints().size());
         assertEquals(4, b.getGroundPoints().size());
 

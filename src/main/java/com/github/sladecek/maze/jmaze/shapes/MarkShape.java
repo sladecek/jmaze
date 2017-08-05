@@ -71,6 +71,6 @@ public final class MarkShape implements IMazeShape2D {
     /**
      * Logger facility.
      */
-    private static final Logger LOG = Logger.getLogger("maze.jmaze");
+    private static final Logger LOG = Logger.getLogger("maze");
 
 }

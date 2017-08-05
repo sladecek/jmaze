@@ -81,5 +81,5 @@ public class OpenScad3DPrinter implements IMaze3DPrinter {
         return result;
     }
 
-    private static final Logger LOG = Logger.getLogger("maze.jmaze");
+    private static final Logger LOG = Logger.getLogger("maze");
 }

@@ -143,5 +143,5 @@ public class Hexagonal2DMaze extends Maze implements IMazeStructure {
         return size;
     }
 
-    private static final Logger LOGGER = Logger.getLogger("maze.jmaze");
+    private static final Logger LOGGER = Logger.getLogger("maze");
 }

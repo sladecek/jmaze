@@ -119,7 +119,7 @@ public class Triangular2DMaze extends Maze implements IMazeStructure {
         return size;
     }
 
-    private static final Logger LOGGER = Logger.getLogger("maze.jmaze");
+    private static final Logger LOGGER = Logger.getLogger("maze");
     private final int rsx = 12;
     private final int rsy = 20;
     private int size;

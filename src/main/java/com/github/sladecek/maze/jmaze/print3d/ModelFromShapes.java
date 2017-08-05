@@ -26,11 +26,11 @@ public class ModelFromShapes {
         this.style = style;
     }
 
-    static public Model3d make(ShapeContainer shapes, IMaze3DMapper mapper, Maze3DSizes sizes, IPrintStyle style) {
+    static public Model3d make(ShapeContainer shapes, IMaze3DMapper mapper, Maze3DSizes sizes, IPrintStyle style, boolean moebiusKludge) {
         ModelFromShapes mfs = new ModelFromShapes(shapes, mapper, sizes, style);
         mfs.makePlanarProjection();
         LOG.info("BEFORE" + mfs.m.toString()); // TODO smazat
-        mfs.extrudeTo3D();
+        mfs.extrudeTo3D(moebiusKludge);
         LOG.info("AFTER" + mfs.m.toString());  // TODO smazat
         return mfs.m;
     }
@@ -49,14 +49,14 @@ public class ModelFromShapes {
         copyFloorPlanToModel();
     }
 
-    private void extrudeTo3D() {
+    private void extrudeTo3D(boolean moebiusKludge) {
             VerticalFaceMaker maker = new VerticalFaceMaker(m, mapper);
             maker.stretchTelescopicPoints();
             maker.setTelescopicPointAltitude();
 
             // blocks must be created after the telescopic point coordinates were established
             // but before adding any new edges to the model
-            createBlocks();
+            createBlocks(moebiusKludge);
 
             maker.makeVerticalEdges();
             maker.makeVerticalFaces();
@@ -167,16 +167,21 @@ public class ModelFromShapes {
     }
 
 
-    private void createBlocks() {
+    private void createBlocks(boolean moebiusKludge) {
         for (MFace f : m.getFaces()) {
-            MBlock block = createOneBlockFromFace(f, mapper);
-            m.addBlock(block);
+            MBlock block = createOneBlockFromFace(f, mapper, moebiusKludge);
+            if (block != null) m.addBlock(block); // TODO
         }
     }
 
-    public static MBlock createOneBlockFromFace(MFace f, IMaze3DMapper mapper) {
+
+    public static MBlock createOneBlockFromFace(MFace f, IMaze3DMapper mapper, boolean moebiusKludge) {
         assert f instanceof FloorFace;
         Altitude alt = ((FloorFace) f).getAltitude();
+        if (moebiusKludge) {
+            if (alt == Altitude.FRAME) return null;// TODO
+            if (alt == Altitude.GROUND) return null;// TODO
+        }
         MBlock block = new MBlock();
         for (MPoint p : f.visitPointsAroundEdges()) {
             assert p instanceof TelescopicPoint;
@@ -190,7 +195,7 @@ public class ModelFromShapes {
         return block;
     }
 
-    private static final Logger LOG = Logger.getLogger("maze.jmaze");
+    private static final Logger LOG = Logger.getLogger("maze");
     private ShapeContainer shapes;
     private Maze3DSizes sizes;
     private IPrintStyle style;

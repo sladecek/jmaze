@@ -193,7 +193,7 @@ public final class Egg3dMapper implements IMaze3DMapper {
 
 
     private static final double SMALL_Y_MM = 0.001;
-    private static final Logger LOG = Logger.getLogger("maze.jmaze");
+    private static final Logger LOG = Logger.getLogger("maze");
     private EggGeometry egg;
     private EggMaze maze;
 

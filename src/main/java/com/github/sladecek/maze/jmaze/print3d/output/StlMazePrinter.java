@@ -35,11 +35,6 @@ public class StlMazePrinter implements IMaze3DPrinter {
     }
 
     private void printFace(PrintWriter pw, MFace face) {
-     /*   if (face instanceof MRoom && ((MRoom)face).getFloorId() < 0) {
-            // TODO
-            return;
-        }
-*/
         ArrayList<MPoint> points = face.visitPointsAroundEdges();
         final int sz = points.size();
         MPoint pt1 = points.get(0);

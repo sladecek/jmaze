@@ -35,7 +35,7 @@ public class ModelFromShapeTestExtruded extends ModelFromShapesTestBase {
         sizes.setCellSizeInmm(2);
         IPrintStyle colors = new DefaultPrintStyle();
         IMaze3DMapper mapper = new PlanarMapper();
-        return ModelFromShapes.make(sc, mapper, sizes, colors);
+        return ModelFromShapes.make(sc, mapper, sizes, colors, false);
     }
 
     @Test
@@ -67,26 +67,6 @@ public class ModelFromShapeTestExtruded extends ModelFromShapesTestBase {
                 .filter((b) -> b.getGroundPoints().size() == vertexCount)
                 .count();
     }
-/* TODO smazat
-    @Test
-    public void testPointAltitudes() {
-        for (MFace mFace : model3d.getFaces()) {
-            if (mFace instanceof FloorFace) {
-                FloorFace f = (FloorFace) mFace;
-                Altitude alt = f.getAltitude();
-                for (MEdge e : f.getEdges()) {
-                    if (e.getP1() instanceof TelescopicPoint) {
-                        TelescopicPoint p = (TelescopicPoint) e.getP1();
-
-                        assert (p.areAltitudesDefined());
-                        assert (p.getHighAltitude() >= p.getLowAltitude());
-                        assert (p.getHighAltitude() == alt.getValue() || p.getLowAltitude() == alt.getValue());
-                    }
-                }
-            }
-        }
-    }
-*/
     @Test
     public void testBlockAltitudes() {
         printBlocks();

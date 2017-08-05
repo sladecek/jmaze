@@ -33,7 +33,7 @@ public final class TestAppMoebius {
             LOG.addHandler(fh);
             fh.setFormatter(new SimpleFormatter());
 
-            final int widthCells = 8;
+            final int widthCells = 4;
             final int lengthCells = 40;
             MoebiusMaze maze = new MoebiusMaze(widthCells, lengthCells);
             final Random randomGenerator = new Random();
@@ -43,6 +43,7 @@ public final class TestAppMoebius {
 
             Maze3DSizes sizes = new Maze3DSizes();
             sizes.setCellSizeInmm(2);  // TODO
+            sizes.setWallHeightInmm(30);
 
             IPrintStyle colors = new DefaultPrintStyle();
 
@@ -53,8 +54,10 @@ public final class TestAppMoebius {
             }
 
             double approxRoomSizeInmm = 3;
-            IMaze3DMapper mapper = new Moebius3dMapper(sizes, widthCells, lengthCells);
-            Model3d model = ModelFromShapes.make(shapes, mapper, sizes, colors);
+            Moebius3dMapper mapper = new Moebius3dMapper(sizes, widthCells, lengthCells);
+            mapper.configureAltitudes(sizes);
+
+            Model3d model = ModelFromShapes.make(shapes, mapper, sizes, colors, true);
 
             final boolean printInJs = false;
             final boolean printInScad = true;
@@ -82,5 +85,5 @@ public final class TestAppMoebius {
 
     }
 
-    private static final Logger LOG = Logger.getLogger("maze.jmaze");
+    private static final Logger LOG = Logger.getLogger("maze");
 }

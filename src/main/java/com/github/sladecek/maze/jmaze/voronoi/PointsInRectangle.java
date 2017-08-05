@@ -100,7 +100,7 @@ public class PointsInRectangle {
 		roomCenterY[i] = value;
 	}
 
-	private static final Logger LOGGER = Logger.getLogger("maze.jmaze");
+	private static final Logger LOGGER = Logger.getLogger("maze");
 	
 	private int width;
 	private int height;

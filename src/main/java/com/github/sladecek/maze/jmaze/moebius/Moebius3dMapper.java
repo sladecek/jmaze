@@ -2,26 +2,29 @@ package com.github.sladecek.maze.jmaze.moebius;
 
 
 import com.github.sladecek.maze.jmaze.geometry.*;
+import com.github.sladecek.maze.jmaze.print3d.ConfigurableAltitudes;
 import com.github.sladecek.maze.jmaze.print3d.IMaze3DMapper;
 import com.github.sladecek.maze.jmaze.print3d.Maze3DSizes;
 import com.github.sladecek.maze.jmaze.print3d.maze3dmodel.Altitude;
 import com.github.sladecek.maze.jmaze.print3d.maze3dmodel.ILocalCoordinateSystem;
 
-public final class Moebius3dMapper implements IMaze3DMapper {
+/**
+ * Maps planar maze coordinates into 3D points.
+ */
+public final class Moebius3dMapper extends ConfigurableAltitudes implements IMaze3DMapper {
 
-    public Moebius3dMapper(final Maze3DSizes sizes, final int height, final int width) {
+    public Moebius3dMapper(final Maze3DSizes sizes, final int sizeAcross, final int sizeAlong) {
         super();
 
-        this.height = height;
-        this.width = width;
-        if (width % 2 != 0) {
-            throw new IllegalArgumentException(
-                    "GridMapper - maze width must be even");
+        this.sizeAcross = sizeAcross;
+        this.sizeAlong = sizeAlong;
+        if (sizeAlong % 2 != 0) {
+            throw new IllegalArgumentException("Moebius maze size along must be even");
         }
         double innerWallThicknessInmm = sizes.getCellSizeInmm() * sizes.getInnerWallToPixelRatio();
 
-        double lengthInmm = sizes.getCellSizeInmm() * width + innerWallThicknessInmm
-                * width;
+        double lengthInmm = sizes.getCellSizeInmm() * sizeAlong + innerWallThicknessInmm
+                * sizeAlong;
         cellStepInmm = sizes.getCellSizeInmm() + innerWallThicknessInmm;
 
         geometry = new MoebiusStripGeometry(lengthInmm);
@@ -30,14 +33,14 @@ public final class Moebius3dMapper implements IMaze3DMapper {
 
     @Override
     public Point3D map(Point2DDbl image, Altitude altitude) {
-        double y = (image.getY() - height / 2) * cellStepInmm;
+        double y = (image.getY() - sizeAcross / 2) * cellStepInmm;
         double x = image.getX() * cellStepInmm;
-        return geometry.transform(new Point3D(x, y, altitude.getValue()));
+        return geometry.transform(new Point3D(x, y, altitude.getValue()*2.001));
     }
 
     @Override
     public ILocalCoordinateSystem createLocalCoordinateSystem(Point2DInt center) {
-        return new Moebius3dMapper.MoebiusLocalCoordinateSystem(center, width);
+        return new Moebius3dMapper.MoebiusLocalCoordinateSystem(center, sizeAlong);
     }
 
     class MoebiusLocalCoordinateSystem implements ILocalCoordinateSystem {
@@ -64,8 +67,9 @@ public final class Moebius3dMapper implements IMaze3DMapper {
         private final double maxX;
 
     }
-    private final int height;
-    private final int width;
+
+    private final int sizeAcross;
+    private final int sizeAlong;
     private MoebiusStripGeometry geometry;
     private double cellStepInmm;
 

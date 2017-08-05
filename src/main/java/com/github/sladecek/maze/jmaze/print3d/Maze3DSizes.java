@@ -12,13 +12,6 @@ public final class Maze3DSizes {
         this.cellSizeInmm = cellSizeInmm;
     }
 
-    public double getBaseThicknessInmm() {
-        return baseThicknessInmm;
-    }
-
-    public void setBaseThicknessInmm(double baseThicknessInmm) {
-        this.baseThicknessInmm = baseThicknessInmm;
-    }
 
     public double getInnerWallToPixelRatio() {
         return innerWallToPixelRatio;
@@ -28,10 +21,6 @@ public final class Maze3DSizes {
         this.innerWallToPixelRatio = innerWallToPixelRatio;
     }
 
-
-    public void setOuterWallToPixelRatio(double outerWallToPixelRatio) {
-        this.outerWallToPixelRatio = outerWallToPixelRatio;
-    }
 
     public double getWallHeightInmm() {
         return wallHeightInmm;
@@ -43,9 +32,8 @@ public final class Maze3DSizes {
 
 
     private double cellSizeInmm = 2;
-    private double baseThicknessInmm = 1;
     private double innerWallToPixelRatio = 1;
-    private double outerWallToPixelRatio = 0.4;
+
     private double wallHeightInmm = 10;
 
 }

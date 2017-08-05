@@ -255,7 +255,7 @@ public final class EggMaze extends Maze implements IMazeStructure {
         return this.baseRoomSizeInmm;
     }
 
-    private static final Logger LOG = Logger.getLogger("maze.jmaze");
+    private static final Logger LOG = Logger.getLogger("maze");
     private static final int MINIMAL_ROOM_COUNT_ON_EGG_MAZE_EQUATOR = 4;
     private EggGeometry egg;
     private int equatorCellCnt;

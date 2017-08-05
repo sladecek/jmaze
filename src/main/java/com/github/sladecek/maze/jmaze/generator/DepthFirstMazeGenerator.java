@@ -10,8 +10,7 @@ import java.util.logging.Logger;
 import com.github.sladecek.maze.jmaze.maze.IMazeStructure;
 
 /*
- * Generates random maze by opening walls random walk in a depth first
- * way.
+ * Generates random maze by opening walls random walk in a depth first order.
  */
 public final class DepthFirstMazeGenerator implements IMazeGenerator {
 
@@ -27,7 +26,7 @@ public final class DepthFirstMazeGenerator implements IMazeGenerator {
         int allRoomsCnt = maze.getRoomCount();
         visitedRooms = new BitSet(allRoomsCnt);
 
-        stack = new Stack<Integer>();
+        stack = new Stack<>();
         visitRoom(maze.getStartRoom());
         while (!stack.isEmpty()) {
 
@@ -36,7 +35,7 @@ public final class DepthFirstMazeGenerator implements IMazeGenerator {
             if (room == maze.getTargetRoom()) {
                 // save solution
                 assert solution == null : "Maze cannot have two solutions";
-                solution = new Vector<Integer>();
+                solution = new Vector<>();
                 for (Integer i : stack) {
                     solution.add(i);
                 }
@@ -75,7 +74,7 @@ public final class DepthFirstMazeGenerator implements IMazeGenerator {
 
     private Vector<Integer> findAllPossibleNextRooms(final IMazeStructure maze,
             final MazeRealization real, final int room) {
-        Vector<Integer> candidates = new Vector<Integer>();
+        Vector<Integer> candidates = new Vector<>();
         for (int wall : maze.getWalls(room)) {
             if (real.isWallClosed(wall)) {
                 int otherRoom = maze.getRoomBehindWall(room, wall);
@@ -87,7 +86,7 @@ public final class DepthFirstMazeGenerator implements IMazeGenerator {
         if (candidates.size() <= 1) {
             return candidates;
         }
-        Vector<Integer> weightedCandidates = new Vector<Integer>();
+        Vector<Integer> weightedCandidates = new Vector<>();
         for (int wall : candidates) {
             int weight = maze.getWallProbabilityWeight(wall);
             for (int i = 0; i < weight; i++) {
@@ -104,8 +103,8 @@ public final class DepthFirstMazeGenerator implements IMazeGenerator {
         stack.push(room);
     }
 
-    private static final Logger LOGGER = Logger.getLogger("maze.jmaze");
-    private Random randomGenerator;
+    private static final Logger LOGGER = Logger.getLogger("maze");
+    private final Random randomGenerator;
     private BitSet visitedRooms;
     private Stack<Integer> stack;
 }

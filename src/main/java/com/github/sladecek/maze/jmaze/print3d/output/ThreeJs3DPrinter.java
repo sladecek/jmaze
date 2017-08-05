@@ -77,5 +77,5 @@ public class ThreeJs3DPrinter implements IMaze3DPrinter {
 
     private IPrintStyle printStyle;
 
-    private static final Logger LOG = Logger.getLogger("maze.jmaze");
+    private static final Logger LOG = Logger.getLogger("maze");
 }

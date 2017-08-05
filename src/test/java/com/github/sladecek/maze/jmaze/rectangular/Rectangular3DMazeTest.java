@@ -50,14 +50,14 @@ public class Rectangular3DMazeTest {
         colors = new DefaultPrintStyle();
 
         mapper = new PlanarMapper();
-        model = ModelFromShapes.make(shapes, mapper, sizes, colors);
+        model = ModelFromShapes.make(shapes, mapper, sizes, colors, false);
     }
 
 
     @Test
     public void testStl() throws IOException {
         IMaze3DMapper mapper = new PlanarMapper();
-        model = ModelFromShapes.make(shapes, mapper, sizes, colors);
+        model = ModelFromShapes.make(shapes, mapper, sizes, colors, false);
 
 
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -65,7 +65,7 @@ public class Rectangular3DMazeTest {
         printer.printModel(model, stream);
         stream.close();
         String s = stream.toString();
-        assertEquals(19191, s.length());
+        assertEquals(22863, s.length());
 
 
     }

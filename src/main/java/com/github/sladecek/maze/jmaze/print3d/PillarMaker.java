@@ -158,6 +158,6 @@ public class PillarMaker {
     private ArrayList<MPoint> intersections = new ArrayList<>();
 
 
-    private static final Logger LOG = Logger.getLogger("maze.jmaze");
+    private static final Logger LOG = Logger.getLogger("maze");
 
 }
