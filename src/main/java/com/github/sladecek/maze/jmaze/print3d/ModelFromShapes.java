@@ -26,11 +26,11 @@ public class ModelFromShapes {
         this.style = style;
     }
 
-    static public Model3d make(ShapeContainer shapes, IMaze3DMapper mapper, Maze3DSizes sizes, IPrintStyle style, boolean moebiusKludge) {
+    static public Model3d make(ShapeContainer shapes, IMaze3DMapper mapper, Maze3DSizes sizes, IPrintStyle style) {
         ModelFromShapes mfs = new ModelFromShapes(shapes, mapper, sizes, style);
         mfs.makePlanarProjection();
         LOG.info("BEFORE" + mfs.m.toString()); // TODO smazat
-        mfs.extrudeTo3D(moebiusKludge);
+        mfs.extrudeTo3D();
         LOG.info("AFTER" + mfs.m.toString());  // TODO smazat
         return mfs.m;
     }
@@ -49,19 +49,29 @@ public class ModelFromShapes {
         copyFloorPlanToModel();
     }
 
-    private void extrudeTo3D(boolean moebiusKludge) {
+    private void extrudeTo3D() {
+            setFaceVisibilityDependingOnAltitude();
+
             VerticalFaceMaker maker = new VerticalFaceMaker(m, mapper);
             maker.stretchTelescopicPoints();
             maker.setTelescopicPointAltitude();
 
             // blocks must be created after the telescopic point coordinates were established
             // but before adding any new edges to the model
-            createBlocks(moebiusKludge);
+            createBlocks();
 
             maker.makeVerticalEdges();
             maker.makeVerticalFaces();
             maker.addNewObjectsBackToModel();
+    }
 
+    private void setFaceVisibilityDependingOnAltitude() {
+        for (MFace f: m.getFaces()) {
+            if (f instanceof FloorFace) {
+                FloorFace ff = (FloorFace)f;
+                f.setVisible(mapper.isAltitudeVisible(ff.getAltitude()));
+            }
+        }
     }
 
     private void makeRooms() {
@@ -134,7 +144,7 @@ public class ModelFromShapes {
         }
     }
 
-    private void takeRoomCornersFromPillar(Collection<RoomCorner> corners) {
+     private void takeRoomCornersFromPillar(Collection<RoomCorner> corners) {
         for (RoomCorner c : corners) {
             int floorId = c.getFloorId();
             MRoom room = makeRoom(floorId, Altitude.FRAME);
@@ -159,7 +169,6 @@ public class ModelFromShapes {
         }
 
         for (MRoom r : rooms.values()) {
-
                 m.addFace(r);
                 r.finishEdges();
             // no new points or edges
@@ -167,21 +176,20 @@ public class ModelFromShapes {
     }
 
 
-    private void createBlocks(boolean moebiusKludge) {
+    private void createBlocks() {
         for (MFace f : m.getFaces()) {
-            MBlock block = createOneBlockFromFace(f, mapper, moebiusKludge);
-            if (block != null) m.addBlock(block); // TODO
+            // do not create blocks from invisible faces
+            if (f.isVisible()) {
+                MBlock block = createOneBlockFromFace(f, mapper);
+                m.addBlock(block);
+            }
         }
     }
 
 
-    public static MBlock createOneBlockFromFace(MFace f, IMaze3DMapper mapper, boolean moebiusKludge) {
+    public static MBlock createOneBlockFromFace(MFace f, IMaze3DMapper mapper) {
         assert f instanceof FloorFace;
         Altitude alt = ((FloorFace) f).getAltitude();
-        if (moebiusKludge) {
-            if (alt == Altitude.FRAME) return null;// TODO
-            if (alt == Altitude.GROUND) return null;// TODO
-        }
         MBlock block = new MBlock();
         for (MPoint p : f.visitPointsAroundEdges()) {
             assert p instanceof TelescopicPoint;

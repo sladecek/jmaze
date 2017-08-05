@@ -67,5 +67,15 @@ public class MFace {
                 '}';
     }
 
+    private boolean isVisible = true;
+
+    public boolean isVisible() {
+        return isVisible;
+    }
+
+    public void setVisible(boolean visible) {
+        isVisible = visible;
+    }
+
     private ArrayList<MEdge> edges = new ArrayList<>();
 }

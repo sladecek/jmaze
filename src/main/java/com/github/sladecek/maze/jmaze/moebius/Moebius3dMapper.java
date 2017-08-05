@@ -35,13 +35,19 @@ public final class Moebius3dMapper extends ConfigurableAltitudes implements IMaz
     public Point3D map(Point2DDbl image, Altitude altitude) {
         double y = (image.getY() - sizeAcross / 2) * cellStepInmm;
         double x = image.getX() * cellStepInmm;
-        return geometry.transform(new Point3D(x, y, altitude.getValue()*2.001));
+        return geometry.transform(new Point3D(x, y, altitude.getValue() * 2.001));
     }
 
     @Override
     public ILocalCoordinateSystem createLocalCoordinateSystem(Point2DInt center) {
         return new Moebius3dMapper.MoebiusLocalCoordinateSystem(center, sizeAlong);
     }
+
+    @Override
+    public boolean isAltitudeVisible(Altitude alt) {
+        return (alt != Altitude.FRAME) && (alt != Altitude.GROUND);
+    }
+
 
     class MoebiusLocalCoordinateSystem implements ILocalCoordinateSystem {
         public MoebiusLocalCoordinateSystem(Point2DInt center, int maxX) {
@@ -65,12 +71,12 @@ public final class Moebius3dMapper extends ConfigurableAltitudes implements IMaz
 
         private final Point2DInt center;
         private final double maxX;
-
     }
 
     private final int sizeAcross;
     private final int sizeAlong;
     private MoebiusStripGeometry geometry;
     private double cellStepInmm;
+
 
 }

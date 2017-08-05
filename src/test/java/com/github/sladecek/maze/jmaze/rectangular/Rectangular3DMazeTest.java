@@ -50,14 +50,14 @@ public class Rectangular3DMazeTest {
         colors = new DefaultPrintStyle();
 
         mapper = new PlanarMapper();
-        model = ModelFromShapes.make(shapes, mapper, sizes, colors, false);
+        model = ModelFromShapes.make(shapes, mapper, sizes, colors);
     }
 
 
     @Test
     public void testStl() throws IOException {
         IMaze3DMapper mapper = new PlanarMapper();
-        model = ModelFromShapes.make(shapes, mapper, sizes, colors, false);
+        model = ModelFromShapes.make(shapes, mapper, sizes, colors);
 
 
         ByteArrayOutputStream stream = new ByteArrayOutputStream();

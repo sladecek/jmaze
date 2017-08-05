@@ -24,8 +24,4 @@ public class PlanarMapper extends ConfigurableAltitudes implements IMaze3DMapper
     }
 
 
-    @Override
-    public ILocalCoordinateSystem createLocalCoordinateSystem(Point2DInt center) {
-        return new TrivialCoordinateSystem();
-    }
 }

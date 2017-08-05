@@ -3,15 +3,25 @@ package com.github.sladecek.maze.jmaze.print3d;
 import com.github.sladecek.maze.jmaze.geometry.*;
 import com.github.sladecek.maze.jmaze.print3d.maze3dmodel.Altitude;
 import com.github.sladecek.maze.jmaze.print3d.maze3dmodel.ILocalCoordinateSystem;
+import com.github.sladecek.maze.jmaze.print3d.maze3dmodel.TrivialCoordinateSystem;
 
 /**
- * Maps planar maze coordinates into 3D points.
+ * Maps planar maze coordinates into 3D points. Also represents intimate details about maze space topology.
  */
 public interface IMaze3DMapper {
     Point3D map(Point2DDbl image, Altitude altitude);
-    //double inverselyMapLengthAt(Point2DDbl center, double v);
 
-    ILocalCoordinateSystem createLocalCoordinateSystem(Point2DInt center);
+
+
+    default boolean isAltitudeVisible(Altitude alt) {
+        return true;
+    }
+
+
+
+    default ILocalCoordinateSystem createLocalCoordinateSystem(Point2DInt center) {
+        return new TrivialCoordinateSystem();
+    }
 
     // TODO odstranit metodu a dat ji primo na misto pouziti
     default double inverselyMapLengthAt(Point2DDbl center, double v)

@@ -76,7 +76,7 @@ final class TestAppEgg {
 
 
             IMaze3DMapper mapper = new Egg3dMapper(egg, maze);
-            Model3d model = ModelFromShapes.make(shapes, mapper, sizes, colors, false);
+            Model3d model = ModelFromShapes.make(shapes, mapper, sizes, colors);
 
 
             final boolean printInJs = true;

@@ -58,9 +58,6 @@ public class VerticalFaceMaker {
 
 
     private void makeVerticalEdgesOnePoint(TelescopicPoint tp) {
-    /* TODO smazat    // Max altitude defines the z coordinate of the TelescopicPoint itself.
-        tp.setOwnAltitude(mapper);
-*/
         MPoint upperPoint = tp;
         Altitude upperAlt = tp.getMaxAltitude();
         tp.addSection(upperAlt, tp, null);
@@ -93,8 +90,7 @@ public class VerticalFaceMaker {
 
 
     /**
-     * Set maximal/minimal altitudes of TelescopicPoint. This method exists for internal usage
-     * by unit testx.
+     * Set maximal/minimal altitudes of TelescopicPoint. Public for unit tests.
      *
      * @param e
      */
@@ -160,7 +156,8 @@ public class VerticalFaceMaker {
         e.setP2(fp2.getPointAt(upperAltitude));
     }
 
-    private void fixUnevenAltitudes(MEdge e, TelescopicPoint fp1, TelescopicPoint fp2, Altitude upperAltitude, Altitude lowerAltitude, MFace lowFace) {
+    private void fixUnevenAltitudes(MEdge e, TelescopicPoint fp1, TelescopicPoint fp2,
+                                    Altitude upperAltitude, Altitude lowerAltitude, MFace lowFace) {
         MEdge upperEdge = e;
 
         // loop over all altitudes between two faces
@@ -175,7 +172,12 @@ public class VerticalFaceMaker {
             newFace.addEdge(fp1.getRodAt(oneBelow));
             newFace.addEdge(newEdge);
             newFace.addEdge(fp2.getRodAt(oneBelow));
+            // vertical face is invisible when both its altitudes are invisible
+            newFace.setVisible(
+                    mapper.isAltitudeVisible(alt) || mapper.isAltitudeVisible(oneBelow)
+            );
             m.addFace(newFace);
+
 
             alt = oneBelow;
             upperEdge = newEdge;

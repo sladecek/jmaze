@@ -57,7 +57,7 @@ public final class TestAppMoebius {
             Moebius3dMapper mapper = new Moebius3dMapper(sizes, widthCells, lengthCells);
             mapper.configureAltitudes(sizes);
 
-            Model3d model = ModelFromShapes.make(shapes, mapper, sizes, colors, true);
+            Model3d model = ModelFromShapes.make(shapes, mapper, sizes, colors);
 
             final boolean printInJs = false;
             final boolean printInScad = true;

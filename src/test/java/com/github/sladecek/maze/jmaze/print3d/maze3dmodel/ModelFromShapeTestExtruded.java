@@ -35,7 +35,7 @@ public class ModelFromShapeTestExtruded extends ModelFromShapesTestBase {
         sizes.setCellSizeInmm(2);
         IPrintStyle colors = new DefaultPrintStyle();
         IMaze3DMapper mapper = new PlanarMapper();
-        return ModelFromShapes.make(sc, mapper, sizes, colors, false);
+        return ModelFromShapes.make(sc, mapper, sizes, colors);
     }
 
     @Test
