@@ -21,7 +21,7 @@ import java.util.logging.*;
 /***
  * Command line application generating a Moebius maze..
  */
-public final class TestAppMoebius {
+/*public final class TestAppMoebius {
 
     public static void main(final String[] args) {
         System.setProperty("java.util.logging.SimpleFormatter.format",
@@ -87,3 +87,4 @@ public final class TestAppMoebius {
 
     private static final Logger LOG = Logger.getLogger("maze");
 }
+*/

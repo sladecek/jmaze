@@ -8,6 +8,7 @@ import com.github.sladecek.maze.jmaze.generator.MazeRealization;
 import com.github.sladecek.maze.jmaze.hexagonal.Hexagonal2DMaze;
 import com.github.sladecek.maze.jmaze.maze.BaseMaze;
 import com.github.sladecek.maze.jmaze.maze.IMaze;
+import com.github.sladecek.maze.jmaze.moebius.MoebiusMaze;
 import com.github.sladecek.maze.jmaze.print2d.MazeOutputFormat;
 import com.github.sladecek.maze.jmaze.print2d.SvgMazePrinter;
 import com.github.sladecek.maze.jmaze.print3d.IMaze3DMapper;
@@ -104,7 +105,8 @@ public class TestApp {
 
             // return new RectangularMaze(2, 2);
             //return new Circular2DMaze(4);
-            return new Hexagonal2DMaze(4);
+            //return new Hexagonal2DMaze(4);
+            return new MoebiusMaze(40,4);
         });
     }
 

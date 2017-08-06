@@ -44,12 +44,16 @@ public class GenericMazeStructure implements IMazeStructure {
         wallRoom1.add(room1);
         rooms.elementAt(room1).add(id);
         wallRoom2.add(room2);
+        wallProbabilityWeight.add(1);
         rooms.elementAt(room2).add(id);
         LOGGER.log(Level.INFO, "add wall id=" + id + " room1=" + room1
                 + " room2=" + room2);
         return id;
     }
 
+    public void setWallProbability(int wall, int value) {
+        wallProbabilityWeight.set(wall, value);
+    }
 
     @Override
     public final int getStartRoom() {
@@ -84,13 +88,14 @@ public class GenericMazeStructure implements IMazeStructure {
         } else if (r2 == room) {
             return r1;
         } else {
-            throw new IllegalArgumentException("unknown wall");
+            throw new IllegalArgumentException("unknown room");
         }
     }
 
     @Override
+    // TODO odstranit, nahradit metodou pro naplneni pole
     public int getWallProbabilityWeight(int wall) {
-        return 1;
+        return wallProbabilityWeight.get(wall);
     }
 
     private static final Logger LOGGER = Logger.getLogger("maze");
@@ -101,5 +106,6 @@ public class GenericMazeStructure implements IMazeStructure {
     private Vector<Vector<Integer>> rooms = new Vector<Vector<Integer>>();
     private Vector<Integer> wallRoom1 = new Vector<Integer>();
     private Vector<Integer> wallRoom2 = new Vector<Integer>();
+    private Vector<Integer> wallProbabilityWeight = new Vector<>();
 
 }

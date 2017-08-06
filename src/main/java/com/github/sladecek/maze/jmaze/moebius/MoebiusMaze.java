@@ -2,18 +2,45 @@ package com.github.sladecek.maze.jmaze.moebius;
 
 
 import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
+import com.github.sladecek.maze.jmaze.maze.BaseMaze;
+import com.github.sladecek.maze.jmaze.maze.IMaze;
 import com.github.sladecek.maze.jmaze.maze.IMazeStructure;
 import com.github.sladecek.maze.jmaze.maze.Irrengarten;
+import com.github.sladecek.maze.jmaze.print3d.IMaze3DMapper;
+import com.github.sladecek.maze.jmaze.print3d.Maze3DSizes;
+import com.github.sladecek.maze.jmaze.printstyle.DefaultPrintStyle;
+import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
+import com.github.sladecek.maze.jmaze.properties.MazeProperties;
 import com.github.sladecek.maze.jmaze.shapes.*;
 
 /**
  * 2D rectangular maze on Moebius strip.
  */
-public final class MoebiusMaze extends Irrengarten implements IMazeStructure {
+public final class MoebiusMaze extends BaseMaze {
 
-    public MoebiusMaze(final int height, final int width) {
-        this.width = width;
-        this.height = height;
+
+    public MoebiusMaze(int width, int height) {
+        this();
+        MazeProperties p = getDefaultProperties();
+        p.put("width", width);
+        p.put("height", height);
+        setProperties(p);
+    }
+
+    public MoebiusMaze() {
+        super();
+        defaultProperties.put("name", "moebius");
+        defaultProperties.put("width", 20);
+        defaultProperties.put("height", 20);
+        properties = defaultProperties.clone();
+
+    }
+
+    @Override
+    public void buildMaze() {
+  //      final boolean isPolar = false;
+        height = properties.getInt("height");
+        width = properties.getInt("width");
 
         if (width % 2 != 0) {
             throw new IllegalArgumentException(
@@ -23,61 +50,29 @@ public final class MoebiusMaze extends Irrengarten implements IMazeStructure {
             throw new IllegalArgumentException(
                     "Moebius maze must have even height");
         }
+
+        flatModel = new ShapeContainer(false, height, width);
         eastWestWallCount = width * height;
         southNorthWallCount = width * (height - 1);
 
-        buildMaze();
-    }
-
-    /*
-    public Hexagonal2DMaze() {
-
-    }
-
-    public RectangularMaze(int width, int height) {
-        this();
-        MazeProperties p = getDefaultProperties();
-        p.put("width", width);
-        p.put("height", height);
-        setProperties(p);
-    }
-
-    public RectangularMaze() {
-        super();
-        defaultProperties.put("name", "rect");
-        defaultProperties.put("width", 20);
-        defaultProperties.put("height", 20);
-        properties = defaultProperties.clone();
-
-    }
-
-    @Override
-    public void buildMaze() {
-        final boolean isPolar = false;
-        final int height = properties.getInt("height");
-        final int width = properties.getInt("width");*/
-
-
-
-    private void buildMaze() {
         int expectedRoomCount = width * height;
         int firstHorizontalWall = expectedRoomCount;
         int firstFloorWall = firstHorizontalWall + expectedRoomCount - width;
         expectedWallCount = firstFloorWall + expectedRoomCount / 2;
         expectedShapeCount = 3 * expectedRoomCount + width;
 
-        setStartRoom(0);
-        setTargetRoom(width / 4 + (height - 1) * width);
+        getGraph().setStartRoom(0);
+        getGraph().setTargetRoom(width / 4 + (height - 1) * width);
 
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 int wall = mapXYToRoomId(y, x);
-                int i = addRoom();
+                int i = getGraph().addRoom();
                 assert i == wall : "Inconsistent room numbering";
 
                 FloorShape r3 = new FloorShape(i, new Point2DInt(x, y));
                 r3.setRoomId(i);
-                addShape(r3);
+                getFlatModel().add(r3);
             }
         }
 
@@ -87,8 +82,9 @@ public final class MoebiusMaze extends Irrengarten implements IMazeStructure {
             for (int x = 0; x < width; x++) {
                 int roomEast = mapXYToRoomId(y, x);
                 int roomWest = mapXYToRoomId(y, (x + 1) % width);
-                int id = addWall(roomEast, roomWest);
-                addShape(WallShape.newInnerWall(id,
+                int id = getGraph().addWall(roomEast, roomWest);
+                setWallProbabilityWeight(id);
+                getFlatModel().add(WallShape.newInnerWall(id,
                         new Point2DInt(x, y), new Point2DInt(x, y + 1),
                         roomEast, roomWest)
                 );
@@ -102,8 +98,9 @@ public final class MoebiusMaze extends Irrengarten implements IMazeStructure {
             for (int x = 0; x < width; x++) {
                 int roomNorth = mapXYToRoomId(y, x);
                 int roomSouth = mapXYToRoomId(y + 1, x);
-                int id = addWall(roomNorth, roomSouth);
-                addShape(WallShape.newInnerWall(id, new Point2DInt((x - 1 + width) % width, y + 1), new Point2DInt(x, y + 1),
+                int id = getGraph().addWall(roomNorth, roomSouth);
+                setWallProbabilityWeight(id);
+                getFlatModel().add(WallShape.newInnerWall(id, new Point2DInt((x - 1 + width) % width, y + 1), new Point2DInt(x, y + 1),
                         roomSouth, roomNorth
                         )
                 );
@@ -115,9 +112,9 @@ public final class MoebiusMaze extends Irrengarten implements IMazeStructure {
         for (int x = 0; x < width; x++) {
             int roomNorth = mapXYToRoomId(0, x);
             int xx = (x - 1 + width) % width;
-            addShape(WallShape.newOuterWall(new Point2DInt(xx, 0), new Point2DInt(x, 0), roomNorth, -1));
+            getFlatModel().add(WallShape.newOuterWall(new Point2DInt(xx, 0), new Point2DInt(x, 0), roomNorth, -1));
             int roomSouth = mapXYToRoomId(height - 1, x);
-            addShape(WallShape.newOuterWall(new Point2DInt(xx, height), new Point2DInt(x, height), -2, roomSouth));
+            getFlatModel().add(WallShape.newOuterWall(new Point2DInt(xx, height), new Point2DInt(x, height), -2, roomSouth));
         }
 
         // floors
@@ -127,16 +124,38 @@ public final class MoebiusMaze extends Irrengarten implements IMazeStructure {
                 int hy = getTheOtherSideOfHoleY(y, x);
                 int hx = getTheOtherSideOfHoleX(y, x);
                 int room2 = mapXYToRoomId(hy, hx);
-                int id = addWall(room1, room2);
+                int id = getGraph().addWall(room1, room2);
+                setWallProbabilityWeight(id);
                 assert id == firstFloorWall + mapXYToRoomId(y, x) : "Inconsistent wall numbering - floor";
             }
         }
 
-        assert getRoomCount() == expectedRoomCount : "Unexpected room count";
-        assert getWallCount() == expectedWallCount : "Unexpected wall count";
+        assert getGraph().getRoomCount() == expectedRoomCount : "Unexpected room count";
+        assert getGraph().getWallCount() == expectedWallCount : "Unexpected wall count";
 
-        assert getShapes().length() == expectedShapeCount : "Incorrect shape count";
+        assert getFlatModel().length() == expectedShapeCount : "Incorrect shape count";
 
+    }
+
+    @Override
+    public IMaze3DMapper create3DMapper() {
+        Maze3DSizes sizes = new Maze3DSizes();
+        sizes.setCellSizeInmm(2);  // TODO
+        sizes.setWallHeightInmm(30);
+
+        IPrintStyle colors = new DefaultPrintStyle();
+
+        Moebius3dMapper mapper = new Moebius3dMapper(sizes, height, width);
+        mapper.configureAltitudes(properties);
+
+
+
+        return mapper;
+    }
+
+    @Override
+    public boolean canBePrintedIn2D() {
+        return false;
     }
 
     private int mapXYToRoomId(int hy, int hx) {
@@ -159,23 +178,24 @@ public final class MoebiusMaze extends Irrengarten implements IMazeStructure {
         return (x + width / 2) % width;
     }
 
-    @Override
-    public int getWallProbabilityWeight(int wall) {
+    private void setWallProbabilityWeight(int wall) {
+        int value = 1;
         if (wall < eastWestWallCount) {
             // horizontal
-            return 30;
+            value = 30;
         } else if (wall < eastWestWallCount + southNorthWallCount) {
             // vertical
-            return 3;
+            value =  3;
         } else {
             // hole
-            return 99; // TODO
+            value =  99; // TODO
 
         }
+        getGraph().setWallProbability(wall, value);
     }
 
-    private final int height;
-    private final int width;
+    private int height;
+    private int width;
 
     private int expectedWallCount;
     private int expectedShapeCount;
