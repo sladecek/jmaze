@@ -1,25 +1,40 @@
 package com.github.sladecek.maze.jmaze.hexagonal;
 
 import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
+import com.github.sladecek.maze.jmaze.maze.BaseMaze;
 import com.github.sladecek.maze.jmaze.maze.IMazeStructure;
 import com.github.sladecek.maze.jmaze.maze.Irrengarten;
+import com.github.sladecek.maze.jmaze.print3d.IMaze3DMapper;
+import com.github.sladecek.maze.jmaze.properties.MazeProperties;
 import com.github.sladecek.maze.jmaze.shapes.MarkShape;
 
+import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContext;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
 
 import java.util.Vector;
 import java.util.logging.Logger;
 
-public class Hexagonal2DMaze extends Irrengarten implements IMazeStructure {
+public class Hexagonal2DMaze extends BaseMaze {
 
     private int size;
 
     public Hexagonal2DMaze(int size) {
-        super();
-        this.size = size;
-        buildMaze();
+        this();
+        MazeProperties p = getDefaultProperties();
+        p.put("size", size);
+
+        setProperties(p);
     }
+
+    public Hexagonal2DMaze() {
+        super();
+        defaultProperties.put("name", "hexa");
+        defaultProperties.put("size", 6);
+        properties = defaultProperties.clone();
+
+    }
+
 
     // Radius of the hexagon.
     static final int hP = 20;
@@ -35,7 +50,10 @@ public class Hexagonal2DMaze extends Irrengarten implements IMazeStructure {
     static final int[] neigbourRoomYOdd = {-1, 0, 1, 1, 1, 0};
     static final int[] neigbourRoomYEven = {-1, -1, 0, 1, 0, -1};
 
-    private void buildMaze() {
+    @Override
+    public void buildMaze() {
+        final boolean isPolar = false;
+        size = properties.getInt("size");
 
         makeContext();
 
@@ -49,7 +67,7 @@ public class Hexagonal2DMaze extends Irrengarten implements IMazeStructure {
             for (int y = 0; y < size; y++) {
 
                 // make room (topology)
-                int r = addRoom();
+                int r = getGraph().addRoom();
                 mapXY2room.add(r);
 
                 Point2DInt center = computeRoomCenter(x, isOdd, y);
@@ -93,22 +111,32 @@ public class Hexagonal2DMaze extends Irrengarten implements IMazeStructure {
 
             }
         }
-        setStartRoom(0);
+        getGraph().setStartRoom(0);
         final int lastRoom = size * roomsPerRow - 1;
-        setTargetRoom(lastRoom);
+        getGraph().setTargetRoom(lastRoom);
+    }
+
+    @Override
+    public IMaze3DMapper create3DMapper() {
+        return null;
+    }
+
+    @Override
+    public boolean canBePrintedIn2D() {
+        return true;
     }
 
     private void makeFloor(int r, Point2DInt center) {
         final MarkShape floor = new MarkShape(r, center);
 
-        addShape(floor);
+        getFlatModel().add(floor);
     }
 
     private void makeContext() {
         final int height = hH * (2 * size + 1);
         final int width = hP * (3 * size - 1);
         final boolean isPolar = false;
-        setContext(new ShapeContext(isPolar, height, width));
+        flatModel = new ShapeContainer(isPolar, height, width);
     }
 
     private Point2DInt computeRoomCenter(int x, boolean isOdd, int y) {
@@ -124,15 +152,15 @@ public class Hexagonal2DMaze extends Irrengarten implements IMazeStructure {
 
     private void addInnerWall(int r2, int r, int x1, int y1, int x2, int y2, int ox, int oy) {
 
-        int id = addWall(r, r2);
+        int id = getGraph().addWall(r, r2);
 
         LOGGER.info(
                 "addWallAndShape room1=" + r + " room2=" + r2 + " y1=" + y1 + " y2=" + y2 + " x1=" + x1 + " x2=" + x2);
-        addShape(WallShape.newInnerWall(id, new Point2DInt(x1, y1), new Point2DInt(x2, y2)));
+        getFlatModel().add(WallShape.newInnerWall(id, new Point2DInt(x1, y1), new Point2DInt(x2, y2)));
     }
 
     private void addOuterWall(int x1, int y1, int x2, int y2) {
-        addShape(WallShape.newOuterWall(new Point2DInt(x1, y1), new Point2DInt(x2, y2)));
+        getFlatModel().add(WallShape.newOuterWall(new Point2DInt(x1, y1), new Point2DInt(x2, y2)));
     }
 
     private boolean areRoomCoordinatesValid(final int roomsPerRow, int ox, int oy) {

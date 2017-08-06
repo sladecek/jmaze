@@ -26,6 +26,36 @@ public class Voronoi2DMaze extends Irrengarten implements IMazeStructure {
         buildMaze();
     }
 
+
+    /*
+    public Hexagonal2DMaze() {
+
+    }
+
+    public RectangularMaze(int width, int height) {
+        this();
+        MazeProperties p = getDefaultProperties();
+        p.put("width", width);
+        p.put("height", height);
+        setProperties(p);
+    }
+
+    public RectangularMaze() {
+        super();
+        defaultProperties.put("name", "rect");
+        defaultProperties.put("width", 20);
+        defaultProperties.put("height", 20);
+        properties = defaultProperties.clone();
+
+    }
+
+    @Override
+    public void buildMaze() {
+        final boolean isPolar = false;
+        final int height = properties.getInt("height");
+        final int width = properties.getInt("width");*/
+
+
     private void buildMaze() {
         final boolean isPolar = false;
         setContext(new ShapeContext(isPolar, height, width/*, 1, 1*/));

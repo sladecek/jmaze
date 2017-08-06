@@ -19,7 +19,8 @@ public class Hexagonal2DMazeTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		maze = new Hexagonal2DMaze(2);		
+		maze = new Hexagonal2DMaze(2);
+		maze.makeMazeAllSteps(false);
 	}
 
 
@@ -30,29 +31,29 @@ public class Hexagonal2DMazeTest {
 
 	@Test
 	public void testGetRoomCount() {
-		assertEquals(6, maze.getRoomCount());
+		assertEquals(6, maze.getGraph().getRoomCount());
 	}
 
 	@Test
 	public void testGetWallCount() {
-		assertEquals(9, maze.getWallCount());
+		assertEquals(9, maze.getGraph().getWallCount());
 	}
 
 	@Test
 	public void testGetWalls() {
 		List<Integer> list = new ArrayList<Integer>();
-		maze.getWalls(0).iterator().forEachRemaining(list::add);
+		maze.getGraph().getWalls(0).iterator().forEachRemaining(list::add);
 		assertEquals(2, list.size());
 	}
 
 	@Test
 	public void testGetStartRoom() {
-		assertEquals(0, maze.getStartRoom());
+		assertEquals(0, maze.getGraph().getStartRoom());
 	}
 
 	@Test
 	public void testGetTargetRoom() {
-		assertEquals(5, maze.getTargetRoom());
+		assertEquals(5, maze.getGraph().getTargetRoom());
 	}
 
 	@Test
@@ -60,31 +61,31 @@ public class Hexagonal2DMazeTest {
 		// rooms are numbered by columns
 		// walls counterclockwise
 		
-		assertEquals(1, maze.getRoomBehindWall(0, 0));
-		assertEquals(2, maze.getRoomBehindWall(0, 1));
+		assertEquals(1, maze.getGraph().getRoomBehindWall(0, 0));
+		assertEquals(2, maze.getGraph().getRoomBehindWall(0, 1));
 		
-		assertEquals(0, maze.getRoomBehindWall(1, 0));
-		assertEquals(2, maze.getRoomBehindWall(1, 2));
+		assertEquals(0, maze.getGraph().getRoomBehindWall(1, 0));
+		assertEquals(2, maze.getGraph().getRoomBehindWall(1, 2));
 		
-		assertEquals(0, maze.getRoomBehindWall(2, 1));
-		assertEquals(1, maze.getRoomBehindWall(2, 2));
-		assertEquals(3, maze.getRoomBehindWall(2, 3));
-		assertEquals(5, maze.getRoomBehindWall(2, 7));
-		assertEquals(4, maze.getRoomBehindWall(2, 5));
+		assertEquals(0, maze.getGraph().getRoomBehindWall(2, 1));
+		assertEquals(1, maze.getGraph().getRoomBehindWall(2, 2));
+		assertEquals(3, maze.getGraph().getRoomBehindWall(2, 3));
+		assertEquals(5, maze.getGraph().getRoomBehindWall(2, 7));
+		assertEquals(4, maze.getGraph().getRoomBehindWall(2, 5));
 
-		assertEquals(2, maze.getRoomBehindWall(4, 5));
-		assertEquals(5, maze.getRoomBehindWall(4, 6));
+		assertEquals(2, maze.getGraph().getRoomBehindWall(4, 5));
+		assertEquals(5, maze.getGraph().getRoomBehindWall(4, 6));
 		
-		assertEquals(4, maze.getRoomBehindWall(5, 6));
-		assertEquals(2, maze.getRoomBehindWall(5, 7));
-		assertEquals(3, maze.getRoomBehindWall(5, 8));
+		assertEquals(4, maze.getGraph().getRoomBehindWall(5, 6));
+		assertEquals(2, maze.getGraph().getRoomBehindWall(5, 7));
+		assertEquals(3, maze.getGraph().getRoomBehindWall(5, 8));
 	}
 
 	// TODO wall shapes
 	@Test
 	public void testMarkShapes() {
 		ArrayList<MarkShape> floors = new ArrayList<MarkShape>();
-		ShapeContainer  sc = maze.getShapes();
+		ShapeContainer  sc = maze.getFlatModel();
 		for (IMazeShape2D s: sc.getShapes()) {
 			if (s instanceof MarkShape) {
 				floors.add((MarkShape)s);

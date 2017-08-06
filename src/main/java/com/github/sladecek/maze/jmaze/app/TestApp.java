@@ -5,6 +5,7 @@ import com.github.sladecek.maze.jmaze.circular.Circular2DMaze;
 import com.github.sladecek.maze.jmaze.generator.DepthFirstMazeGenerator;
 import com.github.sladecek.maze.jmaze.generator.IMazeGenerator;
 import com.github.sladecek.maze.jmaze.generator.MazeRealization;
+import com.github.sladecek.maze.jmaze.hexagonal.Hexagonal2DMaze;
 import com.github.sladecek.maze.jmaze.maze.BaseMaze;
 import com.github.sladecek.maze.jmaze.maze.IMaze;
 import com.github.sladecek.maze.jmaze.print2d.MazeOutputFormat;
@@ -102,7 +103,8 @@ public class TestApp {
         new TestApp().printTestMaze( () -> {
 
             // return new RectangularMaze(2, 2);
-            return new Circular2DMaze(4);
+            //return new Circular2DMaze(4);
+            return new Hexagonal2DMaze(4);
         });
     }
 
