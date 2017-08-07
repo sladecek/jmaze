@@ -9,7 +9,7 @@ maze.log.*
 maze.log
 /target/
 /.sonar
-/maze-egg.js
+/maze-geometry.js
 /maze-moebius.js
 /maze-rect.pdf
 /maze-triangular.pdf

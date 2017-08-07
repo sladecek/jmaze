@@ -62,6 +62,9 @@ public final class EggGeometry {
 		while (xInmm < this.ellipseMajorInmm - 2 * probeInmm) {
 			double angleInRad = Math.atan2(computeY(sign * (xInmm + probeInmm)) - computeY(sign * xInmm), probeInmm);
 			double dxInmm = stepInmm * Math.cos(angleInRad);
+			if (dxInmm <= 0 || dxInmm < xInmm/1000000) {
+				throw new InternalError("Infinite loop in egg division");
+			}
 			xInmm += dxInmm;
 			if (xInmm >= this.ellipseMajorInmm) {
 				break;
