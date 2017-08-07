@@ -2,63 +2,53 @@ package com.github.sladecek.maze.jmaze.voronoi;
 
 import be.humphreys.simplevoronoi.GraphEdge;
 import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
+import com.github.sladecek.maze.jmaze.maze.BaseMaze;
 import com.github.sladecek.maze.jmaze.maze.IMazeStructure;
 import com.github.sladecek.maze.jmaze.maze.Irrengarten;
+import com.github.sladecek.maze.jmaze.print3d.IMaze3DMapper;
+import com.github.sladecek.maze.jmaze.properties.MazeProperties;
 import com.github.sladecek.maze.jmaze.shapes.MarkShape;
 
+import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContext;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
 
 import java.util.Random;
 import java.util.logging.Logger;
 
-public class Voronoi2DMaze extends Irrengarten implements IMazeStructure {
+public class Voronoi2DMaze extends BaseMaze {
 
 
-    public Voronoi2DMaze(int width, int height, int roomCount, int loydCnt, Random randomGenerator, boolean debug) {
-        super();
-        this.width = width * rsp;
-        this.height = height * rsp;
-        this.roomCount = roomCount;
-        this.loydCnt = loydCnt;
-        this.randomGenerator = randomGenerator;
-
-        buildMaze();
-    }
-
-
-    /*
-    public Hexagonal2DMaze() {
-
-    }
-
-    public RectangularMaze(int width, int height) {
+    public Voronoi2DMaze(int width, int height, int roomCount, int loydCnt) {
         this();
         MazeProperties p = getDefaultProperties();
         p.put("width", width);
         p.put("height", height);
+        p.put("roomCount", roomCount);
+        p.put("loydCount", loydCnt);
         setProperties(p);
     }
-
-    public RectangularMaze() {
+    
+    public Voronoi2DMaze() {
         super();
-        defaultProperties.put("name", "rect");
-        defaultProperties.put("width", 20);
-        defaultProperties.put("height", 20);
+        defaultProperties.put("name", "voronoi");
+        defaultProperties.put("width", 10);
+        defaultProperties.put("height", 10);
+        defaultProperties.put("roomCount", 100);
+        defaultProperties.put("loydCount", 10);
         properties = defaultProperties.clone();
-
     }
 
     @Override
     public void buildMaze() {
+        this.width = properties.getInt("width") * rsp;
+        this.height = properties.getInt("height") * rsp;
+        this.roomCount = properties.getInt("roomCount");
+        this.loydCnt = properties.getInt("loydCount");
+        
         final boolean isPolar = false;
-        final int height = properties.getInt("height");
-        final int width = properties.getInt("width");*/
-
-
-    private void buildMaze() {
-        final boolean isPolar = false;
-        setContext(new ShapeContext(isPolar, height, width/*, 1, 1*/));
+        
+        flatModel = new ShapeContainer(isPolar, height, width);
 
         createOuterWalls();
 
@@ -89,10 +79,10 @@ public class Voronoi2DMaze extends Irrengarten implements IMazeStructure {
         for (int i = 0; i < roomCount; i++) {
             Point2DInt pt = p1.getIntegerPoint(i);
             LOGGER.info("room center [" + i + "]=" + pt);
-            int r = addRoom();
+            int r = getGraph().addRoom();
             final MarkShape floor = new MarkShape(r, pt);
 
-            addShape(floor);
+            getFlatModel().add(floor);
         }
 
         for (GraphEdge e : new VoronoiAlgorithm().computeEdges(p1)) {
@@ -100,8 +90,8 @@ public class Voronoi2DMaze extends Irrengarten implements IMazeStructure {
                 continue;
             }
             if (e.length() < 0.5) continue;
-            int id = addWall(e.site1, e.site2);
-            addShape(WallShape.newInnerWall(id,
+            int id = getGraph().addWall(e.site1, e.site2);
+            getFlatModel().add(WallShape.newInnerWall(id,
                     new Point2DInt((int) e.x1, (int) e.y1), new Point2DInt((int) e.x2, (int) e.y2)));
 
 
@@ -109,16 +99,26 @@ public class Voronoi2DMaze extends Irrengarten implements IMazeStructure {
 
         }
 
-        setStartRoom(0);
-        setTargetRoom(roomCount - 1);
+        getGraph().setStartRoom(0);
+        getGraph().setTargetRoom(roomCount - 1);
+    }
+
+    @Override
+    public IMaze3DMapper create3DMapper() {
+        return null;
+    }
+
+    @Override
+    public boolean canBePrintedIn2D() {
+        return true;
     }
 
     private void createOuterWalls() {
 
-        addShape(WallShape.newOuterWall(new Point2DInt(0, 0), new Point2DInt(width, 0)));
-        addShape(WallShape.newOuterWall(new Point2DInt(0, 0), new Point2DInt(0, height)));
-        addShape(WallShape.newOuterWall(new Point2DInt(0, height), new Point2DInt(width, height)));
-        addShape(WallShape.newOuterWall(new Point2DInt(width, 0), new Point2DInt(width, height)));
+        getFlatModel().add(WallShape.newOuterWall(new Point2DInt(0, 0), new Point2DInt(width, 0)));
+        getFlatModel().add(WallShape.newOuterWall(new Point2DInt(0, 0), new Point2DInt(0, height)));
+        getFlatModel().add(WallShape.newOuterWall(new Point2DInt(0, height), new Point2DInt(width, height)));
+        getFlatModel().add(WallShape.newOuterWall(new Point2DInt(width, 0), new Point2DInt(width, height)));
 
     }
 
@@ -132,5 +132,5 @@ public class Voronoi2DMaze extends Irrengarten implements IMazeStructure {
     private int roomCount;
     private int loydCnt;
 
-    private Random randomGenerator;
+
 }

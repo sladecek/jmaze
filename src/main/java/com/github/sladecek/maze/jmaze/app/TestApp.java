@@ -27,6 +27,7 @@ import com.github.sladecek.maze.jmaze.spheric.EggGeometry;
 import com.github.sladecek.maze.jmaze.spheric.EggMaze;
 import com.github.sladecek.maze.jmaze.triangular.Triangular2DMaze;
 import com.github.sladecek.maze.jmaze.util.MazeGenerationException;
+import com.github.sladecek.maze.jmaze.voronoi.Voronoi2DMaze;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -116,7 +117,9 @@ public class TestApp {
             // return new EggMaze(egg, equatorCells);
 
 
-            return new Triangular2DMaze(20);
+            //return new Triangular2DMaze(20);
+
+            return new Voronoi2DMaze();
         });
     }
 

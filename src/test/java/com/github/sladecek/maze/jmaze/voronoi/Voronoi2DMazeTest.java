@@ -28,35 +28,36 @@ public class Voronoi2DMazeTest {
 		int roomCount = 3;
         Random r = mock(Random.class);
         when(r.nextDouble()).thenReturn(0.5, 0.1, 0.5, 0.5, 0.5, 0.9);
-		maze = new Voronoi2DMaze(width, height, roomCount, 1, r, false);
+		maze = new Voronoi2DMaze(width, height, roomCount, 1);
+		maze.forceRandomGenerator(r);
 	}
 
 
 	@Test
 	public void testGetRoomCount() {
-		assertEquals(3, maze.getRoomCount());
+		assertEquals(3, maze.getGraph().getRoomCount());
 	}
 
 	@Test
 	public void testGetWallCount() {
-		assertEquals(2, maze.getWallCount());
+		assertEquals(2, maze.getGraph().getWallCount());
 	}
 
 	@Test
 	public void testGetWalls() {
 		List<Integer> list = new ArrayList<Integer>();
-		maze.getWalls(0).iterator().forEachRemaining(list::add);
+		maze.getGraph().getWalls(0).iterator().forEachRemaining(list::add);
 		assertEquals(1, list.size());
 	}
 
 	@Test
 	public void testGetStartRoom() {
-		assertEquals(0, maze.getStartRoom());
+		assertEquals(0, maze.getGraph().getStartRoom());
 	}
 
 	@Test
 	public void testGetTargetRoom() {
-		assertEquals(2, maze.getTargetRoom());
+		assertEquals(2, maze.getGraph().getTargetRoom());
 	}
 
 	@Test
@@ -89,7 +90,7 @@ public class Voronoi2DMazeTest {
 	@Test
 	public void testMarkShapes() {
 		ArrayList<MarkShape> floors = new ArrayList<MarkShape>();
-		ShapeContainer  sc = maze.getShapes();
+		ShapeContainer  sc = maze.getFlatModel();
 		for (IMazeShape2D s: sc.getShapes()) {
 			if (s instanceof MarkShape) {
 				floors.add((MarkShape)s);

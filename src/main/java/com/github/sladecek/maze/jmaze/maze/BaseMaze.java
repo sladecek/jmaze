@@ -19,6 +19,7 @@ import java.util.Random;
  */
 public abstract class BaseMaze implements IMaze {
     public BaseMaze() {
+        defaultProperties.put("randomSeed", 0);
         defaultProperties.put("wallHeight", 10.0);
         defaultProperties.put("cellSize", 2.0);
         defaultProperties.put("innerWallToPixelRatio", 1.0);
@@ -60,10 +61,8 @@ public abstract class BaseMaze implements IMaze {
     }
 
     public void makeMazeAllSteps(boolean with3d) {
+        setupRandomGenerator();
         buildMaze();
-
-        final Random randomGenerator = new Random();
-        randomGenerator.setSeed(0);
         IMazeGenerator g = new DepthFirstMazeGenerator(randomGenerator);
 
         // generate
@@ -88,6 +87,19 @@ public abstract class BaseMaze implements IMaze {
         }
 
     }
+
+    protected void  setupRandomGenerator() {
+        int randomSeed = properties.getInt("randomSeed");
+        randomGenerator = new Random();
+        randomGenerator.setSeed(randomSeed);
+    }
+
+    // for unit tests
+    public void forceRandomGenerator(Random r) {
+        randomGenerator = r;
+    }
+
+    protected Random randomGenerator;
 
     protected GenericMazeStructure graph = new GenericMazeStructure();
     protected ShapeContainer flatModel;
