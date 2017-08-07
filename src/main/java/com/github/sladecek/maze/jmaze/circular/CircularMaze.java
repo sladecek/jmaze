@@ -18,21 +18,19 @@ import java.util.logging.Logger;
  */
 public class CircularMaze extends BaseMaze {
 
+    /**
+     * Creates new instance of circular maze..
+*/
     public CircularMaze() {
 
     }
-
-    /**
-     * Creates new instance of circular maze..
-     *
-     * @param layerCount number of layers in the maze.
-     */
+/*
     public CircularMaze(int layerCount) {
         MazeProperties p = getDefaultProperties();
         p.put("layerCount", layerCount);
         setProperties(p);
     }
-
+*/
     @Override
     public MazeProperties getDefaultProperties() {
         MazeProperties defaultProperties = super.getDefaultProperties();

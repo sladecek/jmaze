@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.Arrays;
 
+import com.github.sladecek.maze.jmaze.properties.MazeProperties;
 import com.github.sladecek.maze.jmaze.shapes.FloorShape;
 //import com.github.sladecek.maze.jmaze.geometry.Direction;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape;
@@ -16,7 +17,15 @@ public class MoebiusMazeTest {
 
     @Before
     public final void setUp() throws Exception {
-        maze = new MoebiusMaze(6, 4);
+        maze = new MoebiusMaze();
+
+        MazeProperties p = maze.getDefaultProperties();
+        p.put("sizeAlong", 6);
+        p.put("sizeAcross", 4);
+
+
+        maze.setProperties(p);
+
         maze.makeMazeAllSteps(false);
     }
 

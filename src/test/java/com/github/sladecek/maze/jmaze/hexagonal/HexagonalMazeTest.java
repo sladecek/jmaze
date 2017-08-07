@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.github.sladecek.maze.jmaze.properties.MazeProperties;
 import com.github.sladecek.maze.jmaze.shapes.MarkShape;
 import com.github.sladecek.maze.jmaze.shapes.Shapes;
 import org.junit.Before;
@@ -19,7 +20,12 @@ public class HexagonalMazeTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		maze = new HexagonalMaze(2);
+		maze = new HexagonalMaze();
+
+		MazeProperties p = maze.getDefaultProperties();
+		p.put("size", 2);
+		maze.setProperties(p);
+
 		maze.makeMazeAllSteps(false);
 	}
 

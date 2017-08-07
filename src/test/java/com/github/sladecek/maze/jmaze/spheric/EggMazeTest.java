@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.Vector;
 
+import com.github.sladecek.maze.jmaze.properties.MazeProperties;
 import org.junit.Test;
 
 import com.github.sladecek.maze.jmaze.geometry.SouthNorth;
@@ -61,7 +62,17 @@ public class EggMazeTest {
 	private Vector<Integer> generateTestHemisphere(SouthNorth hemisphere, int equatorCellCnt ) {
 		EggGeometry egg = new EggGeometry(4, 3, 0.5);
 
-		EggMaze maze = new EggMaze(egg, equatorCellCnt);
+		EggMaze maze = new EggMaze();
+
+		MazeProperties p = maze.getDefaultProperties();
+		p.put("ellipseMajor", 4.0);
+		p.put("ellipseMinor", 3.0);
+		p.put("eggness", 0.5);
+		p.put("equatorCells", equatorCellCnt);
+		maze.setProperties(p);
+
+
+
 		maze.buildMazeGraphAndShapes();
 		final double baseRoomSizeInmm = maze.getBaseRoomSizeInmm();		
 		Vector<Double> layerXPosition = egg.divideMeridian(baseRoomSizeInmm, hemisphere);

@@ -11,13 +11,10 @@ import java.util.logging.Logger;
 
 public class TriangularMaze extends BaseMaze {
 
-
+/*
     public TriangularMaze(int size) {
-        MazeProperties p = getDefaultProperties();
-        p.put("size", size);
-        setProperties(p);
     }
-
+*/
 
     @Override
     public MazeProperties getDefaultProperties() {

@@ -16,7 +16,12 @@ import com.github.sladecek.maze.jmaze.shapes.*;
  */
 public final class EggMaze extends BaseMaze {
 
-    public EggMaze(EggGeometry geometry, int equatorCellCnt) {
+    public EggMaze() {
+    }
+
+        /*
+        (EggGeometry
+    } geometry, int equatorCellCnt) {
         MazeProperties p = getDefaultProperties();
         p.put("ellipseMajor", geometry.getEllipseMajorInmm());
         p.put("ellipseMinor", geometry.getEllipseMinorInmm());
@@ -24,7 +29,7 @@ public final class EggMaze extends BaseMaze {
         p.put("equatorCells", equatorCellCnt);
         setProperties(p);
     }
-
+*/
 
 
 
@@ -35,6 +40,7 @@ public final class EggMaze extends BaseMaze {
         defaultProperties.put("ellipseMajor", 10);
         defaultProperties.put("ellipseMinor", 10);
         defaultProperties.put("eggness", 0.2);
+        defaultProperties.put("equatorCells", 8);
         return defaultProperties;
     }
 

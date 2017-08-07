@@ -16,13 +16,14 @@ import com.github.sladecek.maze.jmaze.shapes.WallShape;
  */
 public class RectangularMaze extends BaseMaze {
 
+    /*
     public RectangularMaze(int width, int height) {
         MazeProperties p = getDefaultProperties();
         p.put("width", width);
         p.put("height", height);
         setProperties(p);
     }
-
+*/
 
     @Override
     public MazeProperties getDefaultProperties() {

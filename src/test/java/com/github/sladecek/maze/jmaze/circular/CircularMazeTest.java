@@ -1,5 +1,6 @@
 package com.github.sladecek.maze.jmaze.circular;
 
+import com.github.sladecek.maze.jmaze.properties.MazeProperties;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape2D;
 import com.github.sladecek.maze.jmaze.shapes.MarkShape;
 import com.github.sladecek.maze.jmaze.shapes.Shapes;
@@ -17,7 +18,13 @@ public class CircularMazeTest {
     @Before
     public void setUp() throws Exception {
         int layerCount = 4;
-        maze = new CircularMaze(layerCount);
+        maze = new CircularMaze();
+
+        MazeProperties p = maze.getDefaultProperties();
+        p.put("layerCount", layerCount);
+        maze.setProperties(p);
+
+
         maze.makeMazeAllSteps(false);
     }
 

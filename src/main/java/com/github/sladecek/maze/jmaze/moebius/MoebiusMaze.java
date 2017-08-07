@@ -16,53 +16,56 @@ import com.github.sladecek.maze.jmaze.shapes.*;
 public final class MoebiusMaze extends BaseMaze {
 
 
-    public MoebiusMaze(int width, int height) {
+/*    public MoebiusMaze(int width, int height) {
         MazeProperties p = getDefaultProperties();
-        p.put("width", width);
-        p.put("height", height);
+        p.put("sizeAlong", width);
+        p.put("sizeAcross", height);
         setProperties(p);
     }
+*/
 
+public MoebiusMaze() {
 
+}
     @Override
     public MazeProperties getDefaultProperties() {
         MazeProperties defaultProperties = super.getDefaultProperties();
         defaultProperties.put("name", "moebius");
-        defaultProperties.put("width", 20);
-        defaultProperties.put("height", 20);
+        defaultProperties.put("sizeAlong", 40);
+        defaultProperties.put("sizeAcross", 4);
         return defaultProperties;
     }
 
     @Override
     public void buildMazeGraphAndShapes() {
   //      final boolean isPolar = false;
-        height = properties.getInt("height");
-        width = properties.getInt("width");
+        sizeAcross = properties.getInt("sizeAcross");
+        sizeAlong = properties.getInt("sizeAlong");
 
-        if (width % 2 != 0) {
+        if (sizeAlong % 2 != 0) {
             throw new IllegalArgumentException(
-                    "Moebius maze must have even width");
+                    "Moebius maze must have even sizeAlong");
         }
-        if (height % 2 != 0) {
+        if (sizeAcross % 2 != 0) {
             throw new IllegalArgumentException(
-                    "Moebius maze must have even height");
+                    "Moebius maze must have even sizeAcross");
         }
 
-        allShapes = new Shapes(false, height, width);
-        eastWestWallCount = width * height;
-        southNorthWallCount = width * (height - 1);
+        allShapes = new Shapes(false, sizeAcross, sizeAlong);
+        eastWestWallCount = sizeAlong * sizeAcross;
+        southNorthWallCount = sizeAlong * (sizeAcross - 1);
 
-        int expectedRoomCount = width * height;
+        int expectedRoomCount = sizeAlong * sizeAcross;
         int firstHorizontalWall = expectedRoomCount;
-        int firstFloorWall = firstHorizontalWall + expectedRoomCount - width;
+        int firstFloorWall = firstHorizontalWall + expectedRoomCount - sizeAlong;
         expectedWallCount = firstFloorWall + expectedRoomCount / 2;
-        expectedShapeCount = 3 * expectedRoomCount + width;
+        expectedShapeCount = 3 * expectedRoomCount + sizeAlong;
 
         getGraph().setStartRoom(0);
-        getGraph().setTargetRoom(width / 4 + (height - 1) * width);
+        getGraph().setTargetRoom(sizeAlong / 4 + (sizeAcross - 1) * sizeAlong);
 
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
+        for (int y = 0; y < sizeAcross; y++) {
+            for (int x = 0; x < sizeAlong; x++) {
                 int wall = mapXYToRoomId(y, x);
                 int i = getGraph().addRoom();
                 assert i == wall : "Inconsistent room numbering";
@@ -75,10 +78,10 @@ public final class MoebiusMaze extends BaseMaze {
 
 
         // inner walls - east/west
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
+        for (int y = 0; y < sizeAcross; y++) {
+            for (int x = 0; x < sizeAlong; x++) {
                 int roomEast = mapXYToRoomId(y, x);
-                int roomWest = mapXYToRoomId(y, (x + 1) % width);
+                int roomWest = mapXYToRoomId(y, (x + 1) % sizeAlong);
                 int id = getGraph().addWall(roomEast, roomWest);
                 setWallProbabilityWeight(id);
                 getAllShapes().add(WallShape.newInnerWall(id,
@@ -91,13 +94,13 @@ public final class MoebiusMaze extends BaseMaze {
 
 
         // inner walls - south/north
-        for (int y = 0; y < height - 1; y++) {
-            for (int x = 0; x < width; x++) {
+        for (int y = 0; y < sizeAcross - 1; y++) {
+            for (int x = 0; x < sizeAlong; x++) {
                 int roomNorth = mapXYToRoomId(y, x);
                 int roomSouth = mapXYToRoomId(y + 1, x);
                 int id = getGraph().addWall(roomNorth, roomSouth);
                 setWallProbabilityWeight(id);
-                getAllShapes().add(WallShape.newInnerWall(id, new Point2DInt((x - 1 + width) % width, y + 1), new Point2DInt(x, y + 1),
+                getAllShapes().add(WallShape.newInnerWall(id, new Point2DInt((x - 1 + sizeAlong) % sizeAlong, y + 1), new Point2DInt(x, y + 1),
                         roomSouth, roomNorth
                         )
                 );
@@ -106,17 +109,17 @@ public final class MoebiusMaze extends BaseMaze {
         }
 
         // outer walls - south/north
-        for (int x = 0; x < width; x++) {
+        for (int x = 0; x < sizeAlong; x++) {
             int roomNorth = mapXYToRoomId(0, x);
-            int xx = (x - 1 + width) % width;
+            int xx = (x - 1 + sizeAlong) % sizeAlong;
             getAllShapes().add(WallShape.newOuterWall(new Point2DInt(xx, 0), new Point2DInt(x, 0), roomNorth, -1));
-            int roomSouth = mapXYToRoomId(height - 1, x);
-            getAllShapes().add(WallShape.newOuterWall(new Point2DInt(xx, height), new Point2DInt(x, height), -2, roomSouth));
+            int roomSouth = mapXYToRoomId(sizeAcross - 1, x);
+            getAllShapes().add(WallShape.newOuterWall(new Point2DInt(xx, sizeAcross), new Point2DInt(x, sizeAcross), -2, roomSouth));
         }
 
         // floors
-        for (int y = 0; y < height / 2; y++) {
-            for (int x = 0; x < width; x++) {
+        for (int y = 0; y < sizeAcross / 2; y++) {
+            for (int x = 0; x < sizeAlong; x++) {
                 int room1 = mapXYToRoomId(y, x);
                 int hy = getTheOtherSideOfHoleY(y, x);
                 int hx = getTheOtherSideOfHoleX(y, x);
@@ -138,7 +141,7 @@ public final class MoebiusMaze extends BaseMaze {
     public IMaze3DMapper create3DMapper() {
         IPrintStyle colors = new DefaultPrintStyle();
 
-        Moebius3dMapper mapper = new Moebius3dMapper(height, width,
+        Moebius3dMapper mapper = new Moebius3dMapper(sizeAcross, sizeAlong,
                 properties.getDouble("cellSize"),
                 properties.getDouble("innerWallSize")
                 );
@@ -155,23 +158,23 @@ public final class MoebiusMaze extends BaseMaze {
     }
 
     private int mapXYToRoomId(int hy, int hx) {
-        return hx + hy * width;
+        return hx + hy * sizeAlong;
     }
 
     private int getTheOtherSideOfHole(int room) {
-        int y = room / width;
-        int x = room % width;
+        int y = room / sizeAlong;
+        int x = room % sizeAlong;
         int hy = getTheOtherSideOfHoleY(y, x);
         int hx = getTheOtherSideOfHoleX(y, x);
-        return hy * width + hx;
+        return hy * sizeAlong + hx;
     }
 
     private int getTheOtherSideOfHoleY(int y, int x) {
-        return height - 1 - y;
+        return sizeAcross - 1 - y;
     }
 
     private int getTheOtherSideOfHoleX(int y, int x) {
-        return (x + width / 2) % width;
+        return (x + sizeAlong / 2) % sizeAlong;
     }
 
     private void setWallProbabilityWeight(int wall) {
@@ -190,8 +193,8 @@ public final class MoebiusMaze extends BaseMaze {
         getGraph().setWallProbability(wall, value);
     }
 
-    private int height;
-    private int width;
+    private int sizeAcross;
+    private int sizeAlong;
 
     private int expectedWallCount;
     private int expectedShapeCount;

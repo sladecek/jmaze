@@ -16,12 +16,17 @@ import java.util.logging.Logger;
 public class HexagonalMaze extends BaseMaze {
 
     private int size;
-
+/*
     public HexagonalMaze(int size) {
         MazeProperties p = getDefaultProperties();
         p.put("size", size);
         setProperties(p);
     }
+*/
+
+public HexagonalMaze() {
+
+}
 
     @Override
     public MazeProperties getDefaultProperties() {

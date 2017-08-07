@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.Vector;
 
 import com.github.sladecek.maze.jmaze.maze.IMaze;
+import com.github.sladecek.maze.jmaze.properties.MazeProperties;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,7 +16,14 @@ public class Rectangular2DMazeTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		maze = new RectangularMaze(5, 3);
+
+		maze = new RectangularMaze();
+
+		MazeProperties p = maze.getDefaultProperties();
+		p.put("width", 5);
+		p.put("height", 3);
+
+		maze.setProperties(p);
 		maze.makeMazeAllSteps(false);
 
 

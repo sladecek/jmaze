@@ -1,6 +1,7 @@
 package com.github.sladecek.maze.jmaze.rectangular;
 
 import com.github.sladecek.maze.jmaze.print3d.output.StlMazePrinter;
+import com.github.sladecek.maze.jmaze.properties.MazeProperties;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -14,7 +15,14 @@ public class Rectangular3DMazeTest {
     @Before
     public void setUp() throws Exception {
 
-        maze = new RectangularMaze(2, 2);
+        maze = new RectangularMaze();
+
+        MazeProperties p = maze.getDefaultProperties();
+        p.put("width", 2);
+        p.put("height", 2);
+
+        maze.setProperties(p);
+
         maze.makeMazeAllSteps(true);
     }
 

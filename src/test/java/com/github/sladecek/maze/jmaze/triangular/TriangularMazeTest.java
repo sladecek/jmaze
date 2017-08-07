@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.github.sladecek.maze.jmaze.properties.MazeProperties;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape2D;
 import com.github.sladecek.maze.jmaze.shapes.MarkShape;
 import org.junit.Before;
@@ -19,8 +20,14 @@ public class TriangularMazeTest {
 
 	@Before
 	public void setUp() throws Exception {
+
 		final int size = 3;
-		maze = new TriangularMaze(size);
+
+		maze = new TriangularMaze();
+		MazeProperties p = maze.getDefaultProperties();
+		p.put("size", size);
+		maze.setProperties(p);
+
 		maze.makeMazeAllSteps(false);
 	}
 
