@@ -3,7 +3,6 @@ package com.github.sladecek.maze.jmaze.maze;
 import com.github.sladecek.maze.jmaze.generator.DepthFirstMazeGenerator;
 import com.github.sladecek.maze.jmaze.generator.IMazeGenerator;
 import com.github.sladecek.maze.jmaze.print3d.IMaze3DMapper;
-import com.github.sladecek.maze.jmaze.print3d.Maze3DSizes;
 import com.github.sladecek.maze.jmaze.print3d.ModelFromShapes;
 import com.github.sladecek.maze.jmaze.printstyle.DefaultPrintStyle;
 import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
@@ -12,7 +11,7 @@ import com.github.sladecek.maze.jmaze.properties.MazeProperties;
 import java.util.Random;
 
 /**
- *
+ *  Builds a maze using maze data and IMaze methods.
  */
 public abstract class BaseMaze extends MazeData implements IMaze {
     public BaseMaze() {
@@ -36,23 +35,20 @@ public abstract class BaseMaze extends MazeData implements IMaze {
         IMazeGenerator g = new DepthFirstMazeGenerator(randomGenerator);
 
         // generate
-        pick = g.generateMaze(getGraph());
+        pick = g.generatePick(getGraph());
         pickedShapes = getAllShapes().applyRealization(pick);
 
         if (with3d) {
             IMaze3DMapper mapper = create3DMapper();
             if (mapper != null) {
-                Maze3DSizes sizes;
+
                 IPrintStyle colors;
 
                 double approxRoomSizeInmm = 3;
-                sizes = new Maze3DSizes();
-                sizes.setCellSizeInmm(2);  // TODO
-
                 colors = new DefaultPrintStyle();
 
-
-                model3d = ModelFromShapes.make(pickedShapes, mapper, sizes, colors);
+// TODO proc nasobit?
+                model3d = ModelFromShapes.make(pickedShapes, mapper, colors, properties.getDouble("cellSize")*properties.getDouble("innerWallSize"));
             }
         }
 

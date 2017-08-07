@@ -1,6 +1,6 @@
 package com.github.sladecek.maze.jmaze.generator;
 
-import com.github.sladecek.maze.jmaze.maze.IMazeStructure;
+import com.github.sladecek.maze.jmaze.maze.IMazeGraph;
 
 
 /** 
@@ -8,6 +8,6 @@ import com.github.sladecek.maze.jmaze.maze.IMazeStructure;
  */
 public interface IMazeGenerator {
 	
-	MazePick generateMaze(IMazeStructure maze);
+	MazePick generatePick(IMazeGraph maze);
 
 }

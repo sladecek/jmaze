@@ -7,10 +7,10 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.github.sladecek.maze.jmaze.maze.IMazeStructure;
+import com.github.sladecek.maze.jmaze.maze.IMazeGraph;
 
 /*
- * Generates random maze by opening walls random walk in a depth first order.
+ * Generates random maze by opening walls  by random walk in a depth first order.
  */
 public final class DepthFirstMazeGenerator implements IMazeGenerator {
 
@@ -20,7 +20,7 @@ public final class DepthFirstMazeGenerator implements IMazeGenerator {
     }
 
     @Override
-    public MazePick generateMaze(final IMazeStructure graph) {
+    public MazePick generatePick(final IMazeGraph graph) {
         MazePick result = new MazePick(graph.getWallCount(), graph.getStartRoom(), graph.getTargetRoom());
         Vector<Integer> solution = null;
         int allRoomsCnt = graph.getRoomCount();
@@ -72,7 +72,7 @@ public final class DepthFirstMazeGenerator implements IMazeGenerator {
         return result;
     }
 
-    private Vector<Integer> findAllPossibleNextRooms(final IMazeStructure maze,
+    private Vector<Integer> findAllPossibleNextRooms(final IMazeGraph maze,
                                                      final MazePick real, final int room) {
         Vector<Integer> candidates = new Vector<>();
         for (int wall : maze.getWalls(room)) {

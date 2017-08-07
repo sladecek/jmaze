@@ -18,6 +18,10 @@ import java.util.logging.Logger;
  */
 public class CircularMaze extends BaseMaze {
 
+    public CircularMaze() {
+
+    }
+
     /**
      * Creates new instance of circular maze..
      *

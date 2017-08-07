@@ -6,8 +6,7 @@ import java.util.Vector;
 import com.github.sladecek.maze.jmaze.util.BitSetIntervalPrinter;
 
 /**
- * Data structure which defines one particular maze. Defines walls opened
- * on the maze. Also contains solution.
+ * Defines concrete maze by picking opened walls among all possible walls in the maze. Also contains solution.
  */
 public final class MazePick {
 

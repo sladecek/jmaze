@@ -15,12 +15,12 @@ public class ConfigurableAltitudes {
     public void setAltitude(Altitude a, double value) {
         altitudes[a.ordinal()] = value;
     }
-
+/*
     public void configureAltitudes(Maze3DSizes cfg) {
         double wh  = cfg.getWallHeightInmm();
         configureFromWallHeight(wh);
     }
-
+*/
     private void configureFromWallHeight(double wh) {
         setAltitude(Altitude.FRAME,-wh / 5);
         setAltitude(Altitude.GROUND,0);

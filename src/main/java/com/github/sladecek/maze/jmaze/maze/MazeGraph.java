@@ -10,7 +10,7 @@ import java.util.logging.Logger;
  * rooms and a list of walls. The rooms and wall must be added to lists one by
  * one during maze construction.
  */
-public class MazeGraph implements IMazeStructure {
+public class MazeGraph implements IMazeGraph {
 
     @Override
     public final int getRoomCount() {

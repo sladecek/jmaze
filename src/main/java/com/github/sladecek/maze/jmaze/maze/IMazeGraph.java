@@ -3,7 +3,7 @@ package com.github.sladecek.maze.jmaze.maze;
 
 /***
  */
-public interface IMazeStructure {
+public interface IMazeGraph {
 	
 	int getRoomCount();
 	

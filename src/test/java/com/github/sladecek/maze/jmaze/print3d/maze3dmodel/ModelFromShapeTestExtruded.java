@@ -31,11 +31,9 @@ public class ModelFromShapeTestExtruded extends ModelFromShapesTestBase {
     }
 
     protected Model3d compute3dModel(Shapes sc) {
-        Maze3DSizes sizes = new Maze3DSizes();
-        sizes.setCellSizeInmm(2);
         IPrintStyle colors = new DefaultPrintStyle();
         IMaze3DMapper mapper = new PlanarMapper();
-        return ModelFromShapes.make(sc, mapper, sizes, colors);
+        return ModelFromShapes.make(sc, mapper, colors, 2);
     }
 
     @Test

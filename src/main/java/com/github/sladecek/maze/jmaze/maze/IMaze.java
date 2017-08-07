@@ -9,7 +9,7 @@ import com.github.sladecek.maze.jmaze.properties.MazeProperties;
 public interface IMaze {
 
     /**
-     * Generate maze graph and maze shapes.
+     * Generate maze graph and maze shapes. Usually uses MazeData structures for results.
      */
     void buildMazeGraphAndShapes();
 

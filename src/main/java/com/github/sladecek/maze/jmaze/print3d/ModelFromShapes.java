@@ -19,15 +19,15 @@ import java.util.logging.Logger;
  */
 public class ModelFromShapes {
 
-    public ModelFromShapes(Shapes shapes, IMaze3DMapper mapper, Maze3DSizes sizes, IPrintStyle style) {
+    public ModelFromShapes(Shapes shapes, IMaze3DMapper mapper, IPrintStyle style, double wallSize) {
         this.shapes = shapes;
         this.mapper = mapper;
-        this.sizes = sizes;
         this.style = style;
+        this.wallSize = wallSize;
     }
 
-    static public Model3d make(Shapes shapes, IMaze3DMapper mapper, Maze3DSizes sizes, IPrintStyle style) {
-        ModelFromShapes mfs = new ModelFromShapes(shapes, mapper, sizes, style);
+    static public Model3d make(Shapes shapes, IMaze3DMapper mapper,  IPrintStyle style, double wallSize) {
+        ModelFromShapes mfs = new ModelFromShapes(shapes, mapper, style, wallSize);
         mfs.makePlanarProjection();
         LOG.info("BEFORE" + mfs.m.toString()); // TODO smazat
         mfs.extrudeTo3D();
@@ -35,8 +35,8 @@ public class ModelFromShapes {
         return mfs.m;
     }
 
-    static public Model3d makeWithoutExtrusionForUnitTesting(Shapes shapes, IMaze3DMapper mapper, Maze3DSizes sizes, IPrintStyle style) {
-        ModelFromShapes mfs = new ModelFromShapes(shapes, mapper, sizes, style);
+    static public Model3d makeWithoutExtrusionForUnitTesting(Shapes shapes, IMaze3DMapper mapper,  IPrintStyle style, double wallSize) {
+        ModelFromShapes mfs = new ModelFromShapes(shapes, mapper, style, wallSize);
         mfs.makePlanarProjection();
         return mfs.m;
     }
@@ -134,8 +134,8 @@ public class ModelFromShapes {
     private void makePillars() {
         for (Point2DInt center : wallsForPillars.keySet()) {
             Point2DDbl c = new Point2DDbl(center.getX(), center.getY());
-            double wallWidthInMm = mapper.inverselyMapLengthAt(c,
-                    sizes.getInnerWallToPixelRatio() * sizes.getCellSizeInmm());
+            double wallWidthInMm = mapper.inverselyMapLengthAt(c, wallSize);
+
             List<WallEnd> walls = new LinkedList<>(wallsForPillars.get(center));
             PillarMaker pm = new PillarMaker(mapper.createLocalCoordinateSystem(center), center, walls, wallWidthInMm);
             pm.makePillar();
@@ -204,8 +204,9 @@ public class ModelFromShapes {
     }
 
     private static final Logger LOG = Logger.getLogger("maze");
+    private final double wallSize;
     private Shapes shapes;
-    private Maze3DSizes sizes;
+
     private IPrintStyle style;
     private IMaze3DMapper mapper;
     private Model3d m;
