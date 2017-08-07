@@ -3,7 +3,7 @@ package com.github.sladecek.maze.jmaze.hexagonal;
 import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 import com.github.sladecek.maze.jmaze.maze.BaseMaze;
 import com.github.sladecek.maze.jmaze.maze.IMazeStructure;
-import com.github.sladecek.maze.jmaze.maze.Irrengarten;
+
 import com.github.sladecek.maze.jmaze.print3d.IMaze3DMapper;
 import com.github.sladecek.maze.jmaze.properties.MazeProperties;
 import com.github.sladecek.maze.jmaze.shapes.MarkShape;
@@ -51,7 +51,7 @@ public class Hexagonal2DMaze extends BaseMaze {
     static final int[] neigbourRoomYEven = {-1, -1, 0, 1, 0, -1};
 
     @Override
-    public void buildMaze() {
+    public void buildMazeGraphAndShapes() {
         final boolean isPolar = false;
         size = properties.getInt("size");
 

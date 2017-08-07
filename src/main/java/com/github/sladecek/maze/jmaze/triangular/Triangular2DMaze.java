@@ -3,7 +3,7 @@ package com.github.sladecek.maze.jmaze.triangular;
 import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 import com.github.sladecek.maze.jmaze.maze.BaseMaze;
 import com.github.sladecek.maze.jmaze.maze.IMazeStructure;
-import com.github.sladecek.maze.jmaze.maze.Irrengarten;
+
 import com.github.sladecek.maze.jmaze.print3d.IMaze3DMapper;
 import com.github.sladecek.maze.jmaze.properties.MazeProperties;
 import com.github.sladecek.maze.jmaze.shapes.*;
@@ -29,7 +29,7 @@ public class Triangular2DMaze extends BaseMaze {
 
 
     @Override
-    public void buildMaze() {
+    public void buildMazeGraphAndShapes() {
         final boolean isPolar = false;
         size = properties.getInt("size");
 

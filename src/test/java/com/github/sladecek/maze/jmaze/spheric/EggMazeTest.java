@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.Vector;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import com.github.sladecek.maze.jmaze.geometry.SouthNorth;
@@ -63,7 +62,7 @@ public class EggMazeTest {
 		EggGeometry egg = new EggGeometry(4, 3, 0.5);
 
 		EggMaze maze = new EggMaze(egg, equatorCellCnt);
-		maze.buildMaze();
+		maze.buildMazeGraphAndShapes();
 		final double baseRoomSizeInmm = maze.getBaseRoomSizeInmm();		
 		Vector<Double> layerXPosition = egg.divideMeridian(baseRoomSizeInmm, hemisphere);
 		Vector<Integer> layerRoomCnt = maze.computeRoomCounts(layerXPosition, equatorCellCnt, baseRoomSizeInmm);
@@ -76,7 +75,7 @@ public class EggMazeTest {
 		/*
 		EggGeometry egg = new EggGeometry(4, 3, 0.5);
 		EggMaze maze = new EggMaze(egg, 8);
-		maze.buildMaze();
+		maze.buildMazeGraphAndShapes();
 
 		int roomCount = 0;
 		int meridianWallCount = 0;
@@ -123,7 +122,7 @@ public class EggMazeTest {
 		
 		EggGeometry egg = new EggGeometry(ellipseMajorInmm, ellipseMinorInmm, eggCoef);
 		EggMaze maze = new EggMaze(egg, equator_cells);
-		maze.buildMaze();
+		maze.buildMazeGraphAndShapes();
 
 		for (IMazeShape2D s: maze.getShapes()) {
 			System.out.println(s);

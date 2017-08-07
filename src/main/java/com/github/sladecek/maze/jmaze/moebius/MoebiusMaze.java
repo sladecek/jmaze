@@ -3,9 +3,7 @@ package com.github.sladecek.maze.jmaze.moebius;
 
 import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 import com.github.sladecek.maze.jmaze.maze.BaseMaze;
-import com.github.sladecek.maze.jmaze.maze.IMaze;
-import com.github.sladecek.maze.jmaze.maze.IMazeStructure;
-import com.github.sladecek.maze.jmaze.maze.Irrengarten;
+
 import com.github.sladecek.maze.jmaze.print3d.IMaze3DMapper;
 import com.github.sladecek.maze.jmaze.print3d.Maze3DSizes;
 import com.github.sladecek.maze.jmaze.printstyle.DefaultPrintStyle;
@@ -37,7 +35,7 @@ public final class MoebiusMaze extends BaseMaze {
     }
 
     @Override
-    public void buildMaze() {
+    public void buildMazeGraphAndShapes() {
   //      final boolean isPolar = false;
         height = properties.getInt("height");
         width = properties.getInt("width");

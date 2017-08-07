@@ -35,7 +35,7 @@ public class RectangularMaze extends BaseMaze {
     }
 
     @Override
-    public void buildMaze() {
+    public void buildMazeGraphAndShapes() {
         final boolean isPolar = false;
         final int height = properties.getInt("height");
         final int width = properties.getInt("width");

@@ -37,7 +37,7 @@ public final class EggMaze extends BaseMaze {
     }
 
     @Override
-    public void buildMaze() {
+    public void buildMazeGraphAndShapes() {
         this.geometry = new EggGeometry(
           properties.getDouble("ellipseMajor")      ,
                 properties.getDouble("ellipseMinor"),

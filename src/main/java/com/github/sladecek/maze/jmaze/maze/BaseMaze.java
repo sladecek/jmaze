@@ -25,7 +25,11 @@ public abstract class BaseMaze implements IMaze {
         defaultProperties.put("innerWallToPixelRatio", 1.0);
     }
 
-    @Override
+    /**
+     * Set properties for concrete maze such as size or colors.
+     * @param value
+     */
+
     public void setProperties(MazeProperties value) {
         properties = value;
     }
@@ -35,12 +39,13 @@ public abstract class BaseMaze implements IMaze {
         return defaultProperties;
     }
 
-    @Override
+
+
     public String getName() {
         return defaultProperties.getString("name");
     }
 
-    @Override
+
     public GenericMazeStructure getGraph() {
         return graph;
     }
@@ -54,7 +59,7 @@ public abstract class BaseMaze implements IMaze {
         return realisedModel;
     }
 
-    @Override
+
     public ShapeContainer getFlatModel() {
         return flatModel;
 
@@ -62,7 +67,7 @@ public abstract class BaseMaze implements IMaze {
 
     public void makeMazeAllSteps(boolean with3d) {
         setupRandomGenerator();
-        buildMaze();
+        buildMazeGraphAndShapes();
         IMazeGenerator g = new DepthFirstMazeGenerator(randomGenerator);
 
         // generate

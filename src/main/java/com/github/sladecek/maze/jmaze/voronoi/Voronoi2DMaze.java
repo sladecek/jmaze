@@ -4,7 +4,7 @@ import be.humphreys.simplevoronoi.GraphEdge;
 import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 import com.github.sladecek.maze.jmaze.maze.BaseMaze;
 import com.github.sladecek.maze.jmaze.maze.IMazeStructure;
-import com.github.sladecek.maze.jmaze.maze.Irrengarten;
+
 import com.github.sladecek.maze.jmaze.print3d.IMaze3DMapper;
 import com.github.sladecek.maze.jmaze.properties.MazeProperties;
 import com.github.sladecek.maze.jmaze.shapes.MarkShape;
@@ -40,7 +40,7 @@ public class Voronoi2DMaze extends BaseMaze {
     }
 
     @Override
-    public void buildMaze() {
+    public void buildMazeGraphAndShapes() {
         this.width = properties.getInt("width") * rsp;
         this.height = properties.getInt("height") * rsp;
         this.roomCount = properties.getInt("roomCount");

@@ -5,13 +5,14 @@ import com.github.sladecek.maze.jmaze.properties.MazeProperties;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
 
 /**
- * One type of mazes such as rectangular, triangular or spherical mazes.
+ * Represents one type of mazes such as rectangular, triangular or spherical maze.
  */
 public interface IMaze {
+
     /**
-     * Generate maze graph and maze FlatModel.
+     * Generate maze graph and maze shapes.
      */
-    void buildMaze();
+    void buildMazeGraphAndShapes();
 
     /**
      * Default properties for this type of the maze.
@@ -20,28 +21,16 @@ public interface IMaze {
     MazeProperties getDefaultProperties();
 
     /**
-     * Set properties for concrete maze such as size or colors.
-     * @param value
-     */
-    void setProperties(MazeProperties value);
-
-    /**
-     * Create 3D mapper responsible for embedding planar maze into threedimensional space. May be return null for
+     * Create 3D mapper responsible for embedding planar maze into three dimensional space. May be return null for
      * mazes that can be printed in 2D only.
      * @return
      */
     IMaze3DMapper create3DMapper();
 
     /**
-     * Certain maze types  such as the rectangular maze, can be printed in 2D, certain types, such as the
-     * Moebius maze cannot.
+     * Return <code>true</code> if the maze can be printed in 2D.
      * @return
      */
     boolean canBePrintedIn2D();
 
-    String getName();
-
-    GenericMazeStructure getGraph();
-
-    ShapeContainer getFlatModel();
 }

@@ -40,7 +40,7 @@ public class Circular2DMaze extends BaseMaze {
 
     }
 
-    public void buildMaze() {
+    public void buildMazeGraphAndShapes() {
         layerCount= properties.getInt("layerCount");
         computeRoomCounts();
         firstRoomInLayer = new Vector<>();

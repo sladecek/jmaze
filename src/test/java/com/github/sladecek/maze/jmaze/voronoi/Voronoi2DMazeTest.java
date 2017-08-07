@@ -30,7 +30,7 @@ public class Voronoi2DMazeTest {
         when(r.nextDouble()).thenReturn(0.5, 0.1, 0.5, 0.5, 0.5, 0.9);
 		maze = new Voronoi2DMaze(width, height, roomCount, 1);
 		maze.forceRandomGenerator(r);
-		maze.buildMaze();
+		maze.buildMazeGraphAndShapes();
 	}
 
 
