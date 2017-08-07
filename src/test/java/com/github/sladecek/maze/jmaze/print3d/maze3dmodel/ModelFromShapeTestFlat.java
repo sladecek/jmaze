@@ -4,7 +4,7 @@ import com.github.sladecek.maze.jmaze.print3d.*;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.Model3d;
 import com.github.sladecek.maze.jmaze.printstyle.DefaultPrintStyle;
 import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
-import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
+import com.github.sladecek.maze.jmaze.shapes.Shapes;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -18,13 +18,13 @@ public class ModelFromShapeTestFlat extends ModelFromShapesTestBase {
 
     @Before
     public void setUp() throws Exception {
-        ShapeContainer sc = setUpInput();
+        Shapes sc = setUpInput();
         model3d = compute3dModel(sc);
         collectOutputs(model3d);
     }
 
 
-    protected Model3d compute3dModel(ShapeContainer sc) {
+    protected Model3d compute3dModel(Shapes sc) {
         Maze3DSizes sizes = new Maze3DSizes();
         sizes.setCellSizeInmm(2);
         sizes.setInnerWallToPixelRatio(0.2);

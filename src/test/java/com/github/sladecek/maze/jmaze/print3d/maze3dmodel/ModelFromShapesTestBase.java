@@ -14,8 +14,8 @@ import static org.junit.Assert.*;
  */
 public class ModelFromShapesTestBase {
 
-    protected ShapeContainer setUpInput() {
-        ShapeContainer sc = new ShapeContainer(new ShapeContext(false, 100, 100));
+    protected Shapes setUpInput() {
+        Shapes sc = new Shapes(new ShapeContext(false, 100, 100));
         sc.add(new FloorShape(0, new Point2DInt(55, 15)));
         sc.add(new FloorShape(1, new Point2DInt(65, 15)));
 

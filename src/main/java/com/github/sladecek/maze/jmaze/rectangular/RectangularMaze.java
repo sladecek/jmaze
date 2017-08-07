@@ -2,13 +2,12 @@ package com.github.sladecek.maze.jmaze.rectangular;
 
 import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 import com.github.sladecek.maze.jmaze.maze.BaseMaze;
-import com.github.sladecek.maze.jmaze.maze.GenericMazeStructure;
 import com.github.sladecek.maze.jmaze.print3d.IMaze3DMapper;
 import com.github.sladecek.maze.jmaze.print3d.PlanarMapper;
 import com.github.sladecek.maze.jmaze.properties.MazeProperties;
 import com.github.sladecek.maze.jmaze.shapes.FloorShape;
 import com.github.sladecek.maze.jmaze.shapes.MarkShape;
-import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
+import com.github.sladecek.maze.jmaze.shapes.Shapes;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
 
 /**
@@ -18,20 +17,20 @@ import com.github.sladecek.maze.jmaze.shapes.WallShape;
 public class RectangularMaze extends BaseMaze {
 
     public RectangularMaze(int width, int height) {
-        this();
         MazeProperties p = getDefaultProperties();
         p.put("width", width);
         p.put("height", height);
         setProperties(p);
     }
 
-    public RectangularMaze() {
-        super();
+
+    @Override
+    public MazeProperties getDefaultProperties() {
+        MazeProperties defaultProperties = super.getDefaultProperties();
         defaultProperties.put("name", "rect");
         defaultProperties.put("width", 20);
         defaultProperties.put("height", 20);
-        properties = defaultProperties.clone();
-
+        return defaultProperties;
     }
 
     @Override
@@ -44,7 +43,7 @@ public class RectangularMaze extends BaseMaze {
         final int h = rsp * height;
         final int w = rsp * width;
 
-        flatModel = new ShapeContainer(isPolar, h, w);
+        allShapes = new Shapes(isPolar, h, w);
 
 
         // rooms
@@ -56,9 +55,9 @@ public class RectangularMaze extends BaseMaze {
                 final int y1 = y * rsp + rsp / 2;
                 final Point2DInt position = new Point2DInt(x1, y1);
                 final MarkShape mark = new MarkShape(roomId, position);
-                flatModel.add(mark);
+                allShapes.add(mark);
                 final FloorShape floor = new FloorShape(roomId, position);
-                flatModel.add(floor);
+                allShapes.add(floor);
             }
         }
 
@@ -72,16 +71,16 @@ public class RectangularMaze extends BaseMaze {
 
                 if (x >= width - 1) {
                     // east outer wall
-                    flatModel.add(WallShape.newOuterWall(p1, p2, roomIdWest, -1));
+                    allShapes.add(WallShape.newOuterWall(p1, p2, roomIdWest, -1));
 
                 } else if (x < 0) {
                     // west outer wall
-                    flatModel.add(WallShape.newOuterWall(p1, p2, -1, roomIdEast));
+                    allShapes.add(WallShape.newOuterWall(p1, p2, -1, roomIdEast));
                 } else {
 
                     // inner wall
                     int id = graph.addWall(roomIdWest, roomIdEast);
-                    flatModel.add(WallShape.newInnerWall(id, p1, p2, roomIdWest, roomIdEast));
+                    allShapes.add(WallShape.newInnerWall(id, p1, p2, roomIdWest, roomIdEast));
 
                 }
             }
@@ -96,14 +95,14 @@ public class RectangularMaze extends BaseMaze {
                 final Point2DInt p2 = new Point2DInt(rsp * (x + 1), rsp * (y + 1));
 
                 if (y < 0) {
-                    flatModel.add(WallShape.newOuterWall(p1, p2, roomIdSouth, -1));
+                    allShapes.add(WallShape.newOuterWall(p1, p2, roomIdSouth, -1));
                 } else if (y >= height - 1) {
                     // south outer wall
-                    flatModel.add(WallShape.newOuterWall(p1, p2, -1, roomIdNorth));
+                    allShapes.add(WallShape.newOuterWall(p1, p2, -1, roomIdNorth));
                 } else {
                     // inner wall
                     int id = graph.addWall(roomIdNorth, roomIdSouth);
-                    flatModel.add(WallShape.newInnerWall(id, p1, p2, roomIdSouth, roomIdNorth));
+                    allShapes.add(WallShape.newInnerWall(id, p1, p2, roomIdSouth, roomIdNorth));
                 }
             }
         }

@@ -9,7 +9,7 @@ public class MazeRealizationTest {
 
     @Test
     public void testMazeRealization() {
-        MazeRealization r = new MazeRealization(3);
+        MazePick r = new MazePick(3);
         assertEquals(true, r.isWallClosed(0));
         assertEquals(true, r.isWallClosed(1));
         assertEquals(true, r.isWallClosed(2));
@@ -17,7 +17,7 @@ public class MazeRealizationTest {
 
     @Test
     public void testSetWallClosed() {
-        MazeRealization r = new MazeRealization(3);
+        MazePick r = new MazePick(3);
         assertEquals(true, r.isWallClosed(1));
         r.setWallClosed(1, false);
         assertEquals(false, r.isWallClosed(1));
@@ -27,7 +27,7 @@ public class MazeRealizationTest {
 
     @Test
     public void testPrintClosedWalls() {
-        MazeRealization r = new MazeRealization(3);
+        MazePick r = new MazePick(3);
         r.setWallClosed(1, false);
         assertEquals("0 2", r.printClosedWalls());
     }

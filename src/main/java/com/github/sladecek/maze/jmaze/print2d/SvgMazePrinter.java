@@ -19,7 +19,7 @@ import org.apache.fop.svg.PDFTranscoder;
 import com.github.sladecek.maze.jmaze.printstyle.DefaultPrintStyle;
 import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape2D;
-import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
+import com.github.sladecek.maze.jmaze.shapes.Shapes;
 import com.github.sladecek.maze.jmaze.util.MazeGenerationException;
 
 /*
@@ -30,8 +30,8 @@ public final class SvgMazePrinter  {
     public SvgMazePrinter() {
     }
 
-    public void printShapes(final ShapeContainer shapes, final MazeOutputFormat format,
-            final OutputStream output) throws MazeGenerationException {
+    public void printShapes(final Shapes shapes, final MazeOutputFormat format,
+                            final OutputStream output) throws MazeGenerationException {
         SvgDocument sd = createSvgDocument(shapes);
         printSvgDocument(format, output, sd);
     }
@@ -63,7 +63,7 @@ public final class SvgMazePrinter  {
         }
     }
 
-    public SvgDocument createSvgDocument(final ShapeContainer shapes) {
+    public SvgDocument createSvgDocument(final Shapes shapes) {
         SvgDocument sd = new SvgDocument(shapes.getContext());
         for (IMazeShape2D shape : shapes.getShapes()) {
 

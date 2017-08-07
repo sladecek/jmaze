@@ -1,37 +1,18 @@
 package com.github.sladecek.maze.jmaze.app;
 
-import com.fasterxml.jackson.databind.deser.Deserializers;
-import com.github.sladecek.maze.jmaze.circular.Circular2DMaze;
-import com.github.sladecek.maze.jmaze.generator.DepthFirstMazeGenerator;
-import com.github.sladecek.maze.jmaze.generator.IMazeGenerator;
-import com.github.sladecek.maze.jmaze.generator.MazeRealization;
-import com.github.sladecek.maze.jmaze.hexagonal.Hexagonal2DMaze;
 import com.github.sladecek.maze.jmaze.maze.BaseMaze;
-import com.github.sladecek.maze.jmaze.maze.IMaze;
 import com.github.sladecek.maze.jmaze.moebius.MoebiusMaze;
 import com.github.sladecek.maze.jmaze.print2d.MazeOutputFormat;
 import com.github.sladecek.maze.jmaze.print2d.SvgMazePrinter;
 import com.github.sladecek.maze.jmaze.print3d.IMaze3DMapper;
-import com.github.sladecek.maze.jmaze.print3d.Maze3DSizes;
-import com.github.sladecek.maze.jmaze.print3d.ModelFromShapes;
-import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.Model3d;
 import com.github.sladecek.maze.jmaze.print3d.output.OpenScad3DPrinter;
 import com.github.sladecek.maze.jmaze.print3d.output.StlMazePrinter;
 import com.github.sladecek.maze.jmaze.print3d.output.ThreeJs3DPrinter;
-import com.github.sladecek.maze.jmaze.printstyle.DefaultPrintStyle;
-import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
 
-import com.github.sladecek.maze.jmaze.rectangular.RectangularMaze;
-import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
-import com.github.sladecek.maze.jmaze.spheric.EggGeometry;
-import com.github.sladecek.maze.jmaze.spheric.EggMaze;
-import com.github.sladecek.maze.jmaze.triangular.Triangular2DMaze;
 import com.github.sladecek.maze.jmaze.util.MazeGenerationException;
-import com.github.sladecek.maze.jmaze.voronoi.Voronoi2DMaze;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Random;
 import java.util.function.Supplier;
 import java.util.logging.*;
 
@@ -66,9 +47,9 @@ public class TestApp {
                 SvgMazePrinter printer = new SvgMazePrinter();
 
                 FileOutputStream sSvg = new FileOutputStream(fileName + ".svg");
-                printer.printShapes(maze.getRealisedModel(), MazeOutputFormat.svg, sSvg);
+                printer.printShapes(maze.getPickedShapes(), MazeOutputFormat.svg, sSvg);
                 FileOutputStream fPdf = new FileOutputStream(fileName+ ".pdf");
-                printer.printShapes(maze.getRealisedModel(), MazeOutputFormat.pdf, fPdf);
+                printer.printShapes(maze.getPickedShapes(), MazeOutputFormat.pdf, fPdf);
             }
 
             IMaze3DMapper mapper = maze.create3DMapper();
@@ -108,18 +89,20 @@ public class TestApp {
         new TestApp().printTestMaze( () -> {
 
             // return new RectangularMaze(2, 2);
-            //return new Circular2DMaze(4);
-            //return new Hexagonal2DMaze(4);
-            //return new MoebiusMaze(40,4);
+            //return new CircularMaze(4);
+            //return new HexagonalMaze(4);
+            return new MoebiusMaze(40,4);
 
             //final int equatorCells = 8; // must be power of 2
             //EggGeometry egg = new EggGeometry(10, 10, 0.2);
             // return new EggMaze(egg, equatorCells);
 
 
-            //return new Triangular2DMaze(20);
+            //
+            // return new TriangularMaze(20);
 
-            return new Voronoi2DMaze();
+            //
+            // return new VoronoiMaze();
         });
     }
 

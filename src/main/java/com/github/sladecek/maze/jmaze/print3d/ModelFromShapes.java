@@ -7,7 +7,7 @@ import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.*;
 import com.github.sladecek.maze.jmaze.print3d.maze3dmodel.*;
 import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
 import com.github.sladecek.maze.jmaze.shapes.FloorShape;
-import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
+import com.github.sladecek.maze.jmaze.shapes.Shapes;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
 import com.github.sladecek.maze.jmaze.shapes.WallType;
 
@@ -19,14 +19,14 @@ import java.util.logging.Logger;
  */
 public class ModelFromShapes {
 
-    public ModelFromShapes(ShapeContainer shapes, IMaze3DMapper mapper, Maze3DSizes sizes, IPrintStyle style) {
+    public ModelFromShapes(Shapes shapes, IMaze3DMapper mapper, Maze3DSizes sizes, IPrintStyle style) {
         this.shapes = shapes;
         this.mapper = mapper;
         this.sizes = sizes;
         this.style = style;
     }
 
-    static public Model3d make(ShapeContainer shapes, IMaze3DMapper mapper, Maze3DSizes sizes, IPrintStyle style) {
+    static public Model3d make(Shapes shapes, IMaze3DMapper mapper, Maze3DSizes sizes, IPrintStyle style) {
         ModelFromShapes mfs = new ModelFromShapes(shapes, mapper, sizes, style);
         mfs.makePlanarProjection();
         LOG.info("BEFORE" + mfs.m.toString()); // TODO smazat
@@ -35,7 +35,7 @@ public class ModelFromShapes {
         return mfs.m;
     }
 
-    static public Model3d makeWithoutExtrusionForUnitTesting(ShapeContainer shapes, IMaze3DMapper mapper, Maze3DSizes sizes, IPrintStyle style) {
+    static public Model3d makeWithoutExtrusionForUnitTesting(Shapes shapes, IMaze3DMapper mapper, Maze3DSizes sizes, IPrintStyle style) {
         ModelFromShapes mfs = new ModelFromShapes(shapes, mapper, sizes, style);
         mfs.makePlanarProjection();
         return mfs.m;
@@ -204,7 +204,7 @@ public class ModelFromShapes {
     }
 
     private static final Logger LOG = Logger.getLogger("maze");
-    private ShapeContainer shapes;
+    private Shapes shapes;
     private Maze3DSizes sizes;
     private IPrintStyle style;
     private IMaze3DMapper mapper;

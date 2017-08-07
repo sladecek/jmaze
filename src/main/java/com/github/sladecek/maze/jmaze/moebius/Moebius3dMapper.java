@@ -4,7 +4,6 @@ package com.github.sladecek.maze.jmaze.moebius;
 import com.github.sladecek.maze.jmaze.geometry.*;
 import com.github.sladecek.maze.jmaze.print3d.ConfigurableAltitudes;
 import com.github.sladecek.maze.jmaze.print3d.IMaze3DMapper;
-import com.github.sladecek.maze.jmaze.print3d.Maze3DSizes;
 import com.github.sladecek.maze.jmaze.print3d.maze3dmodel.Altitude;
 import com.github.sladecek.maze.jmaze.print3d.maze3dmodel.ILocalCoordinateSystem;
 
@@ -13,19 +12,21 @@ import com.github.sladecek.maze.jmaze.print3d.maze3dmodel.ILocalCoordinateSystem
  */
 public final class Moebius3dMapper extends ConfigurableAltitudes implements IMaze3DMapper {
 
-    public Moebius3dMapper(final Maze3DSizes sizes, final int sizeAcross, final int sizeAlong) {
+    public Moebius3dMapper(final int sizeAcross, final int sizeAlong, final double cellSizeInmm, final double innerWallSize) {
         super();
 
         this.sizeAcross = sizeAcross;
         this.sizeAlong = sizeAlong;
+        this.cellSizeInmm = cellSizeInmm;
+        this.innerWallSize = innerWallSize;
         if (sizeAlong % 2 != 0) {
             throw new IllegalArgumentException("Moebius maze size along must be even");
         }
-        double innerWallThicknessInmm = sizes.getCellSizeInmm() * sizes.getInnerWallToPixelRatio();
+        double innerWallThicknessInmm = cellSizeInmm * innerWallSize;
 
-        double lengthInmm = sizes.getCellSizeInmm() * sizeAlong + innerWallThicknessInmm
+        double lengthInmm = cellSizeInmm * sizeAlong + innerWallThicknessInmm
                 * sizeAlong;
-        cellStepInmm = sizes.getCellSizeInmm() + innerWallThicknessInmm;
+        cellStepInmm = cellSizeInmm + innerWallThicknessInmm;
 
         geometry = new MoebiusStripGeometry(lengthInmm);
 
@@ -75,6 +76,8 @@ public final class Moebius3dMapper extends ConfigurableAltitudes implements IMaz
 
     private final int sizeAcross;
     private final int sizeAlong;
+    private final double cellSizeInmm;
+    private final double innerWallSize;
     private MoebiusStripGeometry geometry;
     private double cellStepInmm;
 

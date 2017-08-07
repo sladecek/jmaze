@@ -12,7 +12,7 @@
 //
 //import com.github.sladecek.maze.jmaze.generator.DepthFirstMazeGenerator;
 //import com.github.sladecek.maze.jmaze.generator.IMazeGenerator;
-//import com.github.sladecek.maze.jmaze.generator.MazeRealization;
+//import com.github.sladecek.maze.jmaze.generator.MazePick;
 //import com.github.sladecek.maze.jmaze.print3d.IMaze3DMapper;
 //import com.github.sladecek.maze.jmaze.print3d.Maze3DSizes;
 //import com.github.sladecek.maze.jmaze.print3d.ModelFromShapes;
@@ -23,7 +23,7 @@
 //import com.github.sladecek.maze.jmaze.printstyle.DefaultPrintStyle;
 //import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
 //import com.github.sladecek.maze.jmaze.shapes.IMazeShape;
-//import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
+//import com.github.sladecek.maze.jmaze.shapes.Shapes;
 //
 //
 //final class TestAppEgg {
@@ -53,7 +53,7 @@
 //            randomGenerator.setSeed(0);
 //            IMazeGenerator g = new DepthFirstMazeGenerator(randomGenerator);
 //
-//            MazeRealization real = g.generateMaze(maze);
+//            MazePick real = g.generateMaze(maze);
 //
 //            Maze3DSizes sizes = new Maze3DSizes();
 //            sizes.setCellSizeInmm(0.1);
@@ -63,7 +63,7 @@
 //
 //            IPrintStyle colors = new DefaultPrintStyle();
 //
-//            ShapeContainer shapes = maze.applyRealization(real);
+//            Shapes shapes = maze.applyRealization(real);
 //
 //
 //            double approxRoomSizeInmm = 3;

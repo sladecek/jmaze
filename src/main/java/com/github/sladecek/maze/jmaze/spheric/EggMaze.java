@@ -17,7 +17,6 @@ import com.github.sladecek.maze.jmaze.shapes.*;
 public final class EggMaze extends BaseMaze {
 
     public EggMaze(EggGeometry geometry, int equatorCellCnt) {
-        this();
         MazeProperties p = getDefaultProperties();
         p.put("ellipseMajor", geometry.getEllipseMajorInmm());
         p.put("ellipseMinor", geometry.getEllipseMinorInmm());
@@ -27,14 +26,18 @@ public final class EggMaze extends BaseMaze {
     }
 
 
-    public EggMaze() {
-        super();
+
+
+    @Override
+    public MazeProperties getDefaultProperties() {
+        MazeProperties defaultProperties = super.getDefaultProperties();
         defaultProperties.put("name", "geometry");
         defaultProperties.put("ellipseMajor", 10);
         defaultProperties.put("ellipseMinor", 10);
         defaultProperties.put("eggness", 0.2);
-        properties = defaultProperties.clone();
+        return defaultProperties;
     }
+
 
     @Override
     public void buildMazeGraphAndShapes() {
@@ -61,7 +64,7 @@ public final class EggMaze extends BaseMaze {
         final boolean isPolar = false;
         int width = 0;
         int height = 0;
-        flatModel = new ShapeContainer(isPolar, height, width);
+        allShapes = new Shapes(isPolar, height, width);
 
         // generate both hemispheres
         for (SouthNorth sn : SouthNorth.values()) {
@@ -173,9 +176,9 @@ public final class EggMaze extends BaseMaze {
             }
             Point2DInt center = new Point2DInt(ix*res+res/2, (iy * roomMapRatio)*res+res/2);
             final MarkShape mark = new MarkShape(r, center);
-            getFlatModel().add(mark);
+            getAllShapes().add(mark);
             final FloorShape floor = new FloorShape(r, center);
-            getFlatModel().add(floor);
+            getAllShapes().add(floor);
         }
 
     }
@@ -263,7 +266,7 @@ public final class EggMaze extends BaseMaze {
         final Point2DInt p1 = new Point2DInt(x1*res, y1*res);
         final Point2DInt p2 = new Point2DInt(x2*res, y2*res);
         LOG.log(Level.INFO, "addWallShape p1="+p1+" p2="+p2+" right="+rightRoom+" left="+leftRoom);
-        getFlatModel().add(WallShape.newInnerWall(id, p1, p2, rightRoom, leftRoom));
+        getAllShapes().add(WallShape.newInnerWall(id, p1, p2, rightRoom, leftRoom));
     }
 
     private boolean isPowerOfTwo(int n) {

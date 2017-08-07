@@ -9,7 +9,7 @@ import java.util.Random;
 
 import org.junit.Test;
 
-import com.github.sladecek.maze.jmaze.maze.GenericMazeStructure;
+import com.github.sladecek.maze.jmaze.maze.MazeGraph;
 
 public class DepthFirstMazeGeneratorTest {
 
@@ -35,7 +35,7 @@ public class DepthFirstMazeGeneratorTest {
         /*      5     */
         /*      6     */
         
-        GenericMazeStructure s = new GenericMazeStructure();
+        MazeGraph s = new MazeGraph();
         s.addRoom();
         s.addRoom();
         s.addRoom();
@@ -57,7 +57,7 @@ public class DepthFirstMazeGeneratorTest {
         Random r = mock(Random.class);
         when(r.nextInt(2)).thenReturn(1);
         DepthFirstMazeGenerator g = new DepthFirstMazeGenerator(r);
-        MazeRealization e = g.generateMaze(s);
+        MazePick e = g.generateMaze(s);
         
         assertEquals(5, e.getSolution().size());
         
@@ -82,7 +82,7 @@ public class DepthFirstMazeGeneratorTest {
         /*  0 1 2  */
         /*  3 4 5  */
         
-        GenericMazeStructure s = new GenericMazeStructure();
+        MazeGraph s = new MazeGraph();
         s.addRoom();
         s.addRoom();
         s.addRoom();
@@ -106,7 +106,7 @@ public class DepthFirstMazeGeneratorTest {
         when(r.nextInt(2)).thenReturn(0);
         
         DepthFirstMazeGenerator g = new DepthFirstMazeGenerator(r);
-        MazeRealization e = g.generateMaze(s);
+        MazePick e = g.generateMaze(s);
         
         assertEquals(4, e.getSolution().size());
         

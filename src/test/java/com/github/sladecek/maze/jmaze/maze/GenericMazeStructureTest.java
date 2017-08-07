@@ -9,11 +9,11 @@ import org.junit.Test;
 
 public class GenericMazeStructureTest {
 
-    public GenericMazeStructure s;
+    public MazeGraph s;
     
     @Before
     public void setUp() throws Exception {
-        s = new GenericMazeStructure();
+        s = new MazeGraph();
         s.addRoom();
         s.addRoom();
         s.addRoom();

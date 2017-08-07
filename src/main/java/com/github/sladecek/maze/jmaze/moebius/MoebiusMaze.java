@@ -5,7 +5,6 @@ import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 import com.github.sladecek.maze.jmaze.maze.BaseMaze;
 
 import com.github.sladecek.maze.jmaze.print3d.IMaze3DMapper;
-import com.github.sladecek.maze.jmaze.print3d.Maze3DSizes;
 import com.github.sladecek.maze.jmaze.printstyle.DefaultPrintStyle;
 import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
 import com.github.sladecek.maze.jmaze.properties.MazeProperties;
@@ -18,20 +17,20 @@ public final class MoebiusMaze extends BaseMaze {
 
 
     public MoebiusMaze(int width, int height) {
-        this();
         MazeProperties p = getDefaultProperties();
         p.put("width", width);
         p.put("height", height);
         setProperties(p);
     }
 
-    public MoebiusMaze() {
-        super();
+
+    @Override
+    public MazeProperties getDefaultProperties() {
+        MazeProperties defaultProperties = super.getDefaultProperties();
         defaultProperties.put("name", "moebius");
         defaultProperties.put("width", 20);
         defaultProperties.put("height", 20);
-        properties = defaultProperties.clone();
-
+        return defaultProperties;
     }
 
     @Override
@@ -49,7 +48,7 @@ public final class MoebiusMaze extends BaseMaze {
                     "Moebius maze must have even height");
         }
 
-        flatModel = new ShapeContainer(false, height, width);
+        allShapes = new Shapes(false, height, width);
         eastWestWallCount = width * height;
         southNorthWallCount = width * (height - 1);
 
@@ -70,7 +69,7 @@ public final class MoebiusMaze extends BaseMaze {
 
                 FloorShape r3 = new FloorShape(i, new Point2DInt(x, y));
                 r3.setRoomId(i);
-                getFlatModel().add(r3);
+                getAllShapes().add(r3);
             }
         }
 
@@ -82,7 +81,7 @@ public final class MoebiusMaze extends BaseMaze {
                 int roomWest = mapXYToRoomId(y, (x + 1) % width);
                 int id = getGraph().addWall(roomEast, roomWest);
                 setWallProbabilityWeight(id);
-                getFlatModel().add(WallShape.newInnerWall(id,
+                getAllShapes().add(WallShape.newInnerWall(id,
                         new Point2DInt(x, y), new Point2DInt(x, y + 1),
                         roomEast, roomWest)
                 );
@@ -98,7 +97,7 @@ public final class MoebiusMaze extends BaseMaze {
                 int roomSouth = mapXYToRoomId(y + 1, x);
                 int id = getGraph().addWall(roomNorth, roomSouth);
                 setWallProbabilityWeight(id);
-                getFlatModel().add(WallShape.newInnerWall(id, new Point2DInt((x - 1 + width) % width, y + 1), new Point2DInt(x, y + 1),
+                getAllShapes().add(WallShape.newInnerWall(id, new Point2DInt((x - 1 + width) % width, y + 1), new Point2DInt(x, y + 1),
                         roomSouth, roomNorth
                         )
                 );
@@ -110,9 +109,9 @@ public final class MoebiusMaze extends BaseMaze {
         for (int x = 0; x < width; x++) {
             int roomNorth = mapXYToRoomId(0, x);
             int xx = (x - 1 + width) % width;
-            getFlatModel().add(WallShape.newOuterWall(new Point2DInt(xx, 0), new Point2DInt(x, 0), roomNorth, -1));
+            getAllShapes().add(WallShape.newOuterWall(new Point2DInt(xx, 0), new Point2DInt(x, 0), roomNorth, -1));
             int roomSouth = mapXYToRoomId(height - 1, x);
-            getFlatModel().add(WallShape.newOuterWall(new Point2DInt(xx, height), new Point2DInt(x, height), -2, roomSouth));
+            getAllShapes().add(WallShape.newOuterWall(new Point2DInt(xx, height), new Point2DInt(x, height), -2, roomSouth));
         }
 
         // floors
@@ -131,19 +130,18 @@ public final class MoebiusMaze extends BaseMaze {
         assert getGraph().getRoomCount() == expectedRoomCount : "Unexpected room count";
         assert getGraph().getWallCount() == expectedWallCount : "Unexpected wall count";
 
-        assert getFlatModel().length() == expectedShapeCount : "Incorrect shape count";
+        assert getAllShapes().length() == expectedShapeCount : "Incorrect shape count";
 
     }
 
     @Override
     public IMaze3DMapper create3DMapper() {
-        Maze3DSizes sizes = new Maze3DSizes();
-        sizes.setCellSizeInmm(2);  // TODO
-        sizes.setWallHeightInmm(30);
-
         IPrintStyle colors = new DefaultPrintStyle();
 
-        Moebius3dMapper mapper = new Moebius3dMapper(sizes, height, width);
+        Moebius3dMapper mapper = new Moebius3dMapper(height, width,
+                properties.getDouble("cellSize"),
+                properties.getDouble("innerWallSize")
+                );
         mapper.configureAltitudes(properties);
 
 

@@ -1,23 +1,5 @@
 package com.github.sladecek.maze.jmaze.moebius;
 
-import com.github.sladecek.maze.jmaze.generator.DepthFirstMazeGenerator;
-import com.github.sladecek.maze.jmaze.generator.IMazeGenerator;
-import com.github.sladecek.maze.jmaze.generator.MazeRealization;
-import com.github.sladecek.maze.jmaze.print3d.output.OpenScad3DPrinter;
-import com.github.sladecek.maze.jmaze.print3d.output.StlMazePrinter;
-import com.github.sladecek.maze.jmaze.print3d.output.ThreeJs3DPrinter;
-import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.Model3d;
-import com.github.sladecek.maze.jmaze.print3d.ModelFromShapes;
-import com.github.sladecek.maze.jmaze.print3d.*;
-import com.github.sladecek.maze.jmaze.printstyle.DefaultPrintStyle;
-import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
-import com.github.sladecek.maze.jmaze.shapes.IMazeShape2D;
-import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
-
-import java.io.FileOutputStream;
-import java.util.Random;
-import java.util.logging.*;
-
 /***
  * Command line application generating a Moebius maze..
  */
@@ -39,7 +21,7 @@ import java.util.logging.*;
             final Random randomGenerator = new Random();
             randomGenerator.setSeed(0);
             IMazeGenerator g = new DepthFirstMazeGenerator(randomGenerator);
-            MazeRealization r = g.generateMaze(maze);
+            MazePick r = g.generateMaze(maze);
 
             Maze3DSizes sizes = new Maze3DSizes();
             sizes.setCellSizeInmm(2);  // TODO
@@ -48,7 +30,7 @@ import java.util.logging.*;
             IPrintStyle colors = new DefaultPrintStyle();
 
 //maze.setDebug(true);
-            ShapeContainer shapes = maze.applyRealization(r);
+            Shapes shapes = maze.applyRealization(r);
             for (IMazeShape2D sh: shapes.getShapes()) {
                 System.out.println(sh);
             }

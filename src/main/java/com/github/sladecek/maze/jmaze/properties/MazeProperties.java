@@ -1,10 +1,8 @@
 package com.github.sladecek.maze.jmaze.properties;
 
-import com.github.sladecek.maze.jmaze.generator.MazeRealization;
 import com.github.sladecek.maze.jmaze.printstyle.Color;
 
 import java.util.HashMap;
-import java.util.Properties;
 
 /**
  * List of configurable maze properties such as sizes, probabilities or colors.
