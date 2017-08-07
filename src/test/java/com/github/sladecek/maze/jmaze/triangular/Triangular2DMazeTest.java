@@ -20,7 +20,8 @@ public class Triangular2DMazeTest {
 	@Before
 	public void setUp() throws Exception {
 		final int size = 3;
-		maze = new Triangular2DMaze(size);		
+		maze = new Triangular2DMaze(size);
+		maze.makeMazeAllSteps(false);
 	}
 
 
@@ -31,29 +32,29 @@ public class Triangular2DMazeTest {
 
 	@Test
 	public void testGetRoomCount() {
-		assertEquals(9, maze.getRoomCount());
+		assertEquals(9, maze.getGraph().getRoomCount());
 	}
 
 	@Test
 	public void testGetWallCount() {
-		assertEquals(9, maze.getWallCount());
+		assertEquals(9, maze.getGraph().getWallCount());
 	}
 
 	@Test
 	public void testGetWalls() {
 		List<Integer> list = new ArrayList<Integer>();
-		maze.getWalls(0).iterator().forEachRemaining(list::add);
+		maze.getGraph().getWalls(0).iterator().forEachRemaining(list::add);
 		assertEquals(1, list.size());
 	}
 
 	@Test
 	public void testGetStartRoom() {
-		assertEquals(0, maze.getStartRoom());
+		assertEquals(0, maze.getGraph().getStartRoom());
 	}
 
 	@Test
 	public void testGetTargetRoom() {
-		assertEquals(8, maze.getTargetRoom());
+		assertEquals(8, maze.getGraph().getTargetRoom());
 	}
 
 	@Test
@@ -86,7 +87,7 @@ public class Triangular2DMazeTest {
 	@Test
 	public void testFloorShapes() {
 		ArrayList<MarkShape> floors = new ArrayList<MarkShape>();
-		ShapeContainer  sc = maze.getShapes();
+		ShapeContainer  sc = maze.getFlatModel();
 		for (IMazeShape2D s: sc.getShapes()) {
 			if (s instanceof MarkShape) {
 				floors.add((MarkShape)s);

@@ -23,6 +23,9 @@ import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
 
 import com.github.sladecek.maze.jmaze.rectangular.RectangularMaze;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContainer;
+import com.github.sladecek.maze.jmaze.spheric.EggGeometry;
+import com.github.sladecek.maze.jmaze.spheric.EggMaze;
+import com.github.sladecek.maze.jmaze.triangular.Triangular2DMaze;
 import com.github.sladecek.maze.jmaze.util.MazeGenerationException;
 
 import java.io.FileOutputStream;
@@ -106,7 +109,14 @@ public class TestApp {
             // return new RectangularMaze(2, 2);
             //return new Circular2DMaze(4);
             //return new Hexagonal2DMaze(4);
-            return new MoebiusMaze(40,4);
+            //return new MoebiusMaze(40,4);
+
+            //final int equatorCells = 8; // must be power of 2
+            //EggGeometry egg = new EggGeometry(10, 10, 0.2);
+            // return new EggMaze(egg, equatorCells);
+
+
+            return new Triangular2DMaze(20);
         });
     }
 

@@ -1,30 +1,43 @@
 package com.github.sladecek.maze.jmaze.triangular;
 
 import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
+import com.github.sladecek.maze.jmaze.maze.BaseMaze;
 import com.github.sladecek.maze.jmaze.maze.IMazeStructure;
 import com.github.sladecek.maze.jmaze.maze.Irrengarten;
-import com.github.sladecek.maze.jmaze.shapes.FloorShape;
-import com.github.sladecek.maze.jmaze.shapes.MarkShape;
-
-import com.github.sladecek.maze.jmaze.shapes.ShapeContext;
-import com.github.sladecek.maze.jmaze.shapes.WallShape;
+import com.github.sladecek.maze.jmaze.print3d.IMaze3DMapper;
+import com.github.sladecek.maze.jmaze.properties.MazeProperties;
+import com.github.sladecek.maze.jmaze.shapes.*;
 
 import java.util.logging.Logger;
 
-public class Triangular2DMaze extends Irrengarten implements IMazeStructure {
+public class Triangular2DMaze extends BaseMaze {
 
 
     public Triangular2DMaze(int size) {
-        super();
-        this.size = size;
-        buildMaze();
+        this();
+        MazeProperties p = getDefaultProperties();
+        p.put("size", size);
+        setProperties(p);
     }
 
-    private void buildMaze() {
+    public Triangular2DMaze() {
+        super();
+        defaultProperties.put("name", "triangular");
+        defaultProperties.put("size", 20);
+        properties = defaultProperties.clone();
+    }
+
+
+    @Override
+    public void buildMaze() {
+        final boolean isPolar = false;
+        size = properties.getInt("size");
+
+
         final int height = size;
         final int width = 2 * size;
-        final boolean isPolar = false;
-        setContext(new ShapeContext(isPolar, rsy * height, rsx * width));
+
+        flatModel = new ShapeContainer(isPolar, rsy * height, rsx * width);
 
         int prevFirst = -1;
         int lastRoom = -1;
@@ -52,7 +65,7 @@ public class Triangular2DMaze extends Irrengarten implements IMazeStructure {
 
                     int r = -1;
                     if (j < roomsInRow) {
-                        r = addRoom();
+                        r = getGraph().addRoom();
                         if (j == 0) {
                             prevFirst = myFirst;
                             myFirst = r;
@@ -64,9 +77,9 @@ public class Triangular2DMaze extends Irrengarten implements IMazeStructure {
 
                         final Point2DInt position = new Point2DInt(rsx * x2, rsy * y + rsy / 2);
                         final MarkShape mark = new MarkShape(r, position);
-                        addShape(mark);
+                        flatModel.add(mark);
                         final FloorShape floor = new FloorShape(r, position);
-                        addShape(floor);
+                        flatModel.add(floor);
                     }
 
                     if (newRoomIsRight) {
@@ -95,8 +108,18 @@ public class Triangular2DMaze extends Irrengarten implements IMazeStructure {
 
         }
 
-        setStartRoom(0);
-        setTargetRoom(lastRoom);
+        getGraph().setStartRoom(0);
+        getGraph().setTargetRoom(lastRoom);
+    }
+
+    @Override
+    public IMaze3DMapper create3DMapper() {
+        return null;
+    }
+
+    @Override
+    public boolean canBePrintedIn2D() {
+        return true;
     }
 
     private void addWallAndWallShape(int roomLeft, int roomRight, int x1, int x2,
@@ -108,10 +131,10 @@ public class Triangular2DMaze extends Irrengarten implements IMazeStructure {
                 roomLeft + " y1=" + y1 + " y2=" + y2 + " x1=" + x1 + " x2=" + x2);
 
         if (roomRight >= 0 && roomLeft >= 0) {
-            int id = addWall(roomRight, roomLeft);
-            addShape(WallShape.newInnerWall(id, p1, p2, roomRight, roomLeft));
+            int id = getGraph().addWall(roomRight, roomLeft);
+            flatModel.add(WallShape.newInnerWall(id, p1, p2, roomRight, roomLeft));
         } else {
-            addShape(WallShape.newOuterWall(p1, p2, roomRight, roomLeft));
+            flatModel.add(WallShape.newOuterWall(p1, p2, roomRight, roomLeft));
         }
     }
 
