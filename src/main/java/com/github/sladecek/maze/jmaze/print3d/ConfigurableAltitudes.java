@@ -4,7 +4,7 @@ import com.github.sladecek.maze.jmaze.print3d.maze3dmodel.Altitude;
 import com.github.sladecek.maze.jmaze.properties.MazeProperties;
 
 /**
- * Helper class for mapers. Enables to define numerical values of feature altitudes such as wall heights.
+ * Helper class. Enables to define numerical values of feature altitudes such as wall heights.
  */
 public class ConfigurableAltitudes {
 
@@ -12,20 +12,16 @@ public class ConfigurableAltitudes {
         return altitudes[a.ordinal()];
     }
 
-    public void setAltitude(Altitude a, double value) {
+    private void setAltitude(Altitude a, double value) {
         altitudes[a.ordinal()] = value;
     }
-/*
-    public void configureAltitudes(Maze3DSizes cfg) {
-        double wh  = cfg.getWallHeightInmm();
-        configureFromWallHeight(wh);
-    }
-*/
-    private void configureFromWallHeight(double wh) {
-        setAltitude(Altitude.FRAME,-wh / 5);
+
+    private void configureFromWallHeight(double wallHeight) {
+        final int wallToFloorRatio = 5;
+        setAltitude(Altitude.FRAME,-wallHeight / wallToFloorRatio);
         setAltitude(Altitude.GROUND,0);
-        setAltitude(Altitude.FLOOR, wh /5);
-        setAltitude(Altitude.CEILING,wh);
+        setAltitude(Altitude.FLOOR, wallHeight / wallToFloorRatio);
+        setAltitude(Altitude.CEILING,wallHeight);
     }
 
     public void configureAltitudes(MazeProperties properties) {
@@ -33,7 +29,7 @@ public class ConfigurableAltitudes {
         configureFromWallHeight(wh);
     }
 
-    private double altitudes[] = new double[Altitude.values().length];
+    private final double[] altitudes = new double[Altitude.values().length];
     {
         // default setting - each altitude is equal to value
         for (Altitude a: Altitude.values()) {

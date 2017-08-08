@@ -36,6 +36,7 @@ public class CircularMaze extends BaseMaze {
         MazeProperties defaultProperties = super.getDefaultProperties();
         defaultProperties.put("name", "circ");
         defaultProperties.put("layerCount", 8);
+        addDefault2DProperties(defaultProperties);
         return defaultProperties;
     }
 

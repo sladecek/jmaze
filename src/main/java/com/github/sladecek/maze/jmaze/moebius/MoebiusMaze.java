@@ -3,12 +3,13 @@ package com.github.sladecek.maze.jmaze.moebius;
 
 import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 import com.github.sladecek.maze.jmaze.maze.BaseMaze;
-
 import com.github.sladecek.maze.jmaze.print3d.IMaze3DMapper;
 import com.github.sladecek.maze.jmaze.printstyle.DefaultPrintStyle;
 import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
 import com.github.sladecek.maze.jmaze.properties.MazeProperties;
-import com.github.sladecek.maze.jmaze.shapes.*;
+import com.github.sladecek.maze.jmaze.shapes.FloorShape;
+import com.github.sladecek.maze.jmaze.shapes.Shapes;
+import com.github.sladecek.maze.jmaze.shapes.WallShape;
 
 /**
  * 2D rectangular maze on Moebius strip.
@@ -16,29 +17,23 @@ import com.github.sladecek.maze.jmaze.shapes.*;
 public final class MoebiusMaze extends BaseMaze {
 
 
-/*    public MoebiusMaze(int width, int height) {
-        MazeProperties p = getDefaultProperties();
-        p.put("sizeAlong", width);
-        p.put("sizeAcross", height);
-        setProperties(p);
+    public MoebiusMaze() {
+
     }
-*/
 
-public MoebiusMaze() {
-
-}
     @Override
     public MazeProperties getDefaultProperties() {
         MazeProperties defaultProperties = super.getDefaultProperties();
         defaultProperties.put("name", "moebius");
         defaultProperties.put("sizeAlong", 40);
         defaultProperties.put("sizeAcross", 4);
+        addDefault3DProperties(defaultProperties);
         return defaultProperties;
     }
 
     @Override
     public void buildMazeGraphAndShapes() {
-  //      final boolean isPolar = false;
+        //      final boolean isPolar = false;
         sizeAcross = properties.getInt("sizeAcross");
         sizeAlong = properties.getInt("sizeAlong");
 
@@ -144,9 +139,8 @@ public MoebiusMaze() {
         Moebius3dMapper mapper = new Moebius3dMapper(sizeAcross, sizeAlong,
                 properties.getDouble("cellSize"),
                 properties.getDouble("innerWallSize")
-                );
+        );
         mapper.configureAltitudes(properties);
-
 
 
         return mapper;
@@ -184,10 +178,10 @@ public MoebiusMaze() {
             value = 30;
         } else if (wall < eastWestWallCount + southNorthWallCount) {
             // vertical
-            value =  3;
+            value = 3;
         } else {
             // hole
-            value =  99; // TODO
+            value = 99; // TODO
 
         }
         getGraph().setWallProbability(wall, value);

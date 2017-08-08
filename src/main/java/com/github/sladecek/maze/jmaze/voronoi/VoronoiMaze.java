@@ -38,6 +38,7 @@ public class VoronoiMaze extends BaseMaze {
         defaultProperties.put("height", 10);
         defaultProperties.put("roomCount", 100);
         defaultProperties.put("loydCount", 10);
+        addDefault2DProperties(defaultProperties);
         return defaultProperties;
     }
 

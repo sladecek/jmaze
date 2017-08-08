@@ -23,10 +23,18 @@ public abstract class BaseMaze extends MazeData implements IMaze {
     public MazeProperties getDefaultProperties() {
         MazeProperties defaultProperties = new MazeProperties();
         defaultProperties.put("randomSeed", 0);
-        defaultProperties.put("wallHeight", 30.0);
-        defaultProperties.put("cellSize", 2.0);
-        defaultProperties.put("innerWallSize", 2.0);
         return defaultProperties;
+    }
+
+    protected void addDefault2DProperties(MazeProperties properties) {
+        properties.put("wallHeight", 6.0);
+
+    }
+
+    protected void addDefault3DProperties(MazeProperties properties) {
+        properties.put("wallHeight", 30.0);
+        properties.put("cellSize", 2.0);
+        properties.put("innerWallSize", 2.0);
     }
 
     public void makeMazeAllSteps(boolean with3d) {

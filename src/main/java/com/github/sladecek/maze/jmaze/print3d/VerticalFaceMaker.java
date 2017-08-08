@@ -161,6 +161,12 @@ public class VerticalFaceMaker {
         MEdge upperEdge = e;
 
         // loop over all altitudes between two faces
+
+        assert  (Altitude.FRAME.getValue() < Altitude.GROUND.getValue())
+                && (Altitude.GROUND.getValue() < Altitude.FLOOR.getValue())
+                && (Altitude.FLOOR.getValue() < Altitude.CEILING.getValue())
+                : "Altitudes must be ordered.";
+
         Altitude alt = upperAltitude;
         while (alt.hasPrev() && alt.prev().getValue() >= lowerAltitude.getValue()) {
             Altitude oneBelow = alt.prev();
@@ -187,7 +193,7 @@ public class VerticalFaceMaker {
     }
 
 
-        private final IMaze3DMapper mapper;
+    private final IMaze3DMapper mapper;
 
     private Model3d m;
 

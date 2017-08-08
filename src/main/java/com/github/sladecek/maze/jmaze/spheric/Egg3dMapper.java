@@ -1,6 +1,7 @@
 package com.github.sladecek.maze.jmaze.spheric;
 
 import com.github.sladecek.maze.jmaze.geometry.*;
+import com.github.sladecek.maze.jmaze.print3d.ConfigurableAltitudes;
 import com.github.sladecek.maze.jmaze.print3d.IMaze3DMapper;
 import com.github.sladecek.maze.jmaze.print3d.maze3dmodel.Altitude;
 import com.github.sladecek.maze.jmaze.print3d.maze3dmodel.ILocalCoordinateSystem;
@@ -11,7 +12,7 @@ import java.util.logging.Logger;
 /*
  * Map integer room cordinates do 3D coordinates in the egg.
  */
-public final class Egg3dMapper implements IMaze3DMapper {
+public final class Egg3dMapper extends ConfigurableAltitudes implements IMaze3DMapper {
     public Egg3dMapper(EggGeometry egg, EggMaze maze) {
         super();
         this.egg = egg;
@@ -37,7 +38,7 @@ public final class Egg3dMapper implements IMaze3DMapper {
 
         double offsetV = y - cellVertical;
         double offsetH = x - cellHorizontal;
-        double offsetA = altitude.getValue();
+        double offsetA = mapAltitude(altitude);
 
         final int eqCnt = maze.getEquatorCellCnt();
 

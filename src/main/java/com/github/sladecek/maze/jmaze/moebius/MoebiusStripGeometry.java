@@ -9,12 +9,13 @@ import com.github.sladecek.maze.jmaze.geometry.Point3D;
  */
 public final class MoebiusStripGeometry {
 	
-	public MoebiusStripGeometry(double circumferenceInmm) {
-		this.circumferenceInmm = circumferenceInmm;		
-		this.radiusInmm = this.circumferenceInmm / (4 * Math.PI); 
+	public MoebiusStripGeometry(double circumference) {
+		this.circumference = circumference;
+		this.radius = this.circumference / (4 * Math.PI);
 	}
 
-	/** Transform point in planar maze into point on Moebius list.
+	/**
+	 * Transform point in planar maze into point on Moebius list.
 	 */
 	Point3D transform(Point3D p) {
 		final double theta = computeTheta(p.getX());
@@ -25,24 +26,22 @@ public final class MoebiusStripGeometry {
 		final double z2 = -p.getY() * Math.sin(phi) + p.getZ() * Math.cos(phi);
 		
 		// rotate along global axis 
-		final double rInmm = radiusInmm + z2;
-		final Point3D result = new Point3D(rInmm * Math.cos(theta), rInmm * Math.sin(theta), y2);
-		
-		return result;
+		final double rInmm = radius + z2;
+		return new Point3D(rInmm * Math.cos(theta), rInmm * Math.sin(theta), y2);
 	}
 
-    protected double computeTheta(double distanceAlongEdgeInmm) {
-        return 4 * Math.PI * distanceAlongEdgeInmm / circumferenceInmm;
+    protected double computeTheta(double distanceAlongEdge) {
+        return 4 * Math.PI * distanceAlongEdge / circumference;
     }
 
-    public double getCircumferenceInmm() {
-		return circumferenceInmm;
+    public double getCircumference() {
+		return circumference;
 	}
 
-	public double getRadiusInmm() {
-		return radiusInmm;
+	public double getRadius() {
+		return radius;
 	}
 	
-	private final double circumferenceInmm;
-	private final double radiusInmm;	
+	private final double circumference;
+	private final double radius;
 }

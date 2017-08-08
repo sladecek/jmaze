@@ -3,7 +3,7 @@ package com.github.sladecek.maze.jmaze.print2d;
 import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 
 /*
- * Polar mapping from 2D coordinates used by shapes to svg coordinates (for circular maze).
+ * Maps 2D polar coordinates used by shapes into SVG cartesian coordinates (for circular maze).
  */
 public class Polar2DMapper implements IMaze2DMapper {
 

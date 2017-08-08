@@ -1,42 +1,62 @@
 package com.github.sladecek.maze.jmaze.moebius;
 
-
-import com.github.sladecek.maze.jmaze.geometry.*;
+import com.github.sladecek.maze.jmaze.geometry.Point2DDbl;
+import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
+import com.github.sladecek.maze.jmaze.geometry.Point3D;
 import com.github.sladecek.maze.jmaze.print3d.ConfigurableAltitudes;
 import com.github.sladecek.maze.jmaze.print3d.IMaze3DMapper;
 import com.github.sladecek.maze.jmaze.print3d.maze3dmodel.Altitude;
 import com.github.sladecek.maze.jmaze.print3d.maze3dmodel.ILocalCoordinateSystem;
 
 /**
- * Maps planar maze coordinates into 3D points.
+ * Maps planar 'shape' coordinates into 3D points.
  */
 public final class Moebius3dMapper extends ConfigurableAltitudes implements IMaze3DMapper {
 
-    public Moebius3dMapper(final int sizeAcross, final int sizeAlong, final double cellSizeInmm, final double innerWallSize) {
+    /**
+     * Creates <code>{@link Moebius3dMapper}</code>.
+     *
+     * @param sizeAcross    number of cells across the maze.
+     * @param sizeAlong     number of cells along the maze loop.
+     * @param cellSize      cell size in mm.
+     * @param wallThickness wall size in mm.
+     */
+    public Moebius3dMapper(final int sizeAcross, final int sizeAlong,
+                           final double cellSize, final double wallThickness) {
         super();
 
         this.sizeAcross = sizeAcross;
         this.sizeAlong = sizeAlong;
-        this.cellSizeInmm = cellSizeInmm;
-        this.innerWallSize = innerWallSize;
+        this.cellSize = cellSize;
+        this.wallSize = wallThickness;
+        
         if (sizeAlong % 2 != 0) {
-            throw new IllegalArgumentException("Moebius maze size along must be even");
+            throw new IllegalArgumentException("Moebius maze must have even number of cells.");
         }
-        double innerWallThicknessInmm = cellSizeInmm * innerWallSize;
+        
+        if (sizeAlong <= 0 || sizeAcross <= 0 || cellSize <= 0 || wallThickness <= 0 ) {
+            throw new IllegalArgumentException("Maze sizes must be positive.");
+        }
+        
+        if (wallThickness > cellSize/2) {
+            throw new IllegalArgumentException("Maze walls are too thick.");
+        }
 
-        double lengthInmm = cellSizeInmm * sizeAlong + innerWallThicknessInmm
-                * sizeAlong;
-        cellStepInmm = cellSizeInmm + innerWallThicknessInmm;
-
-        geometry = new MoebiusStripGeometry(lengthInmm);
-
+        this.length = cellSize * sizeAlong + wallThickness * sizeAlong;
+        this.cellStep = cellSize + wallThickness;
+        this.geometry = new MoebiusStripGeometry(length);
     }
 
     @Override
     public Point3D map(Point2DDbl image, Altitude altitude) {
-        double y = (image.getY() - sizeAcross / 2) * cellStepInmm;
-        double x = image.getX() * cellStepInmm;
-        return geometry.transform(new Point3D(x, y, altitude.getValue() * 2.001));
+        final Point3D imagePoint = computeImagePoint(image, altitude);
+        return geometry.transform(imagePoint);
+    }
+
+    public Point3D computeImagePoint(Point2DDbl image, Altitude altitude) {
+        double y = (image.getY() - sizeAcross / 2) * cellStep;
+        double x = image.getX() * cellStep;
+        return new Point3D(x, y, mapAltitude(altitude));
     }
 
     @Override
@@ -74,12 +94,25 @@ public final class Moebius3dMapper extends ConfigurableAltitudes implements IMaz
         private final double maxX;
     }
 
+
+    public double getLength() {
+        return length;
+    }
+
+    public double getCellStep() {
+        return cellStep;
+    }
+
+    public MoebiusStripGeometry getGeometry() {
+        return geometry;
+    }
+
     private final int sizeAcross;
     private final int sizeAlong;
-    private final double cellSizeInmm;
-    private final double innerWallSize;
+    private final double cellSize;
+    private final double wallSize;
+    private final double length;
+    private final double cellStep;
     private MoebiusStripGeometry geometry;
-    private double cellStepInmm;
-
 
 }

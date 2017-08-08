@@ -7,6 +7,7 @@ import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MEdge;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MPoint;
 import com.github.sladecek.maze.jmaze.print3d.maze3dmodel.*;
 import com.github.sladecek.maze.jmaze.shapes.WallType;
+import scala.util.regexp.Base;
 
 import java.util.*;
 import java.util.logging.Logger;
@@ -115,6 +116,7 @@ public class PillarMaker {
         double py2 = k2 * s2 - dy2;
         assert Math.abs(px - px2) < 0.000001 : "PillarMaker intersection solutions not equal x";
         assert Math.abs(py - py2) < 0.000001 : "PillarMaker intersection solutions not equal y";
+        assert(Altitude.GROUND.getValue() == 0) : "Assuming that ground altitude is zero)";
         return new Point3D(px + center.getX(), py + center.getY(), Altitude.GROUND.getValue());
     }
 

@@ -28,12 +28,12 @@ public class MoebiusStripGeometryTest {
 
     @Test
     public void testGetCircumferenceInmm() {
-        assertEquals(1256.637d, msg.getCircumferenceInmm(), delta);
+        assertEquals(1256.637d, msg.getCircumference(), delta);
     }
 
     @Test
     public void testGetRadiusInmm() {
-        assertEquals(100d, msg.getRadiusInmm(), delta);
+        assertEquals(100d, msg.getRadius(), delta);
     }
 
     @Test
