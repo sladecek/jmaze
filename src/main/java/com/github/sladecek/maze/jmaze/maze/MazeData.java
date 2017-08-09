@@ -1,6 +1,6 @@
 package com.github.sladecek.maze.jmaze.maze;
 
-import com.github.sladecek.maze.jmaze.generator.MazePick;
+import com.github.sladecek.maze.jmaze.generator.MazePath;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.Model3d;
 import com.github.sladecek.maze.jmaze.properties.MazeProperties;
 import com.github.sladecek.maze.jmaze.shapes.Shapes;
@@ -57,6 +57,6 @@ public class MazeData {
     protected MazeGraph graph = new MazeGraph();
     protected Shapes allShapes;
     protected Shapes pickedShapes;
-    protected MazePick pick;
+    protected MazePath pick;
     protected Model3d model3d;
 }

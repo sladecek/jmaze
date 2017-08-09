@@ -1,6 +1,6 @@
 package com.github.sladecek.maze.jmaze.shapes;
 
-import com.github.sladecek.maze.jmaze.generator.MazePick;
+import com.github.sladecek.maze.jmaze.generator.MazePath;
 import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 
 import com.github.sladecek.maze.jmaze.print2d.I2DDocument;
@@ -37,7 +37,7 @@ public class FloorShape implements IPrintableMazeShape2D {
 
 
     @Override
-    public void applyPick(MazePick mr) {
+    public void applyPick(MazePath mr) {
 
         isHole = !mr.isWallClosed(roomId);
 

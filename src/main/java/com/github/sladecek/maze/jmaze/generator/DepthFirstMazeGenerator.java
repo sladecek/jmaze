@@ -20,8 +20,8 @@ public final class DepthFirstMazeGenerator implements IMazeGenerator {
     }
 
     @Override
-    public MazePick generatePick(final IMazeGraph graph) {
-        MazePick result = new MazePick(graph.getWallCount(), graph.getStartRoom(), graph.getTargetRoom());
+    public MazePath generatePick(final IMazeGraph graph) {
+        MazePath result = new MazePath(graph.getWallCount(), graph.getStartRoom(), graph.getTargetRoom());
         Vector<Integer> solution = null;
         int allRoomsCnt = graph.getRoomCount();
         visitedRooms = new BitSet(allRoomsCnt);
@@ -73,7 +73,7 @@ public final class DepthFirstMazeGenerator implements IMazeGenerator {
     }
 
     private Vector<Integer> findAllPossibleNextRooms(final IMazeGraph maze,
-                                                     final MazePick real, final int room) {
+                                                     final MazePath real, final int room) {
         Vector<Integer> candidates = new Vector<>();
         for (int wall : maze.getWalls(room)) {
             if (real.isWallClosed(wall)) {

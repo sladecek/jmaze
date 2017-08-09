@@ -57,7 +57,7 @@ public class DepthFirstMazeGeneratorTest {
         Random r = mock(Random.class);
         when(r.nextInt(2)).thenReturn(1);
         DepthFirstMazeGenerator g = new DepthFirstMazeGenerator(r);
-        MazePick e = g.generatePick(s);
+        MazePath e = g.generatePick(s);
         
         assertEquals(5, e.getSolution().size());
         
@@ -106,7 +106,7 @@ public class DepthFirstMazeGeneratorTest {
         when(r.nextInt(2)).thenReturn(0);
         
         DepthFirstMazeGenerator g = new DepthFirstMazeGenerator(r);
-        MazePick e = g.generatePick(s);
+        MazePath e = g.generatePick(s);
         
         assertEquals(4, e.getSolution().size());
         

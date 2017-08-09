@@ -6,12 +6,12 @@ import java.util.Vector;
 import com.github.sladecek.maze.jmaze.util.BitSetIntervalPrinter;
 
 /**
- * Defines concrete maze by picking opened walls among all possible walls in the maze. Also contains solution.
+ * Defines concrete maze by picking opened walls among all possible walls in the maze. This also contains solution.
  */
-public final class MazePick {
+public final class MazePath {
 
 
-    public MazePick(int wallCount, int startRoom, int targetRoom) {
+    public MazePath(int wallCount, int startRoom, int targetRoom) {
         allocateWalls(wallCount);
         this.wallCount = wallCount;
         this.startRoom = startRoom;

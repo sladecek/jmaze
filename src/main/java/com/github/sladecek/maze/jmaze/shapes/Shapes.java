@@ -1,6 +1,6 @@
 package com.github.sladecek.maze.jmaze.shapes;
 
-import com.github.sladecek.maze.jmaze.generator.MazePick;
+import com.github.sladecek.maze.jmaze.generator.MazePath;
 
 import java.util.Vector;
 
@@ -18,7 +18,7 @@ public final class Shapes {
     }
 
 
-    public Shapes applyRealization(MazePick realization) {
+    public Shapes applyRealization(MazePath realization) {
         Shapes result = new Shapes(context);
 
         for (IPrintableMazeShape2D s : getShapes()) {

@@ -8,6 +8,6 @@ import com.github.sladecek.maze.jmaze.maze.IMazeGraph;
  */
 public interface IMazeGenerator {
 	
-	MazePick generatePick(IMazeGraph maze);
+	MazePath generatePick(IMazeGraph maze);
 
 }
