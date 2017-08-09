@@ -10,7 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /*
- * Map integer room cordinates do 3D coordinates in the egg.
+ * Map integer room coordinates do 3D coordinates in the egg.
  */
 public final class Egg3dMapper extends ConfigurableAltitudes implements IMaze3DMapper {
     public Egg3dMapper(EggGeometry egg, EggMaze maze) {
@@ -22,10 +22,6 @@ public final class Egg3dMapper extends ConfigurableAltitudes implements IMaze3DM
     /**
      * Map integer room coordinates to 3D coordinates on the egg.
      *
-     * @param cellVerical    Longitudal room number. Unit is 2*pi/#of rooms on the equator. The
-     *                       rooms on the equator have consecutive numbers 0,1,2.... Following layers
-     *                       may have less rooms and their numbers may skip some numbers 0,4,8....
-     * @param cellHorizontal Latitudal room number. Zero index is equator.
      * @return 3D coordinate of south-western corner of the room + offset.
      */
     @Override
@@ -109,58 +105,6 @@ public final class Egg3dMapper extends ConfigurableAltitudes implements IMaze3DM
         return result;
     }
 
-    /*
-        // TODO @Override
-        public Point3D mapCorner(int cellX, EastWest ew, UpDown ud,
-                                 SouthNorth snWall, SouthNorth snEdge) {
-            throw new IllegalArgumentException("Egg has no corners");
-        }
-
-        // TODO @Override
-        public int getStepY(int y, int x) {
-            final int eqCnt = maze.getEquatorCellCnt();
-
-            // South hemisphere has separate data structure.
-            SouthNorth sn = SouthNorth.north;
-            int indexH = x;
-            if (x < 0) {
-                sn = SouthNorth.south;
-                indexH = -x;
-            }
-            EggMazeHemisphere hem = maze.getHemisphere(sn);
-            final int layerCnt = hem.getCircleCnt();
-
-            assert indexH >= 0 : "Invalid horizontal coordinate - negative";
-            assert indexH <= layerCnt : "Invalid horizontal coordinate - too big";
-
-            final boolean isPole = indexH > hem.getCircleCnt();
-            final boolean isPolarCircle = indexH == hem.getCircleCnt();
-            if (isPole) {
-                return 1;
-            } else {
-                // polar circle uses room count from last normal layer to form polar cups
-                int where = indexH;
-                if (isPolarCircle) {
-                    where = indexH - 1;
-                }
-                int roomCntThis = hem.getWallCntOnCircle(where);
-                return eqCnt / roomCntThis;
-            }
-        }
-    */
-
-/*    @Override
-    public double inverselyMapLengthAt(Point2DDbl center, double v) {
-        final double epsilon = 0.001;
-        final double epsilonSide = epsilon / Math.sqrt(2);
-        Point2DDbl shifted = new Point2DDbl(center.getX() + epsilonSide, center.getY()+epsilonSide);
-        Point3D p1 = map(center, Altitude.GROUND);
-        Point3D p2 = map(shifted, Altitude.GROUND);
-        double distance = Point3D.computeDistance(p1, p2);
-        return v*epsilon/distance;
-
-    }
-*/
     class EggLocalCoordinateSystem implements ILocalCoordinateSystem {
         public EggLocalCoordinateSystem(Point2DInt center, int eqCnt) {
             this.center = center;
@@ -181,8 +125,8 @@ public final class Egg3dMapper extends ConfigurableAltitudes implements IMaze3DM
             return new Point2DDbl(image);
         }
 
-        private Point2DInt center;
-        private double maxY;
+        private final Point2DInt center;
+        private final double maxY;
     }
 
     @Override
@@ -195,8 +139,8 @@ public final class Egg3dMapper extends ConfigurableAltitudes implements IMaze3DM
 
     private static final double SMALL_Y_MM = 0.001;
     private static final Logger LOG = Logger.getLogger("maze");
-    private EggGeometry egg;
-    private EggMaze maze;
+    private final EggGeometry egg;
+    private final EggMaze maze;
 
 
 }

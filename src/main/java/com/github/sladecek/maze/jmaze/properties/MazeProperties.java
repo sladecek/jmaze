@@ -3,6 +3,7 @@ package com.github.sladecek.maze.jmaze.properties;
 import com.github.sladecek.maze.jmaze.printstyle.Color;
 
 import java.util.HashMap;
+import java.util.stream.Collectors;
 
 /**
  * List of configurable maze properties such as sizes, probabilities or colors.
@@ -13,9 +14,10 @@ public class MazeProperties {
 
     }
 
-    public MazeProperties clone() {
+    public MazeProperties clone()  {
+
         MazeProperties cloned = new MazeProperties();
-        data.forEach((k,v)->cloned.put(k,v));
+        data.forEach(cloned::put);
 
         return cloned;
     }
@@ -61,5 +63,35 @@ public class MazeProperties {
         return (Boolean)get(name, Boolean.class);
     }
 
-    private HashMap<String, Object> data = new HashMap<>();
+    public boolean isEmpty() {
+        return data.isEmpty();
+    }
+
+    public void updateFromStrings(MazeProperties stringProperties) {
+        stringProperties.data.forEach((k,v)-> {
+            if (!hasProperty(k)) {
+                throw new IllegalArgumentException("Undefined property '"+k+"'");
+            }
+            Object o = data.get(k);
+            String val = (String)v;
+            if (o instanceof Integer) {
+                put(k, Integer.valueOf(val));
+            } else if (o instanceof Double) {
+                put(k, Double.valueOf(val));
+            } else if (o instanceof Boolean) {
+                put(k, Boolean.valueOf(val));
+            } else if (o instanceof Color) {
+                put(k, new Color(val));
+            } else {
+                assert (o instanceof  String);
+                put(k, val);
+            }
+        });
+    }
+
+    public String toUserString() {
+        return data.keySet().stream().map((k)-> k + "=" + data.get(k).toString()).collect(Collectors.joining("\n"));
+    }
+
+    private final HashMap<String, Object> data = new HashMap<>();
 }

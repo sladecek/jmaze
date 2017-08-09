@@ -3,6 +3,7 @@ package com.github.sladecek.maze.jmaze.properties;
 import com.github.sladecek.maze.jmaze.printstyle.Color;
 import org.junit.Before;
 import org.junit.Test;
+import org.neo4j.cypher.internal.compiler.v2_1.functions.E;
 
 import static org.junit.Assert.*;
 
@@ -66,6 +67,57 @@ public class MazePropertiesTest {
     @Test
     public void getBoolean() throws Exception {
         assertEquals(true, p.getBoolean("bool"));
+    }
+
+    @Test
+    public void isNotEmpty() throws Exception {
+        assertFalse(p.isEmpty());
+    }
+
+    @Test
+    public void isEmpty() throws Exception {
+        p = new MazeProperties();
+        assertTrue(p.isEmpty());
+    }
+
+    @Test
+    public void updateInt() throws Exception {
+        MazeProperties p2 = new MazeProperties();
+        p2.put("int", "7");
+        p.updateFromStrings(p2);
+        assertEquals(7, p.getInt("int", 0, 10));
+    }
+
+    @Test
+    public void updateDouble() throws Exception {
+        MazeProperties p2 = new MazeProperties();
+        p2.put("double", "7.7");
+        p.updateFromStrings(p2);
+        assertEquals(7.7, p.getDouble("double"), 0.000001);
+    }
+
+    @Test
+    public void updateBool() throws Exception {
+        MazeProperties p2 = new MazeProperties();
+        p2.put("bool", "false");
+        p.updateFromStrings(p2);
+        assertEquals(false, p.getBoolean("bool"));
+    }
+
+    @Test
+    public void updateString() throws Exception {
+        MazeProperties p2 = new MazeProperties();
+        p2.put("string", "7");
+        p.updateFromStrings(p2);
+        assertEquals("7", p.getString("string"));
+    }
+
+    @Test
+    public void updateColor() throws Exception {
+        MazeProperties p2 = new MazeProperties();
+        p2.put("color", "019988");
+        p.updateFromStrings(p2);
+        assertEquals(new Color("019988"), p.getColor("color"));
     }
 
     private MazeProperties p;
