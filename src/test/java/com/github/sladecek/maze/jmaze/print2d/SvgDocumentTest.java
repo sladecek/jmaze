@@ -86,7 +86,7 @@ public class SvgDocumentTest {
 	}
 
 	@Test
-	public void testPrintLine() throws TransformerConfigurationException, TransformerFactoryConfigurationError, TransformerException {
+	public void testPrintLine() throws TransformerFactoryConfigurationError, TransformerException {
 		boolean isPolarCoordinates = false;
 		SvgDocument d = createTestDocument(isPolarCoordinates);
 		d.printLine(new Point2DInt(20, 30), new Point2DInt(40, 50), "style");
@@ -98,7 +98,7 @@ public class SvgDocumentTest {
 		
 	}
 	@Test
-	public void testPrintArcSegment() throws TransformerConfigurationException, TransformerFactoryConfigurationError, TransformerException {
+	public void testPrintArcSegment() throws TransformerFactoryConfigurationError, TransformerException {
 		boolean isPolarCoordinates = false;
 		SvgDocument d = createTestDocument(isPolarCoordinates);
 		d.printArcSegment(new Point2DInt(20, 30), new Point2DInt(40, 30), "style");
@@ -110,14 +110,14 @@ public class SvgDocumentTest {
 	}
 
 	@Test(expected=IllegalArgumentException.class)
-	public void testPrintArcSegmentShouldThrowEception() throws TransformerConfigurationException, TransformerFactoryConfigurationError, TransformerException {
+	public void testPrintArcSegmentShouldThrowEception() throws TransformerFactoryConfigurationError, TransformerException {
 		boolean isPolarCoordinates = false;
 		SvgDocument d = createTestDocument(isPolarCoordinates);
 		d.printArcSegment(new Point2DInt(20, 30), new Point2DInt(40, 31), "style");
 	}
 
 	@Test
-	public void testPrintMark() throws TransformerConfigurationException, TransformerFactoryConfigurationError, TransformerException {
+	public void testPrintMark() throws TransformerFactoryConfigurationError, TransformerException {
 		boolean isPolarCoordinates = false;
 		SvgDocument d = createTestDocument(isPolarCoordinates);
 		d.printMark(new Point2DInt(20, 30), "fill", 9);
@@ -129,7 +129,7 @@ public class SvgDocumentTest {
 	}
 
 	@Test
-	public void testPrintCircle() throws TransformerConfigurationException, TransformerFactoryConfigurationError, TransformerException {
+	public void testPrintCircle() throws TransformerFactoryConfigurationError, TransformerException {
 		boolean isPolarCoordinates = false;
 		SvgDocument d = createTestDocument(isPolarCoordinates);
 		d.printCircle(new Point2DInt(20, 30), "fill", 9,true, "style");
@@ -160,7 +160,7 @@ public class SvgDocumentTest {
 	}
 
 	private String svgToString(Document document)
-			throws TransformerFactoryConfigurationError, TransformerConfigurationException, TransformerException {
+			throws TransformerFactoryConfigurationError, TransformerException {
 		OutputStream out = new ByteArrayOutputStream();
 		Source source = new DOMSource(document);
 		Result result = new StreamResult(out);

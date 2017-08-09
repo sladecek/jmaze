@@ -11,11 +11,6 @@ import java.util.logging.Logger;
 
 public class TriangularMaze extends BaseMaze {
 
-/*
-    public TriangularMaze(int size) {
-    }
-*/
-
     @Override
     public MazeProperties getDefaultProperties() {
         MazeProperties defaultProperties = super.getDefaultProperties();
@@ -30,7 +25,6 @@ public class TriangularMaze extends BaseMaze {
     public void buildMazeGraphAndShapes() {
         final boolean isPolar = false;
         size = properties.getInt("size", 2,10000);
-
 
         final int height = size;
         final int width = 2 * size;

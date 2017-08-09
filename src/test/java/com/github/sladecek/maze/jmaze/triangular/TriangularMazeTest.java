@@ -69,32 +69,33 @@ public class TriangularMazeTest {
 	public void testGetRoomBehindWall() {
 		// rooms are numbered by columns
 		// walls counterclockwise
-		/* TODO
-		assertEquals(1, maze.getRoomBehindWall(0, 0));
-		assertEquals(2, maze.getRoomBehindWall(0, 1));
-		
-		assertEquals(0, maze.getRoomBehindWall(1, 0));
-		assertEquals(2, maze.getRoomBehindWall(1, 2));
-		
-		assertEquals(0, maze.getRoomBehindWall(2, 1));
-		assertEquals(1, maze.getRoomBehindWall(2, 2));
-		assertEquals(3, maze.getRoomBehindWall(2, 3));
-		assertEquals(5, maze.getRoomBehindWall(2, 7));
-		assertEquals(4, maze.getRoomBehindWall(2, 5));
 
-		assertEquals(2, maze.getRoomBehindWall(4, 5));
-		assertEquals(5, maze.getRoomBehindWall(4, 6));
+		/* TODO
+		assertEquals(1, maze.getGraph().getRoomBehindWall(0, 0));
+		assertEquals(2, maze.getGraph().getRoomBehindWall(0, 1));
 		
-		assertEquals(4, maze.getRoomBehindWall(5, 6));
-		assertEquals(2, maze.getRoomBehindWall(5, 7));
-		assertEquals(3, maze.getRoomBehindWall(5, 8));
+		assertEquals(0, maze.getGraph().getRoomBehindWall(1, 0));
+		assertEquals(2, maze.getGraph().getRoomBehindWall(1, 2));
+		
+		assertEquals(0, maze.getGraph().getRoomBehindWall(2, 1));
+		assertEquals(1, maze.getGraph().getRoomBehindWall(2, 2));
+		assertEquals(3, maze.getGraph().getRoomBehindWall(2, 3));
+		assertEquals(5, maze.getGraph().getRoomBehindWall(2, 7));
+		assertEquals(4, maze.getGraph().getRoomBehindWall(2, 5));
+
+		assertEquals(2, maze.getGraph().getRoomBehindWall(4, 5));
+		assertEquals(5, maze.getGraph().getRoomBehindWall(4, 6));
+		
+		assertEquals(4, maze.getGraph().getRoomBehindWall(5, 6));
+		assertEquals(2, maze.getGraph().getRoomBehindWall(5, 7));
+		assertEquals(3, maze.getGraph().getRoomBehindWall(5, 8));
 		*/
 	}
 
 	// TODO wall shapes
 	@Test
 	public void testFloorShapes() {
-		ArrayList<MarkShape> floors = new ArrayList<MarkShape>();
+		ArrayList<MarkShape> floors = new ArrayList<>();
 		Shapes sc = maze.getAllShapes();
 		for (IMazeShape s: sc.getShapes()) {
 			if (s instanceof MarkShape) {
@@ -103,8 +104,7 @@ public class TriangularMazeTest {
 		}
 		assertEquals(9, floors.size());
 		
-		/* TODO
-		assertEquals(10, floors.get(0).getX());
+/* TODO		assertEquals(10, floors.get(0).getX());
 		assertEquals(8, floors.get(0).getY());
 
 		assertEquals(40, floors.get(5).getX());
