@@ -96,25 +96,25 @@ public class EggGeometryTest {
 
 	
 	@Test
-	public void testComputeNormalVectorLeftSide() {
+	public void testComputeNormalArrayListLeftSide() {
 		EggGeometry e = new EggGeometry(4, 3, 0);
-		OrientationVector2D ov = e.computeNormalVector(0);
+		OrientationVector2D ov = e.computeNormalArrayList(0);
 		assertEquals(0, ov.getX(), delta);
 		assertEquals(1, ov.getY(), delta);
 	}
 
 	@Test
-	public void testComputeNormalVectorRightSide() {
+	public void testComputeNormalArrayListRightSide() {
 		EggGeometry e = new EggGeometry(4, 3, 0);
-		OrientationVector2D ov = e.computeNormalVector(4);
+		OrientationVector2D ov = e.computeNormalArrayList(4);
 		assertEquals(1, ov.getX(), delta);
 		assertEquals(0, ov.getY(), delta);
 	}
 
 	@Test
-	public void testComputeNormalVectorMiddleSide() {
+	public void testComputeNormalArrayListMiddleSide() {
 		EggGeometry e = new EggGeometry(4, 3, 0);
-		OrientationVector2D ov = e.computeNormalVector(2);
+		OrientationVector2D ov = e.computeNormalArrayList(2);
 		assertEquals(1, ov.getX()*ov.getX()+ov.getY()*ov.getY(), delta);
 	}
 

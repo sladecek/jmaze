@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 public final class MarkShape implements IPrintableMazeShape2D {
 
 
+
     public MarkShape(int roomId, Point2DInt position) {
         this.roomId = roomId;
         this.center = position;
@@ -24,6 +25,10 @@ public final class MarkShape implements IPrintableMazeShape2D {
 
     public int getY() {
         return center.getY();
+    }
+
+    public void setMarkType(MarkType markType) {
+        this.markType = markType;
     }
 
     @Override
@@ -52,7 +57,7 @@ public final class MarkShape implements IPrintableMazeShape2D {
     }
 
     @Override
-    public void applyPick(MazePath mr) {
+    public void applyPath(MazePath mr) {
         if (mr.getStartRoom() == roomId) {
             markType = MarkType.startRoom;
         } else if (mr.getTargetRoom() == roomId) {
@@ -69,6 +74,10 @@ public final class MarkShape implements IPrintableMazeShape2D {
     private final int roomId;
 
     private final Point2DInt center;
+
+    public MarkType getMarkType() {
+        return markType;
+    }
 
     /**
      * Logger facility.

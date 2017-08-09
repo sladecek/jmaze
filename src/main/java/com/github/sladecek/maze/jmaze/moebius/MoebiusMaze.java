@@ -14,9 +14,7 @@ import com.github.sladecek.maze.jmaze.shapes.WallShape;
  */
 public final class MoebiusMaze extends BaseMaze {
 
-
     public MoebiusMaze() {
-
     }
 
     @Override
@@ -69,7 +67,6 @@ public final class MoebiusMaze extends BaseMaze {
                 getAllShapes().add(r3);
             }
         }
-
 
         // inner walls - east/west
         for (int y = 0; y < sizeAcross; y++) {

@@ -87,7 +87,7 @@ public final class Egg3dMapper extends ConfigurableAltitudes implements IMaze3DM
 
 
         // (2) Add local offsets. ------------------------------------------------------
-        OrientationVector2D normal = egg.computeNormalVector(xx);
+        OrientationVector2D normal = egg.computeNormalArrayList(xx);
         OrientationVector2D tangent = normal.getOrthogonal();
         double xxx = xx + offsetH * tangent.getX() + offsetA * normal.getX();
         double yyy = yy + offsetH * tangent.getY() + offsetA * normal.getY();

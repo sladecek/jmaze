@@ -9,7 +9,6 @@ import java.util.ArrayList;
  */
 public final class Shapes {
     public Shapes(ShapeContext context) {
-
         this.context = context;
     }
 
@@ -21,14 +20,14 @@ public final class Shapes {
     public Shapes applyRealization(MazePath realization) {
         Shapes result = new Shapes(context);
 
-        for (IPrintableMazeShape2D s : getShapes()) {
-            s.applyPick(realization);
+        for (IMazeShape s : getShapes()) {
+            s.applyPath(realization);
             result.add(s);
         }
         return result;
     }
 
-    public ArrayList<IPrintableMazeShape2D> getShapes() {
+    public ArrayList<IMazeShape> getShapes() {
         return shapes;
     }
 
@@ -36,7 +35,7 @@ public final class Shapes {
         return context;
     }
 
-    public void add(IPrintableMazeShape2D s) {
+    public void add(IMazeShape s) {
         shapes.add(s);
     }
 
@@ -44,6 +43,5 @@ public final class Shapes {
     private ShapeContext context;
 
 
-    // TODO nemel by to byt array list - najit vsechny dalsi ArrayList
-    private ArrayList<IPrintableMazeShape2D> shapes = new ArrayList<IPrintableMazeShape2D>();
+    private ArrayList<IMazeShape> shapes = new ArrayList<>();
 }

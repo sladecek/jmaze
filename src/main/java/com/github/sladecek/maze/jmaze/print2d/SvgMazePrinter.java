@@ -2,6 +2,7 @@ package com.github.sladecek.maze.jmaze.print2d;
 
 import com.github.sladecek.maze.jmaze.printstyle.PrintStyle;
 import com.github.sladecek.maze.jmaze.properties.MazeProperties;
+import com.github.sladecek.maze.jmaze.shapes.IMazeShape;
 import com.github.sladecek.maze.jmaze.shapes.IPrintableMazeShape2D;
 import com.github.sladecek.maze.jmaze.shapes.Shapes;
 import com.github.sladecek.maze.jmaze.util.MazeGenerationException;
@@ -60,8 +61,10 @@ public final class SvgMazePrinter {
 
     public SvgDocument createSvgDocument(final Shapes shapes) {
         SvgDocument sd = new SvgDocument(shapes.getContext());
-        for (IPrintableMazeShape2D shape : shapes.getShapes()) {
-            shape.print2D(sd, printStyle);
+        for (IMazeShape shape : shapes.getShapes()) {
+            if (shape instanceof IPrintableMazeShape2D) {
+                ((IPrintableMazeShape2D)shape).print2D(sd, printStyle);
+            }
         }
         return sd;
     }

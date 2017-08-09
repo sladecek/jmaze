@@ -12,7 +12,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 
-import com.github.sladecek.maze.jmaze.shapes.IPrintableMazeShape2D;
+import com.github.sladecek.maze.jmaze.shapes.IMazeShape;
 
 public class HexagonalMazeTest {
 	
@@ -92,7 +92,7 @@ public class HexagonalMazeTest {
 	public void testMarkShapes() {
 		ArrayList<MarkShape> floors = new ArrayList<MarkShape>();
 		Shapes sc = maze.getAllShapes();
-		for (IPrintableMazeShape2D s: sc.getShapes()) {
+		for (IMazeShape s: sc.getShapes()) {
 			if (s instanceof MarkShape) {
 				floors.add((MarkShape)s);
 

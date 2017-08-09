@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.github.sladecek.maze.jmaze.properties.MazeProperties;
+import com.github.sladecek.maze.jmaze.shapes.IMazeShape;
 import com.github.sladecek.maze.jmaze.shapes.IPrintableMazeShape2D;
 import com.github.sladecek.maze.jmaze.shapes.MarkShape;
 import org.junit.Before;
@@ -95,7 +96,7 @@ public class TriangularMazeTest {
 	public void testFloorShapes() {
 		ArrayList<MarkShape> floors = new ArrayList<MarkShape>();
 		Shapes sc = maze.getAllShapes();
-		for (IPrintableMazeShape2D s: sc.getShapes()) {
+		for (IMazeShape s: sc.getShapes()) {
 			if (s instanceof MarkShape) {
 				floors.add((MarkShape)s);
 			}

@@ -117,7 +117,7 @@ public final class WallShape implements IPrintableMazeShape2D {
     }
 
     @Override
-    public void applyPick(MazePath mr) {
+    public void applyPath(MazePath mr) {
         if (wallType == WallType.innerWall) {
             if (!mr.isWallClosed(wallId)) {
                 wallType = WallType.noWall;
