@@ -2,7 +2,7 @@ package com.github.sladecek.maze.jmaze.print3d.maze3dmodel;
 
 import com.github.sladecek.maze.jmaze.print3d.*;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.Model3d;
-import com.github.sladecek.maze.jmaze.printstyle.DefaultPrintStyle;
+import com.github.sladecek.maze.jmaze.printstyle.PrintStyle;
 import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
 import com.github.sladecek.maze.jmaze.shapes.Shapes;
 import org.junit.Before;
@@ -25,7 +25,7 @@ public class ModelFromShapeTestFlat extends ModelFromShapesTestBase {
 
 
     protected Model3d compute3dModel(Shapes sc) {
-        IPrintStyle colors = new DefaultPrintStyle();
+        IPrintStyle colors = new PrintStyle();
         IMaze3DMapper mapper = new PlanarMapper();
         return ModelFromShapes.makeWithoutExtrusionForUnitTesting(sc, mapper, colors, 0.4);
     }

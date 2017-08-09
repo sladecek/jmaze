@@ -31,8 +31,13 @@ public class MazeProperties {
     }
 
 
-    public int getInt(String name) {
-        return (Integer)get(name, Integer.class);
+    public int getInt(String name, int minimum, int maximum) {
+        int value = (Integer)get(name, Integer.class);
+        if (value < minimum || value > maximum) {
+            throw new IllegalArgumentException("Illegal value of property '"+name+"' is "+value+
+                    " should be between "+minimum+" and "+maximum+ ".");
+        }
+        return value;
     }
 
     public double getDouble(String name) {
@@ -49,6 +54,10 @@ public class MazeProperties {
 
     public String getString(String name) {
         return (String)get(name, String.class);
+    }
+
+    public boolean getBoolean(String name) {
+        return (Boolean)get(name, Boolean.class);
     }
 
     private HashMap<String, Object> data = new HashMap<>();

@@ -4,7 +4,7 @@ public interface IPrintStyle {
 
     boolean isPrintSolution();
 
-    boolean isDebugPrintAllWalls();
+    boolean isPrintAllWalls();
 
     Color getBaseColor();
 
@@ -44,5 +44,7 @@ public interface IPrintStyle {
 
     int getSolutionMarkWidth();
 
-    int getStartTargetMarkWidth();
+    int getStartMarkWidth();
+
+    int getTargetMarkWidth();
 }

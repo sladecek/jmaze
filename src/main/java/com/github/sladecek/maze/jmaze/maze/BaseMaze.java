@@ -4,7 +4,8 @@ import com.github.sladecek.maze.jmaze.generator.DepthFirstMazeGenerator;
 import com.github.sladecek.maze.jmaze.generator.IMazeGenerator;
 import com.github.sladecek.maze.jmaze.print3d.IMaze3DMapper;
 import com.github.sladecek.maze.jmaze.print3d.ModelFromShapes;
-import com.github.sladecek.maze.jmaze.printstyle.DefaultPrintStyle;
+import com.github.sladecek.maze.jmaze.printstyle.Color;
+import com.github.sladecek.maze.jmaze.printstyle.PrintStyle;
 import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
 import com.github.sladecek.maze.jmaze.properties.MazeProperties;
 
@@ -18,7 +19,6 @@ public abstract class BaseMaze extends MazeData implements IMaze {
         properties = getDefaultProperties().clone();
     }
 
-
     @Override
     public MazeProperties getDefaultProperties() {
         MazeProperties defaultProperties = new MazeProperties();
@@ -27,44 +27,59 @@ public abstract class BaseMaze extends MazeData implements IMaze {
     }
 
     protected void addDefault2DProperties(MazeProperties properties) {
-        properties.put("wallHeight", 6.0);
+        // TODO
+        properties.put("printSolution", true);
+        properties.put("printAllWalls", false);
+
+        properties.put("startMarkColor", new Color("ff0000"));
+        properties.put("tartgetMarkColor",  new Color("00ff00"));
+        properties.put("solutionMarkColor", new Color("777777"));
+
+        properties.put("startMarkWidth", 4);
+        properties.put("targetMarkWidth",4);
+        properties.put("solutionMarkWidth",2);
 
     }
 
     protected void addDefault3DProperties(MazeProperties properties) {
         properties.put("wallHeight", 30.0);
-        properties.put("cellSize", 2.0);
-        properties.put("innerWallSize", 2.0);
+        properties.put("cellSize", 10.0);
+        properties.put("wallSize", 2.0);
     }
 
     public void makeMazeAllSteps(boolean with3d) {
         setupRandomGenerator();
         buildMazeGraphAndShapes();
-        IMazeGenerator g = new DepthFirstMazeGenerator(randomGenerator);
-
-        // generate
-        pick = g.generatePick(getGraph());
-        pickedShapes = getAllShapes().applyRealization(pick);
+        randomlyGenerateMazePath();
 
         if (with3d) {
-            IMaze3DMapper mapper = create3DMapper();
-            if (mapper != null) {
-
-                IPrintStyle colors;
-
-                double approxRoomSizeInmm = 3;
-                colors = new DefaultPrintStyle();
-
-// TODO proc nasobit?
-                model3d = ModelFromShapes.make(pickedShapes, mapper, colors, properties.getDouble("cellSize")*properties.getDouble("innerWallSize"));
-            }
+            make3DModel();
         }
 
     }
 
+    public void make3DModel() {
+        IMaze3DMapper mapper = create3DMapper();
+        if (mapper != null) {
 
-    protected void setupRandomGenerator() {
-        int randomSeed = properties.getInt("randomSeed");
+            IPrintStyle colors;
+
+            double approxRoomSizeInmm = 3;
+            colors = new PrintStyle();
+
+            model3d = ModelFromShapes.make(pickedShapes, mapper, colors, properties.getDouble("wallSize"));
+        }
+    }
+
+    public void randomlyGenerateMazePath() {
+        IMazeGenerator g = new DepthFirstMazeGenerator(randomGenerator);
+        pick = g.generatePick(getGraph());
+        pickedShapes = getAllShapes().applyRealization(pick);
+    }
+
+
+    public void setupRandomGenerator() {
+        int randomSeed = properties.getInt("randomSeed", Integer.MIN_VALUE, Integer.MAX_VALUE);
         randomGenerator = new Random();
         randomGenerator.setSeed(randomSeed);
     }

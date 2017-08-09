@@ -14,7 +14,7 @@ public class EggMazeAllRoomsTest {
 		int meridianWallCount = 0;
 		int parallelWallCount = 0;
 		
-		for (IMazeShape2D s: maze.getShapes()) {
+		for (IPrintableMazeShape2D s: maze.getShapes()) {
 			System.out.println(s);
 			if (s.getShapeType() == ShapeType.nonHole) {
 				roomCount++;

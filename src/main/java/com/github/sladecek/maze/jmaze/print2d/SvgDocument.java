@@ -30,8 +30,6 @@ public class SvgDocument implements I2DDocument {
         line.setAttributeNS(null, "x2", String.valueOf(mp2.getX()));
         line.setAttributeNS(null, "y2", String.valueOf(mp2.getY()));
         line.setAttributeNS(null, "style", style);
-
-
     }
 
     @Override
@@ -61,9 +59,7 @@ public class SvgDocument implements I2DDocument {
 
     @Override
     public void printMark(Point2DInt center, String fill, int sizePercent) {
-
-        printCircle(center, fill, sizePercent, true, new String());
-
+        printCircle(center, fill, sizePercent, true, "");
     }
 
     @Override
@@ -132,23 +128,20 @@ public class SvgDocument implements I2DDocument {
 
         if (context.isPolarCoordinates()) {
             Point2DInt zeroPoint = new Point2DInt(
-                    margin + context.getPictureWidth()  / 2,
+                    margin + context.getPictureWidth() / 2,
                     margin + context.getPictureHeight() / 2);
             mapper = new Polar2DMapper(zeroPoint, 1);
         } else {
             Point2DInt zeroPoint = new Point2DInt(margin, margin);
 
-            mapper = new Cartesian2DMapper(zeroPoint, 1,1);
+            mapper = new Cartesian2DMapper(zeroPoint, 1, 1);
         }
     }
 
-    ShapeContext context;
+    private final ShapeContext context;
+    private final int margin = 10;
     private Document doc;
-
     private int canvasWidth;
     private int canvasHeight;
-
     private IMaze2DMapper mapper;
-
-    final int margin = 10;
 }

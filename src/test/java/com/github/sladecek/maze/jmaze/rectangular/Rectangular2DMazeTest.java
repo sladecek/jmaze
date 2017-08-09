@@ -41,7 +41,7 @@ public class Rectangular2DMazeTest {
 	@Test
 	public void testGetShapes() {
 		int cnt = 0;
-		for (IMazeShape2D ms: maze.getGraph().getShapes()) {
+		for (IPrintableMazeShape2D ms: maze.getGraph().getShapes()) {
 			cnt++;
 			assertEquals("class com.github.sladecek.maze.jmaze.shapes.WallShape", ms.getClass().toString());
 		}

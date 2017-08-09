@@ -8,5 +8,5 @@ import com.github.sladecek.maze.jmaze.generator.MazePick;
  * Either 2D or 3D.
  */
 public interface IMazeShape {
-    void applyRealization(MazePick mr);
+    void applyPick(MazePick mr);
 }

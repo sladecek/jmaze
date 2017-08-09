@@ -55,7 +55,7 @@ public HexagonalMaze() {
     @Override
     public void buildMazeGraphAndShapes() {
         final boolean isPolar = false;
-        size = properties.getInt("size");
+        size = properties.getInt("size", 2, 10000);
 
         makeContext();
 

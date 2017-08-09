@@ -4,8 +4,6 @@ package com.github.sladecek.maze.jmaze.moebius;
 import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 import com.github.sladecek.maze.jmaze.maze.BaseMaze;
 import com.github.sladecek.maze.jmaze.print3d.IMaze3DMapper;
-import com.github.sladecek.maze.jmaze.printstyle.DefaultPrintStyle;
-import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
 import com.github.sladecek.maze.jmaze.properties.MazeProperties;
 import com.github.sladecek.maze.jmaze.shapes.FloorShape;
 import com.github.sladecek.maze.jmaze.shapes.Shapes;
@@ -34,8 +32,8 @@ public final class MoebiusMaze extends BaseMaze {
     @Override
     public void buildMazeGraphAndShapes() {
         //      final boolean isPolar = false;
-        sizeAcross = properties.getInt("sizeAcross");
-        sizeAlong = properties.getInt("sizeAlong");
+        sizeAcross = properties.getInt("sizeAcross", 2, 1000);
+        sizeAlong = properties.getInt("sizeAlong", 2, 10000);
 
         if (sizeAlong % 2 != 0) {
             throw new IllegalArgumentException(
@@ -51,10 +49,11 @@ public final class MoebiusMaze extends BaseMaze {
         southNorthWallCount = sizeAlong * (sizeAcross - 1);
 
         int expectedRoomCount = sizeAlong * sizeAcross;
+        @SuppressWarnings("UnnecessaryLocalVariable")
         int firstHorizontalWall = expectedRoomCount;
         int firstFloorWall = firstHorizontalWall + expectedRoomCount - sizeAlong;
-        expectedWallCount = firstFloorWall + expectedRoomCount / 2;
-        expectedShapeCount = 3 * expectedRoomCount + sizeAlong;
+        int expectedWallCount = firstFloorWall + expectedRoomCount / 2;
+        int expectedShapeCount = 3 * expectedRoomCount + sizeAlong;
 
         getGraph().setStartRoom(0);
         getGraph().setTargetRoom(sizeAlong / 4 + (sizeAcross - 1) * sizeAlong);
@@ -116,8 +115,8 @@ public final class MoebiusMaze extends BaseMaze {
         for (int y = 0; y < sizeAcross / 2; y++) {
             for (int x = 0; x < sizeAlong; x++) {
                 int room1 = mapXYToRoomId(y, x);
-                int hy = getTheOtherSideOfHoleY(y, x);
-                int hx = getTheOtherSideOfHoleX(y, x);
+                int hy = getTheOtherSideOfHoleY(y);
+                int hx = getTheOtherSideOfHoleX(x);
                 int room2 = mapXYToRoomId(hy, hx);
                 int id = getGraph().addWall(room1, room2);
                 setWallProbabilityWeight(id);
@@ -134,14 +133,11 @@ public final class MoebiusMaze extends BaseMaze {
 
     @Override
     public IMaze3DMapper create3DMapper() {
-        IPrintStyle colors = new DefaultPrintStyle();
-
         Moebius3dMapper mapper = new Moebius3dMapper(sizeAcross, sizeAlong,
                 properties.getDouble("cellSize"),
-                properties.getDouble("innerWallSize")
+                properties.getDouble("wallSize")
         );
         mapper.configureAltitudes(properties);
-
 
         return mapper;
     }
@@ -155,24 +151,16 @@ public final class MoebiusMaze extends BaseMaze {
         return hx + hy * sizeAlong;
     }
 
-    private int getTheOtherSideOfHole(int room) {
-        int y = room / sizeAlong;
-        int x = room % sizeAlong;
-        int hy = getTheOtherSideOfHoleY(y, x);
-        int hx = getTheOtherSideOfHoleX(y, x);
-        return hy * sizeAlong + hx;
-    }
-
-    private int getTheOtherSideOfHoleY(int y, int x) {
+    private int getTheOtherSideOfHoleY(int y) {
         return sizeAcross - 1 - y;
     }
 
-    private int getTheOtherSideOfHoleX(int y, int x) {
+    private int getTheOtherSideOfHoleX(int x) {
         return (x + sizeAlong / 2) % sizeAlong;
     }
 
     private void setWallProbabilityWeight(int wall) {
-        int value = 1;
+        int value;
         if (wall < eastWestWallCount) {
             // horizontal
             value = 30;
@@ -189,9 +177,6 @@ public final class MoebiusMaze extends BaseMaze {
 
     private int sizeAcross;
     private int sizeAlong;
-
-    private int expectedWallCount;
-    private int expectedShapeCount;
 
     private int eastWestWallCount;
     private int southNorthWallCount;

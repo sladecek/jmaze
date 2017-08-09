@@ -21,14 +21,14 @@ public final class Shapes {
     public Shapes applyRealization(MazePick realization) {
         Shapes result = new Shapes(context);
 
-        for (IMazeShape2D s : getShapes()) {
-            s.applyRealization(realization);
+        for (IPrintableMazeShape2D s : getShapes()) {
+            s.applyPick(realization);
             result.add(s);
         }
         return result;
     }
 
-    public Vector<IMazeShape2D> getShapes() {
+    public Vector<IPrintableMazeShape2D> getShapes() {
         return shapes;
     }
 
@@ -36,7 +36,7 @@ public final class Shapes {
         return context;
     }
 
-    public void add(IMazeShape2D s) {
+    public void add(IPrintableMazeShape2D s) {
         shapes.add(s);
     }
 
@@ -45,5 +45,5 @@ public final class Shapes {
 
 
     // TODO nemel by to byt array list - najit vsechny dalsi vector
-    private Vector<IMazeShape2D> shapes = new Vector<IMazeShape2D>();
+    private Vector<IPrintableMazeShape2D> shapes = new Vector<IPrintableMazeShape2D>();
 }

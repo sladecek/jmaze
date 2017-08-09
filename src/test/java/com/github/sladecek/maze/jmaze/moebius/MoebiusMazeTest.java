@@ -1,9 +1,12 @@
 package com.github.sladecek.maze.jmaze.moebius;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
 
+import com.github.sladecek.maze.jmaze.print3d.IMaze3DMapper;
 import com.github.sladecek.maze.jmaze.properties.MazeProperties;
 import com.github.sladecek.maze.jmaze.shapes.FloorShape;
 //import com.github.sladecek.maze.jmaze.geometry.Direction;
@@ -15,6 +18,7 @@ import org.junit.Test;
 public class MoebiusMazeTest {
     private MoebiusMaze maze;
 
+
     @Before
     public final void setUp() throws Exception {
         maze = new MoebiusMaze();
@@ -22,16 +26,11 @@ public class MoebiusMazeTest {
         MazeProperties p = maze.getDefaultProperties();
         p.put("sizeAlong", 6);
         p.put("sizeAcross", 4);
-
-
         maze.setProperties(p);
 
         maze.makeMazeAllSteps(false);
     }
 
-    @After
-    public void tearDown() throws Exception {
-    }
 
     @Test
     public final void testGetRoomCount() {
@@ -101,60 +100,12 @@ public class MoebiusMazeTest {
         assertEquals(12, maze.getGraph().getRoomBehindWall(9, 51));
         assertEquals(9, maze.getGraph().getRoomBehindWall(12, 51));
     }
-/* TODO
-    @Test
-    public final void testWallNumberInterval() {
-        for (IMazeShape sh : maze.getShapes().getShapes()) {
-            if (sh instanceof FloorShape) {
-                FloorShape r3 = (FloorShape) sh;
-                int wallIdEast = r3.getWallId().get(Direction.EAST);
-                assert (wallIdEast >= 0);
-                assert (wallIdEast < 24);
-                int wallIdWest = r3.getWallId().get(Direction.WEST);
-                assert (wallIdWest >= 0);
-                assert (wallIdWest < 24);
-                int wallIdSouth = r3.getWallId().get(Direction.SOUTH);
-                if (wallIdSouth >= 0) {
-                    assert (wallIdSouth >= 24);
-                    assert (wallIdSouth < 24 + 18);
-                }
-                int wallIdNorth = r3.getWallId().get(Direction.NORTH);
-                if (wallIdNorth >= 0) {
-                    assert (wallIdNorth >= 24);
-                    assert (wallIdNorth < 24 + 18);
-                }
-
-                int wallIdFloor = r3.getWallId().get(Direction.FLOOR);
-
-                assert (wallIdFloor >= 24 + 18);
-                assert (wallIdFloor < 24 + 18 + 12);
-
-
-            }
-        }
-    }
 
     @Test
-    public final void testEveryWallIsUsedExactlyTwice() {
-        int[] wallCount = new int[maze.getWallCount()];
-        Arrays.fill(wallCount, 0);
-
-        for (IMazeShape sh : maze.getShapes().getShapes()) {
-            if (sh instanceof FloorShape) {
-                FloorShape r3 = (FloorShape) sh;
-                for (Direction wd : Direction.values()) {
-                    int wallId = r3.getWallId().get(wd);
-                    if (wallId >= 0) {
-                        wallCount[wallId]++;
-                    }
-                }
-            }
-        }
-
-        for (int i = 0; i < maze.getWallCount(); i++) {
-            assertEquals(2, wallCount[i]);
-        }
-
+    public final void testCreate3dMapper() {
+        IMaze3DMapper m = maze.create3DMapper();
+        assertNotNull(m);
+        assertTrue(m instanceof Moebius3dMapper );
     }
-*/
+
 }

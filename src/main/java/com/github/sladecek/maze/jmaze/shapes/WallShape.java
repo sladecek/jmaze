@@ -5,7 +5,7 @@ import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 import com.github.sladecek.maze.jmaze.print2d.I2DDocument;
 import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
 
-public final class WallShape implements IMazeShape2D {
+public final class WallShape implements IPrintableMazeShape2D {
 
 
     public static WallShape newInnerWall(int wallId, Point2DInt p1, Point2DInt p2) {
@@ -62,7 +62,7 @@ public final class WallShape implements IMazeShape2D {
                 break;
 
             case noWall:
-                if (printStyle.isDebugPrintAllWalls()) {
+                if (printStyle.isPrintAllWalls()) {
                     style = "stroke:" + printStyle.getDebugWallColor().toSvg() + ";stroke-width:"
                             + printStyle.getInnerWallWidth();
                 }
@@ -117,7 +117,7 @@ public final class WallShape implements IMazeShape2D {
     }
 
     @Override
-    public void applyRealization(MazePick mr) {
+    public void applyPick(MazePick mr) {
         if (wallType == WallType.innerWall) {
             if (!mr.isWallClosed(wallId)) {
                 wallType = WallType.noWall;

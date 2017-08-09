@@ -29,7 +29,7 @@ public class TriangularMaze extends BaseMaze {
     @Override
     public void buildMazeGraphAndShapes() {
         final boolean isPolar = false;
-        size = properties.getInt("size");
+        size = properties.getInt("size", 2,10000);
 
 
         final int height = size;

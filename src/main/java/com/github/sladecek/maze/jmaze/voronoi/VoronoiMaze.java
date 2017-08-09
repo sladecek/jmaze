@@ -45,10 +45,10 @@ public class VoronoiMaze extends BaseMaze {
 
     @Override
     public void buildMazeGraphAndShapes() {
-        this.width = properties.getInt("width") * rsp;
-        this.height = properties.getInt("height") * rsp;
-        this.roomCount = properties.getInt("roomCount");
-        this.loydCnt = properties.getInt("loydCount");
+        this.width = properties.getInt("width", 2, 10000) * rsp;
+        this.height = properties.getInt("height", 2, 10000) * rsp;
+        this.roomCount = properties.getInt("roomCount", 2, 100000);
+        this.loydCnt = properties.getInt("loydCount",0, 100000);
         
         final boolean isPolar = false;
         

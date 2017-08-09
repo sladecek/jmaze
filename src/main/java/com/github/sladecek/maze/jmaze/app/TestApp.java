@@ -1,10 +1,7 @@
 package com.github.sladecek.maze.jmaze.app;
 
-import com.github.sladecek.maze.jmaze.circular.CircularMaze;
-import com.github.sladecek.maze.jmaze.hexagonal.HexagonalMaze;
 import com.github.sladecek.maze.jmaze.maze.BaseMaze;
 import com.github.sladecek.maze.jmaze.maze.MazeFactory;
-import com.github.sladecek.maze.jmaze.moebius.MoebiusMaze;
 import com.github.sladecek.maze.jmaze.print2d.MazeOutputFormat;
 import com.github.sladecek.maze.jmaze.print2d.SvgMazePrinter;
 import com.github.sladecek.maze.jmaze.print3d.IMaze3DMapper;
@@ -12,14 +9,10 @@ import com.github.sladecek.maze.jmaze.print3d.output.OpenScad3DPrinter;
 import com.github.sladecek.maze.jmaze.print3d.output.StlMazePrinter;
 import com.github.sladecek.maze.jmaze.print3d.output.ThreeJs3DPrinter;
 
-import com.github.sladecek.maze.jmaze.rectangular.RectangularMaze;
-import com.github.sladecek.maze.jmaze.spheric.EggMaze;
-import com.github.sladecek.maze.jmaze.triangular.TriangularMaze;
 import com.github.sladecek.maze.jmaze.util.MazeGenerationException;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.function.Supplier;
 import java.util.logging.*;
 
 /**
@@ -29,7 +22,6 @@ public class TestApp {
 
     /**
      * Prints a maze in all possible formats.
-
      */
     public final void printTestMaze(String name) {
         System.setProperty("java.util.logging.SimpleFormatter.format",
@@ -48,12 +40,12 @@ public class TestApp {
             final String fileName = "maze-" + maze.getName();
             // print 2D
             if (maze.canBePrintedIn2D()) {
-                SvgMazePrinter printer = new SvgMazePrinter();
+                SvgMazePrinter printer = new SvgMazePrinter(maze.getProperties());
 
                 FileOutputStream sSvg = new FileOutputStream(fileName + ".svg");
-                printer.printShapes(maze.getPickedShapes(), MazeOutputFormat.svg, sSvg);
+                printer.printShapes(maze.getPathShapes(), MazeOutputFormat.svg, sSvg);
                 FileOutputStream fPdf = new FileOutputStream(fileName+ ".pdf");
-                printer.printShapes(maze.getPickedShapes(), MazeOutputFormat.pdf, fPdf);
+                printer.printShapes(maze.getPathShapes(), MazeOutputFormat.pdf, fPdf);
             }
 
             IMaze3DMapper mapper = maze.create3DMapper();

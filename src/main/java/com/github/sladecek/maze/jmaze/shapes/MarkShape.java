@@ -5,22 +5,17 @@ import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 import com.github.sladecek.maze.jmaze.print2d.I2DDocument;
 import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
 
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public final class MarkShape implements IMazeShape2D {
+public final class MarkShape implements IPrintableMazeShape2D {
 
-
-
-    private MarkType markType;
-    private int roomId;
 
     public MarkShape(int roomId, Point2DInt position) {
         this.roomId = roomId;
         this.center = position;
         this.markType = MarkType.none;
-        LOG.log(Level.INFO, "MarkShape  " + markType + " center=" + center);
+        LOG.log(Level.FINE, "MarkShape  " + markType + " center=" + center);
     }
 
     public int getX() {
@@ -40,10 +35,10 @@ public final class MarkShape implements IMazeShape2D {
     public void print2D(I2DDocument doc, IPrintStyle printStyle) {
         switch (markType) {
             case startRoom:
-                doc.printMark(center, printStyle.getStartMarkColor().toSvg(), printStyle.getStartTargetMarkWidth());
+                doc.printMark(center, printStyle.getStartMarkColor().toSvg(), printStyle.getStartMarkWidth());
                 break;
             case targetRoom:
-                doc.printMark(center, printStyle.getTargetMarkColor().toSvg(), printStyle.getStartTargetMarkWidth());
+                doc.printMark(center, printStyle.getTargetMarkColor().toSvg(), printStyle.getTargetMarkWidth());
                 break;
             case solution:
                 if (printStyle.isPrintSolution()) {
@@ -57,17 +52,24 @@ public final class MarkShape implements IMazeShape2D {
     }
 
     @Override
-    public void applyRealization(MazePick mr) {
-       markType = MarkType.markRoomFromRealization(roomId, mr);
-
+    public void applyPick(MazePick mr) {
+        if (mr.getStartRoom() == roomId) {
+            markType = MarkType.startRoom;
+        } else if (mr.getTargetRoom() == roomId) {
+            markType = MarkType.targetRoom;
+        } else if (mr.getSolution().contains(roomId)) {
+            markType = MarkType.solution;
+        } else {
+            markType = MarkType.none;
+        }
     }
 
 
-    private Point2DInt center;
-/*
-    private int offsetXPercent = 50;
-    private int offsetYPercent = 50;
-*/
+    private MarkType markType;
+    private final int roomId;
+
+    private final Point2DInt center;
+
     /**
      * Logger facility.
      */

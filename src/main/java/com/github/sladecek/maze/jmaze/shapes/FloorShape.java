@@ -11,7 +11,7 @@ import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
  * Floor in 3D maze.
  */
 /* TODO tohle nebude 2D  */
-public class FloorShape implements IMazeShape2D {
+public class FloorShape implements IPrintableMazeShape2D {
     public FloorShape(int roomId, Point2DInt position) {
         this.position = position;
         this.roomId = roomId;
@@ -37,7 +37,7 @@ public class FloorShape implements IMazeShape2D {
 
 
     @Override
-    public void applyRealization(MazePick mr) {
+    public void applyPick(MazePick mr) {
 
         isHole = !mr.isWallClosed(roomId);
 

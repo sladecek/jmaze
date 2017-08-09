@@ -35,7 +35,7 @@ public class MazeData {
         return model3d;
     }
 
-    public Shapes getPickedShapes() {
+    public Shapes getPathShapes() {
         return pickedShapes;
     }
 
@@ -45,6 +45,10 @@ public class MazeData {
 
     }
 
+
+    public MazeProperties getProperties() {
+        return properties;
+    }
 
     protected MazeProperties properties;
 
