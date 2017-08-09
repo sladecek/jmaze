@@ -15,7 +15,8 @@ public class MazeProperties {
 
     public MazeProperties clone() {
         MazeProperties cloned = new MazeProperties();
-        cloned.data = (HashMap<String, Object>) data.clone();
+        data.forEach((k,v)->cloned.put(k,v));
+
         return cloned;
     }
 

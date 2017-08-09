@@ -68,6 +68,28 @@ public final class Color {
 		return result;
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		Color color = (Color) o;
+
+		if (r != color.r) return false;
+		if (g != color.g) return false;
+		if (b != color.b) return false;
+		return a == color.a;
+	}
+
+	@Override
+	public int hashCode() {
+		int result = r;
+		result = 31 * result + g;
+		result = 31 * result + b;
+		result = 31 * result + a;
+		return result;
+	}
+
 	private int r;
 	private int g;
 	private int b;
