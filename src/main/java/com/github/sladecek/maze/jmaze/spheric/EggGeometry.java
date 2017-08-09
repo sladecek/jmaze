@@ -1,6 +1,6 @@
 package com.github.sladecek.maze.jmaze.spheric;
 
-import java.util.Vector;
+import java.util.ArrayList;
 
 import com.github.sladecek.maze.jmaze.geometry.OrientationVector2D;
 import com.github.sladecek.maze.jmaze.geometry.SouthNorth;
@@ -52,10 +52,10 @@ public final class EggGeometry {
 	 *            Which hemisphere to divide.
 	 * @return Vector of x positions starting with the equator (x==0).
 	 */
-	public Vector<Double> divideMeridian(double stepInmm, SouthNorth hemisphere) {
+	public ArrayList<Double> divideMeridian(double stepInmm, SouthNorth hemisphere) {
 		final double sign = signOfHemispherePole(hemisphere);
 		final double probeInmm = stepInmm / 10;
-		Vector<Double> result = new Vector<Double>();
+		ArrayList<Double> result = new ArrayList<Double>();
 		double xInmm = 0;
 		result.add(xInmm);
 

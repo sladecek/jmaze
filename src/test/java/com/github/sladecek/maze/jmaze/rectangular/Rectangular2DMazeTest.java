@@ -3,10 +3,11 @@ package com.github.sladecek.maze.jmaze.rectangular;
 import static org.junit.Assert.assertEquals;
 
 import java.util.Collections;
-import java.util.Vector;
+import java.util.ArrayList;
 
 import com.github.sladecek.maze.jmaze.maze.IMaze;
 import com.github.sladecek.maze.jmaze.properties.MazeProperties;
+import com.github.sladecek.maze.jmaze.shapes.WallShape;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -36,18 +37,12 @@ public class Rectangular2DMazeTest {
 		assertEquals(15, maze.getGraph().getRoomCount());
 	}
 
-
-	/* TODO
 	@Test
 	public void testGetShapes() {
-		int cnt = 0;
-		for (IPrintableMazeShape2D ms: maze.getGraph().getShapes()) {
-			cnt++;
-			assertEquals("class com.github.sladecek.maze.jmaze.shapes.WallShape", ms.getClass().toString());
-		}
-		assertEquals(4+12+10, cnt);
+		long cnt = maze.getAllShapes().getShapes().stream().filter(s -> s instanceof WallShape).count();
+		assertEquals(38, cnt);
 	}
-	*/
+
 
 	@Test
 	public void testGetStartRoom() {
@@ -103,7 +98,7 @@ public class Rectangular2DMazeTest {
 
 	
 	private void testGetWalls(int room, int[] walls) {
-		Vector<Integer> v = (Vector<Integer>) maze.getGraph().getWalls(room);
+		ArrayList<Integer> v = (ArrayList<Integer>) maze.getGraph().getWalls(room);
 		Collections.sort(v);
 		assertEquals(walls.length, v.size());				
 		int cnt = Math.min(walls.length, v.size());

@@ -1,6 +1,6 @@
 package com.github.sladecek.maze.jmaze.spheric;
 
-import java.util.Vector;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -90,17 +90,17 @@ public final class EggMaze extends BaseMaze {
         return sn == SouthNorth.north ? north : south;
     }
 
-    public Vector<Integer> computeRoomCounts(Vector<Double> layerXPosition, int layerRoomCnt, double baseRoomSizeInmm) {
+    public ArrayList<Integer> computeRoomCounts(ArrayList<Double> layerXPosition, int layerRoomCnt, double baseRoomSizeInmm) {
 
         final int layerCnt = layerXPosition.size();
-        Vector<Integer> result = new Vector<Integer>();
+        ArrayList<Integer> result = new ArrayList<Integer>();
         // equator
         result.add(layerRoomCnt);
         int roomCnt = layerRoomCnt;
 
         // all layers except the polar layer
         for (int i = 1; i < layerCnt - 1 - 1; i++) {
-            final double x = layerXPosition.elementAt(i);
+            final double x = layerXPosition.get(i);
             final double y = geometry.computeY(x);
 
             double currentRoomSizeInmm = 2 * Math.PI * y / roomCnt;
@@ -142,10 +142,10 @@ public final class EggMaze extends BaseMaze {
 
     private void divideSpace(SouthNorth sn) {
         final EggMazeHemisphere h = getHemisphere(sn);
-        Vector<Double> xPos = geometry.divideMeridian(baseRoomSizeInmm, sn);
+        ArrayList<Double> xPos = geometry.divideMeridian(baseRoomSizeInmm, sn);
 
-        Vector<Integer> cellCnt = computeRoomCounts(xPos, equatorCellCnt, baseRoomSizeInmm);
-        h.setLayerXPosition(new Vector<Double>(xPos.subList(0, cellCnt.size())));
+        ArrayList<Integer> cellCnt = computeRoomCounts(xPos, equatorCellCnt, baseRoomSizeInmm);
+        h.setLayerXPosition(new ArrayList<Double>(xPos.subList(0, cellCnt.size())));
         h.setLayerRoomCnt(cellCnt);
 
     }

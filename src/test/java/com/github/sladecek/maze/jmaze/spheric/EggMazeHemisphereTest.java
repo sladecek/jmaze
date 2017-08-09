@@ -3,7 +3,7 @@ package com.github.sladecek.maze.jmaze.spheric;
 
 import static org.junit.Assert.*;
 
-import java.util.Vector;
+import java.util.ArrayList;
 
 import org.junit.Test;
 
@@ -11,9 +11,9 @@ public class EggMazeHemisphereTest {
 
 	@Test
 	public void testGetCircleCnt() {
-		Vector<Integer> layerRoomCnt = new Vector<Integer>();
-		layerRoomCnt.addElement(4);
-		layerRoomCnt.addElement(8);
+		ArrayList<Integer> layerRoomCnt = new ArrayList<Integer>();
+		layerRoomCnt.add(4);
+		layerRoomCnt.add(8);
 
 		EggMazeHemisphere ehm = new EggMazeHemisphere(27);
 		ehm.setLayerRoomCnt(layerRoomCnt);
@@ -22,9 +22,9 @@ public class EggMazeHemisphereTest {
 
 	@Test
 	public void testGetRoomCntAfterCircle() {
-		Vector<Integer> layerRoomCnt = new Vector<Integer>();
-		layerRoomCnt.addElement(4);
-		layerRoomCnt.addElement(8);
+		ArrayList<Integer> layerRoomCnt = new ArrayList<Integer>();
+		layerRoomCnt.add(4);
+		layerRoomCnt.add(8);
 
 		EggMazeHemisphere ehm = new EggMazeHemisphere(27);
 		ehm.setLayerRoomCnt(layerRoomCnt);
@@ -34,9 +34,9 @@ public class EggMazeHemisphereTest {
 
 	@Test
 	public void testGetRoomCntBeforeCircle() {
-		Vector<Integer> layerRoomCnt = new Vector<Integer>();
-		layerRoomCnt.addElement(4);
-		layerRoomCnt.addElement(8);
+		ArrayList<Integer> layerRoomCnt = new ArrayList<Integer>();
+		layerRoomCnt.add(4);
+		layerRoomCnt.add(8);
 
 		EggMazeHemisphere ehm = new EggMazeHemisphere(27);
 		ehm.setLayerRoomCnt(layerRoomCnt);
@@ -48,9 +48,9 @@ public class EggMazeHemisphereTest {
 
 	@Test
 	public void testIsPolarLayer() {
-		Vector<Integer> layerRoomCnt = new Vector<Integer>();
-		layerRoomCnt.addElement(4);
-		layerRoomCnt.addElement(8);
+		ArrayList<Integer> layerRoomCnt = new ArrayList<Integer>();
+		layerRoomCnt.add(4);
+		layerRoomCnt.add(8);
 
 		EggMazeHemisphere ehm = new EggMazeHemisphere(27);
 		ehm.setLayerRoomCnt(layerRoomCnt);
@@ -60,9 +60,9 @@ public class EggMazeHemisphereTest {
 
 	@Test
 	public void testGetGreenwichRoom() {
-		Vector<Integer> layerRoomCnt = new Vector<Integer>();
-		layerRoomCnt.addElement(4);
-		layerRoomCnt.addElement(8);
+		ArrayList<Integer> layerRoomCnt = new ArrayList<Integer>();
+		layerRoomCnt.add(4);
+		layerRoomCnt.add(8);
 			
 		EggMazeHemisphere ehm = new EggMazeHemisphere(27);
 		ehm.setLayerRoomCnt(layerRoomCnt);
@@ -74,13 +74,13 @@ public class EggMazeHemisphereTest {
 
 	@Test
 	public void testGetLayerXPosition() {
-		Vector<Integer> layerRoomCnt = new Vector<Integer>();
-		layerRoomCnt.addElement(4);
-		layerRoomCnt.addElement(8);
+		ArrayList<Integer> layerRoomCnt = new ArrayList<Integer>();
+		layerRoomCnt.add(4);
+		layerRoomCnt.add(8);
 
-		Vector<Double> layerX = new Vector<Double>();
-		layerX.addElement(1.1);
-		layerX.addElement(2.2);
+		ArrayList<Double> layerX = new ArrayList<Double>();
+		layerX.add(1.1);
+		layerX.add(2.2);
 
 
 		EggMazeHemisphere ehm = new EggMazeHemisphere(27);
@@ -96,9 +96,9 @@ public class EggMazeHemisphereTest {
 
 	@Test
 	public void testGetWallCntOnCircle() {
-		Vector<Integer> layerRoomCnt = new Vector<Integer>();
-		layerRoomCnt.addElement(4);
-		layerRoomCnt.addElement(8);
+		ArrayList<Integer> layerRoomCnt = new ArrayList<Integer>();
+		layerRoomCnt.add(4);
+		layerRoomCnt.add(8);
 
 		EggMazeHemisphere ehm = new EggMazeHemisphere(27);
 		ehm.setLayerRoomCnt(layerRoomCnt);

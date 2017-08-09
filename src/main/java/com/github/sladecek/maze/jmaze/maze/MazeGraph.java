@@ -1,6 +1,6 @@
 package com.github.sladecek.maze.jmaze.maze;
 
-import java.util.Vector;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -24,12 +24,12 @@ public class MazeGraph implements IMazeGraph {
 
     @Override
     public final Iterable<Integer> getWalls(final int room) {
-        return rooms.elementAt(room);
+        return rooms.get(room);
     }
 
     public final int addRoom() {
         int id = rooms.size();
-        rooms.add(new Vector<Integer>());
+        rooms.add(new ArrayList<Integer>());
         LOGGER.log(Level.INFO, "add room id=" + id);
         return id;
     }
@@ -42,10 +42,10 @@ public class MazeGraph implements IMazeGraph {
         }
         int id = wallRoom1.size();
         wallRoom1.add(room1);
-        rooms.elementAt(room1).add(id);
+        rooms.get(room1).add(id);
         wallRoom2.add(room2);
         wallProbabilityWeight.add(1);
-        rooms.elementAt(room2).add(id);
+        rooms.get(room2).add(id);
         LOGGER.log(Level.INFO, "add wall id=" + id + " room1=" + room1
                 + " room2=" + room2);
         return id;
@@ -81,8 +81,8 @@ public class MazeGraph implements IMazeGraph {
         if (wall < 0 || wall >= wallRoom1.size() || wall >= wallRoom2.size()) {
             throw new IllegalArgumentException("unknown wall");
         }
-        int r1 = wallRoom1.elementAt(wall);
-        int r2 = wallRoom2.elementAt(wall);
+        int r1 = wallRoom1.get(wall);
+        int r2 = wallRoom2.get(wall);
         if (r1 == room) {
             return r2;
         } else if (r2 == room) {
@@ -103,9 +103,9 @@ public class MazeGraph implements IMazeGraph {
     private int startRoom;
     private int targetRoom;
 
-    private Vector<Vector<Integer>> rooms = new Vector<Vector<Integer>>();
-    private Vector<Integer> wallRoom1 = new Vector<Integer>();
-    private Vector<Integer> wallRoom2 = new Vector<Integer>();
-    private Vector<Integer> wallProbabilityWeight = new Vector<>();
+    private ArrayList<ArrayList<Integer>> rooms = new ArrayList<ArrayList<Integer>>();
+    private ArrayList<Integer> wallRoom1 = new ArrayList<Integer>();
+    private ArrayList<Integer> wallRoom2 = new ArrayList<Integer>();
+    private ArrayList<Integer> wallProbabilityWeight = new ArrayList<>();
 
 }

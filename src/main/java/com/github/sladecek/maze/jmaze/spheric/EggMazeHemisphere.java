@@ -1,6 +1,6 @@
 package com.github.sladecek.maze.jmaze.spheric;
 
-import java.util.Vector;
+import java.util.ArrayList;
 
 /* 
  * One half of an egg maze. An egg consist of two halfeggs - north and south.
@@ -62,11 +62,11 @@ class EggMazeHemisphere {
 		return layerXPosition.get(layer);
 	}
 
-	public void setLayerXPosition(Vector<Double> layerXPosition) {
+	public void setLayerXPosition(ArrayList<Double> layerXPosition) {
 		this.layerXPosition = layerXPosition;
 	}
 
-	public void setLayerRoomCnt(Vector<Integer> layerRoomCnt) {
+	public void setLayerRoomCnt(ArrayList<Integer> layerRoomCnt) {
 		this.layerRoomCnt = layerRoomCnt;
 	}
 
@@ -95,18 +95,18 @@ class EggMazeHemisphere {
 	 * Number of rooms in egg layer. Zero index contains number of rooms on the
 	 * equator.
 	 */
-	private Vector<Integer> layerRoomCnt = new Vector<Integer>();
+	private ArrayList<Integer> layerRoomCnt = new ArrayList<Integer>();
 
 	/***
 	 * Id of the first room (Greenwich room) in the layer.
 	 */
-	private Vector<Integer> greenwichRoom = new Vector<Integer>();
+	private ArrayList<Integer> greenwichRoom = new ArrayList<Integer>();
 
 	/*
 	 * Axial (x) coordinate of egg layer. Zero index contains zero value - the
 	 * equator.
 	 */
-	private Vector<Double> layerXPosition = new Vector<Double>();
+	private ArrayList<Double> layerXPosition = new ArrayList<Double>();
 	private double poleXPosition;
 
 }

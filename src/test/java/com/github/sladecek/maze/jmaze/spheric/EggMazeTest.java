@@ -2,7 +2,7 @@ package com.github.sladecek.maze.jmaze.spheric;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.Vector;
+import java.util.ArrayList;
 
 import com.github.sladecek.maze.jmaze.properties.MazeProperties;
 import org.junit.Test;
@@ -17,7 +17,7 @@ public class EggMazeTest {
 	public void testComputeRoomCountsNorth()	
 	{
 		SouthNorth hemisphere = SouthNorth.north;
-		Vector<Integer> layerRoomCnt = generateTestHemisphere(hemisphere, 16);
+		ArrayList<Integer> layerRoomCnt = generateTestHemisphere(hemisphere, 16);
 		assertEquals(3, layerRoomCnt.size());
 		assertEquals(16, (int)layerRoomCnt.get(0));
 		assertEquals(16, (int)layerRoomCnt.get(1));
@@ -30,7 +30,7 @@ public class EggMazeTest {
 	public void testComputeRoomCountsSouth()	
 	{
 		SouthNorth hemisphere = SouthNorth.south;
-		Vector<Integer> layerRoomCnt = generateTestHemisphere(hemisphere, 16);
+		ArrayList<Integer> layerRoomCnt = generateTestHemisphere(hemisphere, 16);
 		assertEquals(3, layerRoomCnt.size());
 		assertEquals(16, (int)layerRoomCnt.get(0));
 		assertEquals(16, (int)layerRoomCnt.get(1));
@@ -42,7 +42,7 @@ public class EggMazeTest {
 	public void testComputeRoomCountsNorthSmall()	
 	{
 		SouthNorth hemisphere = SouthNorth.north;
-		Vector<Integer> layerRoomCnt = generateTestHemisphere(hemisphere, 8);
+		ArrayList<Integer> layerRoomCnt = generateTestHemisphere(hemisphere, 8);
 		assertEquals(2, layerRoomCnt.size());
 		assertEquals(8, (int)layerRoomCnt.get(0));
 		assertEquals(8, (int)layerRoomCnt.get(1));
@@ -52,14 +52,14 @@ public class EggMazeTest {
 	public void testComputeRoomCountsSouthSmall()	
 	{
 		SouthNorth hemisphere = SouthNorth.south;
-		Vector<Integer> layerRoomCnt = generateTestHemisphere(hemisphere, 8);
+		ArrayList<Integer> layerRoomCnt = generateTestHemisphere(hemisphere, 8);
 		assertEquals(2, layerRoomCnt.size());
 		assertEquals(8, (int)layerRoomCnt.get(0));
 		assertEquals(8, (int)layerRoomCnt.get(1));
 
 	}
 	
-	private Vector<Integer> generateTestHemisphere(SouthNorth hemisphere, int equatorCellCnt ) {
+	private ArrayList<Integer> generateTestHemisphere(SouthNorth hemisphere, int equatorCellCnt ) {
 		EggGeometry egg = new EggGeometry(4, 3, 0.5);
 
 		EggMaze maze = new EggMaze();
@@ -75,8 +75,8 @@ public class EggMazeTest {
 
 		maze.buildMazeGraphAndShapes();
 		final double baseRoomSizeInmm = maze.getBaseRoomSizeInmm();		
-		Vector<Double> layerXPosition = egg.divideMeridian(baseRoomSizeInmm, hemisphere);
-		Vector<Integer> layerRoomCnt = maze.computeRoomCounts(layerXPosition, equatorCellCnt, baseRoomSizeInmm);
+		ArrayList<Double> layerXPosition = egg.divideMeridian(baseRoomSizeInmm, hemisphere);
+		ArrayList<Integer> layerRoomCnt = maze.computeRoomCounts(layerXPosition, equatorCellCnt, baseRoomSizeInmm);
 		return layerRoomCnt;
 	}
 	

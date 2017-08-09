@@ -9,7 +9,8 @@ import com.github.sladecek.maze.jmaze.shapes.MarkShape;
 import com.github.sladecek.maze.jmaze.shapes.Shapes;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
 
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -24,13 +25,7 @@ public class CircularMaze extends BaseMaze {
     public CircularMaze() {
 
     }
-/*
-    public CircularMaze(int layerCount) {
-        MazeProperties p = getDefaultProperties();
-        p.put("layerCount", layerCount);
-        setProperties(p);
-    }
-*/
+
     @Override
     public MazeProperties getDefaultProperties() {
         MazeProperties defaultProperties = super.getDefaultProperties();
@@ -43,8 +38,11 @@ public class CircularMaze extends BaseMaze {
     public void buildMazeGraphAndShapes() {
         layerCount= properties.getInt("layerCount", 1, 1000);
         computeRoomCounts();
-        firstRoomInLayer = new Vector<>();
-        firstRoomInLayer.setSize(layerCount);
+        firstRoomInLayer = new ArrayList<>();
+        for (int i = 0; i <layerCount; i++) {
+            firstRoomInLayer.add(-1);
+        }
+
 
         createModel();
 
@@ -66,8 +64,8 @@ public class CircularMaze extends BaseMaze {
     }
 
     private void computeRoomCounts() {
-        roomCounts = new Vector<>();
-        roomCountRatio = new Vector<>();
+        roomCounts = new ArrayList<>();
+        roomCountRatio = new ArrayList<>();
         if (layerCount > 0) {
             roomCounts.add(1);
             roomCountRatio.add(1);
@@ -215,7 +213,7 @@ public class CircularMaze extends BaseMaze {
     private final int roomCountInZeroLayer = 4;
     private final int minimalRoomLength = 15;
     private final int layerSize = 30;
-    private Vector<Integer> roomCounts;
-    private Vector<Integer> roomCountRatio;
-    private Vector<Integer> firstRoomInLayer;
+    private ArrayList<Integer> roomCounts;
+    private ArrayList<Integer> roomCountRatio;
+    private ArrayList<Integer> firstRoomInLayer;
 }

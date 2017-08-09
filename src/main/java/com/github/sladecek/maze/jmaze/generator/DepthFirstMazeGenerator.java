@@ -3,7 +3,7 @@ package com.github.sladecek.maze.jmaze.generator;
 import java.util.BitSet;
 import java.util.Random;
 import java.util.Stack;
-import java.util.Vector;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -22,7 +22,7 @@ public final class DepthFirstMazeGenerator implements IMazeGenerator {
     @Override
     public MazePath generatePick(final IMazeGraph graph) {
         MazePath result = new MazePath(graph.getWallCount(), graph.getStartRoom(), graph.getTargetRoom());
-        Vector<Integer> solution = null;
+        ArrayList<Integer> solution = null;
         int allRoomsCnt = graph.getRoomCount();
         visitedRooms = new BitSet(allRoomsCnt);
 
@@ -35,7 +35,7 @@ public final class DepthFirstMazeGenerator implements IMazeGenerator {
             if (room == graph.getTargetRoom()) {
                 // save solution
                 assert solution == null : "Irrengarten cannot have two solutions";
-                solution = new Vector<>();
+                solution = new ArrayList<>();
                 for (Integer i : stack) {
                     solution.add(i);
                 }
@@ -46,7 +46,7 @@ public final class DepthFirstMazeGenerator implements IMazeGenerator {
                 stack.pop();
                 continue;
             }
-            Vector<Integer> candidates = findAllPossibleNextRooms(graph, result,
+            ArrayList<Integer> candidates = findAllPossibleNextRooms(graph, result,
                     room);
             if (candidates.isEmpty()) {
                 // backtrace - no way to go
@@ -62,7 +62,7 @@ public final class DepthFirstMazeGenerator implements IMazeGenerator {
             if (candidates.size() > 1) {
                 choice = randomGenerator.nextInt(candidates.size());
             }
-            int wall = candidates.elementAt(choice);
+            int wall = candidates.get(choice);
             LOGGER.log(Level.INFO, " opening wall " + wall);
             result.setWallClosed(wall, false);
             int otherRoom = graph.getRoomBehindWall(room, wall);
@@ -72,9 +72,9 @@ public final class DepthFirstMazeGenerator implements IMazeGenerator {
         return result;
     }
 
-    private Vector<Integer> findAllPossibleNextRooms(final IMazeGraph maze,
+    private ArrayList<Integer> findAllPossibleNextRooms(final IMazeGraph maze,
                                                      final MazePath real, final int room) {
-        Vector<Integer> candidates = new Vector<>();
+        ArrayList<Integer> candidates = new ArrayList<>();
         for (int wall : maze.getWalls(room)) {
             if (real.isWallClosed(wall)) {
                 int otherRoom = maze.getRoomBehindWall(room, wall);
@@ -86,7 +86,7 @@ public final class DepthFirstMazeGenerator implements IMazeGenerator {
         if (candidates.size() <= 1) {
             return candidates;
         }
-        Vector<Integer> weightedCandidates = new Vector<>();
+        ArrayList<Integer> weightedCandidates = new ArrayList<>();
         for (int wall : candidates) {
             int weight = maze.getWallProbabilityWeight(wall);
             for (int i = 0; i < weight; i++) {

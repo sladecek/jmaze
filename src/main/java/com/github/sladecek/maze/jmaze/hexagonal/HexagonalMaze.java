@@ -10,7 +10,7 @@ import com.github.sladecek.maze.jmaze.shapes.MarkShape;
 import com.github.sladecek.maze.jmaze.shapes.Shapes;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
 
-import java.util.Vector;
+import java.util.ArrayList;
 import java.util.logging.Logger;
 
 public class HexagonalMaze extends BaseMaze {
@@ -61,7 +61,7 @@ public HexagonalMaze() {
 
         final int roomsPerRow = 2 * size - 1;
 
-        Vector<Integer> mapXY2room = new Vector<Integer>();
+        ArrayList<Integer> mapXY2room = new ArrayList<Integer>();
 
         // make rooms
         for (int x = 0; x < roomsPerRow; x++) {

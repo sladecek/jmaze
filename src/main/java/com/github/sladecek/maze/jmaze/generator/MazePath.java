@@ -1,7 +1,7 @@
 package com.github.sladecek.maze.jmaze.generator;
 
 import java.util.BitSet;
-import java.util.Vector;
+import java.util.ArrayList;
 
 import com.github.sladecek.maze.jmaze.util.BitSetIntervalPrinter;
 
@@ -26,11 +26,11 @@ public final class MazePath {
         isWallClosed.set(wall, value);
     }
 
-    public Vector<Integer> getSolution() {
+    public ArrayList<Integer> getSolution() {
         return solution;
     }
 
-    public void setSolution(Vector<Integer> solution) {
+    public void setSolution(ArrayList<Integer> solution) {
         this.solution = solution;
     }
 
@@ -46,7 +46,7 @@ public final class MazePath {
     private BitSet isWallClosed;
     private int wallCount;
 
-    private Vector<Integer> solution = new Vector<Integer>();
+    private ArrayList<Integer> solution = new ArrayList<Integer>();
 
     public int getStartRoom() {
         return startRoom;

@@ -2,7 +2,7 @@ package com.github.sladecek.maze.jmaze.shapes;
 
 import com.github.sladecek.maze.jmaze.generator.MazePath;
 
-import java.util.Vector;
+import java.util.ArrayList;
 
 /*
  * Collection of shapes.
@@ -28,7 +28,7 @@ public final class Shapes {
         return result;
     }
 
-    public Vector<IPrintableMazeShape2D> getShapes() {
+    public ArrayList<IPrintableMazeShape2D> getShapes() {
         return shapes;
     }
 
@@ -44,6 +44,6 @@ public final class Shapes {
     private ShapeContext context;
 
 
-    // TODO nemel by to byt array list - najit vsechny dalsi vector
-    private Vector<IPrintableMazeShape2D> shapes = new Vector<IPrintableMazeShape2D>();
+    // TODO nemel by to byt array list - najit vsechny dalsi ArrayList
+    private ArrayList<IPrintableMazeShape2D> shapes = new ArrayList<IPrintableMazeShape2D>();
 }

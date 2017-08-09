@@ -2,7 +2,7 @@ package com.github.sladecek.maze.jmaze.spheric;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.Vector;
+import java.util.ArrayList;
 
 import org.junit.Test;
 
@@ -62,7 +62,7 @@ public class EggGeometryTest {
 		for (SouthNorth sn: SouthNorth.values())
 		{
 		
-			Vector<Double> v = e.divideMeridian(b, sn);
+			ArrayList<Double> v = e.divideMeridian(b, sn);
 			if (sn == SouthNorth.south) {
 				assertEquals(54,  v.size());
 			} else {
@@ -72,9 +72,9 @@ public class EggGeometryTest {
 			
 			// all distances must be in 50% tolerance
 			for (int i = 0; i < v.size()-1; i++) {
-				final double x0 = v.elementAt(i);
+				final double x0 = v.get(i);
 				final double y0 = e.computeY(x0);
-				final double x1 = v.elementAt(i+1);
+				final double x1 = v.get(i+1);
 				final double y1 = e.computeY(x1);
 				final double dx = x1-x0;
 				final double dy = y1-y0;
@@ -90,7 +90,7 @@ public class EggGeometryTest {
 			}
 			
 			// first distance must be on equator
-			assertEquals(0, v.elementAt(0), delta);
+			assertEquals(0, v.get(0), delta);
 		}
 	}
 
