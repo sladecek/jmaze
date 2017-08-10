@@ -1,141 +1,72 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.github.sladecek.maze</groupId>
-  <artifactId>jmaze</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <packaging>jar</packaging>
+    <groupId>com.github.sladecek.maze</groupId>
+    <artifactId>jmaze</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
 
-  <name>jmaze</name>
-  <url>http://maven.apache.org</url>
+    <name>jmaze</name>
+    <url>http://maven.apache.org</url>
 
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <java.version>1.8</java.version>    
- 	<start-class>com.github.sladecek.maze.jmaze.rectangular</start-class>  
-  </properties>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.version>1.8</java.version>
+        <start-class>com.github.sladecek.maze.jmaze.rectangular</start-class>
+    </properties>
 
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.3.3.RELEASE</version>
-    </parent>
-
-
-  <dependencies>
-     <dependency>
-         <groupId>org.springframework.boot</groupId>
-         <artifactId>spring-boot-starter-thymeleaf</artifactId>
-     </dependency>
-	<dependency>
-		<groupId>batik</groupId>
-		<artifactId>batik-svggen</artifactId>
-		<version>1.6-1</version>
-	</dependency>
-	<dependency>
-		<groupId>batik</groupId>
-		<artifactId>batik-transcoder</artifactId>
-		<version>1.6-1</version>
-	</dependency>
-
-	<dependency>
-		<groupId>org.scala-lang</groupId>
-		<artifactId>scala-library</artifactId>
-		<version>2.10.4</version>
-	</dependency>
-	<dependency>
-		<groupId>org.scala-lang</groupId>
-		<artifactId>scala-library</artifactId>
-		<version>2.10.4</version>
-	</dependency>
-	<dependency>
-		<groupId>xml-resolver</groupId>
-		<artifactId>xml-resolver</artifactId>
-		<version>1.2</version>
-	</dependency>
-	<dependency>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-test</artifactId>
-	</dependency>
-	<dependency>
-	   <groupId>be.humphreys</groupId>
-	   <artifactId>simplevoronoi</artifactId>	   
-	   <version>0.4-SNAPSHOT</version>
- 	</dependency>
-
-
-
-	<dependency>
-		<groupId>org.neo4j</groupId>
-		<artifactId>neo4j-cypher-compiler-2.1</artifactId>
-		<version>2.1.5</version>
-	</dependency>
-	<dependency>
-		<groupId>org.neo4j</groupId>
-		<artifactId>neo4j-cypher-compiler-2.1</artifactId>
-		<version>2.1.5</version>
-	</dependency>
-	<dependency>
-		<groupId>org.neo4j</groupId>
-		<artifactId>neo4j-cypher-commons</artifactId>
-		<version>2.1.5</version>
-	</dependency>
-	<dependency>
-		<groupId>org.neo4j</groupId>
-		<artifactId>neo4j-cypher-compiler-2.2</artifactId>
-		<version>2.2.5</version>
-	</dependency>
-	<dependency>
-		<groupId>org.neo4j</groupId>
-		<artifactId>neo4j-cypher-compiler-2.2</artifactId>
-		<version>2.2.5</version>
-	</dependency>
-      <dependency>
-          <groupId>eu.mihosoft.vvecmath</groupId>
-          <artifactId>vvecmath</artifactId>
-          <version>0.3.2</version>
-      </dependency>
-	  <dependency>
-		  <groupId>eu.mihosoft.vrl.jcsg</groupId>
-		  <artifactId>jcsg</artifactId>
-		  <version>0.5.2</version>
-	  </dependency>
-  </dependencies>
-   <build>
-       <plugins>
-           <plugin>
-               <groupId>org.springframework.boot</groupId>
-               <artifactId>spring-boot-maven-plugin</artifactId>
-           </plugin>
-       </plugins>
-   </build>
-
-   <repositories>
-       <repository>
-           <id>spring-milestone</id>
-           <url>https://repo.spring.io/libs-release</url>
-       </repository>
-
+    <dependencies>
+        <dependency>
+            <groupId>batik</groupId>
+            <artifactId>batik-svggen</artifactId>
+            <version>1.6-1</version>
+        </dependency>
+        <dependency>
+            <groupId>batik</groupId>
+            <artifactId>batik-transcoder</artifactId>
+            <version>1.6-1</version>
+        </dependency>
+        <dependency>
+            <groupId>be.humphreys</groupId>
+            <artifactId>simplevoronoi</artifactId>
+            <version>0.4-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <version>1.9.5</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    <repositories>
         <repository>
             <id>myMavenRepo.read</id>
             <url>https://mymavenrepo.com/repo/SXlNWhJjuQekimPDUIj2/</url>
         </repository>
-   </repositories>
-
-    <pluginRepositories>
-        <pluginRepository>
-            <id>spring-milestone</id>
-            <url>https://repo.spring.io/libs-release</url>
-        </pluginRepository>
-    </pluginRepositories>
-
+    </repositories>
     <distributionManagement>
-      <repository>
-        <id>myMavenRepo.write</id>
-        <url>https://mymavenrepo.com/repo/ol2rUb505h9LL9QoA0KD/</url>
-      </repository>
+        <repository>
+            <id>myMavenRepo.write</id>
+            <url>https://mymavenrepo.com/repo/ol2rUb505h9LL9QoA0KD/</url>
+        </repository>
     </distributionManagement>
-
-
 </project>

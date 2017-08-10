@@ -1,6 +1,6 @@
 package com.github.sladecek.maze.jmaze.print3d.generic3dmodel;
 
-import org.neo4j.cypher.InvalidArgumentException;
+
 
 import java.util.ArrayList;
 import java.util.Collection;

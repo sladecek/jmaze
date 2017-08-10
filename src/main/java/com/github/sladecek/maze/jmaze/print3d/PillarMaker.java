@@ -7,7 +7,7 @@ import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MEdge;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MPoint;
 import com.github.sladecek.maze.jmaze.print3d.maze3dmodel.*;
 import com.github.sladecek.maze.jmaze.shapes.WallType;
-import scala.util.regexp.Base;
+
 
 import java.util.*;
 import java.util.logging.Logger;

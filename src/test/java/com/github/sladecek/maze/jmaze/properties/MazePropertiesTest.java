@@ -3,7 +3,7 @@ package com.github.sladecek.maze.jmaze.properties;
 import com.github.sladecek.maze.jmaze.printstyle.Color;
 import org.junit.Before;
 import org.junit.Test;
-import org.neo4j.cypher.internal.compiler.v2_1.functions.E;
+
 
 import static org.junit.Assert.*;
 
