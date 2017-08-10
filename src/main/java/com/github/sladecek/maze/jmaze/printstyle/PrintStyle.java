@@ -135,6 +135,7 @@ public final class PrintStyle implements IPrintStyle {
         return targetMarkWidth;
     }
 
+
     private boolean printSolution = true;
     private boolean printAllWalls = false;
 

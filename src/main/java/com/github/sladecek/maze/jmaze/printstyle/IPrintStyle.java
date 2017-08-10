@@ -47,4 +47,5 @@ public interface IPrintStyle {
     int getStartMarkWidth();
 
     int getTargetMarkWidth();
+
 }

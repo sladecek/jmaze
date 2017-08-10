@@ -52,8 +52,8 @@ public final class MarkShape implements IPrintableMazeShape2D {
                 break;
             default:
                 break;
-
         }
+
     }
 
     @Override

@@ -5,7 +5,7 @@ import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MFace;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MPoint;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.Model3d;
 import com.github.sladecek.maze.jmaze.print3d.maze3dmodel.MRoom;
-import eu.mihosoft.jcsg.ext.quickhull3d.Point3d;
+
 
 import java.io.FileOutputStream;
 import java.io.OutputStream;
