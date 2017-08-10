@@ -159,17 +159,28 @@ public final class MoebiusMaze extends BaseMaze {
     private void setWallProbabilityWeight(int wall) {
         int value;
         if (wall < eastWestWallCount) {
-            // horizontal
+            // horizontal - along
             value = 30;
         } else if (wall < eastWestWallCount + southNorthWallCount) {
-            // vertical
+            // vertical - across
             value = 3;
         } else {
             // hole
-            value = 99; // TODO
-
+            value = 99;
         }
         getGraph().setWallProbability(wall, value);
+    }
+
+    public boolean isAlongWall(int wallId) {
+        return wallId < eastWestWallCount;
+    }
+
+    public boolean isAcrossWall(int wallId) {
+        return (wallId >= eastWestWallCount) && (wallId < eastWestWallCount + southNorthWallCount);
+    }
+
+    public boolean isHole(int wallId) {
+        return wallId >= eastWestWallCount + southNorthWallCount;
     }
 
     private int sizeAcross;

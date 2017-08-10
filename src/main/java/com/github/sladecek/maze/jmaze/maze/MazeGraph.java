@@ -93,7 +93,6 @@ public class MazeGraph implements IMazeGraph {
     }
 
     @Override
-    // TODO odstranit, nahradit metodou pro naplneni pole
     public int getWallProbabilityWeight(int wall) {
         return wallProbabilityWeight.get(wall);
     }

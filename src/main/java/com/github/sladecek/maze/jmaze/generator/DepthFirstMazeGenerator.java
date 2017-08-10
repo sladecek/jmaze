@@ -10,7 +10,7 @@ import java.util.logging.Logger;
 import com.github.sladecek.maze.jmaze.maze.IMazeGraph;
 
 /*
- * Generates random maze by opening walls  by random walk in a depth first order.
+ * Generates random maze opening walls by random walk in a depth first order.
  */
 public final class DepthFirstMazeGenerator implements IMazeGenerator {
 
@@ -34,7 +34,7 @@ public final class DepthFirstMazeGenerator implements IMazeGenerator {
             LOGGER.log(Level.INFO, " observing room: " + room);
             if (room == graph.getTargetRoom()) {
                 // save solution
-                assert solution == null : "Irrengarten cannot have two solutions";
+                assert solution == null : "Maze cannot have two solutions";
                 solution = new ArrayList<>();
                 for (Integer i : stack) {
                     solution.add(i);
@@ -72,12 +72,12 @@ public final class DepthFirstMazeGenerator implements IMazeGenerator {
         return result;
     }
 
-    private ArrayList<Integer> findAllPossibleNextRooms(final IMazeGraph maze,
+    private ArrayList<Integer> findAllPossibleNextRooms(final IMazeGraph mazeGraph,
                                                      final MazePath real, final int room) {
         ArrayList<Integer> candidates = new ArrayList<>();
-        for (int wall : maze.getWalls(room)) {
+        for (int wall : mazeGraph.getWalls(room)) {
             if (real.isWallClosed(wall)) {
-                int otherRoom = maze.getRoomBehindWall(room, wall);
+                int otherRoom = mazeGraph.getRoomBehindWall(room, wall);
                 if (!visitedRooms.get(otherRoom)) {
                     candidates.add(wall);
                 }
@@ -88,7 +88,7 @@ public final class DepthFirstMazeGenerator implements IMazeGenerator {
         }
         ArrayList<Integer> weightedCandidates = new ArrayList<>();
         for (int wall : candidates) {
-            int weight = maze.getWallProbabilityWeight(wall);
+            int weight = mazeGraph.getWallProbabilityWeight(wall);
             for (int i = 0; i < weight; i++) {
                 weightedCandidates.add(wall);
             }

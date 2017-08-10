@@ -61,7 +61,7 @@ public final class EggMaze extends BaseMaze {
 
         if (this.equatorCellCnt < MINIMAL_ROOM_COUNT_ON_EGG_MAZE_EQUATOR) {
             throw new IllegalArgumentException(
-                    "Irrengarten must have at least " + MINIMAL_ROOM_COUNT_ON_EGG_MAZE_EQUATOR + "cells.");
+                    "Maze must have at least " + MINIMAL_ROOM_COUNT_ON_EGG_MAZE_EQUATOR + "cells.");
         }
 
         if (!isPowerOfTwo(this.equatorCellCnt)) {

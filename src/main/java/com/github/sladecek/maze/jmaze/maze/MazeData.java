@@ -36,7 +36,7 @@ public class MazeData {
     }
 
     public Shapes getPathShapes() {
-        return pickedShapes;
+        return pathShapes;
     }
 
 
@@ -56,7 +56,16 @@ public class MazeData {
 
     protected MazeGraph graph = new MazeGraph();
     protected Shapes allShapes;
-    protected Shapes pickedShapes;
-    protected MazePath pick;
+
+    public Random getRandomGenerator() {
+        return randomGenerator;
+    }
+
+    public MazePath getPath() {
+        return path;
+    }
+
+    protected Shapes pathShapes;
+    protected MazePath path;
     protected Model3d model3d;
 }

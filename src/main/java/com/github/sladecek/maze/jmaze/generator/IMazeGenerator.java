@@ -4,7 +4,7 @@ import com.github.sladecek.maze.jmaze.maze.IMazeGraph;
 
 
 /** 
- * Generates randomly concrete pick of a maze by opening walls between rooms in maze structure.
+ * Generates randomly concrete path of a maze by opening walls between rooms in maze structure.
  */
 public interface IMazeGenerator {
 	

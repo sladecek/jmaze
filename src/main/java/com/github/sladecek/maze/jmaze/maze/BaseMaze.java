@@ -6,7 +6,6 @@ import com.github.sladecek.maze.jmaze.print3d.IMaze3DMapper;
 import com.github.sladecek.maze.jmaze.print3d.ModelFromShapes;
 import com.github.sladecek.maze.jmaze.printstyle.Color;
 import com.github.sladecek.maze.jmaze.printstyle.PrintStyle;
-import com.github.sladecek.maze.jmaze.printstyle.PrintStyle;
 import com.github.sladecek.maze.jmaze.properties.MazeProperties;
 
 import java.util.Random;
@@ -73,14 +72,14 @@ public abstract class BaseMaze extends MazeData implements IMaze {
             double approxRoomSizeInmm = 3;
             colors = new PrintStyle();
 
-            model3d = ModelFromShapes.make(pickedShapes, mapper, colors, properties.getDouble("wallSize"));
+            model3d = ModelFromShapes.make(pathShapes, mapper, colors, properties.getDouble("wallSize"));
         }
     }
 
     public void randomlyGenerateMazePath() {
         IMazeGenerator g = new DepthFirstMazeGenerator(randomGenerator);
-        pick = g.generatePick(getGraph());
-        pickedShapes = getAllShapes().applyRealization(pick);
+        path = g.generatePick(getGraph());
+        pathShapes = getAllShapes().applyRealization(path);
     }
 
 
