@@ -33,7 +33,7 @@ public class MFace {
             result.add(e0.getP1());
             while (!unfinished.isEmpty()) {
                 MPoint prev = result.get(result.size() - 1);
-                System.out.println("--"+prev);
+
                 MPoint next = null;
                 for (MEdge e : unfinished) {
                     // for each edge add endpoint that is not contained in the previous edge

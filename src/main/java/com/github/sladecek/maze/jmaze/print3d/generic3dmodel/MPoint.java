@@ -30,7 +30,6 @@ public class MPoint {
 
     public double distanceTo(MPoint p1) {
         double result = Point3D.computeDistance(p1.getCoord(), coord);
-        System.out.println("   comparing ---"+p1.getCoord()+" and "+coord+" dist="+result);
         return result;
     }
 

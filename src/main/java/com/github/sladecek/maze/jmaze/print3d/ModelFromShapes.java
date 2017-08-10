@@ -115,7 +115,6 @@ public class ModelFromShapes {
     }
 
     private WallEnd makeWallEnd(MWall wall, WallShape wallShape, boolean reversed) {
-        System.out.println("C645 wall="+wall+" wallShape="+wallShape);
         return new WallEnd(wall, wallShape, reversed);
     }
 
