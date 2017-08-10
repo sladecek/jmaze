@@ -292,6 +292,10 @@ public final class EggMaze extends BaseMaze {
         return this.baseRoomSizeInmm;
     }
 
+    public EggGeometry getGeometry() {
+        return geometry;
+    }
+
     private static final Logger LOG = Logger.getLogger("maze");
     private static final int MINIMAL_ROOM_COUNT_ON_EGG_MAZE_EQUATOR = 4;
     private EggGeometry geometry;

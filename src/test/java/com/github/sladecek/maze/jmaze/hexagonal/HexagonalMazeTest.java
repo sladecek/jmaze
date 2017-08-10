@@ -87,7 +87,6 @@ public class HexagonalMazeTest {
 		assertEquals(3, maze.getGraph().getRoomBehindWall(5, 8));
 	}
 
-	// TODO wall shapes
 	@Test
 	public void testMarkShapes() {
 		ArrayList<MarkShape> floors = new ArrayList<MarkShape>();
