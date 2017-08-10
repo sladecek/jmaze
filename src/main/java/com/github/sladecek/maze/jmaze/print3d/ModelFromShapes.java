@@ -5,7 +5,7 @@ import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 import com.github.sladecek.maze.jmaze.geometry.Point3D;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.*;
 import com.github.sladecek.maze.jmaze.print3d.maze3dmodel.*;
-import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
+import com.github.sladecek.maze.jmaze.printstyle.PrintStyle;
 import com.github.sladecek.maze.jmaze.shapes.FloorShape;
 import com.github.sladecek.maze.jmaze.shapes.Shapes;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
@@ -19,21 +19,21 @@ import java.util.logging.Logger;
  */
 public class ModelFromShapes {
 
-    public ModelFromShapes(Shapes shapes, IMaze3DMapper mapper, IPrintStyle style, double wallSize) {
+    public ModelFromShapes(Shapes shapes, IMaze3DMapper mapper, PrintStyle style, double wallSize) {
         this.shapes = shapes;
         this.mapper = mapper;
         this.style = style;
         this.wallSize = wallSize;
     }
 
-    static public Model3d make(Shapes shapes, IMaze3DMapper mapper,  IPrintStyle style, double wallSize) {
+    static public Model3d make(Shapes shapes, IMaze3DMapper mapper,  PrintStyle style, double wallSize) {
         ModelFromShapes mfs = new ModelFromShapes(shapes, mapper, style, wallSize);
         mfs.makePlanarProjection();
         mfs.extrudeTo3D();
         return mfs.m;
     }
 
-    static public Model3d makeWithoutExtrusionForUnitTesting(Shapes shapes, IMaze3DMapper mapper,  IPrintStyle style, double wallSize) {
+    static public Model3d makeWithoutExtrusionForUnitTesting(Shapes shapes, IMaze3DMapper mapper,  PrintStyle style, double wallSize) {
         ModelFromShapes mfs = new ModelFromShapes(shapes, mapper, style, wallSize);
         mfs.makePlanarProjection();
         return mfs.m;
@@ -205,7 +205,7 @@ public class ModelFromShapes {
     private final double wallSize;
     private Shapes shapes;
 
-    private IPrintStyle style;
+    private PrintStyle style;
     private IMaze3DMapper mapper;
     private Model3d m;
     private TreeMap<Point2DInt, Set<WallEnd>> wallsForPillars;

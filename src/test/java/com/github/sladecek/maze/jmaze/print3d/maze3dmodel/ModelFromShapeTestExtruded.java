@@ -7,7 +7,7 @@ import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.Model3d;
 import com.github.sladecek.maze.jmaze.print3d.output.OpenScad3DPrinter;
 import com.github.sladecek.maze.jmaze.print3d.output.StlMazePrinter;
 import com.github.sladecek.maze.jmaze.printstyle.PrintStyle;
-import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
+import com.github.sladecek.maze.jmaze.printstyle.PrintStyle;
 import com.github.sladecek.maze.jmaze.shapes.Shapes;
 import org.junit.Before;
 import org.junit.Test;
@@ -31,7 +31,7 @@ public class ModelFromShapeTestExtruded extends ModelFromShapesTestBase {
     }
 
     protected Model3d compute3dModel(Shapes sc) {
-        IPrintStyle colors = new PrintStyle();
+        PrintStyle colors = new PrintStyle();
         IMaze3DMapper mapper = new PlanarMapper();
         return ModelFromShapes.make(sc, mapper, colors, 2);
     }

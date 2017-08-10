@@ -61,7 +61,7 @@ public class VoronoiMazeTest {
 		assertEquals(2, maze.getGraph().getTargetRoom());
 	}
 
-	
+
 	@Test
 	public void testMarkShapes() {
 		ArrayList<MarkShape> floors = new ArrayList<MarkShape>();

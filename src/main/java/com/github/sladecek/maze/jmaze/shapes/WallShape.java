@@ -3,7 +3,7 @@ package com.github.sladecek.maze.jmaze.shapes;
 import com.github.sladecek.maze.jmaze.generator.MazePath;
 import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 import com.github.sladecek.maze.jmaze.print2d.I2DDocument;
-import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
+import com.github.sladecek.maze.jmaze.printstyle.PrintStyle;
 
 public final class WallShape implements IPrintableMazeShape2D {
 
@@ -48,7 +48,7 @@ public final class WallShape implements IPrintableMazeShape2D {
 
 
     @Override
-    public void print2D(I2DDocument doc, IPrintStyle printStyle) {
+    public void print2D(I2DDocument doc, PrintStyle printStyle) {
         String style = "";
 
         switch (wallType) {

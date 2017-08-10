@@ -3,9 +3,13 @@ package com.github.sladecek.maze.jmaze.shapes;
 import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 import com.github.sladecek.maze.jmaze.print2d.I2DDocument;
 import com.github.sladecek.maze.jmaze.printstyle.Color;
-import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
+import com.github.sladecek.maze.jmaze.printstyle.PrintStyle;
+import com.github.sladecek.maze.jmaze.printstyle.PrintStyle;
+import com.github.sladecek.maze.jmaze.properties.MazeProperties;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
+
+import java.util.Properties;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
@@ -175,16 +179,29 @@ public class WallShapeTest {
 
         WallShape w = new WallShape(777, shapeType, new Point2DInt(x1, y1), new Point2DInt(x2, y2), 99,99);
 
-        IPrintStyle mockedPrintStyle = mock(IPrintStyle.class);
-        when(mockedPrintStyle.getInnerWallColor()).thenReturn(new Color("040404"));
-        when(mockedPrintStyle.getOuterWallColor()).thenReturn(new Color("050505"));
-        when(mockedPrintStyle.getSolutionWallColor()).thenReturn(new Color("060606"));
-        when(mockedPrintStyle.getDebugWallColor()).thenReturn(new Color("070707"));
-        when(mockedPrintStyle.getInnerWallWidth()).thenReturn(3);
-        when(mockedPrintStyle.getOuterWallWidth()).thenReturn(5);
-        when(mockedPrintStyle.getSolutionWallWidth()).thenReturn(7);
+        PrintStyle ps = new PrintStyle();
+        MazeProperties properties = new MazeProperties();
 
-        w.print2D(mockedDocument, mockedPrintStyle);
+        properties.put("printSolution", true);
+        properties.put("printAllWalls", false);
+
+        properties.put("startMarkColor", new Color("ff0000"));
+        properties.put("targetMarkColor",  new Color("00ff00"));
+        properties.put("solutionMarkColor", new Color("777777"));
+
+        properties.put("startMarkWidth", 4);
+        properties.put("targetMarkWidth",4);
+        properties.put("solutionMarkWidth",2);
+
+
+        properties.put("innerWallColor", new Color("040404"));
+        properties.put("outerWallColor", new Color("050505"));
+        properties.put("debugWallColor", new Color("070707"));
+        properties.put("innerWallWidth", 3);
+        properties.put("outerWallWidth", 5);
+        ps.configureFromProperties(properties);
+
+        w.print2D(mockedDocument, ps);
     }
 
     @Test

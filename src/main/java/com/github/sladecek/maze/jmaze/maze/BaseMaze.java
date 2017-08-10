@@ -6,7 +6,7 @@ import com.github.sladecek.maze.jmaze.print3d.IMaze3DMapper;
 import com.github.sladecek.maze.jmaze.print3d.ModelFromShapes;
 import com.github.sladecek.maze.jmaze.printstyle.Color;
 import com.github.sladecek.maze.jmaze.printstyle.PrintStyle;
-import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
+import com.github.sladecek.maze.jmaze.printstyle.PrintStyle;
 import com.github.sladecek.maze.jmaze.properties.MazeProperties;
 
 import java.util.Random;
@@ -27,17 +27,23 @@ public abstract class BaseMaze extends MazeData implements IMaze {
     }
 
     protected void addDefault2DProperties(MazeProperties properties) {
-        // TODO
+
         properties.put("printSolution", true);
         properties.put("printAllWalls", false);
 
         properties.put("startMarkColor", new Color("ff0000"));
-        properties.put("tartgetMarkColor",  new Color("00ff00"));
+        properties.put("targetMarkColor",  new Color("00ff00"));
         properties.put("solutionMarkColor", new Color("777777"));
 
+        properties.put("innerWallWidth", 1);
+        properties.put("outerWallWidth", 2);
         properties.put("startMarkWidth", 4);
         properties.put("targetMarkWidth",4);
         properties.put("solutionMarkWidth",2);
+
+        properties.put("outerWallColor", new Color("000000"));
+        properties.put("innerWallColor", new Color("000000"));
+        properties.put("debugWallColor",  new Color("eeeeff"));
 
     }
 
@@ -62,7 +68,7 @@ public abstract class BaseMaze extends MazeData implements IMaze {
         IMaze3DMapper mapper = create3DMapper();
         if (mapper != null) {
 
-            IPrintStyle colors;
+            PrintStyle colors;
 
             double approxRoomSizeInmm = 3;
             colors = new PrintStyle();

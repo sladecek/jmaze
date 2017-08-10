@@ -6,7 +6,7 @@ import java.io.OutputStream;
 import java.util.logging.Logger;
 
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.Model3d;
-import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
+import com.github.sladecek.maze.jmaze.printstyle.PrintStyle;
 
 
 public class ThreeJs3DPrinter implements IMaze3DPrinter {
@@ -16,7 +16,7 @@ public class ThreeJs3DPrinter implements IMaze3DPrinter {
 
     }
 
-    /*
+    /* TODO
         @Override
         public final void printBlocks(final IBlockMaker blockMaker, boolean showSolution,
                 final OutputStream stream) throws MazeGenerationException {
@@ -62,11 +62,12 @@ public class ThreeJs3DPrinter implements IMaze3DPrinter {
     */
     private void printColors(ThreeJsComposer tjs)
             throws IOException {
-
+/*
         tjs.printColor("clearColor", printStyle.getThreeJsClearColor(), true);
         tjs.printColor("meshColor", printStyle.getThreeJsMeshColor(), true);
         tjs.printColor("ambientLightColor", printStyle.getThreeJsAmbientLightColor(), true);
         tjs.printColor("pointLightColor", printStyle.getThreeJsPointLightColor(), false);
+  */
     }
 
     @Override
@@ -75,7 +76,7 @@ public class ThreeJs3DPrinter implements IMaze3DPrinter {
     }
 
 
-    private IPrintStyle printStyle;
+    private PrintStyle printStyle;
 
     private static final Logger LOG = Logger.getLogger("maze");
 }

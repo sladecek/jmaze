@@ -3,7 +3,9 @@ package com.github.sladecek.maze.jmaze.shapes;
 import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 import com.github.sladecek.maze.jmaze.print2d.I2DDocument;
 import com.github.sladecek.maze.jmaze.printstyle.Color;
-import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
+import com.github.sladecek.maze.jmaze.printstyle.PrintStyle;
+import com.github.sladecek.maze.jmaze.printstyle.PrintStyle;
+import com.github.sladecek.maze.jmaze.properties.MazeProperties;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 
@@ -88,16 +90,29 @@ public class MarkShapeTest {
         MarkShape m = new MarkShape(id, new Point2DInt(x, y));
         m.setMarkType(type);
 
-        IPrintStyle mockedPrintStyle = mock(IPrintStyle.class);
-        when(mockedPrintStyle.getStartMarkColor()).thenReturn(new Color("010203"));
-        when(mockedPrintStyle.getTargetMarkColor()).thenReturn(new Color("040404"));
-        when(mockedPrintStyle.getSolutionMarkColor()).thenReturn(new Color("050505"));
-        when(mockedPrintStyle.getStartMarkWidth()).thenReturn(5);
-        when(mockedPrintStyle.getTargetMarkWidth()).thenReturn(5);
-        when(mockedPrintStyle.getSolutionMarkWidth()).thenReturn(7);
-        when(mockedPrintStyle.isPrintSolution()).thenReturn(true);
+        PrintStyle ps = new PrintStyle();
+        MazeProperties properties = new MazeProperties();
 
-        m.print2D(mockedDocument, mockedPrintStyle);
+        properties.put("printSolution", true);
+        properties.put("printAllWalls", false);
+
+        properties.put("startMarkColor", new Color("010203"));
+        properties.put("targetMarkColor",  new Color("040404"));
+        properties.put("solutionMarkColor", new Color("050505"));
+
+        properties.put("startMarkWidth", 5);
+        properties.put("targetMarkWidth",5);
+        properties.put("solutionMarkWidth",7);
+
+
+        properties.put("innerWallColor", new Color("040404"));
+        properties.put("outerWallColor", new Color("050505"));
+        properties.put("debugWallColor", new Color("070707"));
+        properties.put("innerWallWidth", 3);
+        properties.put("outerWallWidth", 5);
+        ps.configureFromProperties(properties);
+
+        m.print2D(mockedDocument, ps);
 
         ArgumentCaptor<Point2DInt> center = ArgumentCaptor.forClass(Point2DInt.class);
         ArgumentCaptor<String> fill = ArgumentCaptor.forClass(String.class);

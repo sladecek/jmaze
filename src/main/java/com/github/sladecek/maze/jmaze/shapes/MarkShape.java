@@ -3,7 +3,7 @@ package com.github.sladecek.maze.jmaze.shapes;
 import com.github.sladecek.maze.jmaze.generator.MazePath;
 import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 import com.github.sladecek.maze.jmaze.print2d.I2DDocument;
-import com.github.sladecek.maze.jmaze.printstyle.IPrintStyle;
+import com.github.sladecek.maze.jmaze.printstyle.PrintStyle;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -37,7 +37,7 @@ public final class MarkShape implements IPrintableMazeShape2D {
     }
 
     @Override
-    public void print2D(I2DDocument doc, IPrintStyle printStyle) {
+    public void print2D(I2DDocument doc, PrintStyle printStyle) {
         switch (markType) {
             case startRoom:
                 doc.printMark(center, printStyle.getStartMarkColor().toSvg(), printStyle.getStartMarkWidth());
