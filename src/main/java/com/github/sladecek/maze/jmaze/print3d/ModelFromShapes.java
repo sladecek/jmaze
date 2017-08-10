@@ -29,9 +29,7 @@ public class ModelFromShapes {
     static public Model3d make(Shapes shapes, IMaze3DMapper mapper,  IPrintStyle style, double wallSize) {
         ModelFromShapes mfs = new ModelFromShapes(shapes, mapper, style, wallSize);
         mfs.makePlanarProjection();
-        LOG.info("BEFORE" + mfs.m.toString()); // TODO smazat
         mfs.extrudeTo3D();
-        LOG.info("AFTER" + mfs.m.toString());  // TODO smazat
         return mfs.m;
     }
 

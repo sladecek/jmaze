@@ -71,7 +71,6 @@ public final class ThreeJsComposer implements java.lang.AutoCloseable {
             throw new IllegalArgumentException("Polyhedrons must have "
                     + POLYHEDRON_VERTEX_CNT + " points");
         }
-        // TODO out.write("/* " + comment + "*/\n");
         if (needComma) {
             out.write(",\n");
         }

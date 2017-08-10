@@ -61,33 +61,7 @@ public class VoronoiMazeTest {
 		assertEquals(2, maze.getGraph().getTargetRoom());
 	}
 
-	@Test
-	public void testGetRoomBehindWall() {
-		// rooms are numbered by columns
-		// walls counterclockwise
-		/* TODO
-		assertEquals(1, maze.getRoomBehindWall(0, 0));
-		assertEquals(2, maze.getRoomBehindWall(0, 1));
-		
-		assertEquals(0, maze.getRoomBehindWall(1, 0));
-		assertEquals(2, maze.getRoomBehindWall(1, 2));
-		
-		assertEquals(0, maze.getRoomBehindWall(2, 1));
-		assertEquals(1, maze.getRoomBehindWall(2, 2));
-		assertEquals(3, maze.getRoomBehindWall(2, 3));
-		assertEquals(5, maze.getRoomBehindWall(2, 7));
-		assertEquals(4, maze.getRoomBehindWall(2, 5));
-
-		assertEquals(2, maze.getRoomBehindWall(4, 5));
-		assertEquals(5, maze.getRoomBehindWall(4, 6));
-		
-		assertEquals(4, maze.getRoomBehindWall(5, 6));
-		assertEquals(2, maze.getRoomBehindWall(5, 7));
-		assertEquals(3, maze.getRoomBehindWall(5, 8));
-		*/
-	}
-
-	// TODO wall shapes
+	
 	@Test
 	public void testMarkShapes() {
 		ArrayList<MarkShape> floors = new ArrayList<MarkShape>();
@@ -99,26 +73,7 @@ public class VoronoiMazeTest {
 		}
 		assertEquals(3, floors.size());
 		
-		/* TODO
-		assertEquals(10, floors.get(0).getX());
-		assertEquals(8, floors.get(0).getY());
 
-		assertEquals(40, floors.get(5).getX());
-		assertEquals(24, floors.get(5).getY());
-		*/
 	}
 
-/*
- * TODO
-	@Test
-	public void testGetShapes() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetContext() {
-		fail("Not yet implemented");
-	}
-
-*/
 }
