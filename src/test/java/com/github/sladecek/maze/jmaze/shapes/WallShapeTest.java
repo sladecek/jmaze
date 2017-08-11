@@ -4,12 +4,9 @@ import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 import com.github.sladecek.maze.jmaze.print2d.I2DDocument;
 import com.github.sladecek.maze.jmaze.printstyle.Color;
 import com.github.sladecek.maze.jmaze.printstyle.PrintStyle;
-import com.github.sladecek.maze.jmaze.printstyle.PrintStyle;
 import com.github.sladecek.maze.jmaze.properties.MazeProperties;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
-
-import java.util.Properties;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;

@@ -11,7 +11,7 @@ public class EggMazeHemisphereTest {
 
 	@Test
 	public void testGetCircleCnt() {
-		ArrayList<Integer> layerRoomCnt = new ArrayList<Integer>();
+		ArrayList<Integer> layerRoomCnt = new ArrayList<>();
 		layerRoomCnt.add(4);
 		layerRoomCnt.add(8);
 
@@ -22,7 +22,7 @@ public class EggMazeHemisphereTest {
 
 	@Test
 	public void testGetRoomCntAfterCircle() {
-		ArrayList<Integer> layerRoomCnt = new ArrayList<Integer>();
+		ArrayList<Integer> layerRoomCnt = new ArrayList<>();
 		layerRoomCnt.add(4);
 		layerRoomCnt.add(8);
 
@@ -34,7 +34,7 @@ public class EggMazeHemisphereTest {
 
 	@Test
 	public void testGetRoomCntBeforeCircle() {
-		ArrayList<Integer> layerRoomCnt = new ArrayList<Integer>();
+		ArrayList<Integer> layerRoomCnt = new ArrayList<>();
 		layerRoomCnt.add(4);
 		layerRoomCnt.add(8);
 
@@ -48,7 +48,7 @@ public class EggMazeHemisphereTest {
 
 	@Test
 	public void testIsPolarLayer() {
-		ArrayList<Integer> layerRoomCnt = new ArrayList<Integer>();
+		ArrayList<Integer> layerRoomCnt = new ArrayList<>();
 		layerRoomCnt.add(4);
 		layerRoomCnt.add(8);
 
@@ -60,7 +60,7 @@ public class EggMazeHemisphereTest {
 
 	@Test
 	public void testGetGreenwichRoom() {
-		ArrayList<Integer> layerRoomCnt = new ArrayList<Integer>();
+		ArrayList<Integer> layerRoomCnt = new ArrayList<>();
 		layerRoomCnt.add(4);
 		layerRoomCnt.add(8);
 			
@@ -74,11 +74,11 @@ public class EggMazeHemisphereTest {
 
 	@Test
 	public void testGetLayerXPosition() {
-		ArrayList<Integer> layerRoomCnt = new ArrayList<Integer>();
+		ArrayList<Integer> layerRoomCnt = new ArrayList<>();
 		layerRoomCnt.add(4);
 		layerRoomCnt.add(8);
 
-		ArrayList<Double> layerX = new ArrayList<Double>();
+		ArrayList<Double> layerX = new ArrayList<>();
 		layerX.add(1.1);
 		layerX.add(2.2);
 
@@ -96,7 +96,7 @@ public class EggMazeHemisphereTest {
 
 	@Test
 	public void testGetWallCntOnCircle() {
-		ArrayList<Integer> layerRoomCnt = new ArrayList<Integer>();
+		ArrayList<Integer> layerRoomCnt = new ArrayList<>();
 		layerRoomCnt.add(4);
 		layerRoomCnt.add(8);
 

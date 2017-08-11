@@ -4,7 +4,6 @@ import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 import com.github.sladecek.maze.jmaze.print2d.I2DDocument;
 import com.github.sladecek.maze.jmaze.printstyle.Color;
 import com.github.sladecek.maze.jmaze.printstyle.PrintStyle;
-import com.github.sladecek.maze.jmaze.printstyle.PrintStyle;
 import com.github.sladecek.maze.jmaze.properties.MazeProperties;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
@@ -75,11 +74,9 @@ public class MarkShapeTest {
     private void testPrint2DForOneMarkType(final MarkType type, String expectedFill, int expectedSize) {
         I2DDocument mockedDocument = mock(I2DDocument.class);
 
-        boolean isPolarCoordinates = false;
-        int pictureHeight = 100;
-        int pictureWidth = 200;
-        int resolutionX = 7;
-        int resolutionY = 7;
+        final boolean isPolarCoordinates = false;
+        final int pictureHeight = 100;
+        final int pictureWidth = 200;
 
         ShapeContext sc = new ShapeContext(isPolarCoordinates, pictureHeight, pictureWidth);
 

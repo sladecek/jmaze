@@ -1,7 +1,6 @@
 package com.github.sladecek.maze.jmaze.print3d.maze3dmodel;
 
 import com.github.sladecek.maze.jmaze.geometry.Point2DDbl;
-import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MPoint;
 
 import java.util.ArrayList;

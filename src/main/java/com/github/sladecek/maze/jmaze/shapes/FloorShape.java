@@ -3,9 +3,6 @@ package com.github.sladecek.maze.jmaze.shapes;
 import com.github.sladecek.maze.jmaze.generator.MazePath;
 import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 
-import com.github.sladecek.maze.jmaze.print2d.I2DDocument;
-import com.github.sladecek.maze.jmaze.printstyle.PrintStyle;
-
 
 /**
  * Floor in 3D maze.

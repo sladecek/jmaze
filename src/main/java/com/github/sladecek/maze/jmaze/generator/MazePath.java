@@ -46,7 +46,7 @@ public final class MazePath {
     private BitSet isWallClosed;
     private int wallCount;
 
-    private ArrayList<Integer> solution = new ArrayList<Integer>();
+    private ArrayList<Integer> solution = new ArrayList<>();
 
     public int getStartRoom() {
         return startRoom;

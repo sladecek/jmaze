@@ -4,9 +4,6 @@ import com.github.sladecek.maze.jmaze.geometry.Point2DDbl;
 import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 import com.github.sladecek.maze.jmaze.geometry.Point3D;
 import com.github.sladecek.maze.jmaze.print3d.IMaze3DMapper;
-import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 /**
  *

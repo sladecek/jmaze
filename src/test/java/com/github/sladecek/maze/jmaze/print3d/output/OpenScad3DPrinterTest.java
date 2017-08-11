@@ -2,8 +2,6 @@ package com.github.sladecek.maze.jmaze.print3d.output;
 
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 /**
  * Test for OpenScad3DPrinter class.
  */

@@ -93,7 +93,7 @@ public final class EggMaze extends BaseMaze {
     public ArrayList<Integer> computeRoomCounts(ArrayList<Double> layerXPosition, int layerRoomCnt, double baseRoomSizeInmm) {
 
         final int layerCnt = layerXPosition.size();
-        ArrayList<Integer> result = new ArrayList<Integer>();
+        ArrayList<Integer> result = new ArrayList<>();
         // equator
         result.add(layerRoomCnt);
         int roomCnt = layerRoomCnt;
@@ -145,7 +145,7 @@ public final class EggMaze extends BaseMaze {
         ArrayList<Double> xPos = geometry.divideMeridian(baseRoomSizeInmm, sn);
 
         ArrayList<Integer> cellCnt = computeRoomCounts(xPos, equatorCellCnt, baseRoomSizeInmm);
-        h.setLayerXPosition(new ArrayList<Double>(xPos.subList(0, cellCnt.size())));
+        h.setLayerXPosition(new ArrayList<>(xPos.subList(0, cellCnt.size())));
         h.setLayerRoomCnt(cellCnt);
 
     }

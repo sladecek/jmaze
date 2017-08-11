@@ -51,7 +51,7 @@ public final class EggGeometry {
     public ArrayList<Double> divideMeridian(double stepInmm, SouthNorth hemisphere) {
         final double sign = signOfHemispherePole(hemisphere);
         final double probeInmm = stepInmm / 10;
-        ArrayList<Double> result = new ArrayList<Double>();
+        ArrayList<Double> result = new ArrayList<>();
         double xInmm = 0;
         result.add(xInmm);
 

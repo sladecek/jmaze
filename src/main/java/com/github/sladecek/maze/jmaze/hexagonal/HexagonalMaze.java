@@ -61,7 +61,7 @@ public HexagonalMaze() {
 
         final int roomsPerRow = 2 * size - 1;
 
-        ArrayList<Integer> mapXY2room = new ArrayList<Integer>();
+        ArrayList<Integer> mapXY2room = new ArrayList<>();
 
         // make rooms
         for (int x = 0; x < roomsPerRow; x++) {

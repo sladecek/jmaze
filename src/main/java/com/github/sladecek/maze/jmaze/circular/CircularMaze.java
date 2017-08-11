@@ -5,11 +5,9 @@ import com.github.sladecek.maze.jmaze.maze.BaseMaze;
 import com.github.sladecek.maze.jmaze.print3d.IMaze3DMapper;
 import com.github.sladecek.maze.jmaze.properties.MazeProperties;
 import com.github.sladecek.maze.jmaze.shapes.MarkShape;
-
 import com.github.sladecek.maze.jmaze.shapes.Shapes;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
 
-import java.util.ArrayList;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,7 +19,7 @@ public class CircularMaze extends BaseMaze {
 
     /**
      * Creates new instance of circular maze..
-*/
+     */
     public CircularMaze() {
 
     }
@@ -29,20 +27,19 @@ public class CircularMaze extends BaseMaze {
     @Override
     public MazeProperties getDefaultProperties() {
         MazeProperties defaultProperties = super.getDefaultProperties();
-        defaultProperties.put("name", "circ");
+        defaultProperties.put("name", "circular");
         defaultProperties.put("layerCount", 8);
         addDefault2DProperties(defaultProperties);
         return defaultProperties;
     }
 
     public void buildMazeGraphAndShapes() {
-        layerCount= properties.getInt("layerCount", 1, 1000);
+        layerCount = properties.getInt("layerCount", 1, 1000);
         computeRoomCounts();
         firstRoomInLayer = new ArrayList<>();
-        for (int i = 0; i <layerCount; i++) {
+        for (int i = 0; i < layerCount; i++) {
             firstRoomInLayer.add(-1);
         }
-
 
         createModel();
 
@@ -55,6 +52,7 @@ public class CircularMaze extends BaseMaze {
 
     @Override
     public IMaze3DMapper create3DMapper() {
+        // Cannot be printed in 3D yet.
         return null;
     }
 
@@ -70,6 +68,7 @@ public class CircularMaze extends BaseMaze {
             roomCounts.add(1);
             roomCountRatio.add(1);
             if (layerCount > 1) {
+                int roomCountInZeroLayer = 4;
                 roomCounts.add(roomCountInZeroLayer);
                 roomCountRatio.add(roomCountInZeroLayer);
 
@@ -77,6 +76,7 @@ public class CircularMaze extends BaseMaze {
                 for (int i = 2; i < layerCount; i++) {
                     int cnt = roomCounts.get(i - 1);
                     double nextRoomIfDoubled = Math.PI * computeRadius(i - 1) / cnt;
+                    int minimalRoomLength = 15;
                     if (nextRoomIfDoubled < minimalRoomLength) {
                         roomCounts.add(cnt);
                         roomCountRatio.add(1);
@@ -93,6 +93,8 @@ public class CircularMaze extends BaseMaze {
     }
 
     private int computeRadius(int i) {
+        int zeroLayerRadius = 20;
+        int layerSize = 30;
         return zeroLayerRadius + i * layerSize;
     }
 
@@ -131,9 +133,7 @@ public class CircularMaze extends BaseMaze {
             }
 
             Point2DInt center = new Point2DInt(mapPhiD(phi * roomRatio + roomRatio * 0.5), y);
-
             final MarkShape floor = new MarkShape(room, center);
-
             getAllShapes().add(floor);
         }
     }
@@ -142,13 +142,11 @@ public class CircularMaze extends BaseMaze {
         return roomCounts.get(roomCounts.size() - 1);
     }
 
-
     private int mapPhiD(double phi) {
         return (int) Math.floor((phi * Point2DInt.ANGLE_2PI) / roomCntInOuterLayer());
     }
 
     private void generateConcentricWalls() {
-
         // draw concentric wall at radius r
         for (int layer = 0; layer < layerCount - 1; layer++) {
             LOGGER.log(Level.INFO, "generateConcentricWalls r=" + layer);
@@ -202,17 +200,12 @@ public class CircularMaze extends BaseMaze {
     }
 
     private void generateOuterWalls() {
-
         int r = computeRadius(layerCount - 1);
         getAllShapes().add(WallShape.newOuterWall(new Point2DInt(0, r), new Point2DInt(0, r)));
     }
 
     private static final Logger LOGGER = Logger.getLogger("maze");
     private int layerCount;
-    private final int zeroLayerRadius = 20;
-    private final int roomCountInZeroLayer = 4;
-    private final int minimalRoomLength = 15;
-    private final int layerSize = 30;
     private ArrayList<Integer> roomCounts;
     private ArrayList<Integer> roomCountRatio;
     private ArrayList<Integer> firstRoomInLayer;

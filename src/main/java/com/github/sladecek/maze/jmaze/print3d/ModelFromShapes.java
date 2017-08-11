@@ -119,11 +119,7 @@ public class ModelFromShapes {
     }
 
     private void addWallToPilar(WallEnd end) {
-        Set<WallEnd> s = wallsForPillars.get(end.getPillarPoint());
-        if (s == null) {
-            s = new TreeSet<WallEnd>();
-            wallsForPillars.put(end.getPillarPoint(), s);
-        }
+        Set<WallEnd> s = wallsForPillars.computeIfAbsent(end.getPillarPoint(), k -> new TreeSet<>());
         s.add(end);
     }
 

@@ -1,7 +1,6 @@
 package com.github.sladecek.maze.jmaze.voronoi;
 
 import be.humphreys.simplevoronoi.GraphEdge;
-import be.humphreys.simplevoronoi.Voronoi;
 import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 import com.github.sladecek.maze.jmaze.maze.BaseMaze;
 

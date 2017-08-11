@@ -1,12 +1,10 @@
 package com.github.sladecek.maze.jmaze.print2d;
 
-import com.github.sladecek.maze.jmaze.print3d.output.StlMazePrinter;
 import com.github.sladecek.maze.jmaze.properties.MazeProperties;
 import com.github.sladecek.maze.jmaze.rectangular.RectangularMaze;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
 import java.io.ByteArrayOutputStream;

@@ -42,7 +42,7 @@ public class PointsInRectangle {
 	
 	public void sortByLongerCoordinate() {
 
-		ArrayList<Integer> points = new ArrayList<Integer>();
+		ArrayList<Integer> points = new ArrayList<>();
 		for (int i = 0; i < roomCount; i++) {
 			points.add(i);
 		}

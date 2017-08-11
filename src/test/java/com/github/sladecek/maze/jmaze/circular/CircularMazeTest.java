@@ -2,7 +2,6 @@ package com.github.sladecek.maze.jmaze.circular;
 
 import com.github.sladecek.maze.jmaze.properties.MazeProperties;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape;
-import com.github.sladecek.maze.jmaze.shapes.IPrintableMazeShape2D;
 import com.github.sladecek.maze.jmaze.shapes.MarkShape;
 import com.github.sladecek.maze.jmaze.shapes.Shapes;
 import org.junit.Before;
@@ -41,7 +40,7 @@ public class CircularMazeTest {
 
     @Test
     public void testGetWalls() {
-        List<Integer> list = new ArrayList<Integer>();
+        List<Integer> list = new ArrayList<>();
         maze.getGraph().getWalls(0).iterator().forEachRemaining(list::add);
         assertEquals(4, list.size());
     }
@@ -58,7 +57,7 @@ public class CircularMazeTest {
 
     @Test
     public void testMarkShapes() {
-        ArrayList<MarkShape> floors = new ArrayList<MarkShape>();
+        ArrayList<MarkShape> floors = new ArrayList<>();
         Shapes sc = maze.getAllShapes();
         for (IMazeShape s : sc.getShapes()) {
             if (s instanceof MarkShape) {

@@ -7,7 +7,6 @@ import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.Model3d;
 import com.github.sladecek.maze.jmaze.print3d.output.OpenScad3DPrinter;
 import com.github.sladecek.maze.jmaze.print3d.output.StlMazePrinter;
 import com.github.sladecek.maze.jmaze.printstyle.PrintStyle;
-import com.github.sladecek.maze.jmaze.printstyle.PrintStyle;
 import com.github.sladecek.maze.jmaze.shapes.Shapes;
 import org.junit.Before;
 import org.junit.Test;

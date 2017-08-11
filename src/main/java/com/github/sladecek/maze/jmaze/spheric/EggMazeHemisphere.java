@@ -95,18 +95,18 @@ class EggMazeHemisphere {
 	 * Number of rooms in egg layer. Zero index contains number of rooms on the
 	 * equator.
 	 */
-	private ArrayList<Integer> layerRoomCnt = new ArrayList<Integer>();
+	private ArrayList<Integer> layerRoomCnt = new ArrayList<>();
 
 	/***
 	 * Id of the first room (Greenwich room) in the layer.
 	 */
-	private ArrayList<Integer> greenwichRoom = new ArrayList<Integer>();
+	private ArrayList<Integer> greenwichRoom = new ArrayList<>();
 
 	/*
 	 * Axial (x) coordinate of egg layer. Zero index contains zero value - the
 	 * equator.
 	 */
-	private ArrayList<Double> layerXPosition = new ArrayList<Double>();
+	private ArrayList<Double> layerXPosition = new ArrayList<>();
 	private double poleXPosition;
 
 }

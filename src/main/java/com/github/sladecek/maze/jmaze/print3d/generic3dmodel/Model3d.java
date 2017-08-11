@@ -4,7 +4,6 @@ package com.github.sladecek.maze.jmaze.print3d.generic3dmodel;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 /**

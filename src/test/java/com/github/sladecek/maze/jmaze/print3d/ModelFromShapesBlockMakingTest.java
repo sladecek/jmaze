@@ -5,7 +5,6 @@ import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MBlock;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MEdge;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MFace;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MPoint;
-import com.github.sladecek.maze.jmaze.print3d.maze3dmodel.Altitude;
 import com.github.sladecek.maze.jmaze.print3d.maze3dmodel.FloorFace;
 import com.github.sladecek.maze.jmaze.print3d.maze3dmodel.TelescopicPoint;
 import org.junit.Test;

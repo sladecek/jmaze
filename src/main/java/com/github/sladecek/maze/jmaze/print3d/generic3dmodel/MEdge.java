@@ -1,8 +1,5 @@
 package com.github.sladecek.maze.jmaze.print3d.generic3dmodel;
 
-import java.util.Comparator;
-import java.util.concurrent.Callable;
-
 /**
  * Edge in a 3D model. An edge connects two points.
  */

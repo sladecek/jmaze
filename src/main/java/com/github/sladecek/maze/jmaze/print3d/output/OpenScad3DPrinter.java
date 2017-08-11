@@ -2,14 +2,11 @@ package com.github.sladecek.maze.jmaze.print3d.output;
 
 import com.github.sladecek.maze.jmaze.geometry.Point3D;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MBlock;
-import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MPoint;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.Model3d;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.logging.Logger;
 
 /**
@@ -73,7 +70,7 @@ public class OpenScad3DPrinter implements IMaze3DPrinter {
         ArrayList<ArrayList<Integer>> result = new ArrayList<>();
         for (int p2 = 2; p2 < sz; p2++ ) {
             ArrayList<Integer> face = new ArrayList<>();
-            face.add(offs + 0);
+            face.add(offs);
             face.add(offs + p2-1);
             face.add(offs + p2);
             result.add(face);

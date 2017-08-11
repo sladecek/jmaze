@@ -45,7 +45,7 @@ public class TriangularMazeTest {
 
 	@Test
 	public void testGetWalls() {
-		List<Integer> list = new ArrayList<Integer>();
+		List<Integer> list = new ArrayList<>();
 		maze.getGraph().getWalls(0).iterator().forEachRemaining(list::add);
 		assertEquals(1, list.size());
 	}

@@ -47,7 +47,7 @@ public class HexagonalMazeTest {
 
 	@Test
 	public void testGetWalls() {
-		List<Integer> list = new ArrayList<Integer>();
+		List<Integer> list = new ArrayList<>();
 		maze.getGraph().getWalls(0).iterator().forEachRemaining(list::add);
 		assertEquals(2, list.size());
 	}
@@ -89,7 +89,7 @@ public class HexagonalMazeTest {
 
 	@Test
 	public void testMarkShapes() {
-		ArrayList<MarkShape> floors = new ArrayList<MarkShape>();
+		ArrayList<MarkShape> floors = new ArrayList<>();
 		Shapes sc = maze.getAllShapes();
 		for (IMazeShape s: sc.getShapes()) {
 			if (s instanceof MarkShape) {

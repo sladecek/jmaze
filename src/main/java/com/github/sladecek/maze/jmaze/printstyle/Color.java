@@ -77,8 +77,7 @@ public final class Color {
 
 		if (r != color.r) return false;
 		if (g != color.g) return false;
-		if (b != color.b) return false;
-		return a == color.a;
+		return b == color.b && a == color.a;
 	}
 
 	@Override

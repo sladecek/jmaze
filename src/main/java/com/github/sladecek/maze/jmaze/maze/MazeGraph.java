@@ -29,7 +29,7 @@ public class MazeGraph implements IMazeGraph {
 
     public final int addRoom() {
         int id = rooms.size();
-        rooms.add(new ArrayList<Integer>());
+        rooms.add(new ArrayList<>());
         LOGGER.log(Level.INFO, "add room id=" + id);
         return id;
     }
@@ -102,9 +102,9 @@ public class MazeGraph implements IMazeGraph {
     private int startRoom;
     private int targetRoom;
 
-    private ArrayList<ArrayList<Integer>> rooms = new ArrayList<ArrayList<Integer>>();
-    private ArrayList<Integer> wallRoom1 = new ArrayList<Integer>();
-    private ArrayList<Integer> wallRoom2 = new ArrayList<Integer>();
+    private ArrayList<ArrayList<Integer>> rooms = new ArrayList<>();
+    private ArrayList<Integer> wallRoom1 = new ArrayList<>();
+    private ArrayList<Integer> wallRoom2 = new ArrayList<>();
     private ArrayList<Integer> wallProbabilityWeight = new ArrayList<>();
 
 }

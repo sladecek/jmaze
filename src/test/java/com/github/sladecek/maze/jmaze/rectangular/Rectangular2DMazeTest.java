@@ -5,7 +5,6 @@ import static org.junit.Assert.assertEquals;
 import java.util.Collections;
 import java.util.ArrayList;
 
-import com.github.sladecek.maze.jmaze.maze.IMaze;
 import com.github.sladecek.maze.jmaze.properties.MazeProperties;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
 import org.junit.Before;

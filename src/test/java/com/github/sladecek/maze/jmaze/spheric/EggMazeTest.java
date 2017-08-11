@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import com.github.sladecek.maze.jmaze.properties.MazeProperties;
 import com.github.sladecek.maze.jmaze.shapes.FloorShape;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape;
-import com.github.sladecek.maze.jmaze.shapes.IPrintableMazeShape2D;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
 import org.junit.Test;
 

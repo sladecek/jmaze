@@ -4,14 +4,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import java.util.Arrays;
-
 import com.github.sladecek.maze.jmaze.print3d.IMaze3DMapper;
 import com.github.sladecek.maze.jmaze.properties.MazeProperties;
-import com.github.sladecek.maze.jmaze.shapes.FloorShape;
 //import com.github.sladecek.maze.jmaze.geometry.Direction;
-import com.github.sladecek.maze.jmaze.shapes.IMazeShape;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 

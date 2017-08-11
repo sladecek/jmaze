@@ -2,7 +2,6 @@ package com.github.sladecek.maze.jmaze.print3d.output;
 
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.Model3d;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 

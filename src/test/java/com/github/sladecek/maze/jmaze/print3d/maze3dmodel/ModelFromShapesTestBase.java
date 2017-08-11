@@ -65,7 +65,7 @@ public class ModelFromShapesTestBase {
                 .filter((f) -> (f instanceof MWall))
                 .map((f) -> (MWall) f)
                 .sorted(Comparator
-                        .comparingDouble((MWall wa) -> wa.getKeyForSortingInTests()))
+                        .comparingDouble(MWall::getKeyForSortingInTests))
                 .collect(Collectors.toList());
 
         rooms = r.getFaces()
@@ -73,7 +73,7 @@ public class ModelFromShapesTestBase {
                 .filter((f) -> (f instanceof MRoom))
                 .map((f) -> (MRoom) f)
                 .sorted(Comparator
-                        .comparingInt((MRoom ro) -> ro.getFloorId()))
+                        .comparingInt(MRoom::getFloorId))
                 .collect(Collectors.toList());
 
         corners = rooms.stream()
@@ -108,7 +108,7 @@ public class ModelFromShapesTestBase {
         // check that MWall has been constructed from the provided wall shape
         final Set<WallEnd> s1 = corners
                 .stream()
-                .map((c) -> c.getWallEnd1())
+                .map(RoomCorner::getWallEnd1)
                 .filter((we) -> we.getMWall() == w)
                 .collect(Collectors.toSet());
         assertEquals(2, s1.size());
@@ -118,7 +118,7 @@ public class ModelFromShapesTestBase {
 
         final Set<WallEnd> s2 = corners
                 .stream()
-                .map((c) -> c.getWallEnd2())
+                .map(RoomCorner::getWallEnd2)
                 .filter((we) -> we.getMWall() == w)
                 .collect(Collectors.toSet());
         assertEquals(2, s2.size());
