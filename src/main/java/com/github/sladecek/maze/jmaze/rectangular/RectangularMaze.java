@@ -24,6 +24,7 @@ public class RectangularMaze extends BaseMaze {
         defaultProperties.put("height", 20);
         addDefault2DProperties(defaultProperties);
         addDefault3DProperties(defaultProperties);
+        addComputedProperties(defaultProperties);
         return defaultProperties;
     }
 

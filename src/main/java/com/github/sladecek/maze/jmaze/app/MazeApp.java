@@ -31,7 +31,7 @@ public class MazeApp {
         System.setProperty("java.util.logging.SimpleFormatter.format",
                 "%5$s%n");
         LogManager.getLogManager().reset();
-        LOG.setLevel(Level.INFO);
+        LOG.setLevel(Level.SEVERE);
         try {
             // logging
             FileHandler fh = new FileHandler("maze.log");
@@ -52,46 +52,13 @@ public class MazeApp {
             } else {
                 maze.getProperties().updateFromStrings(cla.getProperties());
                 maze.makeMazeAllSteps(true);
-
-                final String fileName = "maze-" + maze.getName();
-                // print 2D
-                if (maze.canBePrintedIn2D()) {
-                    SvgMazePrinter printer = new SvgMazePrinter(maze.getProperties());
-
-                    FileOutputStream sSvg = new FileOutputStream(fileName + ".svg");
-                    printer.printShapes(maze.getPathShapes(), MazeOutputFormat.svg, sSvg);
-                    FileOutputStream fPdf = new FileOutputStream(fileName + ".pdf");
-                    printer.printShapes(maze.getPathShapes(), MazeOutputFormat.pdf, fPdf);
-                }
-
-                IMaze3DMapper mapper = maze.create3DMapper();
-                if (mapper != null) {
-                    final boolean printInJs = false;
-                    final boolean printInScad = true;
-                    final boolean printStl = true;
-
-
-                    if (printInJs) {
-                        FileOutputStream fJs = new FileOutputStream(fileName + ".js");
-                        new ThreeJs3DPrinter().printModel(maze.getModel3d(), fJs);
-                        fJs.close();
-                    }
-                    if (printInScad) {
-                        FileOutputStream fScad = new FileOutputStream(fileName + ".scad");
-                        new OpenScad3DPrinter().printModel(maze.getModel3d(), fScad);
-                        fScad.close();
-                    }
-                    if (printStl) {
-                        FileOutputStream fStl = new FileOutputStream(fileName + ".stl");
-                        new StlMazePrinter().printModel(maze.getModel3d(), fStl);
-                        fStl.close();
-                    }
-                }
+                maze.printAccordingToProperties();
             }
         } catch (SecurityException | IOException | MazeGenerationException e) {
             e.printStackTrace();
         }
     }
+
     /**
      * Logging facility.
      */

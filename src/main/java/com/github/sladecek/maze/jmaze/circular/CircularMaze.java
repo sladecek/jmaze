@@ -21,7 +21,6 @@ public class CircularMaze extends BaseMaze {
      * Creates new instance of circular maze..
      */
     public CircularMaze() {
-
     }
 
     @Override
@@ -29,6 +28,7 @@ public class CircularMaze extends BaseMaze {
         MazeProperties defaultProperties = super.getDefaultProperties();
         defaultProperties.put("name", "circular");
         defaultProperties.put("layerCount", 8);
+        addComputedProperties(defaultProperties);
         addDefault2DProperties(defaultProperties);
         return defaultProperties;
     }

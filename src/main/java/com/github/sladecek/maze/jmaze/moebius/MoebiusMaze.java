@@ -23,6 +23,7 @@ public final class MoebiusMaze extends BaseMaze {
         defaultProperties.put("name", "moebius");
         defaultProperties.put("sizeAlong", 40);
         defaultProperties.put("sizeAcross", 4);
+        addComputedProperties(defaultProperties);
         addDefault3DProperties(defaultProperties);
         return defaultProperties;
     }

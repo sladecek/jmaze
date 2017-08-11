@@ -42,6 +42,7 @@ public final class EggMaze extends BaseMaze {
         defaultProperties.put("eggness", 0.2);
         defaultProperties.put("equatorCells", 8);
         addDefault3DProperties(defaultProperties);
+        addComputedProperties(defaultProperties);
         return defaultProperties;
     }
 

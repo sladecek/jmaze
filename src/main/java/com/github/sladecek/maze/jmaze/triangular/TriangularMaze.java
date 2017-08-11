@@ -18,6 +18,7 @@ public class TriangularMaze extends BaseMaze {
         defaultProperties.put("size", 20);
         addDefault2DProperties(defaultProperties);
         addDefault3DProperties(defaultProperties);
+        addComputedProperties(defaultProperties);
         return defaultProperties;
     }
 
