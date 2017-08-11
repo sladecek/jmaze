@@ -183,7 +183,6 @@ public class ModelFromShapes {
         }
     }
 
-
     public static MBlock createOneBlockFromFace(MFace f, IMaze3DMapper mapper) {
         assert f instanceof FloorFace;
         Altitude alt = ((FloorFace) f).getAltitude();

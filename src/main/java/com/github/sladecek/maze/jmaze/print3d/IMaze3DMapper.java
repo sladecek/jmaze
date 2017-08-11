@@ -23,7 +23,6 @@ public interface IMaze3DMapper {
         return new TrivialCoordinateSystem();
     }
 
-    // TODO odstranit metodu a dat ji primo na misto pouziti
     default double inverselyMapLengthAt(Point2DDbl center, double v)
     {
         final double epsilon = 0.001;
