@@ -31,7 +31,7 @@ public class SvgDocumentTest {
 	@Test
 	public void testSvgDocumentWithRectangularContextShouldCreateCorrectCoordinateSystem() {
 
-		boolean isPolarCoordinates = false;
+		final boolean isPolarCoordinates = false;
 		SvgDocument d = createTestDocument(isPolarCoordinates);
 
 		assertEquals(120, d.getCanvasHeight());
@@ -55,7 +55,7 @@ public class SvgDocumentTest {
 	@Test
 	public void testSvgDocumentWithPolarContextShouldCreateCorrectCoordinateSystem() {
 
-		boolean isPolarCoordinates = true;
+		final boolean isPolarCoordinates = true;
 		SvgDocument d = createTestDocument(isPolarCoordinates);
 
 		assertEquals(120, d.getCanvasHeight());
@@ -75,7 +75,7 @@ public class SvgDocumentTest {
 	@Test
 	public void testEmptySvgDocumentShouldCreateCorrectSvg() throws TransformerException {
 
-		boolean isPolarCoordinates = false;
+		final boolean isPolarCoordinates = false;
 		SvgDocument d = createTestDocument(isPolarCoordinates);
 
 		Document document = d.getDocument();
@@ -86,7 +86,7 @@ public class SvgDocumentTest {
 
 	@Test
 	public void testPrintLine() throws TransformerFactoryConfigurationError, TransformerException {
-		boolean isPolarCoordinates = false;
+		final boolean isPolarCoordinates = false;
 		SvgDocument d = createTestDocument(isPolarCoordinates);
 		d.printLine(new Point2DInt(20, 30), new Point2DInt(40, 50), "style");
 		
@@ -98,7 +98,7 @@ public class SvgDocumentTest {
 	}
 	@Test
 	public void testPrintArcSegment() throws TransformerFactoryConfigurationError, TransformerException {
-		boolean isPolarCoordinates = false;
+		final boolean isPolarCoordinates = false;
 		SvgDocument d = createTestDocument(isPolarCoordinates);
 		d.printArcSegment(new Point2DInt(20, 30), new Point2DInt(40, 30), "style");
 		
@@ -109,15 +109,15 @@ public class SvgDocumentTest {
 	}
 
 	@Test(expected=IllegalArgumentException.class)
-	public void testPrintArcSegmentShouldThrowEception() throws TransformerFactoryConfigurationError, TransformerException {
-		boolean isPolarCoordinates = false;
+	public void testPrintArcSegmentShouldThrowException() throws TransformerFactoryConfigurationError, TransformerException {
+		final boolean isPolarCoordinates = false;
 		SvgDocument d = createTestDocument(isPolarCoordinates);
 		d.printArcSegment(new Point2DInt(20, 30), new Point2DInt(40, 31), "style");
 	}
 
 	@Test
 	public void testPrintMark() throws TransformerFactoryConfigurationError, TransformerException {
-		boolean isPolarCoordinates = false;
+		final boolean isPolarCoordinates = false;
 		SvgDocument d = createTestDocument(isPolarCoordinates);
 		d.printMark(new Point2DInt(20, 30), "fill", 9);
 		
@@ -129,7 +129,7 @@ public class SvgDocumentTest {
 
 	@Test
 	public void testPrintCircle() throws TransformerFactoryConfigurationError, TransformerException {
-		boolean isPolarCoordinates = false;
+		final boolean isPolarCoordinates = false;
 		SvgDocument d = createTestDocument(isPolarCoordinates);
 		d.printCircle(new Point2DInt(20, 30), "fill", 9,true, "style");
 		
@@ -140,7 +140,7 @@ public class SvgDocumentTest {
 	}
 	
 
-	final String header = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
+	private final String header = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
 			+ "<svg contentScriptType=\"text/ecmascript\" "
 			+ "xmlns:xlink=\"http://www.w3.org/1999/xlink\" zoomAndPan=\"magnify\" "
 			+ "contentStyleType=\"text/css\" viewBox=\"0 0 220 120\" preserveAspectRatio=\"xMidYMid meet\" "
@@ -148,14 +148,11 @@ public class SvgDocumentTest {
 	
 
 	private SvgDocument createTestDocument(boolean isPolarCoordinates) {
-		int pictureHeight = 100;
-		int pictureWidth = 200;
-		int resolutionX = 7;
-		int resolutionY = 7;
-		ShapeContext sc = new ShapeContext(isPolarCoordinates, pictureHeight, pictureWidth/*, resolutionX, resolutionY*/);
+		final int pictureHeight = 100;
+		final int pictureWidth = 200;
+		ShapeContext sc = new ShapeContext(isPolarCoordinates, pictureHeight, pictureWidth);
 
-		SvgDocument d = new SvgDocument(sc);
-		return d;
+		return new SvgDocument(sc);
 	}
 
 	private String svgToString(Document document)

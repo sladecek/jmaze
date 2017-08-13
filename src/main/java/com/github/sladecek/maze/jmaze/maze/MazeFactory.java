@@ -14,7 +14,7 @@ import com.github.sladecek.maze.jmaze.voronoi.VoronoiMaze;
 public class MazeFactory {
     public BaseMaze newMaze(String name) {
         switch (name) {
-            case "rect":
+            case "rectangular":
                 return new RectangularMaze();
             case "circular":
                 return new CircularMaze();

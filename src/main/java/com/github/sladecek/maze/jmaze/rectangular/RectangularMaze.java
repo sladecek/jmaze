@@ -19,7 +19,7 @@ public class RectangularMaze extends BaseMaze {
     @Override
     public MazeProperties getDefaultProperties() {
         MazeProperties defaultProperties = super.getDefaultProperties();
-        defaultProperties.put("name", "rect");
+        defaultProperties.put("name", "rectangular");
         defaultProperties.put("width", 20);
         defaultProperties.put("height", 20);
         addDefault2DProperties(defaultProperties);

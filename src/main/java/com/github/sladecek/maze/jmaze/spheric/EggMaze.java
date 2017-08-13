@@ -36,7 +36,7 @@ public final class EggMaze extends BaseMaze {
     @Override
     public MazeProperties getDefaultProperties() {
         MazeProperties defaultProperties = super.getDefaultProperties();
-        defaultProperties.put("name", "geometry");
+        defaultProperties.put("name", "egg");
         defaultProperties.put("ellipseMajor", 10);
         defaultProperties.put("ellipseMinor", 10);
         defaultProperties.put("eggness", 0.2);

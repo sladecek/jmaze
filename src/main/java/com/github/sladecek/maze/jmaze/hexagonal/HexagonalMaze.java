@@ -31,7 +31,7 @@ public HexagonalMaze() {
     @Override
     public MazeProperties getDefaultProperties() {
         MazeProperties defaultProperties = super.getDefaultProperties();
-        defaultProperties.put("name", "hexa");
+        defaultProperties.put("name", "hexagonal");
         defaultProperties.put("size", 6);
         addComputedProperties(defaultProperties);
         addDefault2DProperties(defaultProperties);

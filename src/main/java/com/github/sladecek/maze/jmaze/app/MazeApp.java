@@ -2,16 +2,9 @@ package com.github.sladecek.maze.jmaze.app;
 
 import com.github.sladecek.maze.jmaze.maze.BaseMaze;
 import com.github.sladecek.maze.jmaze.maze.MazeFactory;
-import com.github.sladecek.maze.jmaze.print2d.MazeOutputFormat;
-import com.github.sladecek.maze.jmaze.print2d.SvgMazePrinter;
-import com.github.sladecek.maze.jmaze.print3d.IMaze3DMapper;
-import com.github.sladecek.maze.jmaze.print3d.output.OpenScad3DPrinter;
-import com.github.sladecek.maze.jmaze.print3d.output.StlMazePrinter;
-import com.github.sladecek.maze.jmaze.print3d.output.ThreeJs3DPrinter;
 import com.github.sladecek.maze.jmaze.properties.MazeProperties;
 import com.github.sladecek.maze.jmaze.util.MazeGenerationException;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.logging.*;
 

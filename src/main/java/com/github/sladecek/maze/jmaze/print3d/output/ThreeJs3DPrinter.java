@@ -1,11 +1,14 @@
 package com.github.sladecek.maze.jmaze.print3d.output;
 
-import java.io.IOException;
 import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.logging.Logger;
 
+import com.github.sladecek.maze.jmaze.geometry.Point3D;
+import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MFace;
+import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MPoint;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.Model3d;
-import com.github.sladecek.maze.jmaze.printstyle.PrintStyle;
 
 
 public class ThreeJs3DPrinter implements IMaze3DPrinter {
@@ -15,67 +18,69 @@ public class ThreeJs3DPrinter implements IMaze3DPrinter {
 
     }
 
-    /* TODO
-        @Override
-        public final void printBlocks(final IBlockMaker blockMaker, boolean showSolution,
-                final OutputStream stream) throws MazeGenerationException {
-            blockMaker.makeBlocks();
-            try (ThreeJsComposer tjs = new ThreeJsComposer(stream)) {
-                printPureBlocks(tjs, blockMaker);
-                printMarks(tjs, blockMaker, showSolution);
-                printColors(tjs);
-            } catch (IOException ioe) {
-                throw new MazeGenerationException("printBlocsk failed", ioe);
-            }
-        }
+    @Override
+    public void printModel(Model3d model, OutputStream stream) {
+            try (PrintWriter pw = new PrintWriter(stream)) {
 
-        private void printPureBlocks(ThreeJsComposer tjs,
-                final IBlockMaker blockMaker) throws IOException {
-            tjs.beginList("blocks");
-            for (Block b : blockMaker.getBlocks()) {
-                if (!b.isMark()) {
-                    tjs.print8PointPolyhedron(b.getPolyhedron(), b.getComment(),
-                            b.getColor());
-                }
+                    pw.print("{\n");
+                    pw.print("\"vertices\": [");
 
-            }
-            final boolean insertComma = true;
-            tjs.closeList(insertComma);
-        }
-
-        private void printMarks(ThreeJsComposer tjs, final IBlockMaker blockMaker, boolean showSolution)
-                throws IOException {
-            tjs.beginList("marks");
-            if (showSolution) {
-                for (Block b : blockMaker.getBlocks()) {
-                    if (b.isMark()) {
-                        assert b.getPolyhedron().size() == 1 : "mark blocks must have exactly one point";
-                        tjs.printMark(b.getPolyhedron().get(0), b.getComment(),
-                                b.getColor());
+                    for (MFace face : model.getFaces()) {
+                        if (face.isVisible()) {
+                            printFace(pw, face);
+                        }
                     }
-                }
+                    pw.print("]\n ");
+                    pw.print("}\n ");
+
+// TODO                printMarks(tjs, blockMaker, showSolution);
+// TODO                printColors(tjs);
             }
-            final boolean insertComma = true;
-            tjs.closeList(insertComma);
         }
-    */
+
+    private void printFace(PrintWriter pw, MFace face) {
+        ArrayList<MPoint> points = face.visitPointsAroundEdges();
+        final int sz = points.size();
+        MPoint pt1 = points.get(0);
+
+        for (int p2 = 2; p2 < sz; p2++) {
+            MPoint pt2 = points.get(p2 - 1);
+            MPoint pt3 = points.get(p2);
+            printTriangle(pw, pt1, pt2, pt3);
+        }
+    }
+
+    private void printTriangle(PrintWriter pw, MPoint pt1, MPoint pt2, MPoint pt3) {
+        if (skipComma) {
+            skipComma = false;
+        } else {
+            pw.println(",");
+        }
+        printVertex(pw, pt1);
+        pw.println(",");
+        printVertex(pw, pt2);
+        pw.println(",");
+        printVertex(pw, pt3);
+        pw.println();
+    }
+
+    private void printVertex(PrintWriter pw, MPoint pt1) {
+        Point3D p = pt1.getCoord();
+        pw.printf("%.6f, %.6f, %.6f\n", p.getX(), p.getY(), p.getZ());
+    }
+
+/*
     private void printColors(ThreeJsComposer tjs)
             throws IOException {
-/*
+
         tjs.printColor("clearColor", printStyle.getThreeJsClearColor(), true);
         tjs.printColor("meshColor", printStyle.getThreeJsMeshColor(), true);
         tjs.printColor("ambientLightColor", printStyle.getThreeJsAmbientLightColor(), true);
         tjs.printColor("pointLightColor", printStyle.getThreeJsPointLightColor(), false);
-  */
-    }
-
-    @Override
-    public void printModel(Model3d model, OutputStream f) {
 
     }
+*/
 
-
-    private PrintStyle printStyle;
-
+    private boolean skipComma = true;
     private static final Logger LOG = Logger.getLogger("maze");
 }

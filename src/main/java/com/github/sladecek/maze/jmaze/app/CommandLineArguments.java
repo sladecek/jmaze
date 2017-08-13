@@ -84,7 +84,7 @@ class CommandLineArguments {
                 "maze type --list\n"+
                 "maze type { property==value }\n"+
                 "\n"+
-                "type is one of 'rect', 'circular', 'hexagonal', 'moebius', 'egg', 'triangular', 'voronoi'\n"
+                "type is one of 'rectangular', 'circular', 'hexagonal', 'moebius', 'egg', 'triangular', 'voronoi'\n"
 
                 ;
     }
