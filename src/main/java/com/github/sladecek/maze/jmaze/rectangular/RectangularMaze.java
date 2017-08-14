@@ -33,12 +33,13 @@ public class RectangularMaze extends BaseMaze {
         final boolean isPolar = false;
         final int height = properties.getInt("height",2, 100000);
         final int width = properties.getInt("width",2, 100000);
+        final int margin = properties.getInt("margin", 0, 10000);
 
         // width and height in pixels
         final int h = rsp * height;
         final int w = rsp * width;
 
-        allShapes = new Shapes(isPolar, h, w);
+        allShapes = new Shapes(isPolar, h, w, margin);
 
 
         // rooms

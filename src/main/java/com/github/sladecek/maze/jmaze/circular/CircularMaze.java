@@ -35,6 +35,7 @@ public class CircularMaze extends BaseMaze {
 
     public void buildMazeGraphAndShapes() {
         layerCount = properties.getInt("layerCount", 1, 1000);
+        margin = properties.getInt("margin", 0, 10000);
         computeRoomCounts();
         firstRoomInLayer = new ArrayList<>();
         for (int i = 0; i < layerCount; i++) {
@@ -103,7 +104,7 @@ public class CircularMaze extends BaseMaze {
         final int height = 2 * rMax;
         final int width = 2 * rMax;
         final boolean isPolar = true;
-        allShapes = new Shapes(isPolar, height, width);
+        allShapes = new Shapes(isPolar, height, width, margin);
     }
 
     private void setStartAndTargetRooms() {
@@ -206,6 +207,7 @@ public class CircularMaze extends BaseMaze {
 
     private static final Logger LOGGER = Logger.getLogger("maze");
     private int layerCount;
+    private int margin;
     private ArrayList<Integer> roomCounts;
     private ArrayList<Integer> roomCountRatio;
     private ArrayList<Integer> firstRoomInLayer;

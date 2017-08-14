@@ -12,8 +12,8 @@ public final class Shapes {
         this.context = context;
     }
 
-    public Shapes(boolean isPolar, int h, int w) {
-        this.context = new ShapeContext(isPolar, h, w);
+    public Shapes(boolean isPolar, int h, int w, int margin) {
+        this.context = new ShapeContext(isPolar, h, w, margin);
     }
 
 

@@ -102,9 +102,9 @@ public class MazeGraph implements IMazeGraph {
     private int startRoom;
     private int targetRoom;
 
-    private ArrayList<ArrayList<Integer>> rooms = new ArrayList<>();
-    private ArrayList<Integer> wallRoom1 = new ArrayList<>();
-    private ArrayList<Integer> wallRoom2 = new ArrayList<>();
-    private ArrayList<Integer> wallProbabilityWeight = new ArrayList<>();
+    private final ArrayList<ArrayList<Integer>> rooms = new ArrayList<>();
+    private final ArrayList<Integer> wallRoom1 = new ArrayList<>();
+    private final ArrayList<Integer> wallRoom2 = new ArrayList<>();
+    private final ArrayList<Integer> wallProbabilityWeight = new ArrayList<>();
 
 }

@@ -25,9 +25,10 @@ public final class OrientationVector2D {
     }
 
     public OrientationVector2D getOrthogonal() {
+        //noinspection SuspiciousNameCombination
         return new OrientationVector2D(y, -x);
     }
 
-    private double x;
-    private double y;
+    private final double x;
+    private final double y;
 }

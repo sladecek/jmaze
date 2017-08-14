@@ -14,16 +14,10 @@ public class MazeData {
 
     /**
      * Set properties for concrete maze such as size or colors.
-     * @param value
      */
 
     public void setProperties(MazeProperties value) {
         properties = value;
-    }
-
-
-    public String getName() {
-        return properties.getString("name");
     }
 
 
@@ -54,7 +48,7 @@ public class MazeData {
 
     protected Random randomGenerator;
 
-    protected MazeGraph graph = new MazeGraph();
+    protected final MazeGraph graph = new MazeGraph();
     protected Shapes allShapes;
 
     public Random getRandomGenerator() {
@@ -65,7 +59,7 @@ public class MazeData {
         return path;
     }
 
-    protected Shapes pathShapes;
-    protected MazePath path;
-    protected Model3d model3d;
+    Shapes pathShapes;
+    MazePath path;
+    Model3d model3d;
 }

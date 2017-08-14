@@ -44,7 +44,7 @@ public final class MazePath {
     }
 
     private BitSet isWallClosed;
-    private int wallCount;
+    private final int wallCount;
 
     private ArrayList<Integer> solution = new ArrayList<>();
 
@@ -56,8 +56,8 @@ public final class MazePath {
         return targetRoom;
     }
 
-    private int startRoom;
-    private int targetRoom;
+    private final int startRoom;
+    private final int targetRoom;
 
 
 }

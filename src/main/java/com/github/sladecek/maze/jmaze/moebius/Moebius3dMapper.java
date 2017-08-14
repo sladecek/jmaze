@@ -27,9 +27,7 @@ public final class Moebius3dMapper extends ConfigurableAltitudes implements IMaz
 
         this.sizeAcross = sizeAcross;
         this.sizeAlong = sizeAlong;
-        this.cellSize = cellSize;
-        this.wallSize = wallThickness;
-        
+
         if (sizeAlong % 2 != 0) {
             throw new IllegalArgumentException("Moebius maze must have even number of cells.");
         }
@@ -109,8 +107,6 @@ public final class Moebius3dMapper extends ConfigurableAltitudes implements IMaz
 
     private final int sizeAcross;
     private final int sizeAlong;
-    private final double cellSize;
-    private final double wallSize;
     private final double length;
     private final double cellStep;
     private MoebiusStripGeometry geometry;

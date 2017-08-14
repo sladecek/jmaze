@@ -49,10 +49,11 @@ public class VoronoiMaze extends BaseMaze {
         this.height = properties.getInt("height", 2, 10000) * rsp;
         this.roomCount = properties.getInt("roomCount", 2, 100000);
         this.loydCnt = properties.getInt("loydCount",0, 100000);
-        
+        final int margin = properties.getInt("margin", 0, 10000);
+
         final boolean isPolar = false;
         
-        allShapes = new Shapes(isPolar, height, width);
+        allShapes = new Shapes(isPolar, height, width, margin);
 
         createOuterWalls();
 

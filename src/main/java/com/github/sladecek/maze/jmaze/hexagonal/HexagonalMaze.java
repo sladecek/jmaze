@@ -16,13 +16,7 @@ import java.util.logging.Logger;
 public class HexagonalMaze extends BaseMaze {
 
     private int size;
-/*
-    public HexagonalMaze(int size) {
-        MazeProperties p = getDefaultProperties();
-        p.put("size", size);
-        setProperties(p);
-    }
-*/
+
 
 public HexagonalMaze() {
 
@@ -40,24 +34,23 @@ public HexagonalMaze() {
 
 
     // Radius of the hexagon.
-    static final int hP = 20;
+    private static final int hP = 20;
 
     /// Half-height of the hexagon
-    static final int hH = (int) Math.floor(hP * Math.sqrt(3f) / 2f);
+    private static final int hH = (int) Math.floor(hP * Math.sqrt(3f) / 2f);
 
     // parameters of six walls of a hexagon
     // walls numbered counterclockwise, starting at upper room
-    static final int[] walllXOffs = {hP / 2, -hP / 2, -hP, -hP / 2, hP / 2, hP};
-    static final int[] wallYOffs = {-hH, -hH, 0, hH, hH, 0};
-    static final int[] neigbourRoomX = {0, -1, -1, 0, 1, 1};
-    static final int[] neigbourRoomYOdd = {-1, 0, 1, 1, 1, 0};
-    static final int[] neigbourRoomYEven = {-1, -1, 0, 1, 0, -1};
+    private static final int[] wallXOffs = {hP / 2, -hP / 2, -hP, -hP / 2, hP / 2, hP};
+    private static final int[] wallYOffs = {-hH, -hH, 0, hH, hH, 0};
+    private static final int[] neighborRoomX = {0, -1, -1, 0, 1, 1};
+    private static final int[] neighborRoomYOdd = {-1, 0, 1, 1, 1, 0};
+    private static final int[] neighborRoomYEven = {-1, -1, 0, 1, 0, -1};
 
     @Override
     public void buildMazeGraphAndShapes() {
-        final boolean isPolar = false;
         size = properties.getInt("size", 2, 10000);
-
+        margin = properties.getInt("margin", 0, 10000);
         makeContext();
 
         final int roomsPerRow = 2 * size - 1;
@@ -84,18 +77,18 @@ public HexagonalMaze() {
                     int w2 = (w + 1) % 6;
 
                     // wall endpoints
-                    int x1 = center.getX() + walllXOffs[w];
+                    int x1 = center.getX() + wallXOffs[w];
                     int y1 = center.getY() + wallYOffs[w];
-                    int x2 = center.getX() + walllXOffs[w2];
+                    int x2 = center.getX() + wallXOffs[w2];
                     int y2 = center.getY() + wallYOffs[w2];
 
                     // the other room
-                    int ox = x + neigbourRoomX[w];
+                    int ox = x + neighborRoomX[w];
                     int oy = y;
                     if (isOdd) {
-                        oy += neigbourRoomYOdd[w];
+                        oy += neighborRoomYOdd[w];
                     } else {
-                        oy += neigbourRoomYEven[w];
+                        oy += neighborRoomYEven[w];
                     }
 
                     // if the other room does not exist then this is a border
@@ -107,7 +100,7 @@ public HexagonalMaze() {
                         // walls will be linked in the from the other room
                         // (which does not exist yet).
                         int r2 = mapXY2room.get(ox * size + oy);
-                        addInnerWall(r2, r, x1, y1, x2, y2, ox, oy);
+                        addInnerWall(r2, r, x1, y1, x2, y2);
                     }
 
                 }
@@ -139,7 +132,7 @@ public HexagonalMaze() {
         final int height = hH * (2 * size + 1);
         final int width = hP * (3 * size - 1);
         final boolean isPolar = false;
-        allShapes = new Shapes(isPolar, height, width);
+        allShapes = new Shapes(isPolar, height, width, margin);
     }
 
     private Point2DInt computeRoomCenter(int x, boolean isOdd, int y) {
@@ -149,11 +142,10 @@ public HexagonalMaze() {
         if (isOdd) {
             yc += hH;
         }
-        Point2DInt center = new Point2DInt(xc, yc);
-        return center;
+        return new Point2DInt(xc, yc);
     }
 
-    private void addInnerWall(int r2, int r, int x1, int y1, int x2, int y2, int ox, int oy) {
+    private void addInnerWall(int r2, int r, int x1, int y1, int x2, int y2) {
 
         int id = getGraph().addWall(r, r2);
 
@@ -174,5 +166,6 @@ public HexagonalMaze() {
         return size;
     }
 
+    private int margin;
     private static final Logger LOGGER = Logger.getLogger("maze");
 }

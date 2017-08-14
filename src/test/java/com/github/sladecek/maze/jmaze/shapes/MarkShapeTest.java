@@ -77,8 +77,9 @@ public class MarkShapeTest {
         final boolean isPolarCoordinates = false;
         final int pictureHeight = 100;
         final int pictureWidth = 200;
+        final int margin = 10;
 
-        ShapeContext sc = new ShapeContext(isPolarCoordinates, pictureHeight, pictureWidth);
+        ShapeContext sc = new ShapeContext(isPolarCoordinates, pictureHeight, pictureWidth, margin);
 
         when(mockedDocument.getContext()).thenReturn(sc);
         int y = 1;

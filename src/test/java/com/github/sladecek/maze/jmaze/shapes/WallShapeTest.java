@@ -167,7 +167,8 @@ public class WallShapeTest {
         int pictureWidth = 200;
         int resolutionX = 7;
         int resolutionY = 7;
-        ShapeContext sc = new ShapeContext(isPolarCoordinates, pictureHeight, pictureWidth);
+        final int margin = 10;
+        ShapeContext sc = new ShapeContext(isPolarCoordinates, pictureHeight, pictureWidth, margin);
 
         int y1 = 1;
         int x1 = 0;

@@ -150,7 +150,8 @@ public class SvgDocumentTest {
 	private SvgDocument createTestDocument(boolean isPolarCoordinates) {
 		final int pictureHeight = 100;
 		final int pictureWidth = 200;
-		ShapeContext sc = new ShapeContext(isPolarCoordinates, pictureHeight, pictureWidth);
+		final int margin = 10;
+		ShapeContext sc = new ShapeContext(isPolarCoordinates, pictureHeight, pictureWidth, margin);
 
 		return new SvgDocument(sc);
 	}

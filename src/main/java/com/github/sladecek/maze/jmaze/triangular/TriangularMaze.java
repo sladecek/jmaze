@@ -27,10 +27,11 @@ public class TriangularMaze extends BaseMaze {
         final boolean isPolar = false;
         size = properties.getInt("size", 2,10000);
 
+        final int margin = properties.getInt("margin", 0, 10000);
         final int height = size;
         final int width = 2 * size;
 
-        allShapes = new Shapes(isPolar, rsy * height, rsx * width);
+        allShapes = new Shapes(isPolar, rsy * height, rsx * width, margin);
 
         int prevFirst = -1;
         int lastRoom = -1;

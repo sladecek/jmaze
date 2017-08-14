@@ -11,10 +11,6 @@ public final class Point2DInt implements  Comparable<Point2DInt> {
         this.y = y;
     }
 
-    public Point2DInt minus(Point2DInt other) {
-        return new Point2DInt(x - other.x, y - other.y);
-    }
-
     public int getX() {
         return x;
     }
@@ -54,8 +50,8 @@ public final class Point2DInt implements  Comparable<Point2DInt> {
     }
 
     public static final int ANGLE_2PI = 0x1000000;
-    private int x;
+    private final int x;
 
-    private int y;
+    private final int y;
 
 }

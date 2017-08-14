@@ -25,7 +25,7 @@ public class Polar2DMapper implements IMaze2DMapper {
         return l * resolution;
     }
 
-    private Point2DInt zeroPoint;
-    private int resolution;
+    private final Point2DInt zeroPoint;
+    private final int resolution;
 
 }

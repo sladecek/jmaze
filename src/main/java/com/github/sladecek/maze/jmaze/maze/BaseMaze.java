@@ -53,6 +53,7 @@ public abstract class BaseMaze extends MazeData implements IMaze {
 
         properties.put("pdf", true);
         properties.put("svg", false);
+        properties.put("margin", 10);
     }
 
     protected void addDefault3DProperties(MazeProperties properties) {
@@ -79,27 +80,25 @@ public abstract class BaseMaze extends MazeData implements IMaze {
         }
     }
 
-    public void make3DModel() {
+    private void make3DModel() {
         IMaze3DMapper mapper = create3DMapper();
         if (mapper != null) {
 
             PrintStyle colors;
-
-            double approxRoomSizeInmm = 3;
             colors = new PrintStyle();
 
             model3d = ModelFromShapes.make(pathShapes, mapper, colors, properties.getDouble("wallSize"));
         }
     }
 
-    public void randomlyGenerateMazePath() {
+    private void randomlyGenerateMazePath() {
         IMazeGenerator g = new DepthFirstMazeGenerator(randomGenerator);
         path = g.generatePick(getGraph());
         pathShapes = getAllShapes().applyRealization(path);
     }
 
 
-    public void setupRandomGenerator() {
+    private void setupRandomGenerator() {
         int randomSeed = properties.getInt("randomSeed", Integer.MIN_VALUE, Integer.MAX_VALUE);
         randomGenerator = new Random();
         randomGenerator.setSeed(randomSeed);

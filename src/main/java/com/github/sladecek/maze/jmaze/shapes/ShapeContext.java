@@ -7,23 +7,24 @@ public class ShapeContext {
 
     /**
      * Creates a new Shape context.
+     *
      * @param isPolarCoordinates
-     * @param pictureHeight  picture heigth in pixels (2D) or rooms (3D)
-     * @param pictureWidth picture width in pixels (2D) or rooms (3D)
+     * @param pictureHeight      picture heigth in pixels (2D) or rooms (3D)
+     * @param pictureWidth       picture width in pixels (2D) or rooms (3D)
      */
-    public ShapeContext(boolean isPolarCoordinates, int pictureHeight, int pictureWidth) {
+    public ShapeContext(boolean isPolarCoordinates, int pictureHeight, int pictureWidth, int margin) {
 
 
         super();
         this.isPolarCoordinates = isPolarCoordinates;
         this.pictureHeight = pictureHeight;
         this.pictureWidth = pictureWidth;
-
+        this.margin = margin;
     }
 
-    private boolean isPolarCoordinates;
-    private int pictureHeight;
-    private int pictureWidth;
+    public int getMargin() {
+        return margin;
+    }
 
     public boolean isPolarCoordinates() {
         return isPolarCoordinates;
@@ -36,5 +37,9 @@ public class ShapeContext {
     public int getPictureWidth() {
         return pictureWidth;
     }
+    private boolean isPolarCoordinates;
+    private int pictureHeight;
+    private int pictureWidth;
+    private int margin;
 
 }

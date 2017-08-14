@@ -43,7 +43,7 @@ public final class MoebiusMaze extends BaseMaze {
                     "Moebius maze must have even sizeAcross");
         }
 
-        allShapes = new Shapes(false, sizeAcross, sizeAlong);
+        allShapes = new Shapes(false, sizeAcross, sizeAlong, 0);
         eastWestWallCount = sizeAlong * sizeAcross;
         southNorthWallCount = sizeAlong * (sizeAcross - 1);
 

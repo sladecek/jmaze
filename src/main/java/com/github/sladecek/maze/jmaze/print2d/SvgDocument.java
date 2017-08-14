@@ -121,8 +121,7 @@ public class SvgDocument implements I2DDocument {
     }
 
     private void constructCoordinateSystem() {
-
-
+        int margin = context.getMargin();
         canvasWidth = 2 * margin + context.getPictureWidth();
         canvasHeight = 2 * margin + context.getPictureHeight();
 
@@ -139,7 +138,6 @@ public class SvgDocument implements I2DDocument {
     }
 
     private final ShapeContext context;
-    private final int margin = 10;
     private Document doc;
     private int canvasWidth;
     private int canvasHeight;

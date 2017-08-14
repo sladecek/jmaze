@@ -70,9 +70,9 @@ public final class EggMaze extends BaseMaze {
         }
 
         final boolean isPolar = false;
-        int width = 0;
+        int width = 0; // TODO?
         int height = 0;
-        allShapes = new Shapes(isPolar, height, width);
+        allShapes = new Shapes(isPolar, height, width, 0);
 
         // generate both hemispheres
         for (SouthNorth sn : SouthNorth.values()) {

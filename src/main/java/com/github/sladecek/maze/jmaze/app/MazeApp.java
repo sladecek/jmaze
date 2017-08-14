@@ -20,7 +20,7 @@ public class MazeApp {
     /**
      * Prints a maze in all possible formats.
      */
-    public final void printTestMaze(String[] args) {
+    private void printTestMaze(String[] args) {
         System.setProperty("java.util.logging.SimpleFormatter.format",
                 "%5$s%n");
         LogManager.getLogManager().reset();

@@ -15,9 +15,8 @@ public class Cartesian2DMapper implements IMaze2DMapper {
 
     @Override
     public Point2DInt mapPoint(Point2DInt p) {
-        Point2DInt result = new Point2DInt(resolutionX * (p.getX()) + zeroPoint.getX(),
+        return new Point2DInt(resolutionX * (p.getX()) + zeroPoint.getX(),
                 resolutionY * (p.getY()) + zeroPoint.getY());
-        return result;
     }
 
     @Override
@@ -26,7 +25,7 @@ public class Cartesian2DMapper implements IMaze2DMapper {
         return l * resolutionX;
     }
 
-    private Point2DInt zeroPoint;
-    private int resolutionX;
-    private int resolutionY;
+    private final Point2DInt zeroPoint;
+    private final int resolutionX;
+    private final int resolutionY;
 }
