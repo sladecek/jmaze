@@ -88,11 +88,11 @@ public class VerticalFaceMakerTest {
         maker.makeVerticalEdges();
 
         final double epsilon = 1e-8;
-        assertEquals(2, pCenter.getCoord().getZ(), epsilon);
-        assertEquals(2, pNorth.getCoord().getZ(), epsilon);
-        assertEquals(2, pWest.getCoord().getZ(), epsilon);
-        assertEquals(1, pEast.getCoord().getZ(), epsilon);
-        assertEquals(1, pSouth.getCoord().getZ(), epsilon);
+        assertEquals(2, pCenter.getCoordinate().getZ(), epsilon);
+        assertEquals(2, pNorth.getCoordinate().getZ(), epsilon);
+        assertEquals(2, pWest.getCoordinate().getZ(), epsilon);
+        assertEquals(1, pEast.getCoordinate().getZ(), epsilon);
+        assertEquals(1, pSouth.getCoordinate().getZ(), epsilon);
 
         assertTrue(pCenter.hasSectionAt(Altitude.CEILING));
         assertTrue(pCenter.hasSectionAt(Altitude.FLOOR));
@@ -137,21 +137,21 @@ public class VerticalFaceMakerTest {
 
         System.out.println(model);
 
-        assertEquals(2, pCenter.getCoord().getZ(), epsilon);
-        assertEquals(2, pNorth.getCoord().getZ(), epsilon);
-        assertEquals(2, pWest.getCoord().getZ(), epsilon);
-        assertEquals(1, pEast.getCoord().getZ(), epsilon);
-        assertEquals(1, pSouth.getCoord().getZ(), epsilon);
+        assertEquals(2, pCenter.getCoordinate().getZ(), epsilon);
+        assertEquals(2, pNorth.getCoordinate().getZ(), epsilon);
+        assertEquals(2, pWest.getCoordinate().getZ(), epsilon);
+        assertEquals(1, pEast.getCoordinate().getZ(), epsilon);
+        assertEquals(1, pSouth.getCoordinate().getZ(), epsilon);
 
-        assertEquals(1, eCE.getP1().getCoord().getZ(), epsilon);
-        assertEquals(1, eCE.getP2().getCoord().getZ(), epsilon);
-        assertEquals(1, eCS.getP1().getCoord().getZ(), epsilon);
-        assertEquals(1, eCS.getP2().getCoord().getZ(), epsilon);
+        assertEquals(1, eCE.getP1().getCoordinate().getZ(), epsilon);
+        assertEquals(1, eCE.getP2().getCoordinate().getZ(), epsilon);
+        assertEquals(1, eCS.getP1().getCoordinate().getZ(), epsilon);
+        assertEquals(1, eCS.getP2().getCoordinate().getZ(), epsilon);
 
-        assertEquals(2, eCN.getP1().getCoord().getZ(), epsilon);
-        assertEquals(2, eCN.getP2().getCoord().getZ(), epsilon);
-        assertEquals(2, eCW.getP1().getCoord().getZ(), epsilon);
-        assertEquals(2, eCW.getP2().getCoord().getZ(), epsilon);
+        assertEquals(2, eCN.getP1().getCoordinate().getZ(), epsilon);
+        assertEquals(2, eCN.getP2().getCoordinate().getZ(), epsilon);
+        assertEquals(2, eCW.getP1().getCoordinate().getZ(), epsilon);
+        assertEquals(2, eCW.getP2().getCoordinate().getZ(), epsilon);
     }
 
 
@@ -186,11 +186,11 @@ public class VerticalFaceMakerTest {
         maker.makeVerticalEdges();
 
         final double epsilon = 1e-8;
-        assertEquals(2, pCenter.getCoord().getZ(), epsilon);
-        assertEquals(2, pNorth.getCoord().getZ(), epsilon);
-        assertEquals(1, pEast.getCoord().getZ(), epsilon);
-        assertEquals(1, pSouth.getCoord().getZ(), epsilon);
-        assertEquals(2, pWest.getCoord().getZ(), epsilon);
+        assertEquals(2, pCenter.getCoordinate().getZ(), epsilon);
+        assertEquals(2, pNorth.getCoordinate().getZ(), epsilon);
+        assertEquals(1, pEast.getCoordinate().getZ(), epsilon);
+        assertEquals(1, pSouth.getCoordinate().getZ(), epsilon);
+        assertEquals(2, pWest.getCoordinate().getZ(), epsilon);
 
         assertTrue(pCenter.hasSectionAt(Altitude.CEILING));
         assertTrue(pCenter.hasSectionAt(Altitude.FLOOR));
@@ -243,21 +243,21 @@ public class VerticalFaceMakerTest {
 
         System.out.println(model);
 
-        assertEquals(2, pCenter.getCoord().getZ(), epsilon);
-        assertEquals(2, pNorth.getCoord().getZ(), epsilon);
-        assertEquals(2, pWest.getCoord().getZ(), epsilon);
-        assertEquals(1, pEast.getCoord().getZ(), epsilon);
-        assertEquals(1, pSouth.getCoord().getZ(), epsilon);
+        assertEquals(2, pCenter.getCoordinate().getZ(), epsilon);
+        assertEquals(2, pNorth.getCoordinate().getZ(), epsilon);
+        assertEquals(2, pWest.getCoordinate().getZ(), epsilon);
+        assertEquals(1, pEast.getCoordinate().getZ(), epsilon);
+        assertEquals(1, pSouth.getCoordinate().getZ(), epsilon);
 
-        assertEquals(1, eCE.getP1().getCoord().getZ(), epsilon);
-        assertEquals(1, eCE.getP2().getCoord().getZ(), epsilon);
-        assertEquals(1, eCS.getP1().getCoord().getZ(), epsilon);
-        assertEquals(1, eCS.getP2().getCoord().getZ(), epsilon);
+        assertEquals(1, eCE.getP1().getCoordinate().getZ(), epsilon);
+        assertEquals(1, eCE.getP2().getCoordinate().getZ(), epsilon);
+        assertEquals(1, eCS.getP1().getCoordinate().getZ(), epsilon);
+        assertEquals(1, eCS.getP2().getCoordinate().getZ(), epsilon);
 
-        assertEquals(2, eCN.getP1().getCoord().getZ(), epsilon);
-        assertEquals(2, eCN.getP2().getCoord().getZ(), epsilon);
-        assertEquals(2, eCW.getP1().getCoord().getZ(), epsilon);
-        assertEquals(2, eCW.getP2().getCoord().getZ(), epsilon);
+        assertEquals(2, eCN.getP1().getCoordinate().getZ(), epsilon);
+        assertEquals(2, eCN.getP2().getCoordinate().getZ(), epsilon);
+        assertEquals(2, eCW.getP1().getCoordinate().getZ(), epsilon);
+        assertEquals(2, eCW.getP2().getCoordinate().getZ(), epsilon);
 
 //        for(MEdge e: model.getEdges()) {
 //            testSkewEdge(e);
@@ -336,9 +336,9 @@ public class VerticalFaceMakerTest {
     }
 
     void testSkewEdge(MEdge e) {
-        double dz = Math.abs(e.getP1().getCoord().getZ() - e.getP2().getCoord().getZ());
-        double dx = Math.abs(e.getP1().getCoord().getX() - e.getP2().getCoord().getX());
-        double dy = Math.abs(e.getP1().getCoord().getY() - e.getP2().getCoord().getY());
+        double dz = Math.abs(e.getP1().getCoordinate().getZ() - e.getP2().getCoordinate().getZ());
+        double dx = Math.abs(e.getP1().getCoordinate().getX() - e.getP2().getCoordinate().getX());
+        double dy = Math.abs(e.getP1().getCoordinate().getY() - e.getP2().getCoordinate().getY());
         double dxy = Math.sqrt((dx*dx+dy*dy));
         final double epsilon = 1e-6;
         assertTrue(dz < epsilon || dxy < epsilon);

@@ -77,5 +77,5 @@ public class MFace {
         isVisible = visible;
     }
 
-    private ArrayList<MEdge> edges = new ArrayList<>();
+    private final ArrayList<MEdge> edges = new ArrayList<>();
 }

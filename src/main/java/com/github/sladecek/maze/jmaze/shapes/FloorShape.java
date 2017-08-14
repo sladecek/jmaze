@@ -39,8 +39,8 @@ public class FloorShape implements IMazeShape {
         this.roomId = roomId;
     }
 
-    private Point2DInt position;
+    private final Point2DInt position;
     private int roomId;
-    private MarkType markType = MarkType.none;
+    private final MarkType markType = MarkType.none;
     private boolean isHole;
 }

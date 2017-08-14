@@ -5,7 +5,7 @@ import com.github.sladecek.maze.jmaze.geometry.Point3D;
 import java.util.ArrayList;
 
 /**
- * 3D block for export to solid model format such as openscad.
+ * 3D block for export to solid model format such as OpenScad.
  */
 public class MBlock {
     public MBlock() {
@@ -27,8 +27,8 @@ public class MBlock {
         ceilingPoints.add(p);
     }
 
-    private ArrayList<Point3D> groundPoints = new ArrayList<>();
-    private ArrayList<Point3D> ceilingPoints = new ArrayList<>();
+    private final ArrayList<Point3D> groundPoints = new ArrayList<>();
+    private final ArrayList<Point3D> ceilingPoints = new ArrayList<>();
 
     @Override
     public String toString() {

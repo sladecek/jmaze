@@ -27,7 +27,7 @@ public class TelescopicPoint extends MPoint {
 
     @Override
     public String toString() {
-        return "{" + planar.getX() + ", " + planar.getY() + "," + getCoord().getZ() + "} ";
+        return "{" + planar.getX() + ", " + planar.getY() + "," + getCoordinate().getZ() + "} ";
     }
 
     public double getPlanarX() {
@@ -48,7 +48,7 @@ public class TelescopicPoint extends MPoint {
     }
 
     public void setOwnAltitude(IMaze3DMapper mapper) {
-        setCoord(mapPoint(mapper, maxAltitude));
+        setCoordinate(mapPoint(mapper, maxAltitude));
     }
 
     public Point3D mapPoint(IMaze3DMapper mapper, Altitude altitude) {

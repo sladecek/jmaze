@@ -10,7 +10,7 @@ import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MEdge;
  */
 public class MWall extends FloorFace {
 
-    static int glId = 0;
+    private static int glId = 0;
     private int id = 0;
     public MWall() {
         id = glId++;
@@ -19,7 +19,6 @@ public class MWall extends FloorFace {
     /**
      * Adds an edge to the wall at one of its two pillar positions.
      *
-     * @param edge
      * @param edgeAtP1 if true the edge is added to the 'p1' side of the wall. Otherwise to the p2 side.
      */
     public void addEdgeToHead(MEdge edge, boolean edgeAtP1) {

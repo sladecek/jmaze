@@ -28,7 +28,7 @@ public final class WallShape implements IPrintableMazeShape2D {
         return wallId;
     }
 
-    protected WallShape(int wallId, WallType type, Point2DInt p1, Point2DInt p2, int rigthFaceId, int leftFaceId) {
+    protected WallShape(int wallId, WallType type, Point2DInt p1, Point2DInt p2, int rightFaceId, int leftFaceId) {
         if (type == WallType.innerWall && wallId < 0) {
             throw new IllegalArgumentException("Inner wall must have positive wallId.");
         }
@@ -37,13 +37,8 @@ public final class WallShape implements IPrintableMazeShape2D {
         this.wallType = type;
         this.p1 = p1;
         this.p2 = p2;
-        this.rigthFaceId = rigthFaceId;
+        this.rigthFaceId = rightFaceId;
         this.leftFaceId = leftFaceId;
-    }
-
-    public static void weldTwoOuterWalls(WallShape w1, WallShape w2, boolean swap) {
-        w1.weld = new OuterWallWeld(w1, w2, swap);
-        w2.weld = w1.weld;
     }
 
 
@@ -100,7 +95,7 @@ public final class WallShape implements IPrintableMazeShape2D {
         return p2.getY();
     }
 
-    public int getRigthFaceId() {
+    public int getRightFaceId() {
         return rigthFaceId;
     }
 
@@ -112,7 +107,7 @@ public final class WallShape implements IPrintableMazeShape2D {
     public String toString() {
         return "WallShape [ wallType=" + wallType + ", x1=" + getX1() + ", x2=" + getX2()
                 + ", y1=" + getY1() + ", y2=" + getY2()
-                + ", right=" + getRigthFaceId() + ", left=" + getLeftFaceId()
+                + ", right=" + getRightFaceId() + ", left=" + getLeftFaceId()
                 + "]";
     }
 
@@ -140,5 +135,5 @@ public final class WallShape implements IPrintableMazeShape2D {
     private int wallId;
     private int rigthFaceId = -1;
     private int leftFaceId = -1;
-    private OuterWallWeld weld;
+
 }

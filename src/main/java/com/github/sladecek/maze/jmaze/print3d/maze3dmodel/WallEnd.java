@@ -11,8 +11,6 @@ public class WallEnd implements Comparable<WallEnd> {
     /**
      * WallEnd constructor.
      *
-     * @param mWall
-     * @param wallShape
      * @param p1IsPilar true if wallShape.p1 touches the pillar. Otherwise p2 touches the pillar.
      */
     public WallEnd(MWall mWall, WallShape wallShape, boolean p1IsPilar) {
@@ -33,7 +31,7 @@ public class WallEnd implements Comparable<WallEnd> {
      * Returns on of the points of the mWall.
      *
      * @param whichPoint if 'true' returns the rear point (p1). If 'false' returns the front point (p2).
-     * @return
+
      */
     private Point2DInt getPoint(boolean whichPoint) {
         if (whichPoint) {
@@ -43,9 +41,9 @@ public class WallEnd implements Comparable<WallEnd> {
         }
     }
 
-    public int getFaceId(boolean whichFace) {
+    private int getFaceId(boolean whichFace) {
         if (whichFace) {
-            return wallShape.getRigthFaceId();
+            return wallShape.getRightFaceId();
         } else {
             return wallShape.getLeftFaceId();
         }
@@ -94,6 +92,6 @@ public class WallEnd implements Comparable<WallEnd> {
     }
 
     private final MWall mWall;
-    private WallShape wallShape;
-    private boolean p1IsPilar;
+    private final WallShape wallShape;
+    private final boolean p1IsPilar;
 }

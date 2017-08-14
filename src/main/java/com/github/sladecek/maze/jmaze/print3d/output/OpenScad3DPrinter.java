@@ -7,7 +7,6 @@ import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.Model3d;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.logging.Logger;
 
 /**
  * Save maze model in open scad file format.
@@ -55,7 +54,7 @@ public class OpenScad3DPrinter implements IMaze3DPrinter {
             faces.add(printTriangle(p2, p1+sz, p2 + sz));
         }
 
-        scad.printPolyhedron(allPoints, faces, "", null);
+        scad.printPolyhedron(allPoints, faces);
     }
 
     private ArrayList<Integer> printTriangle(int p1, int p2, int p3) {
@@ -78,5 +77,4 @@ public class OpenScad3DPrinter implements IMaze3DPrinter {
         return result;
     }
 
-    private static final Logger LOG = Logger.getLogger("maze");
 }

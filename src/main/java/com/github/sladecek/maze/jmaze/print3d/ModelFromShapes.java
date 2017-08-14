@@ -12,35 +12,33 @@ import com.github.sladecek.maze.jmaze.shapes.WallShape;
 import com.github.sladecek.maze.jmaze.shapes.WallType;
 
 import java.util.*;
-import java.util.logging.Logger;
 
 /**
  * Creates model from shapes
  */
 public class ModelFromShapes {
 
-    public ModelFromShapes(Shapes shapes, IMaze3DMapper mapper, PrintStyle style, double wallSize) {
+    private ModelFromShapes(Shapes shapes, IMaze3DMapper mapper, double wallSize) {
         this.shapes = shapes;
         this.mapper = mapper;
-        this.style = style;
         this.wallSize = wallSize;
     }
 
     static public Model3d make(Shapes shapes, IMaze3DMapper mapper,  PrintStyle style, double wallSize) {
-        ModelFromShapes mfs = new ModelFromShapes(shapes, mapper, style, wallSize);
+        ModelFromShapes mfs = new ModelFromShapes(shapes, mapper, wallSize);
         mfs.makePlanarProjection();
         mfs.extrudeTo3D();
         return mfs.m;
     }
 
     static public Model3d makeWithoutExtrusionForUnitTesting(Shapes shapes, IMaze3DMapper mapper,  PrintStyle style, double wallSize) {
-        ModelFromShapes mfs = new ModelFromShapes(shapes, mapper, style, wallSize);
+        ModelFromShapes mfs = new ModelFromShapes(shapes, mapper, wallSize);
         mfs.makePlanarProjection();
         return mfs.m;
     }
 
     private void makePlanarProjection() {
-        // create 2d floor projection of the maze using ExtrudablePoints
+        // create 2d floor projection of the maze using TelescopicPoints
         makeRooms();
         collectWallsForPillars();
         makePillars();
@@ -108,7 +106,7 @@ public class ModelFromShapes {
                 wall.setAltitude(altitude);
                 walls.add(wall);
                 for (int end = 0; end < 2; end++) {
-                    addWallToPilar(makeWallEnd(wall, wallShape, end == 1));
+                    addWallToPillar(makeWallEnd(wall, wallShape, end == 1));
                 }
             }
         });
@@ -118,7 +116,7 @@ public class ModelFromShapes {
         return new WallEnd(wall, wallShape, reversed);
     }
 
-    private void addWallToPilar(WallEnd end) {
+    private void addWallToPillar(WallEnd end) {
         Set<WallEnd> s = wallsForPillars.computeIfAbsent(end.getPillarPoint(), k -> new TreeSet<>());
         s.add(end);
     }
@@ -195,16 +193,15 @@ public class ModelFromShapes {
         return block;
     }
 
-    private static final Logger LOG = Logger.getLogger("maze");
-    private final double wallSize;
-    private Shapes shapes;
 
-    private PrintStyle style;
-    private IMaze3DMapper mapper;
+    private final double wallSize;
+    private final Shapes shapes;
+
+    private final IMaze3DMapper mapper;
     private Model3d m;
     private TreeMap<Point2DInt, Set<WallEnd>> wallsForPillars;
-    private ArrayList<MWall> walls = new ArrayList<>();
-    private ArrayList<MPillar> pillars = new ArrayList<>();
-    private TreeMap<Integer, MRoom> rooms = new TreeMap<>();
+    private final ArrayList<MWall> walls = new ArrayList<>();
+    private final ArrayList<MPillar> pillars = new ArrayList<>();
+    private final TreeMap<Integer, MRoom> rooms = new TreeMap<>();
 
 }

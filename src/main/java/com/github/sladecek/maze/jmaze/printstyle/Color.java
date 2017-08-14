@@ -8,10 +8,10 @@ public final class Color {
 	/**
 	 * Create new color.
 	 * 
-	 * @param r
-	 * @param g
-	 * @param b
-	 * @param a
+	 * @param r red component value
+	 * @param g green component value
+	 * @param b blue component value
+	 * @param a alpha channel value
 	 */
 	public Color(final int r, final int g, final int b, final int a) {
 		super();
@@ -64,8 +64,7 @@ public final class Color {
 					+ "' is too short to specify color. Must have at least 6 characters");
 		}
 		final int hex = 16;
-		int result = Integer.parseInt(s.substring(pair * 2, pair * 2 + 2), hex);
-		return result;
+        return Integer.parseInt(s.substring(pair * 2, pair * 2 + 2), hex);
 	}
 
 	@Override
@@ -75,9 +74,7 @@ public final class Color {
 
 		Color color = (Color) o;
 
-		if (r != color.r) return false;
-		if (g != color.g) return false;
-		return b == color.b && a == color.a;
+		return r == color.r && g == color.g && b == color.b && a == color.a;
 	}
 
 	@Override
@@ -89,9 +86,9 @@ public final class Color {
 		return result;
 	}
 
-	private int r;
-	private int g;
-	private int b;
+	private final int r;
+	private final int g;
+	private final int b;
 	private int a;
 	
 }

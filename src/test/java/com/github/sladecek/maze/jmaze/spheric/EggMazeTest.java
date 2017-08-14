@@ -68,8 +68,7 @@ public class EggMazeTest {
 		maze.buildMazeGraphAndShapes();
 		final double baseRoomSizeInmm = maze.getBaseRoomSizeInmm();		
 		ArrayList<Double> layerXPosition = maze.getGeometry().divideMeridian(baseRoomSizeInmm, hemisphere);
-		ArrayList<Integer> layerRoomCnt = maze.computeRoomCounts(layerXPosition, equatorCellCnt, baseRoomSizeInmm);
-		return layerRoomCnt;
+        return maze.computeRoomCounts(layerXPosition, equatorCellCnt, baseRoomSizeInmm);
 	}
 
 	private EggMaze createEggMaze(int equatorCellCnt) {

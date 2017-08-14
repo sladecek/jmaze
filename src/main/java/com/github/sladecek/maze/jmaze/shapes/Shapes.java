@@ -40,8 +40,8 @@ public final class Shapes {
     }
 
     public int length() { return shapes.size(); }
-    private ShapeContext context;
+    private final ShapeContext context;
 
 
-    private ArrayList<IMazeShape> shapes = new ArrayList<>();
+    private final ArrayList<IMazeShape> shapes = new ArrayList<>();
 }

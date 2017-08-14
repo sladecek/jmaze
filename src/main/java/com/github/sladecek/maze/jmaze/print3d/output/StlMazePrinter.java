@@ -55,7 +55,7 @@ public class StlMazePrinter implements IMaze3DPrinter {
     }
 
     private void printVertex(PrintWriter pw, MPoint pt1) {
-        Point3D p = pt1.getCoord();
+        Point3D p = pt1.getCoordinate();
         pw.printf("vertex %.6f %.6f %.6f\n", p.getX(), p.getY(), p.getZ());
     }
 }

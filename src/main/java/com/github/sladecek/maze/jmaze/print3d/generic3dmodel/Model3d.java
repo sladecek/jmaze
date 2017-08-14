@@ -71,10 +71,10 @@ public class Model3d implements IModel3d {
     }
 
     private String name = "";
-    private ArrayList<MPoint> points = new ArrayList<>();
-    private ArrayList<MEdge> edges = new ArrayList<>();
-    private ArrayList<MFace> faces = new ArrayList<>();
-    private ArrayList<MBlock> blocks = new ArrayList<>();
+    private final ArrayList<MPoint> points = new ArrayList<>();
+    private final ArrayList<MEdge> edges = new ArrayList<>();
+    private final ArrayList<MFace> faces = new ArrayList<>();
+    private final ArrayList<MBlock> blocks = new ArrayList<>();
 
     @Override
     public String toString() {

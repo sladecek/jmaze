@@ -21,17 +21,13 @@ public class MEdge {
     /**
      * Return 'p1' if 'f' is left face, otherwise p1.
      *
-     * @param faceThatShouldBeOnLeftSide
-     * @return
      */
     public MPoint getBackwardPoint(MFace faceThatShouldBeOnLeftSide) {
-        MPoint result = (faceThatShouldBeOnLeftSide == leftFace) ? p1 : p2;
-        return result;
+        return (faceThatShouldBeOnLeftSide == leftFace) ? p1 : p2;
     }
 
     public MPoint getForwardPoint(MFace faceThatShouldBeOnLeftSide) {
-        MPoint result = (faceThatShouldBeOnLeftSide == leftFace) ? p2 : p1;
-        return result;
+        return (faceThatShouldBeOnLeftSide == leftFace) ? p2 : p1;
     }
 
     public MFace getRightFace() {
@@ -71,8 +67,8 @@ public class MEdge {
         this.p2 = value;
     }
 
-    MPoint p1;
-    MPoint p2;
+    private MPoint p1;
+    private MPoint p2;
     private MFace rightFace;
     private MFace leftFace;
 }

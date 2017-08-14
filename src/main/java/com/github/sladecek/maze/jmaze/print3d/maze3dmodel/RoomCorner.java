@@ -37,7 +37,7 @@ public class RoomCorner {
                 '}';
     }
 
-    private int floorId;
+    private final int floorId;
     private WallEnd wallEnd1;
     private WallEnd wallEnd2;
 }

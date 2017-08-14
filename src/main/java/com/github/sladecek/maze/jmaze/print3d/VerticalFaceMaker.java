@@ -92,7 +92,7 @@ public class VerticalFaceMaker {
     /**
      * Set maximal/minimal altitudes of TelescopicPoint. Public for unit tests.
      *
-     * @param e
+
      */
     public void stretchOneEdge(MEdge e) {
         // edge endpoints
@@ -116,9 +116,8 @@ public class VerticalFaceMaker {
 
     /**
      * Make vertical shapes induced by one edge. This method is public due to internal usage
-     * by unit testx.
+     * by unit tests.
      *
-     * @param e
      */
     void makeVerticalFacesOneEdge(MEdge e) {
 
@@ -195,8 +194,8 @@ public class VerticalFaceMaker {
 
     private final IMaze3DMapper mapper;
 
-    private Model3d m;
+    private final Model3d m;
 
-    private List<MEdge> newEdges;
-    private List<MPoint> newPoints;
+    private final List<MEdge> newEdges;
+    private final List<MPoint> newPoints;
 }

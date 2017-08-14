@@ -24,7 +24,7 @@ public enum Altitude {
     public Altitude prev() {
         return values()[ordinal() - 1];
     }
-    public static Altitude MIN = FRAME;
-    public static Altitude MAX = CEILING;
-    private int value;
+    public static final Altitude MIN = FRAME;
+    public static final Altitude MAX = CEILING;
+    private final int value;
 }

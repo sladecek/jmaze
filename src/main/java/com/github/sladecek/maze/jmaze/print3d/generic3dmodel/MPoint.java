@@ -6,32 +6,31 @@ import com.github.sladecek.maze.jmaze.geometry.Point3D;
  * Point in a 3D model. All points in the model must be unique.
  */
 public class MPoint {
-    public MPoint(Point3D coord) {
-        this.coord = coord;
+    public MPoint(Point3D coordinate) {
+        this.coordinate = coordinate;
     }
 
-    public Point3D getCoord() {
-        return coord;
+    public Point3D getCoordinate() {
+        return coordinate;
     }
 
-    protected void setCoord(Point3D coord) {
-        if (coord == null) {
+    protected void setCoordinate(Point3D coordinate) {
+        if (coordinate == null) {
             throw new IllegalArgumentException("Coordinates may not be null");
         }
-        this.coord = coord;
+        this.coordinate = coordinate;
     }
 
     @Override
     public String toString() {
         return "MPoint{" +
-                coord +
+                coordinate +
                 '}';
     }
 
     public double distanceTo(MPoint p1) {
-        double result = Point3D.computeDistance(p1.getCoord(), coord);
-        return result;
+        return Point3D.computeDistance(p1.getCoordinate(), coordinate);
     }
 
-    private Point3D coord;
+    private Point3D coordinate;
 }

@@ -17,10 +17,10 @@ import static org.junit.Assert.*;
 public class MWallTest {
     @Before
     public void setUp() throws Exception {
-        p41 = new MPoint(new Point3D(4.1, 0, 0));
-        p12 = new MPoint(new Point3D(1.2, 0, 0));
-        p23 = new MPoint(new Point3D(2.3, 0, 0));
-        p34 = new MPoint(new Point3D(3.4, 0, 0));
+        MPoint p41 = new MPoint(new Point3D(4.1, 0, 0));
+        MPoint p12 = new MPoint(new Point3D(1.2, 0, 0));
+        MPoint p23 = new MPoint(new Point3D(2.3, 0, 0));
+        MPoint p34 = new MPoint(new Point3D(3.4, 0, 0));
 
         e1 = new MEdge(p41, p12);
         e3 = new MEdge(p23, p34);
@@ -61,11 +61,12 @@ public class MWallTest {
         MEdge e2 = w.getE2();
         MEdge e4 = w.getE4();
 
-        assertEquals(1.2, e2.getP1().getCoord().getX(), epsilon);
-        assertEquals(2.3, e2.getP2().getCoord().getX(), epsilon);
+        double epsilon = 0.001;
+        assertEquals(1.2, e2.getP1().getCoordinate().getX(), epsilon);
+        assertEquals(2.3, e2.getP2().getCoordinate().getX(), epsilon);
 
-        assertEquals(3.4, e4.getP1().getCoord().getX(), epsilon);
-        assertEquals(4.1, e4.getP2().getCoord().getX(), epsilon);
+        assertEquals(3.4, e4.getP1().getCoordinate().getX(), epsilon);
+        assertEquals(4.1, e4.getP2().getCoordinate().getX(), epsilon);
 
         assertEquals(w, e2.getRightFace());
         assertEquals(w, e4.getRightFace());
@@ -75,11 +76,6 @@ public class MWallTest {
 
     }
 
-    private final double epsilon = 0.001;
-    private MPoint p41;
-    private MPoint p12;
-    private MPoint p23;
-    private MPoint p34;
     private MEdge e1;
     private MEdge e3;
     private MWall w;

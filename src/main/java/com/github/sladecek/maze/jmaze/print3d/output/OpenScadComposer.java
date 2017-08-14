@@ -39,27 +39,6 @@ public final class OpenScadComposer implements java.lang.AutoCloseable {
         out.write("}\n");
     }
 
-    public void beginDifference() throws IOException {
-        out.write("difference() {\n");
-    }
-
-    public void closeDifference() throws IOException {
-        out.write("}\n");
-
-    }
-
-    public void printTranslate(final Point3D p0) throws IOException {
-        out.write("translate(");
-        printPoint(p0);
-        out.write(")");
-    }
-
-    public void printText(final String text, final Color color, final double size) throws IOException {
-        out.write("color(" + formatColor(color) + ") {\n");
-        out.write("text(\"" + text + "\", size=" + size + ");\n");
-        out.write("}\n");
-    }
-
     private void printPoint(final Point3D p0) throws IOException {
         out.write(" [ " + p0.getX() + "," + p0.getY() + "," + p0.getZ() + "] ");
     }
@@ -69,19 +48,14 @@ public final class OpenScadComposer implements java.lang.AutoCloseable {
      * (most important), then y, then z.
      *
 
-     * @throws IOException
+
      */
     public void printPolyhedron(
             final ArrayList<Point3D> points,
-            final ArrayList<ArrayList<Integer>> faces,
-            final String comment, final Color color)
+            final ArrayList<ArrayList<Integer>> faces)
             throws IOException {
-        if (comment != null && !comment.isEmpty()) {
-            out.write("/* " + comment + "*/\n");
-        }
-        if (color != null) {
-            out.write("color(" + formatColor(color) + ") ");
-        }
+
+
         out.write("polyhedron (points =[");
         boolean comma = false;
         for (Point3D p: points)  {
@@ -121,6 +95,6 @@ public final class OpenScadComposer implements java.lang.AutoCloseable {
     }
 
     private Writer out;
-    private OutputStream stream;
+    private final OutputStream stream;
 
 }

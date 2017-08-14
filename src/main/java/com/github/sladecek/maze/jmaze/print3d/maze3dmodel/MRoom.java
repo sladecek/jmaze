@@ -37,9 +37,8 @@ public class MRoom extends FloorFace {
         for (RoomCorner rc : unfinished) {
             LOG.info("  "+rc);
         }
-        RoomCorner first = corners.get(0);
 
-        RoomCorner current = first;
+        RoomCorner current = corners.get(0);
         for (; ; ) {
             unfinished.remove(current);
             final WallEnd wallEnd2 = current.getWallEnd2();
@@ -79,7 +78,7 @@ public class MRoom extends FloorFace {
                 '}';
     }
     private static final Logger LOG = Logger.getLogger("maze");
-    private ArrayList<RoomCorner> corners = new ArrayList<>();
-    private int floorId;
+    private final ArrayList<RoomCorner> corners = new ArrayList<>();
+    private final int floorId;
 
 }

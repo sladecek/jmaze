@@ -150,14 +150,14 @@ public class PillarMaker {
 
     private final ILocalCoordinateSystem cs;
 
-    private List<WallEnd> wallEnds;
-    private LinkedList<WallEnd> unsortedWalls;
-    private Point2DDbl center;
-    private double wallWidthInMm;
+    private final List<WallEnd> wallEnds;
+    private final LinkedList<WallEnd> unsortedWalls;
+    private final Point2DDbl center;
+    private final double wallWidthInMm;
     private MPillar base;
     private ArrayList<WallEnd> walls;
-    private ArrayList<RoomCorner> corners = new ArrayList<>();
-    private ArrayList<MPoint> intersections = new ArrayList<>();
+    private final ArrayList<RoomCorner> corners = new ArrayList<>();
+    private final ArrayList<MPoint> intersections = new ArrayList<>();
 
 
     private static final Logger LOG = Logger.getLogger("maze");

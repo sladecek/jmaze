@@ -3,7 +3,6 @@ package com.github.sladecek.maze.jmaze.print3d.output;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.logging.Logger;
 
 import com.github.sladecek.maze.jmaze.geometry.Point3D;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MFace;
@@ -65,7 +64,7 @@ public class ThreeJs3DPrinter implements IMaze3DPrinter {
     }
 
     private void printVertex(PrintWriter pw, MPoint pt1) {
-        Point3D p = pt1.getCoord();
+        Point3D p = pt1.getCoordinate();
         pw.printf("%.6f, %.6f, %.6f\n", p.getX(), p.getY(), p.getZ());
     }
 
@@ -82,5 +81,4 @@ public class ThreeJs3DPrinter implements IMaze3DPrinter {
 */
 
     private boolean skipComma = true;
-    private static final Logger LOG = Logger.getLogger("maze");
 }

@@ -5,7 +5,7 @@ import java.util.Collection;
 /**
  * Complete 3D model.
  */
-public interface IModel3d {
+interface IModel3d {
     Collection<MPoint> getPoints();
     Collection<MEdge> getEdges();
     Collection<MFace> getFaces();
