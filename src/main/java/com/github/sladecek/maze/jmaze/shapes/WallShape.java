@@ -37,7 +37,7 @@ public final class WallShape implements IPrintableMazeShape2D {
         this.wallType = type;
         this.p1 = p1;
         this.p2 = p2;
-        this.rigthFaceId = rightFaceId;
+        this.rightFaceId = rightFaceId;
         this.leftFaceId = leftFaceId;
     }
 
@@ -96,7 +96,7 @@ public final class WallShape implements IPrintableMazeShape2D {
     }
 
     public int getRightFaceId() {
-        return rigthFaceId;
+        return rightFaceId;
     }
 
     public int getLeftFaceId() {
@@ -133,7 +133,7 @@ public final class WallShape implements IPrintableMazeShape2D {
 
     private WallType wallType;
     private int wallId;
-    private int rigthFaceId = -1;
+    private int rightFaceId = -1;
     private int leftFaceId = -1;
 
 }
