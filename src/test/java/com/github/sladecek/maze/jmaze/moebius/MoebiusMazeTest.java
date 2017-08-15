@@ -6,7 +6,6 @@ import static org.junit.Assert.assertTrue;
 
 import com.github.sladecek.maze.jmaze.print3d.IMaze3DMapper;
 import com.github.sladecek.maze.jmaze.properties.MazeProperties;
-//import com.github.sladecek.maze.jmaze.geometry.Direction;
 import org.junit.Before;
 import org.junit.Test;
 

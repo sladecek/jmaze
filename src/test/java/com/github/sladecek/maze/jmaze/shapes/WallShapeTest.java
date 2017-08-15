@@ -26,7 +26,7 @@ public class WallShapeTest {
     public void whenCoordinatesAreRectangularTestPrint2DShouldPrintLine() {
         I2DDocument mockedDocument = mock(I2DDocument.class);
 
-        boolean isPolarCoordinates = false;
+        final boolean isPolarCoordinates = false;
         WallType shapeType = WallType.innerWall;
         callPrint2D(mockedDocument, isPolarCoordinates, shapeType, 3, 4);
 
@@ -51,7 +51,7 @@ public class WallShapeTest {
     public void whenCoordinatesArePolarTestPrint2DShouldPrintRadialLine() {
         I2DDocument mockedDocument = mock(I2DDocument.class);
 
-        boolean isPolarCoordinates = true;
+        final boolean isPolarCoordinates = true;
         WallType shapeType = WallType.innerWall;
         callPrint2D(mockedDocument, isPolarCoordinates, shapeType, 5, 0);
 
@@ -75,7 +75,7 @@ public class WallShapeTest {
     public void whenCoordinatesArePolarTestPrint2DShouldPrintArc() {
         I2DDocument mockedDocument = mock(I2DDocument.class);
 
-        boolean isPolarCoordinates = true;
+        final boolean isPolarCoordinates = true;
         WallType shapeType = WallType.innerWall;
         callPrint2D(mockedDocument, isPolarCoordinates, shapeType, 1, 5);
 
@@ -98,7 +98,7 @@ public class WallShapeTest {
     public void whenCoordinatesArePolarTestPrint2DShouldPrintCircle() {
         I2DDocument mockedDocument = mock(I2DDocument.class);
 
-        boolean isPolarCoordinates = true;
+        final boolean isPolarCoordinates = true;
         WallType shapeType = WallType.innerWall;
         callPrint2D(mockedDocument, isPolarCoordinates, shapeType, 1, 0);
 
@@ -124,7 +124,7 @@ public class WallShapeTest {
     @Test
     public void testPrint2DShouldPrintInnerWallInCorrectStyle() {
         String expectedStyle = "stroke:rgb(4,4,4);stroke-width:3";
-        boolean expectedCenter = false;
+        final boolean expectedCenter = false;
         WallType shapeType = WallType.innerWall;
         test2DPrintStyle(expectedStyle, expectedCenter, shapeType);
     }
@@ -132,7 +132,7 @@ public class WallShapeTest {
     @Test
     public void testPrint2DShouldPrintOuterWallInCorrectStyle() {
         String expectedStyle = "stroke:rgb(5,5,5);stroke-width:5";
-        boolean expectedCenter = false;
+        final boolean expectedCenter = false;
         WallType shapeType = WallType.outerWall;
         test2DPrintStyle(expectedStyle, expectedCenter, shapeType);
     }
@@ -140,7 +140,7 @@ public class WallShapeTest {
     @Test
     public void testPrint2DShouldPrintSolutionWallInCorrectStyle() {
         String expectedStyle = "stroke:rgb(5,5,5);stroke-width:5";
-        boolean expectedCenter = true;
+        final boolean expectedCenter = true;
         WallType shapeType = WallType.outerWall;
         test2DPrintStyle(expectedStyle, expectedCenter, shapeType);
     }
@@ -148,7 +148,7 @@ public class WallShapeTest {
     private void test2DPrintStyle(String expectedStyle, boolean expectedCenter,
                                   WallType shapeType) {
         I2DDocument mockedDocument = mock(I2DDocument.class);
-        boolean isPolarCoordinates = false;
+        final boolean isPolarCoordinates = false;
         callPrint2D(mockedDocument, isPolarCoordinates, shapeType, 3, 0);
 
         ArgumentCaptor<Point2DInt> p1 = ArgumentCaptor.forClass(Point2DInt.class);

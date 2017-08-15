@@ -23,7 +23,7 @@ public class ModelFromShapeTestFlat extends ModelFromShapesTestBase {
     }
 
 
-    protected Model3d compute3dModel(Shapes sc) {
+    private Model3d compute3dModel(Shapes sc) {
         PrintStyle colors = new PrintStyle();
         IMaze3DMapper mapper = new PlanarMapper();
         return ModelFromShapes.makeWithoutExtrusionForUnitTesting(sc, mapper, colors, 0.4);
@@ -117,12 +117,12 @@ public class ModelFromShapeTestFlat extends ModelFromShapesTestBase {
 
     @Test
     public void checkAllEdgesOfFacePointToFace() {
-        model3d.getFaces().forEach((f) -> checkEdgesOfFacePointToTheFace(f));
+        model3d.getFaces().forEach(this::checkEdgesOfFacePointToTheFace);
     }
 
     @Test
     public void checkAllEdgesAreCyclic() {
-        model3d.getFaces().forEach((f) -> checkEdgesAreCyclic(f));
+        model3d.getFaces().forEach(this::checkEdgesAreCyclic);
     }
 
 

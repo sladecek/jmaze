@@ -29,7 +29,7 @@ public class ModelFromShapeTestExtruded extends ModelFromShapesTestBase {
         collectOutputs(model3d);
     }
 
-    protected Model3d compute3dModel(Shapes sc) {
+    private Model3d compute3dModel(Shapes sc) {
         PrintStyle colors = new PrintStyle();
         IMaze3DMapper mapper = new PlanarMapper();
         return ModelFromShapes.make(sc, mapper, colors, 2);

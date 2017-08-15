@@ -37,7 +37,7 @@ public class MoebiusStripGeometryTest {
     }
 
     @Test
-    public void testCmputeTheta() {
+    public void testComputeTheta() {
         assertEquals(2*Math.PI, msg.computeTheta(628.32d), delta);
     }
     

@@ -16,7 +16,7 @@ import static org.junit.Assert.assertEquals;
  * Base class for PillarMakerTests
  */
 public class PillarMakerTestBase {
-    protected void testOneComputation(int dx, int dy, int[][] endpoints, int expectedIntersectionCount, double[][] expected, int expectedBaseEdgesSize) {
+    void testOneComputation(int dx, int dy, int[][] endpoints, int expectedIntersectionCount, double[][] expected, int expectedBaseEdgesSize) {
         Point2DInt center = new Point2DInt(dx, dy);
         ArrayList<WallEnd> walls = new ArrayList<>();
         final int cnt = endpoints.length;
@@ -24,7 +24,7 @@ public class PillarMakerTestBase {
             MWall mw = new MWall();
             Point2DInt p1 = new Point2DInt(dx+endpoints[i][0], dy+endpoints[i][1]);
             final int leftId = (i + 1) % cnt;
-            final int rightId = i;
+            @SuppressWarnings("UnnecessaryLocalVariable") final int rightId = i;
             WallShape ws = WallShape.newInnerWall(0, center, p1, leftId, rightId);
             final boolean p1IsPillar = true;
             WallEnd w = new WallEnd(mw, ws, p1IsPillar);

@@ -6,7 +6,7 @@ import org.junit.Test;
 
 public class Point2DIntTest {
 
-    static final double delta = 0.0000001;
+    private static final double delta = 0.0000001;
     
     @Test
     public void testGetAngle() {

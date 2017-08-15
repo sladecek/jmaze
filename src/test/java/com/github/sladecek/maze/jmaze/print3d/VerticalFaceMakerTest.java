@@ -345,31 +345,31 @@ public class VerticalFaceMakerTest {
     }
 
 
-    IMaze3DMapper mapper = new PlanarMapper();
-    Model3d model;
+    private IMaze3DMapper mapper = new PlanarMapper();
+    private Model3d model;
 
-    TelescopicPoint pCenter;
-    TelescopicPoint pWest;
-    TelescopicPoint pEast;
-    TelescopicPoint pSouth;
-    TelescopicPoint pNorth;
+    private TelescopicPoint pCenter;
+    private TelescopicPoint pWest;
+    private TelescopicPoint pEast;
+    private TelescopicPoint pSouth;
+    private TelescopicPoint pNorth;
 
-    MEdge eCW;
-    MEdge eCE;
-    MEdge eNE;
-    MEdge eCS;
-    MEdge eCN;
+    private MEdge eCW;
+    private MEdge eCE;
+    private MEdge eNE;
+    private MEdge eCS;
+    private MEdge eCN;
 
-    MEdge eWS;
-    MEdge eWN;
-    MEdge eSE;
+    private MEdge eWS;
+    private MEdge eWN;
+    private MEdge eSE;
 
 
-    FloorFace fNW;
-    FloorFace fSW;
-    FloorFace fSE;
-    FloorFace fNE;
+    private FloorFace fNW;
+    private FloorFace fSW;
+    private FloorFace fSE;
+    private FloorFace fNE;
 
-    VerticalFaceMaker maker;
+    private VerticalFaceMaker maker;
 
 }

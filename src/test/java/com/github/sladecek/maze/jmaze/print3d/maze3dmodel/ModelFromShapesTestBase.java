@@ -12,9 +12,10 @@ import static org.junit.Assert.*;
 /**
  * Tests ModelFromShapes class.
  */
+@SuppressWarnings({"ALL", "unused"})
 public class ModelFromShapesTestBase {
 
-    protected Shapes setUpInput() {
+    Shapes setUpInput() {
         Shapes sc = new Shapes(new ShapeContext(false, 100, 100, 10));
         sc.add(new FloorShape(0, new Point2DInt(55, 15)));
         sc.add(new FloorShape(1, new Point2DInt(65, 15)));
@@ -50,7 +51,7 @@ public class ModelFromShapesTestBase {
     }
 
 
-    protected void collectOutputs(Model3d r) {
+    void collectOutputs(Model3d r) {
         pillars = r.getFaces()
                 .stream()
                 .filter((f) -> (f instanceof MPillar))
@@ -83,7 +84,7 @@ public class ModelFromShapesTestBase {
 
 
 
-    protected void checkWall(MWall w, WallShape ws, int altitude, double[] expected) {
+    void checkWall(MWall w, WallShape ws, int altitude, double[] expected) {
 
         double[] points = new double[8];
         assertEquals(altitude, w.getAltitude().getValue());
@@ -141,7 +142,7 @@ public class ModelFromShapesTestBase {
     }
 
 
-    protected void checkPillar(MPillar p, int altitude, double[][] expectedIntersections) {
+    void checkPillar(MPillar p, int altitude, double[][] expectedIntersections) {
         assertEquals(altitude, p.getAltitude().getValue());
         assertEquals(expectedIntersections.length, p.getIntersections().size());
         for (int i = 0; i < expectedIntersections.length; i++) {
@@ -152,7 +153,7 @@ public class ModelFromShapesTestBase {
     }
 
 
-    protected RoomAuditor chechRoom(MRoom r) {
+    RoomAuditor chechRoom(MRoom r) {
         return new RoomAuditor(r);
     }
 
@@ -170,41 +171,41 @@ public class ModelFromShapesTestBase {
         }
     }
 
-    protected void printPoints() {
+    void printPoints() {
         System.out.println("--POINTS----------");
         for (MPoint p : model3d.getPoints()) {
             System.out.println(p);
         }
     }
 
-    protected void printFaces() {
+    void printFaces() {
         System.out.println("--FACES----------");
         for (MFace f : model3d.getFaces()) {
             System.out.println(f);
         }
     }
 
-    protected void printEdges() {
+    void printEdges() {
         System.out.println("--EDGES----------");
         for (MEdge e : model3d.getEdges()) {
             System.out.println(e);
         }
     }
 
-    protected void printBlocks() {
+    void printBlocks() {
         System.out.println("--BLOCKS----------");
         for (MBlock b : model3d.getBlocks()) {
             System.out.println(b);
         }
     }
 
-    protected void checkEdgesOfFacePointToTheFace(MFace testedFace) {
+    void checkEdgesOfFacePointToTheFace(MFace testedFace) {
         for (MEdge e : testedFace.getEdges()) {
             assert(e.getLeftFace() == testedFace || e.getRightFace() == testedFace);
         }
     }
 
-    protected void checkEdgesAreCyclic(MFace testedFace) {
+    void checkEdgesAreCyclic(MFace testedFace) {
 
         Stack<MEdge> remainingEdges = new Stack<>();
         remainingEdges.addAll(testedFace.getEdges());
@@ -227,6 +228,7 @@ public class ModelFromShapesTestBase {
         }
     }
 
+    @SuppressWarnings({"UnusedReturnValue", "unused"})
     protected class RoomAuditor {
         public RoomAuditor(MRoom r) {
             this.r = r;
@@ -273,23 +275,23 @@ public class ModelFromShapesTestBase {
 
         MRoom r;
     }
-    final double epsilon = 1e-7;
+    private final double epsilon = 1e-7;
 
 
-    protected WallShape ws01;
-    protected WallShape ws12;
-    protected WallShape ws23;
+    WallShape ws01;
+    WallShape ws12;
+    WallShape ws23;
 
-    protected WallShape ws34;
-    protected WallShape ws45;
-    protected WallShape ws50;
-    protected WallShape ws14;
+    WallShape ws34;
+    WallShape ws45;
+    WallShape ws50;
+    WallShape ws14;
 
 
-    protected Model3d model3d;
-    protected List<MPillar> pillars;
-    protected List<MWall> walls;
-    protected List<MRoom> rooms;
-    protected List<RoomCorner> corners;
+    Model3d model3d;
+    List<MPillar> pillars;
+    List<MWall> walls;
+    List<MRoom> rooms;
+    private List<RoomCorner> corners;
 
 }

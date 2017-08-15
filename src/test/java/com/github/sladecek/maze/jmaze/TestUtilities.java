@@ -7,7 +7,7 @@ import com.github.sladecek.maze.jmaze.geometry.Point3D;
 /*
  * Static helper methods for testing. 
  */
-public class TestUtilities {
+class TestUtilities {
 
 	public static ArrayList<Point3D> buildPolyhedronForTest(double x, double y, double z, double stepX) {
 		ArrayList<Point3D> polyhedron = new ArrayList<>();

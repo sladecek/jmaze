@@ -9,7 +9,7 @@ import org.junit.Test;
 
 public class MazeGraphTest {
 
-    public MazeGraph s;
+    private MazeGraph s;
     
     @Before
     public void setUp() throws Exception {

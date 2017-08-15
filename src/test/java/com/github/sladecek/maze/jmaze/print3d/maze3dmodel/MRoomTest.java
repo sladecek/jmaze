@@ -58,7 +58,6 @@ public class MRoomTest {
 
         assertEquals(floorId, rc1.getFloorId());
 
-        // Create the romm
         MRoom r = new MRoom(-1);
 
         // Out of order - the computation must find correct order.

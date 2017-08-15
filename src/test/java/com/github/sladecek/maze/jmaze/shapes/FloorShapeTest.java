@@ -37,6 +37,6 @@ public class FloorShapeTest {
         assertEquals(true, fs.isHole());
     }
 
-    FloorShape fs;
-    MazePath pth;
+    private FloorShape fs;
+    private MazePath pth;
 }

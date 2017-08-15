@@ -16,7 +16,7 @@ public class PillarMakerTest extends PillarMakerTestBase {
         testOneOffset(100,-100);
     }
 
-    void testOneOffset(int dx, int dy) {
+    private void testOneOffset(int dx, int dy) {
         final int[][] endpoints = {{-7, 7}, {-7, 0}, {0, -7}, {7, 7}, {0, 7}};
         final int expectedIntersectionCount = 5;
         final double[][] expected = {

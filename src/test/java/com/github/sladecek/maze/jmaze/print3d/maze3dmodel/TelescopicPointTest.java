@@ -7,10 +7,10 @@ import com.github.sladecek.maze.jmaze.print3d.IMaze3DMapper;
 
 /**
  *
- * TODO nahradit opravdovym testem
+ * TODO replace with a real test
  * Test class for TelescopicPoint.
  */
-public class TelescopicPointTest {
+class TelescopicPointTest {
 
     private IMaze3DMapper fakeMapper = new IMaze3DMapper() {
         @Override

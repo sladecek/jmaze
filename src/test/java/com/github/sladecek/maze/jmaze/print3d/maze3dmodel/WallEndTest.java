@@ -23,8 +23,8 @@ public class WallEndTest {
 
     @Test
     public void p1IsAtPillar() throws Exception {
-        final boolean p1IsPilar = true;
-        WallEnd w = new WallEnd(mw, ws, p1IsPilar);
+        final boolean p1IsPillar = true;
+        WallEnd w = new WallEnd(mw, ws, p1IsPillar);
 
         assertEquals(true, w.isP1Pillar());
         assertEquals(1, w.getPillarPoint().getX());
@@ -42,8 +42,8 @@ public class WallEndTest {
 
     @Test
     public void p1IsNotAtPillar() throws Exception {
-        final boolean p1IsPilar = false;
-        WallEnd w = new WallEnd(mw, ws, p1IsPilar);
+        final boolean p1IsPillar = false;
+        WallEnd w = new WallEnd(mw, ws, p1IsPillar);
 
         assertEquals(false, w.isP1Pillar());
         assertEquals(2, w.getPillarPoint().getX());
@@ -56,13 +56,10 @@ public class WallEndTest {
         assertEquals(e, w.getMWall().getE3());
     }
 
-    @Test
-    public void addEdge() throws Exception {
 
-    }
-    final int leftId = 77;
-    final int rightId = 99;
-    MWall mw;
-    WallShape ws;
+    private final int leftId = 77;
+    private final int rightId = 99;
+    private MWall mw;
+    private WallShape ws;
 
 }
