@@ -123,6 +123,7 @@ public class RectangularMaze extends BaseMaze {
     /**
      * Room size in pixels.
      */
+    @SuppressWarnings("FieldCanBeLocal")
     private final int rsp = 20;
 
 }

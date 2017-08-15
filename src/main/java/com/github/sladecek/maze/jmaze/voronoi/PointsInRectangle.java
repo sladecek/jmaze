@@ -2,8 +2,8 @@ package com.github.sladecek.maze.jmaze.voronoi;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Random;
-import java.util.logging.Logger;
 
 import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 
@@ -47,9 +47,9 @@ public class PointsInRectangle {
 			points.add(i);
 		}
 		if (width >= height) {
-			points.sort((i1,i2) -> Double.compare(roomCenterX[i1],roomCenterX[i2]));
+			points.sort(Comparator.comparingDouble(i -> roomCenterX[i]));
 		} else {
-			points.sort((i1,i2) -> Double.compare(roomCenterY[i1],roomCenterY[i2]));
+			points.sort(Comparator.comparingDouble(i -> roomCenterY[i]));
 		}
 		
 		double y[] = new double[roomCount];
@@ -100,11 +100,11 @@ public class PointsInRectangle {
 		roomCenterY[i] = value;
 	}
 
-	private static final Logger LOGGER = Logger.getLogger("maze");
+
 	
-	private int width;
-	private int height;
-	private int roomCount;
+	private final int width;
+	private final int height;
+	private final int roomCount;
 
 	private double[] roomCenterY;
 	private double[] roomCenterX;

@@ -3,7 +3,7 @@ package com.github.sladecek.maze.jmaze.util;
 import java.util.BitSet;
 
 /**
- * Utility class that prints bitset as set of intervals.
+ * Utility class that prints bit set as set of intervals.
  *
  */
 public final class BitSetIntervalPrinter {
@@ -14,7 +14,7 @@ public final class BitSetIntervalPrinter {
     }
 
     public String printAsIntervals() {
-        String result = new String();
+        String result = "";
         int start = 0;
 
         boolean spc = false;
@@ -40,7 +40,7 @@ public final class BitSetIntervalPrinter {
         return result;
     }
 
-    private BitSet bitSet;
-    private int bitCount;
+    private final BitSet bitSet;
+    private final int bitCount;
 
 }

@@ -42,47 +42,12 @@ public class TriangularMaze extends BaseMaze {
             final int roomsInRow = 2 * y + 1;
             if (y < size) {
                 int prevRoom = -1;
-
-                // make a row of rooms  and vertical walls among them
-                for (int j = 0; j < roomsInRow + 1; j++) {
-                    int x1 = size + j - y - 1;
-                    int x2 = size + j - y;
-                    int y1 = y;
-                    int y2 = y;
-                    boolean newRoomIsRight = true;
-                    if (j % 2 == 0) {
-                        y1++;
-                    } else {
-                        y2++;
-                        newRoomIsRight = false;
-                    }
-
-                    int r = -1;
-                    if (j < roomsInRow) {
-                        r = getGraph().addRoom();
-                        if (j == 0) {
-                            prevFirst = myFirst;
-                            myFirst = r;
-                        }
-                        lastRoom = r;
-                        LOGGER.info("addRoom " + r + " y=" + y + " j=" + j + " prevRoom=" + prevRoom +
-                                " myFirst=" + myFirst + " prevFirst=" + prevFirst + " lastRoom=" + lastRoom);
+                RowBuilder rowBuilder = new RowBuilder(prevFirst, lastRoom, myFirst, y, roomsInRow, prevRoom).invoke();
+                myFirst = rowBuilder.getMyFirst();
+                prevFirst = rowBuilder.getPrevFirst();
+                lastRoom = rowBuilder.getLastRoom();
 
 
-                        final Point2DInt position = new Point2DInt(rsx * x2, rsy * y + rsy / 2);
-                        final MarkShape mark = new MarkShape(r, position);
-                        allShapes.add(mark);
-                        final FloorShape floor = new FloorShape(r, position);
-                        allShapes.add(floor);
-                    }
-
-                    if (newRoomIsRight) {
-                        addWallAndWallShape(r, prevRoom, x1, x2, y1, y2);
-                    } else {
-                        addWallAndWallShape(prevRoom, r, x1, x2, y1, y2);
-                    }
-                    prevRoom = r;
-                }
             } else {
                 prevFirst = myFirst;
             }
@@ -134,6 +99,80 @@ public class TriangularMaze extends BaseMaze {
 
     public int getSize() {
         return size;
+    }
+
+    private class RowBuilder {
+        public RowBuilder(int prevFirst, int lastRoom, int myFirst, int y, int roomsInRow, int prevRoom) {
+            this.prevFirst = prevFirst;
+            this.lastRoom = lastRoom;
+            this.myFirst = myFirst;
+            this.y = y;
+            this.roomsInRow = roomsInRow;
+            this.prevRoom = prevRoom;
+        }
+
+        public int getPrevFirst() {
+            return prevFirst;
+        }
+
+        public int getLastRoom() {
+            return lastRoom;
+        }
+
+        public int getMyFirst() {
+            return myFirst;
+        }
+
+        public RowBuilder invoke() {
+            // make a row of rooms  and vertical walls among them
+            for (int j = 0; j < roomsInRow + 1; j++) {
+                int x1 = size + j - y - 1;
+                int x2 = size + j - y;
+                int y1 = y;
+                int y2 = y;
+                boolean newRoomIsRight = true;
+                if (j % 2 == 0) {
+                    y1++;
+                } else {
+                    y2++;
+                    newRoomIsRight = false;
+                }
+
+                int r = -1;
+                if (j < roomsInRow) {
+                    r = getGraph().addRoom();
+                    if (j == 0) {
+                        prevFirst = myFirst;
+                        myFirst = r;
+                    }
+                    lastRoom = r;
+                    LOGGER.info("addRoom " + r + " y=" + y + " j=" + j + " prevRoom=" + prevRoom +
+                            " myFirst=" + myFirst + " prevFirst=" + prevFirst + " lastRoom=" + lastRoom);
+
+
+                    final Point2DInt position = new Point2DInt(rsx * x2, rsy * y + rsy / 2);
+                    final MarkShape mark = new MarkShape(r, position);
+                    allShapes.add(mark);
+                    final FloorShape floor = new FloorShape(r, position);
+                    allShapes.add(floor);
+                }
+
+                if (newRoomIsRight) {
+                    addWallAndWallShape(r, prevRoom, x1, x2, y1, y2);
+                } else {
+                    addWallAndWallShape(prevRoom, r, x1, x2, y1, y2);
+                }
+                prevRoom = r;
+            }
+            return this;
+        }
+
+        private int prevFirst;
+        private int lastRoom;
+        private int myFirst;
+        private final int y;
+        private final int roomsInRow;
+        private int prevRoom;
     }
 
     private static final Logger LOGGER = Logger.getLogger("maze");

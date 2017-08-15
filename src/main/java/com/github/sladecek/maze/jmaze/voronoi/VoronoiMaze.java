@@ -45,6 +45,10 @@ public class VoronoiMaze extends BaseMaze {
 
     @Override
     public void buildMazeGraphAndShapes() {
+        /*
+      Approximate room size in pixels.
+     */
+        int rsp = 20;
         this.width = properties.getInt("width", 2, 10000) * rsp;
         this.height = properties.getInt("height", 2, 10000) * rsp;
         int roomCount = properties.getInt("roomCount", 2, 100000);
@@ -128,10 +132,6 @@ public class VoronoiMaze extends BaseMaze {
     }
 
     private static final Logger LOGGER = Logger.getLogger("maze");
-    /**
-     * Approximate room size in pixels.
-     */
-    private final int rsp = 20;
     private int width;
     private int height;
 
