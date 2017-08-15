@@ -6,6 +6,7 @@ package com.github.sladecek.maze.jmaze.util;
 public class MazeGenerationException extends Exception {
     
    
+    @SuppressWarnings("SameParameterValue")
     public MazeGenerationException(String message) {
         super(message);
     }

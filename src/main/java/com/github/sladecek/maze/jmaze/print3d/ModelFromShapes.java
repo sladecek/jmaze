@@ -16,6 +16,7 @@ import java.util.*;
 /**
  * Creates model from shapes
  */
+@SuppressWarnings("SameParameterValue")
 public class ModelFromShapes {
 
     private ModelFromShapes(Shapes shapes, IMaze3DMapper mapper, double wallSize) {
@@ -31,7 +32,8 @@ public class ModelFromShapes {
         return mfs.m;
     }
 
-    static public Model3d makeWithoutExtrusionForUnitTesting(Shapes shapes, IMaze3DMapper mapper,  PrintStyle style, double wallSize) {
+    static public Model3d makeWithoutExtrusionForUnitTesting(Shapes shapes, IMaze3DMapper mapper,  PrintStyle style, double
+            wallSize) {
         ModelFromShapes mfs = new ModelFromShapes(shapes, mapper, wallSize);
         mfs.makePlanarProjection();
         return mfs.m;

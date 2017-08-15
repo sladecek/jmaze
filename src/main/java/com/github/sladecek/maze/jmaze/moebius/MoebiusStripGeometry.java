@@ -30,7 +30,7 @@ public final class MoebiusStripGeometry {
 		return new Point3D(rInmm * Math.cos(theta), rInmm * Math.sin(theta), y2);
 	}
 
-    protected double computeTheta(double distanceAlongEdge) {
+    double computeTheta(double distanceAlongEdge) {
         return 4 * Math.PI * distanceAlongEdge / circumference;
     }
 

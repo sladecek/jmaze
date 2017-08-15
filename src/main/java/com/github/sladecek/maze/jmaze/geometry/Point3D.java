@@ -3,6 +3,7 @@ package com.github.sladecek.maze.jmaze.geometry;
 /**
  * Point in 3D.
  */
+@SuppressWarnings("SameParameterValue")
 public final class Point3D {
 
     public Point3D(double x, double y, double z) {

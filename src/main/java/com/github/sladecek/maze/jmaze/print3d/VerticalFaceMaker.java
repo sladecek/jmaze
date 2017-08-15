@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * Creates vertical surfaces by extruding floor faces to proper altitude.
  */
-public class VerticalFaceMaker {
+class VerticalFaceMaker {
     public VerticalFaceMaker(Model3d m, IMaze3DMapper mapper) {
         this.m = m;
         this.mapper = mapper;

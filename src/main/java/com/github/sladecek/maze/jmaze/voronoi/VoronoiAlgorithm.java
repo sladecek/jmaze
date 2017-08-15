@@ -12,7 +12,7 @@ import be.humphreys.simplevoronoi.Voronoi;
  *
  * Implemented using 'simplevoronoi' library.
  */
-public final class VoronoiAlgorithm {
+final class VoronoiAlgorithm {
 
     /**
      * Make Voronoi maze.

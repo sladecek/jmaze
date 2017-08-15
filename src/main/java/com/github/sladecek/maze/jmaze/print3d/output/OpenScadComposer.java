@@ -14,7 +14,7 @@ import java.util.Locale;
 /*
  * Compose content of Open Scad file.
  */
-public final class OpenScadComposer implements java.lang.AutoCloseable {
+final class OpenScadComposer implements java.lang.AutoCloseable {
 
     public OpenScadComposer(final OutputStream stream) throws IOException {
         this.stream = stream;

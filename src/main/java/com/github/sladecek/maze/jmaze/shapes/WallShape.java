@@ -28,7 +28,7 @@ public final class WallShape implements IPrintableMazeShape2D {
         return wallId;
     }
 
-    protected WallShape(int wallId, WallType type, Point2DInt p1, Point2DInt p2, int rightFaceId, int leftFaceId) {
+    WallShape(int wallId, WallType type, Point2DInt p1, Point2DInt p2, int rightFaceId, int leftFaceId) {
         if (type == WallType.innerWall && wallId < 0) {
             throw new IllegalArgumentException("Inner wall must have positive wallId.");
         }

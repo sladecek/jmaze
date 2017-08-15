@@ -13,6 +13,7 @@ public final class Color {
 	 * @param b blue component value
 	 * @param a alpha channel value
 	 */
+	@SuppressWarnings("SameParameterValue")
 	public Color(final int r, final int g, final int b, final int a) {
 		super();
 		this.r = r;

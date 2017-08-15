@@ -13,6 +13,7 @@ import com.github.sladecek.maze.jmaze.shapes.WallShape;
 
 import java.util.logging.Logger;
 
+@SuppressWarnings("SameParameterValue")
 public class VoronoiMaze extends BaseMaze {
 
     public VoronoiMaze() {

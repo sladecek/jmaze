@@ -345,7 +345,7 @@ public class VerticalFaceMakerTest {
     }
 
 
-    private IMaze3DMapper mapper = new PlanarMapper();
+    private final IMaze3DMapper mapper = new PlanarMapper();
     private Model3d model;
 
     private TelescopicPoint pCenter;
