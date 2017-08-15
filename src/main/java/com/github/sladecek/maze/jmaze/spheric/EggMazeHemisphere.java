@@ -77,7 +77,7 @@ class EggMazeHemisphere {
 
 	/**
 	 * 
-	 * @param circle
+	 * @param circle reuired circle.
 	 * @return Number of walls on a circle (geometrical).
 	 */
 	public int getWallCntOnCircle(int circle) {
@@ -100,13 +100,13 @@ class EggMazeHemisphere {
 	/***
 	 * Id of the first room (Greenwich room) in the layer.
 	 */
-	private ArrayList<Integer> greenwichRoom = new ArrayList<>();
+	private final ArrayList<Integer> greenwichRoom = new ArrayList<>();
 
 	/*
 	 * Axial (x) coordinate of egg layer. Zero index contains zero value - the
 	 * equator.
 	 */
 	private ArrayList<Double> layerXPosition = new ArrayList<>();
-	private double poleXPosition;
+	private final double poleXPosition;
 
 }

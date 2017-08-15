@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 /*
  * Map integer room coordinates do 3D coordinates in the egg.
  */
-public final class Egg3dMapper extends ConfigurableAltitudes implements IMaze3DMapper {
+final class Egg3dMapper extends ConfigurableAltitudes implements IMaze3DMapper {
     public Egg3dMapper(EggGeometry egg, EggMaze maze) {
         super();
         this.egg = egg;

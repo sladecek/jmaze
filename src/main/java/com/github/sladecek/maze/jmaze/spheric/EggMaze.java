@@ -25,7 +25,7 @@ public final class EggMaze extends BaseMaze {
         MazeProperties p = getDefaultProperties();
         p.put("ellipseMajor", geometry.getEllipseMajorInmm());
         p.put("ellipseMinor", geometry.getEllipseMinorInmm());
-        p.put("eggness", geometry.getEggCoef());
+        p.put("eggness", geometry.getEggness());
         p.put("equatorCells", equatorCellCnt);
         setProperties(p);
     }
@@ -306,5 +306,5 @@ public final class EggMaze extends BaseMaze {
     private double baseRoomSizeInmm;
 
 
-    public static int res = 10;
+    public static final int res = 10;
 }

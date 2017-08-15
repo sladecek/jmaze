@@ -10,11 +10,11 @@ import java.util.ArrayList;
  */
 public final class EggGeometry {
 
-    public EggGeometry(double ellipseMajorInmm, double ellipseMinorInmm, double eggCoef) {
+    public EggGeometry(double ellipseMajorInmm, double ellipseMinorInmm, double eggness) {
         super();
         this.ellipseMajorInmm = ellipseMajorInmm;
         this.ellipseMinorInmm = ellipseMinorInmm;
-        this.eggCoef = eggCoef;
+        this.eggness = eggness;
     }
 
     public double getEllipseMajorInmm() {
@@ -25,12 +25,12 @@ public final class EggGeometry {
         return ellipseMinorInmm;
     }
 
-    public double getEggCoef() {
-        return eggCoef;
+    public double getEggness() {
+        return eggness;
     }
 
     public double computeY(double x) {
-        final double tx = 1 / (1 - this.eggCoef * x / this.ellipseMajorInmm);
+        final double tx = 1 / (1 - this.eggness * x / this.ellipseMajorInmm);
         final double aa = this.ellipseMajorInmm * this.ellipseMajorInmm;
         final double bb = this.ellipseMinorInmm * this.ellipseMinorInmm;
         final double yy = (1 - x * x / aa) * bb / tx;
@@ -100,7 +100,7 @@ public final class EggGeometry {
         }
     }
 
-    private double ellipseMajorInmm;
-    private double ellipseMinorInmm;
-    private double eggCoef;
+    private final double ellipseMajorInmm;
+    private final double ellipseMinorInmm;
+    private final double eggness;
 }
