@@ -138,9 +138,9 @@ public class PillarMaker {
     }
 
     private Optional<WallEnd> findTheOtherWallInTheSameRoom(WallEnd current) {
-        LOG.info(".....findTheOtherWallInTheSameRoom  current="+current.getWallShape()+" leftFaceId="+current.getLeftFaceId()+" p1Pillar="+current.isP1Pilar());
+        LOG.info(".....findTheOtherWallInTheSameRoom  current="+current.getWallShape()+" leftFaceId="+current.getLeftFaceId()+" p1Pillar="+current.isP1Pillar());
         for (WallEnd b : unsortedWalls) {
-            LOG.info("........b="+b.getWallShape()+" rightFaceId="+b.getRightFaceId()+" p1Pillar="+b.isP1Pilar());
+            LOG.info("........b="+b.getWallShape()+" rightFaceId="+b.getRightFaceId()+" p1Pillar="+b.isP1Pillar());
             if (current.getLeftFaceId() == b.getRightFaceId()) {
                 return Optional.of(b);
             }

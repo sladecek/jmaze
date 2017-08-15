@@ -26,7 +26,7 @@ public class WallEndTest {
         final boolean p1IsPilar = true;
         WallEnd w = new WallEnd(mw, ws, p1IsPilar);
 
-        assertEquals(true, w.isP1Pilar());
+        assertEquals(true, w.isP1Pillar());
         assertEquals(1, w.getPillarPoint().getX());
         assertEquals(2, w.getNonPillarPoint().getX());
         assertEquals(77, w.getLeftFaceId());
@@ -45,7 +45,7 @@ public class WallEndTest {
         final boolean p1IsPilar = false;
         WallEnd w = new WallEnd(mw, ws, p1IsPilar);
 
-        assertEquals(false, w.isP1Pilar());
+        assertEquals(false, w.isP1Pillar());
         assertEquals(2, w.getPillarPoint().getX());
         assertEquals(1, w.getNonPillarPoint().getX());
         assertEquals(99, w.getLeftFaceId());

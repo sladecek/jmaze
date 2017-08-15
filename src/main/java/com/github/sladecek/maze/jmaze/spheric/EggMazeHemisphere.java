@@ -3,7 +3,7 @@ package com.github.sladecek.maze.jmaze.spheric;
 import java.util.ArrayList;
 
 /* 
- * One half of an egg maze. An egg consist of two halfeggs - north and south.
+ * One half of an egg maze. An egg consist of two half-eggs - north and south.
  */
 class EggMazeHemisphere {
 
@@ -77,7 +77,7 @@ class EggMazeHemisphere {
 
 	/**
 	 * 
-	 * @param circle reuired circle.
+	 * @param circle required circle.
 	 * @return Number of walls on a circle (geometrical).
 	 */
 	public int getWallCntOnCircle(int circle) {

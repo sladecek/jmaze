@@ -22,7 +22,7 @@ import java.util.Random;
  * Builds a maze using maze data and IMaze methods.
  */
 public abstract class BaseMaze extends MazeData implements IMaze {
-    public BaseMaze() {
+    protected BaseMaze() {
         properties = getDefaultProperties().clone();
     }
 

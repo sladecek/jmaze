@@ -5,26 +5,26 @@ import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MEdge;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
 
 /**
- * A {@code WallEnd} is the end of a mWall touching the pilar.
+ * A {@code WallEnd} is the end of a mWall touching the pillar.
  */
 public class WallEnd implements Comparable<WallEnd> {
     /**
      * WallEnd constructor.
      *
-     * @param p1IsPilar true if wallShape.p1 touches the pillar. Otherwise p2 touches the pillar.
+     * @param p1IsPillar true if wallShape.p1 touches the pillar. Otherwise p2 touches the pillar.
      */
-    public WallEnd(MWall mWall, WallShape wallShape, boolean p1IsPilar) {
+    public WallEnd(MWall mWall, WallShape wallShape, boolean p1IsPillar) {
         this.mWall = mWall;
         this.wallShape = wallShape;
-        this.p1IsPilar = p1IsPilar;
+        this.p1IsPillar = p1IsPillar;
     }
 
     public Point2DInt getNonPillarPoint() {
-        return getPoint(!p1IsPilar);
+        return getPoint(!p1IsPillar);
     }
 
     public Point2DInt getPillarPoint() {
-        return getPoint(p1IsPilar);
+        return getPoint(p1IsPillar);
     }
 
     /**
@@ -50,15 +50,15 @@ public class WallEnd implements Comparable<WallEnd> {
     }
 
     public int getLeftFaceId() {
-        return getFaceId(p1IsPilar);
+        return getFaceId(p1IsPillar);
     }
 
     public int getRightFaceId() {
-        return getFaceId(!p1IsPilar);
+        return getFaceId(!p1IsPillar);
     }
 
     public void addEdge(MEdge edge) {
-        mWall.addEdgeToHead(edge, p1IsPilar);
+        mWall.addEdgeToHead(edge, p1IsPillar);
     }
 
     public MWall getMWall() {
@@ -69,8 +69,8 @@ public class WallEnd implements Comparable<WallEnd> {
         return wallShape;
     }
 
-    public boolean isP1Pilar() {
-        return p1IsPilar;
+    public boolean isP1Pillar() {
+        return p1IsPillar;
     }
 
     @Override
@@ -87,11 +87,11 @@ public class WallEnd implements Comparable<WallEnd> {
         return "WallEnd{" +
                 "mWall=" + mWall +
                 ", wallShape=" + wallShape +
-                ", p1IsPilar=" + p1IsPilar +
+                ", p1IsPillar=" + p1IsPillar +
                 '}';
     }
 
     private final MWall mWall;
     private final WallShape wallShape;
-    private final boolean p1IsPilar;
+    private final boolean p1IsPillar;
 }

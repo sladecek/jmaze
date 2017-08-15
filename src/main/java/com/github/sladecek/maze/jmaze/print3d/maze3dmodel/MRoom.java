@@ -42,7 +42,7 @@ public class MRoom extends FloorFace {
         for (; ; ) {
             unfinished.remove(current);
             final WallEnd wallEnd2 = current.getWallEnd2();
-            final LeftRight centralSide = wallEnd2.isP1Pilar() ? LeftRight.left : LeftRight.right;
+            final LeftRight centralSide = wallEnd2.isP1Pillar() ? LeftRight.left : LeftRight.right;
             final MWall w2 = wallEnd2.getMWall();
             MEdge e2 = w2.getSideEdge(centralSide);
             e2.setLeftFace(this);

@@ -84,7 +84,7 @@ public final class EggMaze extends BaseMaze {
             generateMeridianWalls(sn);
         }
         generateParallelWallsOnEquator();
-        assignStartAndTragetRooms();
+        assignStartAndTargetRooms();
 
     }
     public EggMazeHemisphere getHemisphere(SouthNorth sn) {
@@ -135,7 +135,7 @@ public final class EggMaze extends BaseMaze {
         return false;
     }
 
-    private void assignStartAndTragetRooms() {
+    private void assignStartAndTargetRooms() {
         getGraph().setStartRoom(north.getGreenwichRoom(north.getCircleCnt() - 1));
         getGraph().setTargetRoom(south.getGreenwichRoom(south.getCircleCnt() - 1));
 
@@ -194,7 +194,7 @@ public final class EggMaze extends BaseMaze {
     private void generateParallelWalls(SouthNorth sn) {
         EggMazeHemisphere h = getHemisphere(sn);
         for (int i = 1; i < h.getCircleCnt(); i++) {
-            LOG.log(Level.INFO, "generateParallesWalls(" + sn + ") i=" + i);
+            LOG.log(Level.INFO, "generateParallelWalls(" + sn + ") i=" + i);
 
             // the next layer may have less rooms than this one
             final int roomCntThis = h.getRoomCntBeforeCircle(i);
@@ -248,15 +248,15 @@ public final class EggMaze extends BaseMaze {
             final int gr = h.getGreenwichRoom(i);
             for (int j = 0; j < cnt; j++) {
                 final int rightRoom = gr + j;
-                final int leftRooom = gr + (j + 1) % cnt;
-                int id = getGraph().addWall(rightRoom, leftRooom);
+                final int leftRoom = gr + (j + 1) % cnt;
+                int id = getGraph().addWall(rightRoom, leftRoom);
                 // strange wall naming convention - wall 0 is between room 0 and
                 // 1
                 int jj = (j + 1) % cnt;
                 if (sn == SouthNorth.north) {
-                    addWallShape(cnt, jj, jj, i, i + 1, id, rightRoom, leftRooom);
+                    addWallShape(cnt, jj, jj, i, i + 1, id, rightRoom, leftRoom);
                 } else {
-                    addWallShape(cnt, jj, jj, -i - 1, -i, id, rightRoom, leftRooom);
+                    addWallShape(cnt, jj, jj, -i - 1, -i, id, rightRoom, leftRoom);
                 }
             }
         }
