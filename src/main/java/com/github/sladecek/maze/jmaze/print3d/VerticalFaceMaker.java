@@ -1,5 +1,6 @@
 package com.github.sladecek.maze.jmaze.print3d;
 
+import com.github.sladecek.maze.jmaze.geometry.LeftRight;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MEdge;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MFace;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MPoint;
@@ -20,7 +21,6 @@ class VerticalFaceMaker {
         this.mapper = mapper;
         newEdges = new ArrayList<>();
         newPoints = new ArrayList<>();
-
     }
 
     /**
@@ -91,8 +91,6 @@ class VerticalFaceMaker {
 
     /**
      * Set maximal/minimal altitudes of TelescopicPoint. Public for unit tests.
-     *
-
      */
     public void stretchOneEdge(MEdge e) {
         // edge endpoints
@@ -117,14 +115,11 @@ class VerticalFaceMaker {
     /**
      * Make vertical shapes induced by one edge. This method is public due to internal usage
      * by unit tests.
-     *
      */
     void makeVerticalFacesOneEdge(MEdge e) {
-
-
         // edge endpoints
-        TelescopicPoint fp1 = (TelescopicPoint) e.getP1();
-        TelescopicPoint fp2 = (TelescopicPoint) e.getP2();
+        TelescopicPoint p1 = (TelescopicPoint) e.getP1();
+        TelescopicPoint p2 = (TelescopicPoint) e.getP2();
 
         // each edge separates two faces
         FloorFace rightFace = (FloorFace) e.getRightFace();
@@ -137,58 +132,83 @@ class VerticalFaceMaker {
         Altitude upperAltitude = rightFace.getAltitude();
         Altitude lowerAltitude = leftFace.getAltitude();
         MFace lowFace = leftFace;
-
+        LeftRight lowFaceSide = LeftRight.left;
         if (a1 < a2) {
             upperAltitude = leftFace.getAltitude();
             lowerAltitude = rightFace.getAltitude();
             lowFace = rightFace;
+            lowFaceSide = LeftRight.right;
         }
 
         // if the faces are on different altitudes, it is necessary to
         // connect them with vertical faces and connecting edges
         if (a1 != a2) {
-            fixUnevenAltitudes(e, fp1, fp2, upperAltitude, lowerAltitude, lowFace);
+            fixUnevenAltitudes(e, p1, p2, upperAltitude, lowerAltitude, lowFace, lowFaceSide);
         }
 
         // replace endpoints of the upper edge so that they are both at the proper level
-        e.setP1(fp1.getPointAt(upperAltitude));
-        e.setP2(fp2.getPointAt(upperAltitude));
+        e.setP1(p1.getPointAt(upperAltitude));
+        e.setP2(p2.getPointAt(upperAltitude));
     }
 
-    private void fixUnevenAltitudes(MEdge e, TelescopicPoint fp1, TelescopicPoint fp2,
-                                    Altitude upperAltitude, Altitude lowerAltitude, MFace lowFace) {
+    private void fixUnevenAltitudes(MEdge e,
+                                    TelescopicPoint p1, TelescopicPoint p2,
+                                    Altitude upperAltitude, Altitude lowerAltitude,
+                                    MFace lowFace, LeftRight lowFaceSide) {
         MEdge upperEdge = e;
 
-        // loop over all altitudes between two faces
 
-        assert  (Altitude.FRAME.getValue() < Altitude.GROUND.getValue())
+        assert (Altitude.FRAME.getValue() < Altitude.GROUND.getValue())
                 && (Altitude.GROUND.getValue() < Altitude.FLOOR.getValue())
                 && (Altitude.FLOOR.getValue() < Altitude.CEILING.getValue())
                 : "Altitudes must be ordered.";
 
+        // Loop over all altitudes between two horizontal faces.
+        // Fill the whole side with vertical faces - one per altitude.
         Altitude alt = upperAltitude;
         while (alt.hasPrev() && alt.prev().getValue() >= lowerAltitude.getValue()) {
-            Altitude oneBelow = alt.prev();
-            MEdge newEdge = new MEdge(fp1.getPointAt(oneBelow), fp2.getPointAt(oneBelow));
-            newEdges.add(newEdge);
-
-            MFace newFace = new MFace();
-            newFace.addEdge(upperEdge);
-            newFace.addEdge(fp1.getRodAt(oneBelow));
-            newFace.addEdge(newEdge);
-            newFace.addEdge(fp2.getRodAt(oneBelow));
-            // vertical face is invisible when both its altitudes are invisible
-            newFace.setVisible(
-                    mapper.isAltitudeVisible(alt) || mapper.isAltitudeVisible(oneBelow)
-            );
-            m.addFace(newFace);
-
-
-            alt = oneBelow;
+            MEdge newEdge = makeVerticalLevel(upperEdge, p1, p2, lowFaceSide, alt);
+            alt = alt.prev();
             upperEdge = newEdge;
         }
 
+        // connect the new objects to the existing low altitude face
         lowFace.replaceEdge(e, upperEdge);
+        upperEdge.setSideFace(lowFaceSide, lowFace);
+    }
+
+    private MEdge makeVerticalLevel(MEdge upperEdge,
+                                    TelescopicPoint p1, TelescopicPoint p2,
+                                    LeftRight upperEdgeSide, Altitude upperAltitude) {
+        Altitude lowerAltitude = upperAltitude.prev();
+        LeftRight lowerEdgeSide = upperEdgeSide.mirror();
+
+        MFace newFace = new MFace();
+
+        MEdge lowerEdge = new MEdge(p1.getPointAt(lowerAltitude), p2.getPointAt(lowerAltitude));
+        newEdges.add(lowerEdge);
+
+        upperEdge.setSideFace(upperEdgeSide, newFace);
+        newFace.addEdge(upperEdge);
+
+        lowerEdge.setSideFace(lowerEdgeSide, newFace);
+        newFace.addEdge(lowerEdge);
+
+        final MEdge rod1 = p1.getRodAt(lowerAltitude);
+        rod1.setSideFace(lowerEdgeSide, newFace);
+        newFace.addEdge(rod1);
+
+        final MEdge rod2 = p2.getRodAt(lowerAltitude);
+        rod2.setSideFace(upperEdgeSide, newFace);
+        newFace.addEdge(rod2);
+
+        // vertical face is invisible when both its altitudes are invisible
+        newFace.setVisible(
+                mapper.isAltitudeVisible(upperAltitude) || mapper.isAltitudeVisible(lowerAltitude)
+        );
+
+        m.addFace(newFace);
+        return lowerEdge;
     }
 
 

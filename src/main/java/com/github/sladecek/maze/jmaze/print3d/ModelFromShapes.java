@@ -3,7 +3,10 @@ package com.github.sladecek.maze.jmaze.print3d;
 import com.github.sladecek.maze.jmaze.geometry.Point2DDbl;
 import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 import com.github.sladecek.maze.jmaze.geometry.Point3D;
-import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.*;
+import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MBlock;
+import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MFace;
+import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MPoint;
+import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.Model3d;
 import com.github.sladecek.maze.jmaze.print3d.maze3dmodel.*;
 import com.github.sladecek.maze.jmaze.printstyle.PrintStyle;
 import com.github.sladecek.maze.jmaze.shapes.FloorShape;
@@ -25,18 +28,34 @@ public class ModelFromShapes {
         this.wallSize = wallSize;
     }
 
-    static public Model3d make(Shapes shapes, IMaze3DMapper mapper,  PrintStyle style, double wallSize) {
+    static public Model3d make(Shapes shapes, IMaze3DMapper mapper, PrintStyle style, double wallSize) {
         ModelFromShapes mfs = new ModelFromShapes(shapes, mapper, wallSize);
         mfs.makePlanarProjection();
         mfs.extrudeTo3D();
         return mfs.m;
     }
 
-    static public Model3d makeWithoutExtrusionForUnitTesting(Shapes shapes, IMaze3DMapper mapper,  PrintStyle style, double
+    static public Model3d makeWithoutExtrusionForUnitTesting(Shapes shapes, IMaze3DMapper mapper, PrintStyle style, double
             wallSize) {
         ModelFromShapes mfs = new ModelFromShapes(shapes, mapper, wallSize);
         mfs.makePlanarProjection();
         return mfs.m;
+    }
+
+    public static MBlock createOneBlockFromFace(MFace f, IMaze3DMapper mapper) {
+        assert f instanceof FloorFace;
+        Altitude alt = ((FloorFace) f).getAltitude();
+        MBlock block = new MBlock();
+        for (MPoint p : f.visitPointsAroundEdges()) {
+            assert p instanceof TelescopicPoint;
+            TelescopicPoint pp = (TelescopicPoint) p;
+            Point3D pGround = pp.mapPoint(mapper, Altitude.GROUND);
+            Point3D pCeiling = pp.mapPoint(mapper, alt);
+
+            block.addCeilingPoint(pCeiling);
+            block.addGroundPoint(pGround);
+        }
+        return block;
     }
 
     private void makePlanarProjection() {
@@ -48,25 +67,25 @@ public class ModelFromShapes {
     }
 
     private void extrudeTo3D() {
-            setFaceVisibilityDependingOnAltitude();
+        setFaceVisibilityDependingOnAltitude();
 
-            VerticalFaceMaker maker = new VerticalFaceMaker(m, mapper);
-            maker.stretchTelescopicPoints();
-            maker.setTelescopicPointAltitude();
+        VerticalFaceMaker maker = new VerticalFaceMaker(m, mapper);
+        maker.stretchTelescopicPoints();
+        maker.setTelescopicPointAltitude();
 
-            // blocks must be created after the telescopic point coordinates were established
-            // but before adding any new edges to the model
-            createBlocks();
+        // blocks must be created after the telescopic point coordinates were established
+        // but before adding any new edges to the model
+        createBlocks();
 
-            maker.makeVerticalEdges();
-            maker.makeVerticalFaces();
-            maker.addNewObjectsBackToModel();
+        maker.makeVerticalEdges();
+        maker.makeVerticalFaces();
+        maker.addNewObjectsBackToModel();
     }
 
     private void setFaceVisibilityDependingOnAltitude() {
-        for (MFace f: m.getFaces()) {
+        for (MFace f : m.getFaces()) {
             if (f instanceof FloorFace) {
-                FloorFace ff = (FloorFace)f;
+                FloorFace ff = (FloorFace) f;
                 f.setVisible(mapper.isAltitudeVisible(ff.getAltitude()));
             }
         }
@@ -123,7 +142,6 @@ public class ModelFromShapes {
         s.add(end);
     }
 
-
     private void makePillars() {
         for (Point2DInt center : wallsForPillars.keySet()) {
             Point2DDbl c = new Point2DDbl(center.getX(), center.getY());
@@ -137,7 +155,7 @@ public class ModelFromShapes {
         }
     }
 
-     private void takeRoomCornersFromPillar(Collection<RoomCorner> corners) {
+    private void takeRoomCornersFromPillar(Collection<RoomCorner> corners) {
         for (RoomCorner c : corners) {
             int floorId = c.getFloorId();
             MRoom room = makeRoom(floorId, Altitude.FRAME);
@@ -162,12 +180,11 @@ public class ModelFromShapes {
         }
 
         for (MRoom r : rooms.values()) {
-                m.addFace(r);
-                r.finishEdges();
+            m.addFace(r);
+            r.finishEdges();
             // no new points or edges
         }
     }
-
 
     private void createBlocks() {
         for (MFace f : m.getFaces()) {
@@ -178,32 +195,14 @@ public class ModelFromShapes {
             }
         }
     }
-
-    public static MBlock createOneBlockFromFace(MFace f, IMaze3DMapper mapper) {
-        assert f instanceof FloorFace;
-        Altitude alt = ((FloorFace) f).getAltitude();
-        MBlock block = new MBlock();
-        for (MPoint p : f.visitPointsAroundEdges()) {
-            assert p instanceof TelescopicPoint;
-            TelescopicPoint pp = (TelescopicPoint) p;
-            Point3D pGround = pp.mapPoint(mapper, Altitude.GROUND);
-            Point3D pCeiling = pp.mapPoint(mapper, alt);
-
-            block.addCeilingPoint(pCeiling);
-            block.addGroundPoint(pGround);
-        }
-        return block;
-    }
-
-
     private final double wallSize;
     private final Shapes shapes;
 
     private final IMaze3DMapper mapper;
-    private Model3d m;
-    private TreeMap<Point2DInt, Set<WallEnd>> wallsForPillars;
     private final ArrayList<MWall> walls = new ArrayList<>();
     private final ArrayList<MPillar> pillars = new ArrayList<>();
     private final TreeMap<Integer, MRoom> rooms = new TreeMap<>();
+    private Model3d m;
+    private TreeMap<Point2DInt, Set<WallEnd>> wallsForPillars;
 
 }
