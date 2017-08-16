@@ -1,12 +1,16 @@
 package com.github.sladecek.maze.jmaze.print3d;
 
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MEdge;
+import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MFace;
+import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MPoint;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.Model3d;
 import com.github.sladecek.maze.jmaze.print3d.maze3dmodel.Altitude;
 import com.github.sladecek.maze.jmaze.print3d.maze3dmodel.FloorFace;
 import com.github.sladecek.maze.jmaze.print3d.maze3dmodel.TelescopicPoint;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.ArrayList;
 
 import static junit.framework.TestCase.assertFalse;
 import static junit.framework.TestCase.assertNull;
@@ -27,6 +31,76 @@ public class VerticalFaceMakerTest {
         pSouth = new TelescopicPoint(1, 0);
         pNorth = new TelescopicPoint(1, 2);
     }
+
+    private void prepareModel(Altitude anw, Altitude ane, Altitude ase, Altitude asw) {
+        model = new Model3d();
+        model.addPoint(pCenter);
+        model.addPoint(pEast);
+        model.addPoint(pWest);
+        model.addPoint(pSouth);
+        model.addPoint(pNorth);
+
+        eCW = new MEdge(pCenter, pWest);
+        eCE = new MEdge(pCenter, pEast);
+        eCS = new MEdge(pCenter, pSouth);
+        eCN = new MEdge(pCenter, pNorth);
+
+        eWS = new MEdge(pWest, pSouth);
+        eWN = new MEdge(pWest, pNorth);
+        eSE = new MEdge(pSouth, pEast);
+        eNE = new MEdge(pNorth, pEast);
+
+        model.addEdge(eCW);
+        model.addEdge(eCE);
+        model.addEdge(eNE);
+        model.addEdge(eCS);
+        model.addEdge(eCN);
+        model.addEdge(eWS);
+        model.addEdge(eWN);
+        model.addEdge(eSE);
+
+        fNW = new FloorFace();
+        fNW.addEdge(eCW);
+        fNW.addEdge(eCN);
+        fNW.addEdge(eWN);
+        fNW.setAltitude(anw);
+
+        fSW = new FloorFace();
+        fSW.addEdge(eCW);
+        fSW.addEdge(eCS);
+        fSW.addEdge(eWS);
+        fSW.setAltitude(asw);
+
+        fSE = new FloorFace();
+        fSE.addEdge(eCE);
+        fSE.addEdge(eCS);
+        fSE.addEdge(eSE);
+        fSE.setAltitude(ase);
+
+        fNE = new FloorFace();
+        fNE.addEdge(eCE);
+        fNE.addEdge(eCN);
+        fNE.addEdge(eNE);
+        fNE.setAltitude(ane);
+
+        model.addFace(fNW);
+        model.addFace(fSW);
+        model.addFace(fSE);
+        model.addFace(fNE);
+
+        eCN.setLeftFace(fNW);
+        eCN.setRightFace(fNE);
+
+        eCW.setLeftFace(fSW);
+        eCW.setRightFace(fNW);
+
+        eCS.setLeftFace(fSE);
+        eCS.setRightFace(fSW);
+
+        eCE.setLeftFace(fSE);
+        eCE.setRightFace(fNE);
+    }
+
 
     @Test
     public void checkUntouchedModel() {
@@ -67,8 +141,6 @@ public class VerticalFaceMakerTest {
         maker = new VerticalFaceMaker(model, mapper);
         // process the central edges only to insulate tested algorithm. Otherwise the frame
         // edges would be extruded to.
-        // process the central edges only, to insulate tested algorithm. Otherwise the frame
-        // edges would be extruded too.
         MEdge[] myEdges = {eCE, eCN, eCS, eCW};
         for (MEdge e : myEdges) maker.stretchOneEdge(e);
 
@@ -135,8 +207,6 @@ public class VerticalFaceMakerTest {
         assertEquals(8 + 3 + 2, model.getEdges().size());
         assertEquals(4 + 2, model.getFaces().size());
 
-        System.out.println(model);
-
         assertEquals(2, pCenter.getCoordinate().getZ(), epsilon);
         assertEquals(2, pNorth.getCoordinate().getZ(), epsilon);
         assertEquals(2, pWest.getCoordinate().getZ(), epsilon);
@@ -152,6 +222,31 @@ public class VerticalFaceMakerTest {
         assertEquals(2, eCN.getP2().getCoordinate().getZ(), epsilon);
         assertEquals(2, eCW.getP1().getCoordinate().getZ(), epsilon);
         assertEquals(2, eCW.getP2().getCoordinate().getZ(), epsilon);
+
+        MFace newFace1 = (MFace)(model.getFaces().toArray()[4]);
+        assertEquals(eCN, newFace1.getEdges().get(0));
+        assertEquals(newFace1, newFace1.getEdges().get(0).getRightFace());
+        assertEquals(newFace1, newFace1.getEdges().get(1).getLeftFace());
+        assertEquals(newFace1, newFace1.getEdges().get(2).getLeftFace());
+        assertEquals(newFace1, newFace1.getEdges().get(3).getRightFace());
+
+        ArrayList<MPoint> newFace1Points = newFace1.visitPointsCounterclockwise();
+        assertEquals(4, newFace1Points.size());
+        // TODO points must be visited CCW
+
+
+        MFace newFace2 = (MFace)(model.getFaces().toArray()[5]);
+        assertEquals(eCW, newFace2.getEdges().get(0));
+        assertEquals(newFace2, newFace2.getEdges().get(0).getLeftFace());
+        assertEquals(newFace2, newFace2.getEdges().get(1).getRightFace());
+        assertEquals(newFace2, newFace2.getEdges().get(2).getRightFace());
+        assertEquals(newFace2, newFace2.getEdges().get(3).getLeftFace());
+
+
+        ArrayList<MPoint> newFacePoints2 = newFace1.visitPointsCounterclockwise();
+        assertEquals(4, newFacePoints2.size());
+        // TODO points must be visited CCW
+
     }
 
 
@@ -259,90 +354,10 @@ public class VerticalFaceMakerTest {
         assertEquals(2, eCW.getP1().getCoordinate().getZ(), epsilon);
         assertEquals(2, eCW.getP2().getCoordinate().getZ(), epsilon);
 
-//        for(MEdge e: model.getEdges()) {
-//            testSkewEdge(e);
-//        }
 
     }
 
-    private void prepareModel(Altitude anw, Altitude ane, Altitude ase, Altitude asw) {
-        model = new Model3d();
-        model.addPoint(pCenter);
-        model.addPoint(pEast);
-        model.addPoint(pWest);
-        model.addPoint(pSouth);
-        model.addPoint(pNorth);
 
-        eCW = new MEdge(pCenter, pWest);
-        eCE = new MEdge(pCenter, pEast);
-        eCS = new MEdge(pCenter, pSouth);
-        eCN = new MEdge(pCenter, pNorth);
-
-        eWS = new MEdge(pWest, pSouth);
-        eWN = new MEdge(pWest, pNorth);
-        eSE = new MEdge(pSouth, pEast);
-        eNE = new MEdge(pNorth, pEast);
-
-        model.addEdge(eCW);
-        model.addEdge(eCE);
-        model.addEdge(eNE);
-        model.addEdge(eCS);
-        model.addEdge(eCN);
-        model.addEdge(eWS);
-        model.addEdge(eWN);
-        model.addEdge(eSE);
-
-        fNW = new FloorFace();
-        fNW.addEdge(eCW);
-        fNW.addEdge(eCN);
-        fNW.addEdge(eWN);
-        fNW.setAltitude(anw);
-
-        fSW = new FloorFace();
-        fSW.addEdge(eCW);
-        fSW.addEdge(eCS);
-        fSW.addEdge(eWS);
-        fSW.setAltitude(asw);
-
-        fSE = new FloorFace();
-        fSE.addEdge(eCE);
-        fSE.addEdge(eCS);
-        fSE.addEdge(eSE);
-        fSE.setAltitude(ase);
-
-        fNE = new FloorFace();
-        fNE.addEdge(eCE);
-        fNE.addEdge(eCN);
-        fNE.addEdge(eNE);
-        fNE.setAltitude(ane);
-
-        model.addFace(fNW);
-        model.addFace(fSW);
-        model.addFace(fSE);
-        model.addFace(fNE);
-
-        eCN.setLeftFace(fNW);
-        eCN.setRightFace(fNE);
-
-        eCW.setLeftFace(fSW);
-        eCW.setRightFace(fNW);
-
-        eCS.setLeftFace(fSE);
-        eCS.setRightFace(fSW);
-
-        eCE.setLeftFace(fSE);
-        eCE.setRightFace(fNE);
-
-    }
-
-    void testSkewEdge(MEdge e) {
-        double dz = Math.abs(e.getP1().getCoordinate().getZ() - e.getP2().getCoordinate().getZ());
-        double dx = Math.abs(e.getP1().getCoordinate().getX() - e.getP2().getCoordinate().getX());
-        double dy = Math.abs(e.getP1().getCoordinate().getY() - e.getP2().getCoordinate().getY());
-        double dxy = Math.sqrt((dx*dx+dy*dy));
-        final double epsilon = 1e-6;
-        assertTrue(dz < epsilon || dxy < epsilon);
-    }
 
 
     private final IMaze3DMapper mapper = new PlanarMapper();

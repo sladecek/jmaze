@@ -32,7 +32,7 @@ public class StlMazePrinter implements IMaze3DPrinter {
     }
 
     private void printFace(PrintWriter pw, MFace face) {
-        ArrayList<MPoint> points = face.visitPointsAroundEdges();
+        ArrayList<MPoint> points = face.visitPointsCounterclockwise();
         final int sz = points.size();
         MPoint pt1 = points.get(0);
 

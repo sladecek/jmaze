@@ -22,7 +22,7 @@ public class MFace {
         this.edges.add(edge);
     }
 
-    public ArrayList<MPoint> visitPointsAroundEdges() {
+    public ArrayList<MPoint> visitPointsCounterclockwise() {
         ArrayList<MPoint> result = new ArrayList<>();
         ArrayList<MEdge> unfinished = new ArrayList<>();
         unfinished.addAll(getEdges());

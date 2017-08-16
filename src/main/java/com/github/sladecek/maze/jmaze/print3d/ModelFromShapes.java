@@ -46,7 +46,7 @@ public class ModelFromShapes {
         assert f instanceof FloorFace;
         Altitude alt = ((FloorFace) f).getAltitude();
         MBlock block = new MBlock();
-        for (MPoint p : f.visitPointsAroundEdges()) {
+        for (MPoint p : f.visitPointsCounterclockwise()) {
             assert p instanceof TelescopicPoint;
             TelescopicPoint pp = (TelescopicPoint) p;
             Point3D pGround = pp.mapPoint(mapper, Altitude.GROUND);

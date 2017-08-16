@@ -33,7 +33,7 @@ public class ModelFromShapesBlockMakingTest {
             ((TelescopicPoint)e.getP2()).setOwnAltitude(mapper);
         }
 
-        ArrayList<MPoint> p = f.visitPointsAroundEdges();
+        ArrayList<MPoint> p = f.visitPointsCounterclockwise();
         assertEquals(p.size(), 4);
 
         final double epsilon=1e-6;
