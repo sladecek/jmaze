@@ -18,6 +18,8 @@ public class WallEndTest {
     @Before
     public void setUp() throws Exception {
         mw = new MWall();
+        int rightId = 99;
+        int leftId = 77;
         ws = WallShape.newInnerWall(0, new Point2DInt(1, 1), new Point2DInt(2, 2), leftId, rightId);
     }
 
@@ -57,8 +59,6 @@ public class WallEndTest {
     }
 
 
-    private final int leftId = 77;
-    private final int rightId = 99;
     private MWall mw;
     private WallShape ws;
 

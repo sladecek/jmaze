@@ -21,6 +21,7 @@ import static org.junit.Assert.assertNotNull;
 /**
  * Test class for VerticalFaceMaker.
  */
+@SuppressWarnings("FieldCanBeLocal")
 public class VerticalFaceMakerTest {
 
     @Before

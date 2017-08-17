@@ -3,8 +3,6 @@ package com.github.sladecek.maze.jmaze.print3d.generic3dmodel;
 import com.github.sladecek.maze.jmaze.geometry.Point3D;
 import org.junit.Test;
 
-import java.util.ArrayList;
-
 import static org.junit.Assert.*;
 
 /**
@@ -52,21 +50,4 @@ public class MFaceTest {
         fail("Exception expected");
     }
 
-    @Test
-    public void testVisit()
-    {
-        MFace f = new MFace();
-        f.addEdge(new MEdge(new MPoint(new Point3D(1.0, 1.0,2.0)), new MPoint(new Point3D(-1.0, -1.0,2.0))));
-        f.addEdge(new MEdge(new MPoint(new Point3D(-1.0, 20.0,2.0)), new MPoint(new Point3D(1.0, 19.0,2.0))));
-        f.addEdge(new MEdge(new MPoint(new Point3D(-1.0, -1.0,2.0)), new MPoint(new Point3D(-1.0, 20.0,2.0))));
-        f.addEdge(new MEdge(new MPoint(new Point3D(1.0, 19.0,2.0)), new MPoint(new Point3D(1.0, 1.0,2.0))));
-        ArrayList<MPoint> p = f.visitPointsCounterclockwise();
-        assertEquals(p.size(), 4);
-        final double epsilon=1e-6;
-        assertEquals(0, Point3D.computeDistance( new Point3D(1.0, 1.0,2.0), p.get(0).getCoordinate()), epsilon);
-        assertEquals(0, Point3D.computeDistance( new Point3D(1.0, 19.0,2.0), p.get(1).getCoordinate()), epsilon);
-        assertEquals(0, Point3D.computeDistance( new Point3D(-1.0, 20.0,2.0), p.get(2).getCoordinate()), epsilon);
-        assertEquals(0, Point3D.computeDistance( new Point3D(-1.0, -1.0,2.0), p.get(3).getCoordinate()), epsilon);
-
-    }
 }
