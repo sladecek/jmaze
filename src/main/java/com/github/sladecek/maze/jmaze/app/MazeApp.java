@@ -1,6 +1,6 @@
 package com.github.sladecek.maze.jmaze.app;
 
-import com.github.sladecek.maze.jmaze.maze.BaseMaze;
+import com.github.sladecek.maze.jmaze.maze.Maze;
 import com.github.sladecek.maze.jmaze.maze.MazeFactory;
 import com.github.sladecek.maze.jmaze.properties.MazeProperties;
 import com.github.sladecek.maze.jmaze.util.MazeGenerationException;
@@ -37,7 +37,7 @@ public class MazeApp {
                 System.out.print(cla.getUsage());
                 return;
             }
-            BaseMaze maze = new MazeFactory().newMaze(cla.getMazeType());
+            Maze maze = new MazeFactory().newMaze(cla.getMazeType());
 
             if (cla.isPropertiesListRequired()) {
                 MazeProperties properties = maze.getDefaultProperties();

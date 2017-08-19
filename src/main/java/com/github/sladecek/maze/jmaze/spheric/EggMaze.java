@@ -6,7 +6,7 @@ import java.util.logging.Logger;
 
 import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 import com.github.sladecek.maze.jmaze.geometry.SouthNorth;
-import com.github.sladecek.maze.jmaze.maze.BaseMaze;
+import com.github.sladecek.maze.jmaze.maze.Maze;
 import com.github.sladecek.maze.jmaze.print3d.IMaze3DMapper;
 import com.github.sladecek.maze.jmaze.properties.MazeProperties;
 import com.github.sladecek.maze.jmaze.shapes.*;
@@ -14,7 +14,7 @@ import com.github.sladecek.maze.jmaze.shapes.*;
 /**
  * Rooms and walls of a maze on an geometry-like shape.
  */
-public final class EggMaze extends BaseMaze {
+public final class EggMaze extends Maze {
 
     public EggMaze() {
     }

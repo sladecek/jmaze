@@ -2,7 +2,7 @@ package com.github.sladecek.maze.jmaze.voronoi;
 
 import be.humphreys.simplevoronoi.GraphEdge;
 import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
-import com.github.sladecek.maze.jmaze.maze.BaseMaze;
+import com.github.sladecek.maze.jmaze.maze.Maze;
 
 import com.github.sladecek.maze.jmaze.print3d.IMaze3DMapper;
 import com.github.sladecek.maze.jmaze.properties.MazeProperties;
@@ -14,7 +14,7 @@ import com.github.sladecek.maze.jmaze.shapes.WallShape;
 import java.util.logging.Logger;
 
 @SuppressWarnings("SameParameterValue")
-public class VoronoiMaze extends BaseMaze {
+public class VoronoiMaze extends Maze {
 
     public VoronoiMaze() {
 

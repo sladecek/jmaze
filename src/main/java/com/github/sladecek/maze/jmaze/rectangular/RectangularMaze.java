@@ -1,7 +1,7 @@
 package com.github.sladecek.maze.jmaze.rectangular;
 
 import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
-import com.github.sladecek.maze.jmaze.maze.BaseMaze;
+import com.github.sladecek.maze.jmaze.maze.Maze;
 import com.github.sladecek.maze.jmaze.print3d.IMaze3DMapper;
 import com.github.sladecek.maze.jmaze.print3d.PlanarMapper;
 import com.github.sladecek.maze.jmaze.properties.MazeProperties;
@@ -14,7 +14,7 @@ import com.github.sladecek.maze.jmaze.shapes.WallShape;
  * 2D rectangular maze. Both rooms and walls are numbered first by rows, then by
  * columns. East/west walls are numbered before south/north ones.
  */
-public class RectangularMaze extends BaseMaze {
+public class RectangularMaze extends Maze {
 
     @Override
     public MazeProperties getDefaultProperties() {

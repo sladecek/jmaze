@@ -21,8 +21,8 @@ import java.util.Random;
 /**
  * Builds a maze using maze data and IMaze methods.
  */
-public abstract class BaseMaze extends MazeData implements IMaze {
-    protected BaseMaze() {
+public abstract class Maze extends MazeData implements IMaze {
+    protected Maze() {
         properties = getDefaultProperties().clone();
     }
 
@@ -74,9 +74,9 @@ public abstract class BaseMaze extends MazeData implements IMaze {
         setupRandomGenerator();
         buildMazeGraphAndShapes();
         randomlyGenerateMazePath();
-
         if (with3d) {
             make3DModel();
+
         }
     }
 

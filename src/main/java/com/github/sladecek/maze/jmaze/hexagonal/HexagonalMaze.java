@@ -1,7 +1,7 @@
 package com.github.sladecek.maze.jmaze.hexagonal;
 
 import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
-import com.github.sladecek.maze.jmaze.maze.BaseMaze;
+import com.github.sladecek.maze.jmaze.maze.Maze;
 
 import com.github.sladecek.maze.jmaze.print3d.IMaze3DMapper;
 import com.github.sladecek.maze.jmaze.properties.MazeProperties;
@@ -13,7 +13,7 @@ import com.github.sladecek.maze.jmaze.shapes.WallShape;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
-public class HexagonalMaze extends BaseMaze {
+public class HexagonalMaze extends Maze {
 
     private int size;
 

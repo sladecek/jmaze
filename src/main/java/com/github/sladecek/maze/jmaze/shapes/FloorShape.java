@@ -12,6 +12,7 @@ public class FloorShape implements IMazeShape {
         this.position = position;
         this.roomId = roomId;
         this.isHole = false;
+        this.wallId = -1;
     }
 
     public Point2DInt getPosition() {
@@ -32,7 +33,8 @@ public class FloorShape implements IMazeShape {
 
     @Override
     public void applyPath(MazePath mr) {
-        isHole = !mr.isWallClosed(roomId);
+
+        isHole = wallId >=0 && !mr.isWallClosed(wallId);
     }
 
     public void setRoomId(int roomId) {
@@ -43,4 +45,16 @@ public class FloorShape implements IMazeShape {
     private int roomId;
     private final MarkType markType = MarkType.none;
     private boolean isHole;
+
+    // in some mazes we call pass throug the floor
+
+    public int getWallId() {
+        return wallId;
+    }
+
+    public void setWallId(int wallId) {
+        this.wallId = wallId;
+    }
+
+    private int wallId;
 }

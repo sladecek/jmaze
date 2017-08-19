@@ -12,7 +12,7 @@ import com.github.sladecek.maze.jmaze.voronoi.VoronoiMaze;
  * Creates a maze.
  */
 public class MazeFactory {
-    public BaseMaze newMaze(String name) {
+    public Maze newMaze(String name) {
         switch (name) {
             case "rectangular":
                 return new RectangularMaze();

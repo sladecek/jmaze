@@ -14,7 +14,8 @@ public class FloorShapeTest {
 
     @Before
     public void setup() {
-        fs = new FloorShape(2, new Point2DInt(11, 22));
+        fs = new FloorShape(7, new Point2DInt(11, 22));
+        fs.setWallId(2);
         pth = new MazePath(3, 0, 2);
     }
 

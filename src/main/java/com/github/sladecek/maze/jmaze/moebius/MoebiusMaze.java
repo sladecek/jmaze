@@ -2,7 +2,7 @@ package com.github.sladecek.maze.jmaze.moebius;
 
 
 import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
-import com.github.sladecek.maze.jmaze.maze.BaseMaze;
+import com.github.sladecek.maze.jmaze.maze.Maze;
 import com.github.sladecek.maze.jmaze.print3d.IMaze3DMapper;
 import com.github.sladecek.maze.jmaze.properties.MazeProperties;
 import com.github.sladecek.maze.jmaze.shapes.FloorShape;
@@ -12,7 +12,7 @@ import com.github.sladecek.maze.jmaze.shapes.WallShape;
 /**
  * 2D rectangular maze on Moebius strip.
  */
-public final class MoebiusMaze extends BaseMaze {
+public final class MoebiusMaze extends Maze {
 
     public MoebiusMaze() {
     }
@@ -65,6 +65,13 @@ public final class MoebiusMaze extends BaseMaze {
 
                 FloorShape r3 = new FloorShape(i, new Point2DInt(x, y));
                 r3.setRoomId(i);
+
+                int wallIdOfThisFloor = wall;
+                if (y >= sizeAcross) {
+                    wallIdOfThisFloor = mapXYToRoomId(getTheOtherSideOfHoleX(x), getTheOtherSideOfHoleY(y));
+                }
+                r3.setWallId(firstFloorWall + wallIdOfThisFloor);
+
                 getAllShapes().add(r3);
             }
         }
