@@ -30,8 +30,8 @@ public class Rectangular3DMazeTest {
     @Test
     public void testStl() throws IOException {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        StlMazePrinter printer = new StlMazePrinter();
-        printer.printModel(maze.getModel3d(), stream);
+        StlMazePrinter printer = new StlMazePrinter(maze.getModel3d());
+        printer.print(stream);
         stream.close();
         String s = stream.toString();
         assertEquals(19335, s.length());

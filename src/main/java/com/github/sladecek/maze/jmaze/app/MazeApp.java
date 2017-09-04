@@ -45,7 +45,7 @@ public class MazeApp {
             } else {
                 maze.getProperties().updateFromStrings(cla.getProperties());
                 maze.makeMazeAllSteps(true);
-                maze.printAccordingToProperties();
+                maze.printToFileInAllAvailableFormats();
             }
         } catch (SecurityException | IOException | MazeGenerationException e) {
             e.printStackTrace();

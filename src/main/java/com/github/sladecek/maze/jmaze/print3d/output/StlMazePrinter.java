@@ -4,7 +4,7 @@ import com.github.sladecek.maze.jmaze.geometry.Point3D;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MFace;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MPoint;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.Model3d;
-
+import com.github.sladecek.maze.jmaze.print.IMazePrinter;
 
 import java.io.OutputStream;
 import java.io.PrintWriter;
@@ -15,9 +15,16 @@ import java.util.ArrayList;
  * <p>
  * https://en.wikipedia.org/wiki/STL_(file_format)
  */
-public class StlMazePrinter implements IMaze3DPrinter {
+public class StlMazePrinter implements IMazePrinter {
+
+    public StlMazePrinter(Model3d model) {
+        this.model = model;
+    }
+
+    private Model3d model;
+
     @Override
-    public void printModel(Model3d model, OutputStream f) {
+    public void print(OutputStream f) {
         try (PrintWriter pw = new PrintWriter(f)) {
             pw.print("solid ");
             pw.println(model.getName());

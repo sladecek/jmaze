@@ -1,5 +1,6 @@
 package com.github.sladecek.maze.jmaze.print2d;
 
+import com.github.sladecek.maze.jmaze.print.MazeOutputFormat;
 import com.github.sladecek.maze.jmaze.properties.MazeProperties;
 import com.github.sladecek.maze.jmaze.rectangular.RectangularMaze;
 import org.junit.Assert;
@@ -21,22 +22,22 @@ public class SvgMazePrinterTest {
     public void setUp() throws Exception {
         maze = new RectangularMaze();
 
-        MazeProperties p = maze.getDefaultProperties();
-        p.put("width", 5);
-        p.put("height", 3);
+        properties = maze.getDefaultProperties();
+        properties.put("width", 5);
+        properties.put("height", 3);
 
-        maze.setProperties(p);
+        maze.setProperties(properties);
         final boolean with3d = false;
         maze.makeMazeAllSteps(with3d);
-        printer = new SvgMazePrinter(p);
+
     }
 
-
+private MazeProperties properties;
     @Test
     public void printShapesSvg() throws Exception {
-        SvgDocument svg = printer.createSvgDocument(maze.getPathShapes());
+        printer = new SvgMazePrinter(properties, MazeOutputFormat.svg, maze.getPathShapes());
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        printer.printSvgDocument(MazeOutputFormat.svg, stream, svg);
+        printer.print(stream);
         stream.close();
         String s = stream.toString();
         Assert.assertEquals(2811, s.length());
@@ -45,9 +46,9 @@ public class SvgMazePrinterTest {
 
     @Test
     public void printShapesPdf() throws Exception {
-        SvgDocument svg = printer.createSvgDocument(maze.getPathShapes());
+        printer = new SvgMazePrinter(properties, MazeOutputFormat.pdf, maze.getPathShapes());
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        printer.printSvgDocument(MazeOutputFormat.pdf, stream, svg);
+        printer.print(stream);
         stream.close();
         String s = stream.toString();
         Assert.assertEquals(1408, s.length());
@@ -55,7 +56,8 @@ public class SvgMazePrinterTest {
 
     @Test
     public void createSvgDocument() throws Exception {
-        SvgDocument svg = printer.createSvgDocument(maze.getPathShapes());
+        printer = new SvgMazePrinter(properties, MazeOutputFormat.pdf, maze.getPathShapes());
+        SvgDocument svg = printer.createSvgDocument();
         assertNotNull(svg);
         assertEquals(37, countNodes(svg.getDocument()));
     }

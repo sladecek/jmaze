@@ -1,5 +1,7 @@
 package com.github.sladecek.maze.jmaze.print2d;
 
+import com.github.sladecek.maze.jmaze.print.IMazePrinter;
+import com.github.sladecek.maze.jmaze.print.MazeOutputFormat;
 import com.github.sladecek.maze.jmaze.printstyle.PrintStyle;
 import com.github.sladecek.maze.jmaze.properties.MazeProperties;
 import com.github.sladecek.maze.jmaze.shapes.IMazeShape;
@@ -15,21 +17,30 @@ import org.apache.fop.svg.PDFTranscoder;
 import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import java.io.IOException;
 import java.io.OutputStream;
 
 /*
  * Print 2D maze to SVG or PDF. 
  */
-public final class SvgMazePrinter {
+public final class SvgMazePrinter implements IMazePrinter
+{
+    private final MazeOutputFormat format;
 
-    public SvgMazePrinter(MazeProperties properties) {
+    final Shapes shapes;
+
+    public SvgMazePrinter(MazeProperties properties, MazeOutputFormat format, Shapes shapes) {
+        this.format = format;
+        this.shapes = shapes;
         printStyle.configureFromProperties(properties);
     }
 
-    public void printShapes(final Shapes shapes, final MazeOutputFormat format,
-                            final OutputStream output) throws MazeGenerationException {
-        SvgDocument sd = createSvgDocument(shapes);
-        printSvgDocument(format, output, sd);
+
+
+    @Override
+    public void print(OutputStream stream) throws IOException, MazeGenerationException {
+        SvgDocument sd = createSvgDocument();
+        printSvgDocument(format, stream, sd);
     }
 
     public void printSvgDocument(final MazeOutputFormat format, final OutputStream output,
@@ -59,7 +70,7 @@ public final class SvgMazePrinter {
         }
     }
 
-    public SvgDocument createSvgDocument(final Shapes shapes) {
+    public SvgDocument createSvgDocument() {
         SvgDocument sd = new SvgDocument(shapes.getContext());
         for (IMazeShape shape : shapes.getShapes()) {
             if (shape instanceof IPrintableMazeShape2D) {
@@ -68,6 +79,8 @@ public final class SvgMazePrinter {
         }
         return sd;
     }
+
+
 
     private final PrintStyle printStyle = new PrintStyle();
 }

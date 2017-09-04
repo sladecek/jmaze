@@ -1,7 +1,2 @@
-*~
 /target/
-/.externalToolBuilders/net.sf.eclipsecs.core.CheckstyleBuilder.launch
-/.externalToolBuilders/org.eclipse.m2e.core.maven2Builder.launch
-/.project
-/.classpath
 /.idea

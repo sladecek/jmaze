@@ -8,6 +8,7 @@ import com.github.sladecek.maze.jmaze.print3d.output.OpenScad3DPrinter;
 import com.github.sladecek.maze.jmaze.print3d.output.StlMazePrinter;
 import com.github.sladecek.maze.jmaze.printstyle.PrintStyle;
 import com.github.sladecek.maze.jmaze.shapes.Shapes;
+import com.github.sladecek.maze.jmaze.util.MazeGenerationException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -93,10 +94,10 @@ public class ModelFromShapeTestExtruded extends ModelFromShapesTestBase {
     }
 
     @Test
-    public void testOpenScadPrint() throws IOException {
+    public void testOpenScadPrint() throws IOException, MazeGenerationException {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        OpenScad3DPrinter printer = new OpenScad3DPrinter();
-        printer.printModel(model3d, stream);
+        OpenScad3DPrinter printer = new OpenScad3DPrinter(model3d);
+        printer.print(stream);
         stream.close();
         String s = stream.toString();
         assertEquals(4507, s.length());
@@ -106,8 +107,8 @@ public class ModelFromShapeTestExtruded extends ModelFromShapesTestBase {
     @Test
     public void testStlPrint() throws IOException {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        StlMazePrinter printer = new StlMazePrinter();
-        printer.printModel(model3d, stream);
+        StlMazePrinter printer = new StlMazePrinter(model3d);
+        printer.print(stream);
         stream.close();
         String s = stream.toString();
         assertEquals(11757, s.length());

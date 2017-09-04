@@ -1,8 +1,10 @@
 package com.github.sladecek.maze.jmaze.print3d.output;
 
 import com.github.sladecek.maze.jmaze.geometry.Point3D;
+import com.github.sladecek.maze.jmaze.print.IMazePrinter;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MBlock;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.Model3d;
+import com.github.sladecek.maze.jmaze.util.MazeGenerationException;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -12,10 +14,18 @@ import java.util.ArrayList;
  * Save maze model in open scad file format.
  */
 
-public class OpenScad3DPrinter implements IMaze3DPrinter {
+public class OpenScad3DPrinter implements IMazePrinter {
+
+
+    public OpenScad3DPrinter(Model3d model) {
+        this.model = model;
+    }
+
+
+    private Model3d model;
 
     @Override
-    public void printModel(Model3d model, OutputStream stream) throws IOException {
+    public void print(OutputStream stream) throws IOException, MazeGenerationException {
         try (OpenScadComposer scad = new OpenScadComposer(stream)) {
             scad.beginUnion();
             for (MBlock b : model.getBlocks()) {

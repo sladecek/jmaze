@@ -2,7 +2,9 @@ package com.github.sladecek.maze.jmaze.maze;
 
 import com.github.sladecek.maze.jmaze.generator.DepthFirstMazeGenerator;
 import com.github.sladecek.maze.jmaze.generator.IMazeGenerator;
-import com.github.sladecek.maze.jmaze.print2d.MazeOutputFormat;
+import com.github.sladecek.maze.jmaze.print.IMazePrinter;
+import com.github.sladecek.maze.jmaze.print.MazeOutputFormat;
+import com.github.sladecek.maze.jmaze.print.MazeResult;
 import com.github.sladecek.maze.jmaze.print2d.SvgMazePrinter;
 import com.github.sladecek.maze.jmaze.print3d.IMaze3DMapper;
 import com.github.sladecek.maze.jmaze.print3d.ModelFromShapes;
@@ -14,6 +16,7 @@ import com.github.sladecek.maze.jmaze.printstyle.PrintStyle;
 import com.github.sladecek.maze.jmaze.properties.MazeProperties;
 import com.github.sladecek.maze.jmaze.util.MazeGenerationException;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Random;
@@ -110,41 +113,51 @@ public abstract class Maze extends MazeData implements IMaze {
     }
 
 
-    public void printAccordingToProperties() throws MazeGenerationException, IOException {
+    public void printToFileInAllAvailableFormats() throws MazeGenerationException, IOException {
         final String fileName = getProperties().getString("fileName");
-        // print 2D
-        if (canBePrintedIn2D()) {
-            SvgMazePrinter printer = new SvgMazePrinter(getProperties());
-
-            if (getProperties().getBoolean("svg")) {
-                FileOutputStream sSvg = new FileOutputStream(fileName + ".svg");
-                printer.printShapes(getPathShapes(), MazeOutputFormat.svg, sSvg);
-            }
-
-            if (getProperties().getBoolean("pdf")) {
-                FileOutputStream fPdf = new FileOutputStream(fileName + ".pdf");
-                printer.printShapes(getPathShapes(), MazeOutputFormat.pdf, fPdf);
-            }
-        }
-
-        IMaze3DMapper mapper = create3DMapper();
-        if (mapper != null) {
-            if (getProperties().getBoolean("js")) {
-                FileOutputStream fJs = new FileOutputStream(fileName + ".js");
-                new ThreeJs3DPrinter().printModel(getModel3d(), fJs);
-                fJs.close();
-            }
-            if (getProperties().getBoolean("scad")) {
-                FileOutputStream fScad = new FileOutputStream(fileName + ".scad");
-                new OpenScad3DPrinter().printModel(getModel3d(), fScad);
-                fScad.close();
-            }
-            if (getProperties().getBoolean("stl")) {
-                FileOutputStream fStl = new FileOutputStream(fileName + ".stl");
-                new StlMazePrinter().printModel(getModel3d(), fStl);
-                fStl.close();
+        for (MazeOutputFormat format : MazeOutputFormat.values()) {
+            IMazePrinter pr = constructMazePrinter(format);
+            if (pr != null) {
+                FileOutputStream stream = new FileOutputStream(fileName + "." + format.fileExtension());
+                pr.print(stream);
+                stream.close();
             }
         }
     }
 
+    public MazeResult printMazeInFormat(MazeOutputFormat format) throws MazeGenerationException, IOException {
+        IMazePrinter pr = constructMazePrinter(format);
+        if (pr != null) {
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            pr.print(stream);
+            stream.close();
+            final String fileName = getProperties().getString("fileName");
+            return new MazeResult(fileName, format, stream.toByteArray());
+        }
+        return null;
+    }
+
+    public IMazePrinter constructMazePrinter(MazeOutputFormat format) {
+        IMazePrinter pr = null;
+        if (getProperties().getBoolean(format.name())) {
+            // print 2D
+            if (format.is2D() && canBePrintedIn2D()) {
+                pr = new SvgMazePrinter(getProperties(), format, getPathShapes());
+            } else if (format.is3D() && canBePrintedIn3D()) {
+                switch (format) {
+                    case json:
+                        pr = new ThreeJs3DPrinter(getModel3d());
+                    case scad:
+                        pr = new OpenScad3DPrinter(getModel3d());
+                    case stl:
+                        pr = new StlMazePrinter(getModel3d());
+                }
+            }
+        }
+        return pr;
+    }
+
+    public boolean canBePrintedIn3D() {
+        return create3DMapper() != null;
+    }
 }

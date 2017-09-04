@@ -46,7 +46,7 @@ public class FloorShape implements IMazeShape {
     private final MarkType markType = MarkType.none;
     private boolean isHole;
 
-    // in some mazes we call pass throug the floor
+    // in some mazes we call pass through the floor
 
     public int getWallId() {
         return wallId;

@@ -1,16 +1,27 @@
 package com.github.sladecek.maze.jmaze.print3d.output;
 
+import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import com.github.sladecek.maze.jmaze.geometry.Point3D;
+import com.github.sladecek.maze.jmaze.print.IMazePrinter;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MFace;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MPoint;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.Model3d;
+import com.github.sladecek.maze.jmaze.util.MazeGenerationException;
 
 
-public class ThreeJs3DPrinter implements IMaze3DPrinter {
+public class ThreeJs3DPrinter implements IMazePrinter {
+
+    public ThreeJs3DPrinter(Model3d model) {
+        this.model = model;
+    }
+
+
+    private Model3d model;
+
 
     public ThreeJs3DPrinter() {
         super();
@@ -18,7 +29,7 @@ public class ThreeJs3DPrinter implements IMaze3DPrinter {
     }
 
     @Override
-    public void printModel(Model3d model, OutputStream stream) {
+    public void print(OutputStream stream) throws IOException, MazeGenerationException {
             try (PrintWriter pw = new PrintWriter(stream)) {
 
                     pw.print("{\n");
