@@ -15,6 +15,7 @@ import com.github.sladecek.maze.jmaze.printstyle.Color;
 import com.github.sladecek.maze.jmaze.printstyle.PrintStyle;
 import com.github.sladecek.maze.jmaze.properties.MazeProperties;
 import com.github.sladecek.maze.jmaze.util.MazeGenerationException;
+import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
@@ -26,17 +27,19 @@ import java.util.Random;
  */
 public abstract class Maze extends MazeData implements IMaze {
     protected Maze() {
-        properties = getDefaultProperties().clone();
+        properties = getDefaultProperties().deepCopy();
     }
 
     @Override
     public MazeProperties getDefaultProperties() {
+        // TODO smazat
         MazeProperties defaultProperties = new MazeProperties();
         defaultProperties.put("randomSeed", 0);
         return defaultProperties;
     }
 
     protected void addDefault2DProperties(MazeProperties properties) {
+        // TODO smazat
         properties.put("printSolution", true);
         properties.put("printAllWalls", false);
 
@@ -60,6 +63,7 @@ public abstract class Maze extends MazeData implements IMaze {
     }
 
     protected void addDefault3DProperties(MazeProperties properties) {
+        // TODO smazat
         properties.put("wallHeight", 30.0);
         properties.put("cellSize", 10.0);
         properties.put("wallSize", 2.0);
@@ -116,7 +120,7 @@ public abstract class Maze extends MazeData implements IMaze {
     public void printToFileInAllAvailableFormats() throws MazeGenerationException, IOException {
         final String fileName = getProperties().getString("fileName");
         for (MazeOutputFormat format : MazeOutputFormat.values()) {
-            IMazePrinter pr = constructMazePrinter(format);
+            IMazePrinter pr = constructMazePrinterIfInProperties(format);
             if (pr != null) {
                 FileOutputStream stream = new FileOutputStream(fileName + "." + format.fileExtension());
                 pr.print(stream);
@@ -126,38 +130,63 @@ public abstract class Maze extends MazeData implements IMaze {
     }
 
     public MazeResult printMazeInFormat(MazeOutputFormat format) throws MazeGenerationException, IOException {
+
+        boolean storeSvgToJson = false;
+        if (canBePrintedIn2D() && format == MazeOutputFormat.json) {
+            // json stored in svg
+            format = MazeOutputFormat.svg;
+            storeSvgToJson = true;
+        }
+
         IMazePrinter pr = constructMazePrinter(format);
         if (pr != null) {
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             pr.print(stream);
             stream.close();
             final String fileName = getProperties().getString("fileName");
-            return new MazeResult(fileName, format, stream.toByteArray());
+            if (storeSvgToJson) {
+                String jsonEncodedSvg = JSONObject.quote(pr.toString());
+                int width = getProperties().getInt("width", 0, Integer.MAX_VALUE);
+                int height = getProperties().getInt("height", 0, Integer.MAX_VALUE);
+                String json = String.format("{ svg: \"%s\", width: %d, height: %d}",
+                        jsonEncodedSvg, width, height);
+                return new MazeResult(fileName, format, json.getBytes());
+            } else {
+                return new MazeResult(fileName, format, stream.toByteArray());
+            }
+        }
+        return null;
+    }
+
+    public IMazePrinter constructMazePrinterIfInProperties(MazeOutputFormat format) {
+
+        if (getProperties().getBooleanOrFalse(format.name())) {
+            return constructMazePrinter(format);
+
         }
         return null;
     }
 
     public IMazePrinter constructMazePrinter(MazeOutputFormat format) {
+        // print 2D
         IMazePrinter pr = null;
-        if (getProperties().getBoolean(format.name())) {
-            // print 2D
-            if (format.is2D() && canBePrintedIn2D()) {
-                pr = new SvgMazePrinter(getProperties(), format, getPathShapes());
-            } else if (format.is3D() && canBePrintedIn3D()) {
-                switch (format) {
-                    case json:
-                        pr = new ThreeJs3DPrinter(getModel3d());
-                    case scad:
-                        pr = new OpenScad3DPrinter(getModel3d());
-                    case stl:
-                        pr = new StlMazePrinter(getModel3d());
-                }
+        if (format.is2D() && canBePrintedIn2D()) {
+            pr = new SvgMazePrinter(getProperties(), format, getPathShapes());
+        } else if (format.is3D() && canBePrintedIn3D()) {
+            switch (format) {
+                case json:
+                    pr = new ThreeJs3DPrinter(getModel3d());
+                case scad:
+                    pr = new OpenScad3DPrinter(getModel3d());
+                case stl:
+                    pr = new StlMazePrinter(getModel3d());
             }
         }
         return pr;
     }
 
     public boolean canBePrintedIn3D() {
+        // TODO smazat
         return create3DMapper() != null;
     }
 }

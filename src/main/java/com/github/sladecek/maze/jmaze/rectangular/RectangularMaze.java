@@ -18,6 +18,7 @@ public class RectangularMaze extends Maze {
 
     @Override
     public MazeProperties getDefaultProperties() {
+        // TODO smazat
         MazeProperties defaultProperties = super.getDefaultProperties();
         defaultProperties.put("name", "rectangular");
         defaultProperties.put("width", 20);

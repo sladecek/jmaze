@@ -1,9 +1,11 @@
 package com.github.sladecek.maze.jmaze.print;
 
+import java.io.Serializable;
+
 /**
  * Result of maze generation.
  */
-public class MazeResult {
+public class MazeResult implements Serializable {
 
     public MazeResult(String fileName, MazeOutputFormat format, byte[] content) {
         this.fileName = fileName;

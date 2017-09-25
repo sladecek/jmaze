@@ -30,7 +30,7 @@ public class MazePropertiesTest {
 
     @Test
     public void testClone() throws Exception {
-        MazeProperties c = p.clone();
+        MazeProperties c = p.deepCopy();
         assertEquals(1, c.getInt("int", 0, 10));
     }
 
@@ -119,6 +119,8 @@ public class MazePropertiesTest {
         p.updateFromStrings(p2);
         assertEquals(new Color("019988"), p.getColor("color"));
     }
+
+
 
     private MazeProperties p;
 }

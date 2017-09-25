@@ -11,29 +11,28 @@ import java.util.stream.Collectors;
 public class MazeProperties {
     public boolean hasProperty(String name) {
         return data.containsKey(name);
-
     }
 
-    public MazeProperties clone()  {
-
-        MazeProperties cloned = new MazeProperties();
-        data.forEach(cloned::put);
-
-        return cloned;
+    public MazeProperties deepCopy()  {
+        // TODO je to dobre?
+        MazeProperties result = new MazeProperties();
+        data.forEach(result::put);
+        return result;
     }
 
     private Object get(String name, java.lang.Class cl) {
         Object o =  data.get(name);
         if (o == null) {
-            throw new IllegalArgumentException("Property "+name+" is not present.");
+            throw new IllegalArgumentException("Property '"+name+"' is not present.");
         }
         if (cl.isInstance(o.getClass())) {
-            throw new IllegalArgumentException("Property "+name+" is not a "+cl.getName()+" but a." + o.getClass().getName());
+            throw new IllegalArgumentException("Property '"+name+"' is not a '"+cl.getName()+"' but a '" + o.getClass().getName());
         }
         return o;
     }
 
 
+    // TODO kontrola bude v options na vstupu
     public int getInt(String name, int minimum, int maximum) {
         int value = (Integer)get(name, Integer.class);
         if (value < minimum || value > maximum) {
@@ -61,6 +60,11 @@ public class MazeProperties {
 
     public boolean getBoolean(String name) {
         return (Boolean)get(name, Boolean.class);
+    }
+
+    public boolean getBooleanOrFalse(String name) {
+        return data.containsKey(name) &&
+            (Boolean)get(name, Boolean.class);
     }
 
     public boolean isEmpty() {
@@ -91,6 +95,10 @@ public class MazeProperties {
 
     public String toUserString() {
         return data.keySet().stream().map((k)-> k + "=" + data.get(k).toString()).collect(Collectors.joining("\n"));
+    }
+
+    public HashMap<String, Object> getData() {
+        return data;
     }
 
     private final HashMap<String, Object> data = new HashMap<>();

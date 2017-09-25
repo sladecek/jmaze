@@ -15,4 +15,13 @@ public enum MazeOutputFormat {
 	    return this.name();
     }
 
+    public String contentType() {
+	    switch (this) {
+	        // TODO
+            case svg: return "cosi/svg";
+            case scad: return "application/openscad";
+            default: return "application/"+this.name();
+        }
+    }
+
 }
