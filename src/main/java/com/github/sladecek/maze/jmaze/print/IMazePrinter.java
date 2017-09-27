@@ -1,5 +1,6 @@
 package com.github.sladecek.maze.jmaze.print;
 
+import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.Model3d;
 import com.github.sladecek.maze.jmaze.util.MazeGenerationException;
 
@@ -11,4 +12,5 @@ import java.io.OutputStream;
  */
 public interface IMazePrinter {
     void print(OutputStream stream) throws IOException, MazeGenerationException;
+    Point2DInt getCanvasSize(); // may be null for 3d printers TODO
 }

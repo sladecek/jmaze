@@ -1,5 +1,6 @@
 package com.github.sladecek.maze.jmaze.print3d.output;
 
+import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 import com.github.sladecek.maze.jmaze.geometry.Point3D;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MFace;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MPoint;
@@ -36,6 +37,11 @@ public class StlMazePrinter implements IMazePrinter {
             pw.print("endsolid ");
             pw.println(model.getName());
         }
+    }
+
+    @Override
+    public Point2DInt getCanvasSize() {
+        return null;
     }
 
     private void printFace(PrintWriter pw, MFace face) {

@@ -5,6 +5,7 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
+import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 import com.github.sladecek.maze.jmaze.geometry.Point3D;
 import com.github.sladecek.maze.jmaze.print.IMazePrinter;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MFace;
@@ -47,6 +48,11 @@ public class ThreeJs3DPrinter implements IMazePrinter {
 // TODO                printColors(tjs);
             }
         }
+
+    @Override
+    public Point2DInt getCanvasSize() {
+        return null;
+    }
 
     private void printFace(PrintWriter pw, MFace face) {
         ArrayList<MPoint> points = face.visitPointsCounterclockwise();

@@ -2,6 +2,7 @@ package com.github.sladecek.maze.jmaze.maze;
 
 import com.github.sladecek.maze.jmaze.generator.DepthFirstMazeGenerator;
 import com.github.sladecek.maze.jmaze.generator.IMazeGenerator;
+import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 import com.github.sladecek.maze.jmaze.print.IMazePrinter;
 import com.github.sladecek.maze.jmaze.print.MazeOutputFormat;
 import com.github.sladecek.maze.jmaze.print.MazeResult;
@@ -145,14 +146,15 @@ public abstract class Maze extends MazeData implements IMaze {
             stream.close();
             final String fileName = getProperties().getString("fileName");
             if (storeSvgToJson) {
-                String jsonEncodedSvg = JSONObject.quote(pr.toString());
-                int width = getProperties().getInt("width", 0, Integer.MAX_VALUE);
-                int height = getProperties().getInt("height", 0, Integer.MAX_VALUE);
-                String json = String.format("{ svg: \"%s\", width: %d, height: %d}",
-                        jsonEncodedSvg, width, height);
-                return new MazeResult(fileName, format, json.getBytes());
+                String jsonEncodedSvg = JSONObject.quote(stream.toString());
+
+                Point2DInt canvasSize = pr.getCanvasSize();
+//
+                String json = String.format("{ \"svg\": %s, \"width\": %d, \"height\": %d}",
+                        jsonEncodedSvg, canvasSize.getX(), canvasSize.getY());
+                return new MazeResult(fileName, format, json);
             } else {
-                return new MazeResult(fileName, format, stream.toByteArray());
+                return new MazeResult(fileName, format, stream.toString());
             }
         }
         return null;

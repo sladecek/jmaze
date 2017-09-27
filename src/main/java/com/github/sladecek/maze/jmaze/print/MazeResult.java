@@ -7,7 +7,7 @@ import java.io.Serializable;
  */
 public class MazeResult implements Serializable {
 
-    public MazeResult(String fileName, MazeOutputFormat format, byte[] content) {
+    public MazeResult(String fileName, MazeOutputFormat format, String content) {
         this.fileName = fileName;
         this.format = format;
         this.content = content;
@@ -21,11 +21,11 @@ public class MazeResult implements Serializable {
         return format;
     }
 
-    public byte[] getContent() {
+    public String getContent() {
         return content;
     }
 
     String fileName;
     MazeOutputFormat format;
-    private byte[] content;
+    private String content;
 }

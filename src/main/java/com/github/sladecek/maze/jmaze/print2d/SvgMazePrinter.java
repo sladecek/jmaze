@@ -1,5 +1,6 @@
 package com.github.sladecek.maze.jmaze.print2d;
 
+import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 import com.github.sladecek.maze.jmaze.print.IMazePrinter;
 import com.github.sladecek.maze.jmaze.print.MazeOutputFormat;
 import com.github.sladecek.maze.jmaze.printstyle.PrintStyle;
@@ -40,7 +41,14 @@ public final class SvgMazePrinter implements IMazePrinter
     @Override
     public void print(OutputStream stream) throws IOException, MazeGenerationException {
         SvgDocument sd = createSvgDocument();
+        canvasSize = new Point2DInt(sd.getCanvasWidth(), sd.getCanvasHeight());
         printSvgDocument(format, stream, sd);
+    }
+
+    @Override
+    public Point2DInt getCanvasSize() {
+
+        return canvasSize;
     }
 
     public void printSvgDocument(final MazeOutputFormat format, final OutputStream output,
@@ -84,4 +92,5 @@ public final class SvgMazePrinter implements IMazePrinter
 
 
     private final PrintStyle printStyle = new PrintStyle();
+    Point2DInt canvasSize;
 }

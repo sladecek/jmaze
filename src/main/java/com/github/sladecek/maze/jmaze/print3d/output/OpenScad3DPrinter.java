@@ -1,5 +1,6 @@
 package com.github.sladecek.maze.jmaze.print3d.output;
 
+import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 import com.github.sladecek.maze.jmaze.geometry.Point3D;
 import com.github.sladecek.maze.jmaze.print.IMazePrinter;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MBlock;
@@ -33,6 +34,11 @@ public class OpenScad3DPrinter implements IMazePrinter {
             }
             scad.closeUnion();
         }
+    }
+
+    @Override
+    public Point2DInt getCanvasSize() {
+        return null;
     }
 
     private void printBlock(OpenScadComposer scad, MBlock b) throws IOException {
