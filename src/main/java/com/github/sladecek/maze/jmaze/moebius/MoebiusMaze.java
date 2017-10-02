@@ -14,6 +14,17 @@ import com.github.sladecek.maze.jmaze.shapes.WallShape;
  */
 public final class MoebiusMaze extends Maze {
 
+      /*
+    TODO validace
+
+
+
+
+        int moebWidth = maze.getMoebWidth();
+        if (moebWidth % 2 == 1) {
+            errors.rejectValue("moebWidth", "odd", "must not be odd");
+        }
+    */
     public MoebiusMaze() {
     }
 

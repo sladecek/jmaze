@@ -2,6 +2,8 @@ package com.github.sladecek.maze.jmaze.properties;
 
 import com.github.sladecek.maze.jmaze.printstyle.Color;
 
+import java.util.Locale;
+
 /**
  * A configurable maze property such as width or height.
  */
@@ -64,4 +66,42 @@ public class MazeOption {
     private double max;
     private double step;
 
+    public void convertAndValidate(MazeProperties properties,  Locale locale, MazeValidationErrors errors) {
+        // TODO zkombinovat s mazeProperties .update from properties
+        String key = getName(); // TODO ?
+        Object value = properties.get(key);
+        if (value == null) {
+            return;
+        }
+        if (defaultValue instanceof Integer) {
+            if (value instanceof String) {
+                try {
+                    value = Integer.parseInt((String) value);
+                    properties.put(name, value);
+                } catch (NumberFormatException e) {
+                    errors.addError("TODO number err");
+                }
+            }
+
+        }
+        else if (defaultValue instanceof Double) {
+            if (value instanceof String) {
+                try {
+                    value = Double.parseDouble((String) value);
+                    properties.put(name, value);
+                } catch (NumberFormatException e) {
+                    errors.addError("TODO number err");
+                }
+            }
+        }
+
+        if (defaultValue instanceof Number && value instanceof Number ) {
+            double dv = ((Number) value).doubleValue();
+            if (dv < min || dv > max) {
+                errors.addError("TODO range err");
+            }
+        }
+
+        // TODO other types
+    }
 }

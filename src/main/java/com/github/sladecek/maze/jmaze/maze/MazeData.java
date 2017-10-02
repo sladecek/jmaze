@@ -15,11 +15,13 @@ public class MazeData {
     /**
      * Set properties for concrete maze such as size or colors.
      */
-
     public void setProperties(MazeProperties value) {
         properties = value;
     }
 
+    public void updateProperties(MazeProperties partialProperties) {
+        properties.update(partialProperties);
+    }
 
     public MazeGraph getGraph() {
         return graph;

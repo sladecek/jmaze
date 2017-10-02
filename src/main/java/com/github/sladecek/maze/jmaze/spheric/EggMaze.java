@@ -16,6 +16,28 @@ import com.github.sladecek.maze.jmaze.shapes.*;
  */
 public final class EggMaze extends Maze {
 
+    /*
+    TODO validace
+
+
+        double eggnes = maze.getEggness();
+        if (eggnes <= 0.01) {
+            errors.rejectValue("eggness", "not positive", "must be positive >= 0.01");
+        }
+        if (eggnes > 0.9) {
+            errors.rejectValue("eggness", "big", "must be <= 0.9");
+        }
+
+        double symmetry = maze.getSymmetry();
+        if (symmetry < 0.01) {
+            errors.rejectValue("symmetry", "not positive", "must be positive >= 0.01");
+        }
+        if (symmetry > 10.0) {
+            errors.rejectValue("symmetry", "big", "must be <= 10.0");
+        }
+
+     */
+
     public EggMaze() {
     }
 

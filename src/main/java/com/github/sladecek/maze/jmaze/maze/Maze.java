@@ -14,13 +14,16 @@ import com.github.sladecek.maze.jmaze.print3d.output.StlMazePrinter;
 import com.github.sladecek.maze.jmaze.print3d.output.ThreeJs3DPrinter;
 import com.github.sladecek.maze.jmaze.printstyle.Color;
 import com.github.sladecek.maze.jmaze.printstyle.PrintStyle;
+import com.github.sladecek.maze.jmaze.properties.IValidator;
 import com.github.sladecek.maze.jmaze.properties.MazeProperties;
+import com.github.sladecek.maze.jmaze.properties.MazeValidationErrors;
 import com.github.sladecek.maze.jmaze.util.MazeGenerationException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Locale;
 import java.util.Random;
 
 /**
@@ -191,4 +194,8 @@ public abstract class Maze extends MazeData implements IMaze {
         // TODO smazat
         return create3DMapper() != null;
     }
+
+
+
+    public static MazeValidationErrors noErrors = new MazeValidationErrors();
 }

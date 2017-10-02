@@ -50,6 +50,10 @@ public class MazeProperties {
         return (Color)get(name, Color.class);
     }
 
+    public Object get(String name) {
+        return data.get(name);
+    }
+
     public void put(String name, Object value) {
         data.put(name, value);
     }
@@ -99,6 +103,14 @@ public class MazeProperties {
 
     public HashMap<String, Object> getData() {
         return data;
+    }
+
+    public void update(MazeProperties partialProperties) {
+        partialProperties.data.forEach((k,v)->data.put(k,v));
+    }
+
+    public void mergeDefaults(MazeProperties properties) {
+        data.forEach((k,v)-> {if (!properties.hasProperty(k)) properties.put(k,v);});
     }
 
     private final HashMap<String, Object> data = new HashMap<>();

@@ -4,6 +4,10 @@ import com.github.sladecek.maze.jmaze.properties.MazeOption;
 import com.github.sladecek.maze.jmaze.properties.MazeOptions;
 import com.github.sladecek.maze.jmaze.rectangular.RectangularMaze;
 
+import java.util.ResourceBundle;
+
+import static java.util.ResourceBundle.getBundle;
+
 /**
  * Configurable options for rectangular maze.
  */
@@ -15,6 +19,11 @@ public class TriangularMazeOptions extends MazeOptions {
     @Override
     public String getName() {
         return "triangular";
+    }
+
+    @Override
+    public String getLocalisedName() {
+        return bundle.getString("triangular");
     }
 
     @Override
@@ -31,4 +40,6 @@ public class TriangularMazeOptions extends MazeOptions {
     public Class getMazeClass() {
         return TriangularMaze.class;
     }
+
+    private static ResourceBundle bundle = getBundle("messages");
 }

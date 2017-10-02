@@ -6,11 +6,12 @@ import com.github.sladecek.maze.jmaze.rectangular.RectangularMaze;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Description of certain maze type.
  */
-abstract public class MazeOptions {
+abstract public class MazeOptions implements IValidator {
 
 
     public List<MazeOption> getOwnOptions() {
@@ -84,6 +85,8 @@ abstract public class MazeOptions {
 
     public abstract String getName();
 
+    public abstract String getLocalisedName();
+
     public abstract Class getMazeClass();
 
     public MazeProperties getDefaultProperties() {
@@ -98,6 +101,13 @@ abstract public class MazeOptions {
         return result;
     }
 
+
     protected List<MazeOption> ownOptions = new ArrayList<>();
 
+    @Override
+    public MazeValidationErrors convertAndValidate(MazeProperties properties, Locale locale) {
+        MazeValidationErrors result = new MazeValidationErrors();
+        getAllOptions().forEach(o->o.convertAndValidate(properties, locale, result));
+        return result;
+    }
 }
