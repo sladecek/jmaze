@@ -56,7 +56,7 @@ public final class SvgMazePrinter implements IMazePrinter
         try {
             switch (format) {
                 case svg:
-                case json:
+                case json2d:
                     Source source = new DOMSource(sd.getDocument());
                     Result result = new StreamResult(output);
                     TransformerFactory factory = TransformerFactory.newInstance();

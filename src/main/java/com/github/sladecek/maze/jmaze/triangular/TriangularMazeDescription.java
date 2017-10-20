@@ -1,8 +1,7 @@
 package com.github.sladecek.maze.jmaze.triangular;
 
+import com.github.sladecek.maze.jmaze.properties.MazeDescription;
 import com.github.sladecek.maze.jmaze.properties.MazeOption;
-import com.github.sladecek.maze.jmaze.properties.MazeOptions;
-import com.github.sladecek.maze.jmaze.rectangular.RectangularMaze;
 
 import java.util.ResourceBundle;
 
@@ -11,8 +10,8 @@ import static java.util.ResourceBundle.getBundle;
 /**
  * Configurable options for rectangular maze.
  */
-public class TriangularMazeOptions extends MazeOptions {
-    public TriangularMazeOptions() {
+public class TriangularMazeDescription extends MazeDescription {
+    public TriangularMazeDescription() {
         ownOptions.add(new MazeOption("size", 10, 2, 100000));
     }
 

@@ -1,10 +1,10 @@
 package com.github.sladecek.maze.jmaze.print;
 
 public enum MazeOutputFormat {
-	svg, pdf, json, stl, scad;
+	svg, pdf, json2d, json3d , stl, scad;
 
 	public boolean is2D() {
-	    return (this == svg || this == pdf);
+	    return (this == svg || this == pdf || this == json2d);
     }
 
     public boolean is3D() {
@@ -20,8 +20,13 @@ public enum MazeOutputFormat {
 	        // TODO
             case svg: return "cosi/svg";
             case scad: return "application/openscad";
+            case json2d:
+            case json3d:return "application/json";
             default: return "application/"+this.name();
         }
     }
 
+    public boolean isJson() {
+	    return this == json2d || this == json3d;
+    }
 }

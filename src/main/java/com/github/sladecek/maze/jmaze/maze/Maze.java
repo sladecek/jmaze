@@ -134,30 +134,21 @@ public abstract class Maze extends MazeData implements IMaze {
     }
 
     public MazeResult printMazeInFormat(MazeOutputFormat format) throws MazeGenerationException, IOException {
-
-        boolean storeSvgToJson = false;
-        if (canBePrintedIn2D() && format == MazeOutputFormat.json) {
-            // json stored in svg
-            format = MazeOutputFormat.svg;
-            storeSvgToJson = true;
-        }
-
         IMazePrinter pr = constructMazePrinter(format);
         if (pr != null) {
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             pr.print(stream);
             stream.close();
             final String fileName = getProperties().getString("fileName");
-            if (storeSvgToJson) {
+            if (format == MazeOutputFormat.json2d) {
+                // svg packed in json
                 String jsonEncodedSvg = JSONObject.quote(stream.toString());
-
                 Point2DInt canvasSize = pr.getCanvasSize();
-//
                 String json = String.format("{ \"svg\": %s, \"width\": %d, \"height\": %d}",
                         jsonEncodedSvg, canvasSize.getX(), canvasSize.getY());
-                return new MazeResult(fileName, format, json);
+                return new MazeResult(fileName, format, json.getBytes());
             } else {
-                return new MazeResult(fileName, format, stream.toString());
+                return new MazeResult(fileName, format, stream.toByteArray());
             }
         }
         return null;
@@ -173,19 +164,26 @@ public abstract class Maze extends MazeData implements IMaze {
     }
 
     public IMazePrinter constructMazePrinter(MazeOutputFormat format) {
-        // print 2D
+        if (format.is3D() && !canBePrintedIn3D()) return null;
+        if (format.is2D() && !canBePrintedIn2D()) return null;
+
         IMazePrinter pr = null;
-        if (format.is2D() && canBePrintedIn2D()) {
-            pr = new SvgMazePrinter(getProperties(), format, getPathShapes());
-        } else if (format.is3D() && canBePrintedIn3D()) {
-            switch (format) {
-                case json:
-                    pr = new ThreeJs3DPrinter(getModel3d());
-                case scad:
-                    pr = new OpenScad3DPrinter(getModel3d());
-                case stl:
-                    pr = new StlMazePrinter(getModel3d());
-            }
+
+        switch (format) {
+            case json2d:
+            case svg:
+            case pdf:
+                pr = new SvgMazePrinter(getProperties(), format, getPathShapes());
+                break;
+            case json3d:
+                pr = new ThreeJs3DPrinter(getModel3d());
+                break;
+            case scad:
+                pr = new OpenScad3DPrinter(getModel3d());
+                break;
+            case stl:
+                pr = new StlMazePrinter(getModel3d());
+                break;
         }
         return pr;
     }

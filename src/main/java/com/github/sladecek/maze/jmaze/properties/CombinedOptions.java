@@ -12,10 +12,10 @@ import static javax.swing.UIManager.put;
  *
  * TODO smazat
 
-public class CombinedOptions extends MazeOptions {
+public class CombinedOptions extends MazeDescription {
     public CombinedOptions(Iterable<Class> optionClasses) throws IllegalAccessException, InstantiationException {
         for(Class c: optionClasses) {
-            MazeOptions o = (MazeOptions) c.newInstance();
+            MazeDescription o = (MazeDescription) c.newInstance();
             String mazeType = o.getName();
             assert (!mazeType.contains("_")): "Maze type may not contain an underscore.";
             for (MazeOption opt: o.ownOptions) {

@@ -1,7 +1,7 @@
 package com.github.sladecek.maze.jmaze.rectangular;
 
 import com.github.sladecek.maze.jmaze.properties.MazeOption;
-import com.github.sladecek.maze.jmaze.properties.MazeOptions;
+import com.github.sladecek.maze.jmaze.properties.MazeDescription;
 
 import java.util.ResourceBundle;
 
@@ -10,8 +10,8 @@ import static java.util.ResourceBundle.getBundle;
 /**
  * Configurable options for rectangular maze.
  */
-public class RectangularMazeOptions extends MazeOptions {
-    public RectangularMazeOptions() {
+public class RectangularMazeDescription extends MazeDescription {
+    public RectangularMazeDescription() {
         ownOptions.add(new MazeOption("width", 20, 2, 100000));
         ownOptions.add(new MazeOption("height", 20, 2, 100000));
     }

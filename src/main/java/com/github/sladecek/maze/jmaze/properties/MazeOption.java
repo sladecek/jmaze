@@ -66,11 +66,23 @@ public class MazeOption {
     private double max;
     private double step;
 
+    private OptionLevel level = OptionLevel.Basic;
+
+
+    public OptionLevel getLevel() {
+        return level;
+    }
+
+    public MazeOption setLevel(OptionLevel value) {
+        this.level = value;
+        return this;
+    }
+
     public void convertAndValidate(MazeProperties properties,  Locale locale, MazeValidationErrors errors) {
         // TODO zkombinovat s mazeProperties .update from properties
         String key = getName(); // TODO ?
         Object value = properties.get(key);
-        if (value == null) {
+        if (value == null && ! (defaultValue instanceof Boolean)) {
             return;
         }
         if (defaultValue instanceof Integer) {
@@ -92,6 +104,19 @@ public class MazeOption {
                 } catch (NumberFormatException e) {
                     errors.addError("TODO number err");
                 }
+            }
+        }
+        else if (defaultValue instanceof Boolean) {
+            if (value instanceof String) {
+                try {
+                    value = Boolean.parseBoolean((String) value);
+                    properties.put(name, value);
+                } catch (NumberFormatException e) {
+                    errors.addError("TODO number err");
+                }
+            } else if (value == null) {
+                value = false;
+                properties.put(name, value);
             }
         }
 
