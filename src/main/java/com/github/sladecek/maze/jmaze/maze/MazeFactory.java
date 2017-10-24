@@ -23,6 +23,7 @@ public class MazeFactory {
             case "moebius":
                 return new MoebiusMaze();
             case "egg":
+            case "ellipsoid":
                 return new EggMaze();
             case "triangular":
                 return new TriangularMaze();
