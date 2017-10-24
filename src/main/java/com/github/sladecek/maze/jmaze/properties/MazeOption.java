@@ -60,6 +60,12 @@ public class MazeOption {
         return step;
     }
 
+    public MazeOption setValue(Object v) {
+        defaultValue = v;
+        return this;
+    }
+
+
     private String name;
     private Object defaultValue;
     private double min;

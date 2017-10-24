@@ -2,6 +2,7 @@ package com.github.sladecek.maze.jmaze.spheric;
 
 import com.github.sladecek.maze.jmaze.properties.MazeDescription;
 import com.github.sladecek.maze.jmaze.properties.MazeOption;
+import com.github.sladecek.maze.jmaze.properties.OptionLevel;
 import com.github.sladecek.maze.jmaze.rectangular.RectangularMaze;
 
 import java.util.ResourceBundle;
@@ -13,9 +14,10 @@ import static java.util.ResourceBundle.getBundle;
  */
 public abstract class EggMazeDescriptionBase extends MazeDescription {
     public EggMazeDescriptionBase() {
-        ownOptions.add(new MazeOption("eggness", 0.2, 0.1, 0.9, 0.1));
         ownOptions.add(new MazeOption("equatorCells", 8, 2, 64));
-
+        ownOptions.add(new MazeOption("ellipseMajor", 10.0,  0.1, 50.0, 0.1));
+        ownOptions.add(new MazeOption("ellipseMinor", 10.0, 0.1, 50, 0.1));
+        ownOptions.add(new MazeOption("eggness", 1.0, 0.1, 0.9, 0.1));
     }
 
 

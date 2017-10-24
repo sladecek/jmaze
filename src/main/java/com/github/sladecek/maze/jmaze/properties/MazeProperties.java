@@ -43,7 +43,7 @@ public class MazeProperties {
     }
 
     public double getDouble(String name) {
-        return (Double)get(name, Double.class);
+        return ((Number)get(name, Number.class)).doubleValue();
     }
 
     public Color getColor(String name) {

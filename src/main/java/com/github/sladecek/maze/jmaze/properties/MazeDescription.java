@@ -2,9 +2,11 @@ package com.github.sladecek.maze.jmaze.properties;
 
 import com.github.sladecek.maze.jmaze.printstyle.Color;
 
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 /**
  * Description of certain maze type.
@@ -14,6 +16,16 @@ abstract public class MazeDescription implements IValidator {
 
     public List<MazeOption> getOwnOptions() {
         return ownOptions;
+    }
+
+
+    public MazeOption findOption(String name) {
+        for (MazeOption o: getOwnOptions()) {
+            if (o.getName().equals(name)) {
+                return o;
+            }
+        }
+        throw new InternalError("nvalid option "+name);
     }
 
     public List<MazeOption> getAllOptions() {

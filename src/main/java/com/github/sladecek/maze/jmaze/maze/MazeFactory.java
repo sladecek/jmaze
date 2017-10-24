@@ -11,6 +11,8 @@ import com.github.sladecek.maze.jmaze.voronoi.VoronoiMaze;
 /**
  * Creates a maze.
  */
+
+// TODO duplicita, neda se to tahat z descriptions?
 public class MazeFactory {
     public Maze newMaze(String name) {
         switch (name) {
@@ -24,6 +26,7 @@ public class MazeFactory {
                 return new MoebiusMaze();
             case "egg":
             case "ellipsoid":
+            case "spheric":
                 return new EggMaze();
             case "triangular":
                 return new TriangularMaze();
