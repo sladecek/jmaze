@@ -65,6 +65,15 @@ public class MazeOption {
         return this;
     }
 
+    public String getEditor() {
+        return editor;
+    }
+
+    public MazeOption setEditor(String editor) {
+        this.editor = editor;
+        return this;
+    }
+
 
     private String name;
     private Object defaultValue;
@@ -135,4 +144,6 @@ public class MazeOption {
 
         // TODO other types
     }
+
+    private String editor = null;
 }

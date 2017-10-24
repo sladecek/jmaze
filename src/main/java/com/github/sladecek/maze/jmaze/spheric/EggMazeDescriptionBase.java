@@ -14,7 +14,7 @@ import static java.util.ResourceBundle.getBundle;
  */
 public abstract class EggMazeDescriptionBase extends MazeDescription {
     public EggMazeDescriptionBase() {
-        ownOptions.add(new MazeOption("equatorCells", 8, 2, 64));
+        ownOptions.add((new MazeOption("equatorCells", 8, 2, 64)).setEditor("powersOf2"));
         ownOptions.add(new MazeOption("ellipseMajor", 10.0,  0.1, 50.0, 0.1));
         ownOptions.add(new MazeOption("ellipseMinor", 10.0, 0.1, 50, 0.1));
         ownOptions.add(new MazeOption("eggness", 1.0, 0.1, 0.9, 0.1));
