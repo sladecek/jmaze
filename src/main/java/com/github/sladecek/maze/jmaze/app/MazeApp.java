@@ -1,7 +1,9 @@
 package com.github.sladecek.maze.jmaze.app;
 
+import com.github.sladecek.maze.jmaze.maze.AllMazeTypes;
 import com.github.sladecek.maze.jmaze.maze.Maze;
 import com.github.sladecek.maze.jmaze.maze.MazeFactory;
+import com.github.sladecek.maze.jmaze.properties.MazeDescription;
 import com.github.sladecek.maze.jmaze.properties.MazeProperties;
 import com.github.sladecek.maze.jmaze.util.MazeGenerationException;
 
@@ -31,23 +33,31 @@ public class MazeApp {
             LOG.addHandler(fh);
             fh.setFormatter(new SimpleFormatter());
 
-            CommandLineArguments cla = new CommandLineArguments(args);
-            cla.parseArguments();
-            if (cla.hasErrors() || cla.isUsageRequired()) {
-                System.out.print(cla.getUsage());
+            CommandLineArguments argumentParser = new CommandLineArguments(args);
+            argumentParser.parseArguments();
+            if (argumentParser.hasErrors() || argumentParser.isUsageRequired()) {
+                System.out.print(argumentParser.getUsage());
                 return;
             }
-            Maze maze = new MazeFactory().newMaze(cla.getMazeType());
 
-            if (cla.isPropertiesListRequired()) {
-                MazeProperties properties = maze.getDefaultProperties();
+            final String mazeType = argumentParser.getMazeType();
+            MazeDescription description = AllMazeTypes.findByName(mazeType);
+            if (description == null) {
+                System.out.println("Unknown maze type '"+mazeType+"' . Known typoes are: "+AllMazeTypes.listOfNamesAsString());
+                return;
+            }
+
+            if (argumentParser.isPropertiesListRequired()) {
+                MazeProperties properties = description.getDefaultProperties();
                 System.out.print(properties.toUserString());
             } else {
-                maze.getProperties().updateFromStrings(cla.getProperties());
+                Maze maze = (Maze)description.getMazeClass().newInstance();
+
+                maze.getProperties().updateFromStrings(argumentParser.getProperties());
                 maze.makeMazeAllSteps(true);
                 maze.printToFileInAllAvailableFormats();
             }
-        } catch (SecurityException | IOException | MazeGenerationException e) {
+        } catch (Throwable e) {
             e.printStackTrace();
         }
     }
@@ -58,6 +68,3 @@ public class MazeApp {
     private static final Logger LOG = Logger.getLogger("maze");
 
 }
-
-
-
