@@ -73,7 +73,7 @@ public class EggMazeTest {
 
 	private EggMaze createEggMaze(int equatorCellCnt) {
 		EggMaze maze = new EggMaze();
-		MazeProperties p = maze.getDefaultProperties();
+		MazeProperties p = new EggMazeDescription().getDefaultProperties();
 		p.put("ellipseMajor", 4.0);
 		p.put("ellipseMinor", 3.0);
 		p.put("eggness", 0.5);

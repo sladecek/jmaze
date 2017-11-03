@@ -11,16 +11,6 @@ import java.util.logging.Logger;
 
 public class TriangularMaze extends Maze {
 
-    @Override
-    public MazeProperties getDefaultProperties() {
-        MazeProperties defaultProperties = super.getDefaultProperties();
-        defaultProperties.put("name", "triangular");
-        defaultProperties.put("size", 20);
-        addDefault2DProperties(defaultProperties);
-        addDefault3DProperties(defaultProperties);
-        addComputedProperties(defaultProperties);
-        return defaultProperties;
-    }
 
     @Override
     public void buildMazeGraphAndShapes() {
@@ -76,10 +66,7 @@ public class TriangularMaze extends Maze {
         return null;
     }
 
-    @Override
-    public boolean canBePrintedIn2D() {
-        return true;
-    }
+
 
     private void addWallAndWallShape(int roomLeft, int roomRight, int x1, int x2,
                                      int y1, int y2) {

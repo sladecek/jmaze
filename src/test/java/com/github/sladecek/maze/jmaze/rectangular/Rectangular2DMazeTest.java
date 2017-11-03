@@ -19,7 +19,7 @@ public class Rectangular2DMazeTest {
 
 		maze = new RectangularMaze();
 
-		MazeProperties p = maze.getDefaultProperties();
+		MazeProperties p = new RectangularMazeDescription().getDefaultProperties();
 		p.put("width", 5);
 		p.put("height", 3);
 

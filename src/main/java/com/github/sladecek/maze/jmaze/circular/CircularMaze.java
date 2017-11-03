@@ -23,44 +23,31 @@ public class CircularMaze extends Maze {
     public CircularMaze() {
     }
 
-    @Override
-    public MazeProperties getDefaultProperties() {
-        MazeProperties defaultProperties = super.getDefaultProperties();
-        defaultProperties.put("name", "circular");
-        defaultProperties.put("layerCount", 8);
-        addComputedProperties(defaultProperties);
-        addDefault2DProperties(defaultProperties);
-        return defaultProperties;
-    }
 
-    public void buildMazeGraphAndShapes() {
-        layerCount = properties.getInt("layerCount", 1, 1000);
-        margin = properties.getInt("margin", 0, 10000);
-        computeRoomCounts();
-        firstRoomInLayer = new ArrayList<>();
-        for (int i = 0; i < layerCount; i++) {
-            firstRoomInLayer.add(-1);
-        }
+   public void buildMazeGraphAndShapes() {
+       layerCount = properties.getInt("layerCount", 1, 1000);
+       margin = properties.getInt("margin", 0, 10000);
+       computeRoomCounts();
+       firstRoomInLayer = new ArrayList<>();
+       for (int i = 0; i < layerCount; i++) {
+           firstRoomInLayer.add(-1);
+       }
 
-        createModel();
+       createModel();
 
-        generateRooms();
-        generateConcentricWalls();
-        generateRadialWalls();
-        generateOuterWalls();
-        setStartAndTargetRooms();
-    }
+       generateRooms();
+       generateConcentricWalls();
+       generateRadialWalls();
+       generateOuterWalls();
+       setStartAndTargetRooms();
+   }
 
-    @Override
-    public IMaze3DMapper create3DMapper() {
-        // Cannot be printed in 3D yet.
-        return null;
-    }
+   @Override
+   public IMaze3DMapper create3DMapper() {
+       // Cannot be printed in 3D yet.
+       return null;
+   }
 
-    @Override
-    public boolean canBePrintedIn2D() {
-        return true;
-    }
 
     private void computeRoomCounts() {
         roomCounts = new ArrayList<>();

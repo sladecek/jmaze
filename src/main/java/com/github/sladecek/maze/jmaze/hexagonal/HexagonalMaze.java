@@ -22,17 +22,6 @@ public HexagonalMaze() {
 
 }
 
-    @Override
-    public MazeProperties getDefaultProperties() {
-        MazeProperties defaultProperties = super.getDefaultProperties();
-        defaultProperties.put("name", "hexagonal");
-        defaultProperties.put("size", 6);
-        addComputedProperties(defaultProperties);
-        addDefault2DProperties(defaultProperties);
-        return defaultProperties;
-    }
-
-
     // Radius of the hexagon.
     private static final int hP = 20;
 
@@ -115,11 +104,6 @@ public HexagonalMaze() {
     @Override
     public IMaze3DMapper create3DMapper() {
         return null;
-    }
-
-    @Override
-    public boolean canBePrintedIn2D() {
-        return true;
     }
 
     private void makeFloor(int r, Point2DInt center) {

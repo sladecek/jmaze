@@ -17,7 +17,7 @@ public class Rectangular3DMazeTest {
 
         maze = new RectangularMaze();
 
-        MazeProperties p = maze.getDefaultProperties();
+        MazeProperties p = new RectangularMazeDescription().getDefaultProperties();
         p.put("width", 2);
         p.put("height", 2);
 

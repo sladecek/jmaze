@@ -17,7 +17,7 @@ public class MoebiusMazeTest {
     public final void setUp() throws Exception {
         maze = new MoebiusMaze();
 
-        MazeProperties p = maze.getDefaultProperties();
+        MazeProperties p = new MoebiusMazeDescription().getDefaultProperties();
         p.put("sizeAlong", 6);
         p.put("sizeAcross", 4);
         maze.setProperties(p);

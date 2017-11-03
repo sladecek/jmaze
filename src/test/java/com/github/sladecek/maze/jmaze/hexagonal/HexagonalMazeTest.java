@@ -22,7 +22,7 @@ public class HexagonalMazeTest {
 	public void setUp() throws Exception {
 		maze = new HexagonalMaze();
 
-		MazeProperties p = maze.getDefaultProperties();
+		MazeProperties p = new HexagonalMazeDescription().getDefaultProperties();
 		p.put("size", 2);
 		maze.setProperties(p);
 

@@ -3,6 +3,7 @@ package com.github.sladecek.maze.jmaze.print2d;
 import com.github.sladecek.maze.jmaze.print.MazeOutputFormat;
 import com.github.sladecek.maze.jmaze.properties.MazeProperties;
 import com.github.sladecek.maze.jmaze.rectangular.RectangularMaze;
+import com.github.sladecek.maze.jmaze.rectangular.RectangularMazeDescription;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,7 +23,7 @@ public class SvgMazePrinterTest {
     public void setUp() throws Exception {
         maze = new RectangularMaze();
 
-        properties = maze.getDefaultProperties();
+        properties = new RectangularMazeDescription().getDefaultProperties();
         properties.put("width", 5);
         properties.put("height", 3);
 

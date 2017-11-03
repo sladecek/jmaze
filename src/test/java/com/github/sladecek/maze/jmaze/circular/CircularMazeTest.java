@@ -20,7 +20,7 @@ public class CircularMazeTest {
         int layerCount = 4;
         maze = new CircularMaze();
 
-        MazeProperties p = maze.getDefaultProperties();
+        MazeProperties p = new CircularMazeDescription().getDefaultProperties();
         p.put("layerCount", layerCount);
         maze.setProperties(p);
 

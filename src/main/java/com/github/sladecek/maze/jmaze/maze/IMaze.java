@@ -13,20 +13,12 @@ interface IMaze {
      */
     void buildMazeGraphAndShapes();
 
-    /**
-     * Default properties for this type of the maze.
-     */
-    MazeProperties getDefaultProperties();
+
 
     /**
      * Create 3D mapper responsible for embedding planar maze into three dimensional space. May be return null for
      * mazes that can be printed in 2D only.
      */
     IMaze3DMapper create3DMapper();
-
-    /**
-     * Return <code>true</code> if the maze can be printed in 2D.
-     */
-    boolean canBePrintedIn2D();
 
 }

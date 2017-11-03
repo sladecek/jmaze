@@ -16,18 +16,6 @@ import com.github.sladecek.maze.jmaze.shapes.WallShape;
  */
 public class RectangularMaze extends Maze {
 
-    @Override
-    public MazeProperties getDefaultProperties() {
-        // TODO smazat
-        MazeProperties defaultProperties = super.getDefaultProperties();
-        defaultProperties.put("name", "rectangular");
-        defaultProperties.put("width", 20);
-        defaultProperties.put("height", 20);
-        addDefault2DProperties(defaultProperties);
-        addDefault3DProperties(defaultProperties);
-        addComputedProperties(defaultProperties);
-        return defaultProperties;
-    }
 
     @Override
     public void buildMazeGraphAndShapes() {
@@ -115,15 +103,11 @@ public class RectangularMaze extends Maze {
         return m;
     }
 
-    @Override
-    public boolean canBePrintedIn2D() {
-        return true;
-    }
 
 
-    /**
-     * Room size in pixels.
-     */
+   /**
+    * Room size in pixels.
+    */
     @SuppressWarnings("FieldCanBeLocal")
     private final int rsp = 20;
 

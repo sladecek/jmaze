@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import com.github.sladecek.maze.jmaze.circular.CircularMazeDescription;
+import com.github.sladecek.maze.jmaze.properties.MazeProperties;
 import com.github.sladecek.maze.jmaze.shapes.MarkShape;
 import org.junit.Before;
 import org.junit.Test;
@@ -28,7 +30,16 @@ public class VoronoiMazeTest {
 		int roomCount = 3;
         Random r = mock(Random.class);
         when(r.nextDouble()).thenReturn(0.5, 0.1, 0.5, 0.5, 0.5, 0.9);
-		maze = new VoronoiMaze(width, height, roomCount, 1);
+		maze = new VoronoiMaze();//width, height, roomCount, 1);
+
+		MazeProperties p = new VoronoiMazeDescription().getDefaultProperties();
+        p.put("width", width);
+        p.put("height", height);
+        p.put("roomCount", roomCount);
+        p.put("loydCount", 1);
+
+		maze.setProperties(p);
+
 		maze.forceRandomGenerator(r);
 		maze.buildMazeGraphAndShapes();
 	}

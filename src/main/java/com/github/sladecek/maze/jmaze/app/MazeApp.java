@@ -2,7 +2,6 @@ package com.github.sladecek.maze.jmaze.app;
 
 import com.github.sladecek.maze.jmaze.maze.AllMazeTypes;
 import com.github.sladecek.maze.jmaze.maze.Maze;
-import com.github.sladecek.maze.jmaze.maze.MazeFactory;
 import com.github.sladecek.maze.jmaze.properties.MazeDescription;
 import com.github.sladecek.maze.jmaze.properties.MazeProperties;
 import com.github.sladecek.maze.jmaze.util.MazeGenerationException;
@@ -48,7 +47,7 @@ public class MazeApp {
             }
 
             if (argumentParser.isPropertiesListRequired()) {
-                MazeProperties properties = description.getDefaultProperties();
+                MazeProperties properties = description.getOwnProperties();
                 System.out.print(properties.toUserString());
             } else {
                 Maze maze = (Maze)description.getMazeClass().newInstance();

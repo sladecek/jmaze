@@ -20,35 +20,11 @@ public class VoronoiMaze extends Maze {
 
     }
 
-    public VoronoiMaze(int width, int height, int roomCount, int loydCnt) {
-        MazeProperties p = getDefaultProperties();
-        p.put("width", width);
-        p.put("height", height);
-        p.put("roomCount", roomCount);
-        p.put("loydCount", loydCnt);
-        setProperties(p);
-    }
-    
-
-    @Override
-    public MazeProperties getDefaultProperties() {
-        MazeProperties defaultProperties = super.getDefaultProperties();
-        defaultProperties.put("name", "voronoi");
-        defaultProperties.put("width", 10);
-        defaultProperties.put("height", 10);
-        defaultProperties.put("roomCount", 100);
-        defaultProperties.put("loydCount", 10);
-        addDefault2DProperties(defaultProperties);
-        addComputedProperties(defaultProperties);
-        return defaultProperties;
-    }
-
-
-    @Override
-    public void buildMazeGraphAndShapes() {
-        /*
-      Approximate room size in pixels.
-     */
+       @Override
+       public void buildMazeGraphAndShapes() {
+           /*
+         Approximate room size in pixels.
+        */
         int rsp = 20;
         this.width = properties.getInt("width", 2, 10000) * rsp;
         this.height = properties.getInt("height", 2, 10000) * rsp;
@@ -118,10 +94,6 @@ public class VoronoiMaze extends Maze {
         return null;
     }
 
-    @Override
-    public boolean canBePrintedIn2D() {
-        return true;
-    }
 
     private void createOuterWalls() {
 

@@ -17,7 +17,7 @@ public class MoebiusMazeWallOpeningProbabilityTest {
     public final void setUp() throws Exception {
         maze = new MoebiusMaze();
 
-        MazeProperties p = maze.getDefaultProperties();
+        MazeProperties p = new MoebiusMazeDescription().getDefaultProperties();
         p.put("sizeAlong", 40);
         p.put("sizeAcross", 20);
         maze.setProperties(p);

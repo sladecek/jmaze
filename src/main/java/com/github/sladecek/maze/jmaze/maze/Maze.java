@@ -31,54 +31,7 @@ import java.util.Random;
  */
 public abstract class Maze extends MazeData implements IMaze {
     protected Maze() {
-        properties = getDefaultProperties().deepCopy();
-    }
-
-    @Override
-    public MazeProperties getDefaultProperties() {
-        // TODO smazat
-        MazeProperties defaultProperties = new MazeProperties();
-        defaultProperties.put("randomSeed", 0);
-        return defaultProperties;
-    }
-
-    protected void addDefault2DProperties(MazeProperties properties) {
-        // TODO smazat
-        properties.put("printSolution", true);
-        properties.put("printAllWalls", false);
-
-        properties.put("startMarkColor", new Color("ff0000"));
-        properties.put("targetMarkColor", new Color("00ff00"));
-        properties.put("solutionMarkColor", new Color("777777"));
-
-        properties.put("innerWallWidth", 1);
-        properties.put("outerWallWidth", 2);
-        properties.put("startMarkWidth", 4);
-        properties.put("targetMarkWidth", 4);
-        properties.put("solutionMarkWidth", 2);
-
-        properties.put("outerWallColor", new Color("000000"));
-        properties.put("innerWallColor", new Color("000000"));
-        properties.put("debugWallColor", new Color("eeeeff"));
-
-        properties.put("pdf", true);
-        properties.put("svg", false);
-        properties.put("margin", 10);
-    }
-
-    protected void addDefault3DProperties(MazeProperties properties) {
-        // TODO smazat
-        properties.put("wallHeight", 30.0);
-        properties.put("cellSize", 10.0);
-        properties.put("wallSize", 2.0);
-
-        properties.put("stl", true);
-        properties.put("scad", false);
-        properties.put("js", false);
-    }
-
-    protected void addComputedProperties(MazeProperties defaultProperties) {
-        defaultProperties.put("fileName", "maze" + defaultProperties.getString("name"));
+        
     }
 
     public void makeMazeAllSteps(boolean with3d) {
@@ -164,9 +117,9 @@ public abstract class Maze extends MazeData implements IMaze {
     }
 
     public IMazePrinter constructMazePrinter(MazeOutputFormat format) {
-        if (format.is3D() && !canBePrintedIn3D()) return null;
+    /*    if (format.is3D() && !canBePrintedIn3D()) return null;
         if (format.is2D() && !canBePrintedIn2D()) return null;
-
+*/
         IMazePrinter pr = null;
 
         switch (format) {

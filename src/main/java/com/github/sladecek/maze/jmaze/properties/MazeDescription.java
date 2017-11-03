@@ -48,7 +48,7 @@ abstract public class MazeDescription implements IValidator {
         return result;
     }
 
-
+    /* TODO odstranit, premisiti do aplikace protoze se nepouziva ve webu */
     public List<MazeOption> getComputedOptions() {
         ArrayList<MazeOption> result = new ArrayList<>();
         result.add((new MazeOption("name",  getName()).setLevel(OptionLevel.Invisible)));
@@ -107,9 +107,14 @@ abstract public class MazeDescription implements IValidator {
 
     public abstract Class getMazeClass();
 
-    public MazeProperties getDefaultProperties() {
+    public MazeProperties getOwnProperties() {
         return getDefaultProperties(ownOptions);
     }
+
+    public MazeProperties getDefaultProperties() {
+        return getDefaultProperties(getAllOptions());
+    }
+
 
     public MazeProperties getDefaultProperties(List<MazeOption> options) {
         MazeProperties result = new MazeProperties();

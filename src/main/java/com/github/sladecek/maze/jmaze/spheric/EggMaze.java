@@ -41,32 +41,6 @@ public final class EggMaze extends Maze {
     public EggMaze() {
     }
 
-        /*
-        (EggGeometry
-    } geometry, int equatorCellCnt) {
-        MazeProperties p = getDefaultProperties();
-        p.put("ellipseMajor", geometry.getEllipseMajorInmm());
-        p.put("ellipseMinor", geometry.getEllipseMinorInmm());
-        p.put("eggness", geometry.getEggness());
-        p.put("equatorCells", equatorCellCnt);
-        setProperties(p);
-    }
-*/
-
-
-
-    @Override
-    public MazeProperties getDefaultProperties() {
-        MazeProperties defaultProperties = super.getDefaultProperties();
-        defaultProperties.put("name", "egg");
-        defaultProperties.put("ellipseMajor", 10);
-        defaultProperties.put("ellipseMinor", 10);
-        defaultProperties.put("eggness", 0.2);
-        defaultProperties.put("equatorCells", 8);
-        addDefault3DProperties(defaultProperties);
-        addComputedProperties(defaultProperties);
-        return defaultProperties;
-    }
 
 
     @Override
@@ -152,10 +126,6 @@ public final class EggMaze extends Maze {
 
     }
 
-    @Override
-    public boolean canBePrintedIn2D() {
-        return false;
-    }
 
     private void assignStartAndTargetRooms() {
         getGraph().setStartRoom(north.getGreenwichRoom(north.getCircleCnt() - 1));

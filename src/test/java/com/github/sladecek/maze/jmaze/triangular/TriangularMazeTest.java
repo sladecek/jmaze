@@ -20,7 +20,7 @@ public class TriangularMazeTest {
 		final int size = 3;
 
 		maze = new TriangularMaze();
-		MazeProperties p = maze.getDefaultProperties();
+		MazeProperties p = new TriangularMazeDescription().getDefaultProperties();
 		p.put("size", size);
 		maze.setProperties(p);
 
