@@ -31,7 +31,7 @@ import java.util.Random;
  */
 public abstract class Maze extends MazeData implements IMaze {
     protected Maze() {
-        
+
     }
 
     public void makeMazeAllSteps(boolean with3d) {
