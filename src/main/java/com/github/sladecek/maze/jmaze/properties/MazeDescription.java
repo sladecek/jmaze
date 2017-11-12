@@ -6,7 +6,6 @@ import com.github.sladecek.maze.jmaze.printstyle.Color;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.stream.Collectors;
 
 /**
  * Description of certain maze type.
@@ -128,9 +127,9 @@ abstract public class MazeDescription implements IValidator {
     protected List<MazeOption> ownOptions = new ArrayList<>();
 
     @Override
-    public MazeValidationErrors convertAndValidate(MazeProperties properties, Locale locale) {
+    public MazeValidationErrors convertAndValidate(MazeProperties properties, String prefix, Locale locale) {
         MazeValidationErrors result = new MazeValidationErrors();
-        getAllOptions().forEach(o->o.convertAndValidate(properties, locale, result));
+        getAllOptions().forEach(o->o.convertAndValidate(properties, locale, prefix, result));
         return result;
     }
 }

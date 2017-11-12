@@ -93,7 +93,7 @@ public class MazeOption {
         return this;
     }
 
-    public void convertAndValidate(MazeProperties properties,  Locale locale, MazeValidationErrors errors) {
+    public void convertAndValidate(MazeProperties properties, Locale locale, String prefix, MazeValidationErrors errors) {
         // TODO zkombinovat s mazeProperties .update from properties
         String key = getName(); // TODO ?
         Object value = properties.get(key);
@@ -106,7 +106,7 @@ public class MazeOption {
                     value = Integer.parseInt((String) value);
                     properties.put(name, value);
                 } catch (NumberFormatException e) {
-                    errors.addError("TODO number err");
+                    errors.addError(prefix, key, "TODO number err");
                 }
             }
 
@@ -117,7 +117,7 @@ public class MazeOption {
                     value = Double.parseDouble((String) value);
                     properties.put(name, value);
                 } catch (NumberFormatException e) {
-                    errors.addError("TODO number err");
+                    errors.addError(prefix, key, "TODO number err");
                 }
             }
         }
@@ -127,7 +127,7 @@ public class MazeOption {
                     value = Boolean.parseBoolean((String) value);
                     properties.put(name, value);
                 } catch (NumberFormatException e) {
-                    errors.addError("TODO number err");
+                    errors.addError(prefix, key, "TODO number err");
                 }
             } else if (value == null) {
                 value = false;
@@ -138,7 +138,7 @@ public class MazeOption {
         if (defaultValue instanceof Number && value instanceof Number ) {
             double dv = ((Number) value).doubleValue();
             if (dv < min || dv > max) {
-                errors.addError("TODO range err");
+                errors.addError(prefix, key, "TODO range err");
             }
         }
 

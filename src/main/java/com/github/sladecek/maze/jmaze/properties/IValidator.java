@@ -6,6 +6,6 @@ import java.util.Locale;
  * Interface for maze parameter validators.
  */
 public interface IValidator {
-    MazeValidationErrors convertAndValidate(MazeProperties properties, Locale locale);
+    MazeValidationErrors convertAndValidate(MazeProperties properties, String prefix, Locale locale);
 
 }
