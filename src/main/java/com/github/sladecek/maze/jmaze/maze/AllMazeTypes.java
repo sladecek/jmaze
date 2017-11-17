@@ -11,9 +11,7 @@ import com.github.sladecek.maze.jmaze.spheric.SphericMazeDescription;
 import com.github.sladecek.maze.jmaze.triangular.TriangularMazeDescription;
 import com.github.sladecek.maze.jmaze.voronoi.VoronoiMazeDescription;
 
-import javax.swing.text.html.Option;
 import java.util.ArrayList;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 /**
@@ -36,11 +34,11 @@ public class AllMazeTypes {
     public static String listOfNamesAsString() {
         return allMazes
                 .stream()
-                .map((d)->d.getName())
+                .map(MazeDescription::getName)
                 .collect(Collectors.joining(", "));
     }
 
-    private static ArrayList<MazeDescription> allMazes;
+    private static final ArrayList<MazeDescription> allMazes;
 
     static {
         allMazes = new ArrayList<>();

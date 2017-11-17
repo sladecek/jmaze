@@ -69,7 +69,7 @@ public final class Moebius3dMapper extends ConfigurableAltitudes implements IMaz
 
 
     class MoebiusLocalCoordinateSystem implements ILocalCoordinateSystem {
-        public MoebiusLocalCoordinateSystem(Point2DInt center, int maxX) {
+        MoebiusLocalCoordinateSystem(Point2DInt center, int maxX) {
             this.center = center;
             this.maxX = maxX;
         }

@@ -42,7 +42,7 @@ public class MazeData {
     }
 
 
-    public MazeProperties getProperties() {
+    MazeProperties getProperties() {
         return properties;
     }
 

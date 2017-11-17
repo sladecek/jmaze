@@ -8,7 +8,6 @@ import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 import com.github.sladecek.maze.jmaze.geometry.SouthNorth;
 import com.github.sladecek.maze.jmaze.maze.Maze;
 import com.github.sladecek.maze.jmaze.print3d.IMaze3DMapper;
-import com.github.sladecek.maze.jmaze.properties.MazeProperties;
 import com.github.sladecek.maze.jmaze.shapes.*;
 
 /**
@@ -20,21 +19,6 @@ public final class EggMaze extends Maze {
     TODO validace
 
 
-        double eggnes = maze.getEggness();
-        if (eggnes <= 0.01) {
-            errors.rejectValue("eggness", "not positive", "must be positive >= 0.01");
-        }
-        if (eggnes > 0.9) {
-            errors.rejectValue("eggness", "big", "must be <= 0.9");
-        }
-
-        double symmetry = maze.getSymmetry();
-        if (symmetry < 0.01) {
-            errors.rejectValue("symmetry", "not positive", "must be positive >= 0.01");
-        }
-        if (symmetry > 10.0) {
-            errors.rejectValue("symmetry", "big", "must be <= 10.0");
-        }
 
      */
 
@@ -66,7 +50,7 @@ public final class EggMaze extends Maze {
         }
 
         final boolean isPolar = false;
-        int width = 0; // TODO?
+        int width = 0;
         int height = 0;
         allShapes = new Shapes(isPolar, height, width, 0);
 

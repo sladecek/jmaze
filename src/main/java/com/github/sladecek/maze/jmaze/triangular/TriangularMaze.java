@@ -4,7 +4,6 @@ import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 import com.github.sladecek.maze.jmaze.maze.Maze;
 
 import com.github.sladecek.maze.jmaze.print3d.IMaze3DMapper;
-import com.github.sladecek.maze.jmaze.properties.MazeProperties;
 import com.github.sladecek.maze.jmaze.shapes.*;
 
 import java.util.logging.Logger;
@@ -89,7 +88,7 @@ public class TriangularMaze extends Maze {
     }
 
     private class RowBuilder {
-        public RowBuilder(int prevFirst, int lastRoom, int myFirst, int y, int roomsInRow, int prevRoom) {
+        RowBuilder(int prevFirst, int lastRoom, int myFirst, int y, int roomsInRow, int prevRoom) {
             this.prevFirst = prevFirst;
             this.lastRoom = lastRoom;
             this.myFirst = myFirst;
@@ -98,19 +97,19 @@ public class TriangularMaze extends Maze {
             this.prevRoom = prevRoom;
         }
 
-        public int getPrevFirst() {
+        int getPrevFirst() {
             return prevFirst;
         }
 
-        public int getLastRoom() {
+        int getLastRoom() {
             return lastRoom;
         }
 
-        public int getMyFirst() {
+        int getMyFirst() {
             return myFirst;
         }
 
-        public RowBuilder invoke() {
+        RowBuilder invoke() {
             // make a row of rooms  and vertical walls among them
             for (int j = 0; j < roomsInRow + 1; j++) {
                 int x1 = size + j - y - 1;

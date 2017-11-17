@@ -40,5 +40,5 @@ public class TriangularMazeDescription extends MazeDescription {
         return TriangularMaze.class;
     }
 
-    private static ResourceBundle bundle = getBundle("messages");
+    private static final ResourceBundle bundle = getBundle("messages");
 }

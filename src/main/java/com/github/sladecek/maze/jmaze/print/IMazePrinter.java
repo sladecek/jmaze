@@ -1,7 +1,6 @@
 package com.github.sladecek.maze.jmaze.print;
 
 import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
-import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.Model3d;
 import com.github.sladecek.maze.jmaze.util.MazeGenerationException;
 
 import java.io.IOException;

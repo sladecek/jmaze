@@ -106,7 +106,7 @@ final class Egg3dMapper extends ConfigurableAltitudes implements IMaze3DMapper {
     }
 
     class EggLocalCoordinateSystem implements ILocalCoordinateSystem {
-        public EggLocalCoordinateSystem(Point2DInt center, int eqCnt) {
+        EggLocalCoordinateSystem(Point2DInt center, int eqCnt) {
             this.center = center;
             this.maxY = eqCnt*EggMaze.res;
         }

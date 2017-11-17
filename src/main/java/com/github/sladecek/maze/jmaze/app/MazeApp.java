@@ -4,15 +4,13 @@ import com.github.sladecek.maze.jmaze.maze.AllMazeTypes;
 import com.github.sladecek.maze.jmaze.maze.Maze;
 import com.github.sladecek.maze.jmaze.properties.MazeDescription;
 import com.github.sladecek.maze.jmaze.properties.MazeProperties;
-import com.github.sladecek.maze.jmaze.util.MazeGenerationException;
 
-import java.io.IOException;
 import java.util.logging.*;
 
 /**
  * Generate any maze..
  */
-public class MazeApp {
+class MazeApp {
 
     public static void main(String[] args) {
         new MazeApp().printTestMaze(args);
@@ -52,7 +50,12 @@ public class MazeApp {
             } else {
                 Maze maze = (Maze)description.getMazeClass().newInstance();
 
-                maze.getProperties().updateFromStrings(argumentParser.getProperties());
+                MazeProperties p = description.getDefaultProperties().deepCopy();
+                p.put("name", mazeType);
+                p.put("fileName", "maze_"+mazeType);
+                p.updateFromStrings(argumentParser.getProperties());
+
+                maze.setProperties(p);
                 maze.makeMazeAllSteps(true);
                 maze.printToFileInAllAvailableFormats();
             }

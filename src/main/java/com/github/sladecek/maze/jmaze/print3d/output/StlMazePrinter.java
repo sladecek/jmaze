@@ -22,7 +22,7 @@ public class StlMazePrinter implements IMazePrinter {
         this.model = model;
     }
 
-    private Model3d model;
+    private final Model3d model;
 
     @Override
     public void print(OutputStream f) {

@@ -82,7 +82,7 @@ public class TelescopicPoint extends MPoint {
     }
 
     private class Section {
-        public Section(MEdge rod, MPoint lowPoint) {
+        Section(MEdge rod, MPoint lowPoint) {
             this.rod = rod;
             this.lowPoint = lowPoint;
         }

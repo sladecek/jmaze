@@ -2,7 +2,6 @@ package com.github.sladecek.maze.jmaze.circular;
 
 import com.github.sladecek.maze.jmaze.properties.MazeDescription;
 import com.github.sladecek.maze.jmaze.properties.MazeOption;
-import com.github.sladecek.maze.jmaze.rectangular.RectangularMaze;
 
 import java.util.ResourceBundle;
 
@@ -40,6 +39,6 @@ public class CircularMazeDescription extends MazeDescription {
     public Class getMazeClass() {
         return CircularMaze.class;
     }
-    private static ResourceBundle bundle = getBundle("messages");
+    private static final ResourceBundle bundle = getBundle("messages");
 
 }

@@ -3,7 +3,7 @@ package com.github.sladecek.maze.jmaze.print;
 public enum MazeOutputFormat {
 	svg, pdf, json2d, json3d , stl, scad;
 
-	public boolean is2D() {
+	private boolean is2D() {
 	    return (this == svg || this == pdf || this == json2d);
     }
 

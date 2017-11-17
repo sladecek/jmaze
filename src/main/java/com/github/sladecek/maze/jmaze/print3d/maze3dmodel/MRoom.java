@@ -6,6 +6,7 @@ import com.github.sladecek.maze.jmaze.geometry.LeftRight;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MEdge;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -33,7 +34,7 @@ public class MRoom extends FloorFace {
         if (corners.isEmpty()) {
             return;
         }
-        Set<RoomCorner> unfinished = corners.stream().collect(Collectors.toSet());
+        Set<RoomCorner> unfinished = new HashSet<>(corners);
         for (RoomCorner rc : unfinished) {
             LOG.info("  "+rc);
         }

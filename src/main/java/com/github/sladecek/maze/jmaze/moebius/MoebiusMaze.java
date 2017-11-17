@@ -4,7 +4,6 @@ package com.github.sladecek.maze.jmaze.moebius;
 import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 import com.github.sladecek.maze.jmaze.maze.Maze;
 import com.github.sladecek.maze.jmaze.print3d.IMaze3DMapper;
-import com.github.sladecek.maze.jmaze.properties.MazeProperties;
 import com.github.sladecek.maze.jmaze.shapes.FloorShape;
 import com.github.sladecek.maze.jmaze.shapes.Shapes;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
@@ -14,21 +13,8 @@ import com.github.sladecek.maze.jmaze.shapes.WallShape;
  */
 public final class MoebiusMaze extends Maze {
 
-      /*
-    TODO validace
-
-
-
-
-        int moebWidth = maze.getMoebWidth();
-        if (moebWidth % 2 == 1) {
-            errors.rejectValue("moebWidth", "odd", "must not be odd");
-        }
-    */
     public MoebiusMaze() {
     }
-
-
 
    @Override
    public void buildMazeGraphAndShapes() {

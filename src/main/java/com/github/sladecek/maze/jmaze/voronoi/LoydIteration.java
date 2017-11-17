@@ -12,7 +12,7 @@ import java.util.List;
  * distribution o points smoother by replacing every point with a centroid of
  * its Voronoi rectangle.
  */
-public class LoydIteration {
+class LoydIteration {
 
     public LoydIteration(PointsInRectangle input, int numberOfIterations) {
         super();

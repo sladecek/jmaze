@@ -1,6 +1,5 @@
 package com.github.sladecek.maze.jmaze.spheric;
 
-import com.github.sladecek.maze.jmaze.properties.OptionLevel;
 import com.github.sladecek.maze.jmaze.spheric.EggMazeDescriptionBase;
 
 /**

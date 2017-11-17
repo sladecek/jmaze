@@ -1,7 +1,6 @@
 package com.github.sladecek.maze.jmaze.maze;
 
 import com.github.sladecek.maze.jmaze.print3d.IMaze3DMapper;
-import com.github.sladecek.maze.jmaze.properties.MazeProperties;
 
 /**
  * Represents one type of mazes such as rectangular, triangular or spherical maze.

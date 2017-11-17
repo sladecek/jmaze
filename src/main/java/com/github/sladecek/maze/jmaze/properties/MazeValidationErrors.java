@@ -1,15 +1,13 @@
 package com.github.sladecek.maze.jmaze.properties;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 /**
  * Collection of maze validation errors.
  */
 public class MazeValidationErrors {
-    public void addError(MazeValidationError error) {
+    private void addError(MazeValidationError error) {
         errors.add(error);
     }
 
@@ -30,7 +28,7 @@ public class MazeValidationErrors {
         return errors.isEmpty();
     }
 
-    ArrayList<MazeValidationError> errors = new ArrayList<>();
+    private final ArrayList<MazeValidationError> errors = new ArrayList<>();
 
     public boolean hasErrorForField(String field) {
         if (isEmpty()) return false;
@@ -40,7 +38,7 @@ public class MazeValidationErrors {
     public ArrayList<String> errorsForField(String field) {
         return errors.stream()
                 .filter((e)->e.getField().equals(field))
-                .map((e)->e.getMessage())
+                .map(MazeValidationError::getMessage)
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 }

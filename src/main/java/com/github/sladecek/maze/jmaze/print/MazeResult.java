@@ -25,7 +25,7 @@ public class MazeResult implements Serializable {
         return content;
     }
 
-    String fileName;
-    MazeOutputFormat format;
-    private byte[] content;
+    private final String fileName;
+    private final MazeOutputFormat format;
+    private final byte[] content;
 }

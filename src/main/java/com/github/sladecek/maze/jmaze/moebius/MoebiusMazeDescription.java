@@ -2,8 +2,10 @@ package com.github.sladecek.maze.jmaze.moebius;
 
 import com.github.sladecek.maze.jmaze.properties.MazeDescription;
 import com.github.sladecek.maze.jmaze.properties.MazeOption;
-import com.github.sladecek.maze.jmaze.rectangular.RectangularMaze;
+import com.github.sladecek.maze.jmaze.properties.MazeProperties;
+import com.github.sladecek.maze.jmaze.properties.MazeValidationErrors;
 
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 import static java.util.ResourceBundle.getBundle;
@@ -43,6 +45,17 @@ public class MoebiusMazeDescription extends MazeDescription {
     public Class getMazeClass() {
         return MoebiusMaze.class;
     }
-    private static ResourceBundle bundle = getBundle("messages");
 
+    private static final ResourceBundle bundle = getBundle("messages");
+
+    @Override
+    public MazeValidationErrors convertAndValidate(MazeProperties properties, String prefix, Locale locale) {
+        MazeValidationErrors  mve = super.convertAndValidate(properties, prefix, locale);
+
+        int moebWidth = properties.getInt("sizeAcross", 1, 1111);
+        if (moebWidth % 2 == 1) {
+            mve.addError(prefix, "sizeAccress", "must not be odd");
+        }
+        return mve;
+    }
 }

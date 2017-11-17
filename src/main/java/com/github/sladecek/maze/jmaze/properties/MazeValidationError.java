@@ -1,6 +1,6 @@
 package com.github.sladecek.maze.jmaze.properties;
 
-public class MazeValidationError {
+class MazeValidationError {
     public MazeValidationError(String field, String message) {
 
         this.field = field;
@@ -14,6 +14,6 @@ public class MazeValidationError {
     public String getMessage() {
         return message;
     }
-    private String field;
-    private String message;
+    private final String field;
+    private final String message;
 }

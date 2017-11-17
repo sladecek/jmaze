@@ -75,7 +75,7 @@ public class MazeOption {
     }
 
 
-    private String name;
+    private final String name;
     private Object defaultValue;
     private double min;
     private double max;

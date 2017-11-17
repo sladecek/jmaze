@@ -106,7 +106,7 @@ public class MazeProperties {
     }
 
     public void update(MazeProperties partialProperties) {
-        partialProperties.data.forEach((k,v)->data.put(k,v));
+        partialProperties.data.forEach(data::put);
     }
 
     public void mergeDefaults(MazeProperties properties) {

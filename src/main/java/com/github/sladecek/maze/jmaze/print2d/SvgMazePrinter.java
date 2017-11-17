@@ -28,7 +28,7 @@ public final class SvgMazePrinter implements IMazePrinter
 {
     private final MazeOutputFormat format;
 
-    final Shapes shapes;
+    private final Shapes shapes;
 
     public SvgMazePrinter(MazeProperties properties, MazeOutputFormat format, Shapes shapes) {
         this.format = format;
@@ -51,8 +51,8 @@ public final class SvgMazePrinter implements IMazePrinter
         return canvasSize;
     }
 
-    public void printSvgDocument(final MazeOutputFormat format, final OutputStream output,
-                                 final SvgDocument sd) throws MazeGenerationException {
+    private void printSvgDocument(final MazeOutputFormat format, final OutputStream output,
+                                  final SvgDocument sd) throws MazeGenerationException {
         try {
             switch (format) {
                 case svg:
@@ -92,5 +92,5 @@ public final class SvgMazePrinter implements IMazePrinter
 
 
     private final PrintStyle printStyle = new PrintStyle();
-    Point2DInt canvasSize;
+    private Point2DInt canvasSize;
 }

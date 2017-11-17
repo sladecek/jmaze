@@ -23,7 +23,7 @@ public class OpenScad3DPrinter implements IMazePrinter {
     }
 
 
-    private Model3d model;
+    private final Model3d model;
 
     @Override
     public void print(OutputStream stream) throws IOException, MazeGenerationException {

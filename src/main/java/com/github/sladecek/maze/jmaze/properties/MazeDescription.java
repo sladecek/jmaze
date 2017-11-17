@@ -18,7 +18,7 @@ abstract public class MazeDescription implements IValidator {
     }
 
 
-    public MazeOption findOption(String name) {
+    protected MazeOption findOption(String name) {
         for (MazeOption o: getOwnOptions()) {
             if (o.getName().equals(name)) {
                 return o;
@@ -27,11 +27,11 @@ abstract public class MazeDescription implements IValidator {
         throw new InternalError("nvalid option "+name);
     }
 
-    public List<MazeOption> getAllOptions() {
+    private List<MazeOption> getAllOptions() {
         ArrayList<MazeOption> result = new ArrayList<>();
         result.addAll(ownOptions);
         result.addAll(getUniversalOptions());
-        result.addAll(getComputedOptions());
+//        result.addAll(getComputedOptions());
         if (canBePrintedIn2D()) {
             result.addAll(get2dOptions());
         }
@@ -47,13 +47,6 @@ abstract public class MazeDescription implements IValidator {
         return result;
     }
 
-    /* TODO odstranit, premisiti do aplikace protoze se nepouziva ve webu */
-    public List<MazeOption> getComputedOptions() {
-        ArrayList<MazeOption> result = new ArrayList<>();
-        result.add((new MazeOption("name",  getName()).setLevel(OptionLevel.Invisible)));
-        result.add((new MazeOption("fileName", "maze" + getName()).setLevel(OptionLevel.Invisible)));
-        return result;
-    }
 
 
     public static List<MazeOption> get2dOptions() {
@@ -115,7 +108,7 @@ abstract public class MazeDescription implements IValidator {
     }
 
 
-    public MazeProperties getDefaultProperties(List<MazeOption> options) {
+    private MazeProperties getDefaultProperties(List<MazeOption> options) {
         MazeProperties result = new MazeProperties();
         for (MazeOption o: options) {
             result.put(o.getName(), o.getDefaultValue());
@@ -124,7 +117,7 @@ abstract public class MazeDescription implements IValidator {
     }
 
 
-    protected List<MazeOption> ownOptions = new ArrayList<>();
+    protected final List<MazeOption> ownOptions = new ArrayList<>();
 
     @Override
     public MazeValidationErrors convertAndValidate(MazeProperties properties, String prefix, Locale locale) {

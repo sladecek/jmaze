@@ -1,13 +1,6 @@
 package com.github.sladecek.maze.jmaze.spheric;
 
-import com.github.sladecek.maze.jmaze.properties.MazeDescription;
-import com.github.sladecek.maze.jmaze.properties.MazeOption;
 import com.github.sladecek.maze.jmaze.properties.OptionLevel;
-import com.github.sladecek.maze.jmaze.rectangular.RectangularMaze;
-
-import java.util.ResourceBundle;
-
-import static java.util.ResourceBundle.getBundle;
 
 /**
  * Configurable options for ellipsoid maze.

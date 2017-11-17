@@ -15,7 +15,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * Base class for PillarMakerTests
  */
-public class PillarMakerTestBase {
+class PillarMakerTestBase {
     void testOneComputation(int dx, int dy, int[][] endpoints, int expectedIntersectionCount, double[][] expected, int expectedBaseEdgesSize) {
         Point2DInt center = new Point2DInt(dx, dy);
         ArrayList<WallEnd> walls = new ArrayList<>();
