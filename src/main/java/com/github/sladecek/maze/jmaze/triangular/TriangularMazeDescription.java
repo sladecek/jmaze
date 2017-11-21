@@ -20,10 +20,6 @@ public class TriangularMazeDescription extends MazeDescription {
         return "triangular";
     }
 
-    @Override
-    public String getLocalisedName() {
-        return bundle.getString("triangular");
-    }
 
     @Override
     public boolean canBePrintedIn2D() {

@@ -26,11 +26,6 @@ public class VoronoiMazeDescription extends MazeDescription {
     }
 
     @Override
-    public String getLocalisedName() {
-        return bundle.getString("voronoi");
-    }
-
-    @Override
     public boolean canBePrintedIn2D() {
         return true;
     }

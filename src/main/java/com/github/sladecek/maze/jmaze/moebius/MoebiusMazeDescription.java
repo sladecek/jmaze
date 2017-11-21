@@ -26,10 +26,7 @@ public class MoebiusMazeDescription extends MazeDescription {
         return "moebius";
     }
 
-    @Override
-    public String getLocalisedName() {
-        return bundle.getString("moebius");
-    }
+
 
     @Override
     public boolean canBePrintedIn2D() {

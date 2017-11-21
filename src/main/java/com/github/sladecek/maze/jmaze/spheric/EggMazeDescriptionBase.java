@@ -18,10 +18,7 @@ public abstract class EggMazeDescriptionBase extends MazeDescription {
         ownOptions.add(new MazeOption("eggness", 1.0, 0.1, 0.9, 0.1));
     }
 
-    @Override
-    public String getLocalisedName() {
-        return bundle.getString(getName());
-    }
+
 
     @Override
     public boolean canBePrintedIn2D() {

@@ -22,11 +22,6 @@ public class RectangularMazeDescription extends MazeDescription {
     }
 
     @Override
-    public String getLocalisedName() {
-        return bundle.getString("rectangular");
-    }
-
-    @Override
     public boolean canBePrintedIn2D() {
         return true;
     }

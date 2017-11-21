@@ -21,10 +21,7 @@ public class HexagonalMazeDescription extends MazeDescription {
         return "hexagonal";
     }
 
-    @Override
-    public String getLocalisedName() {
-        return bundle.getString("hexagonal");
-    }
+
 
     @Override
     public boolean canBePrintedIn2D() {

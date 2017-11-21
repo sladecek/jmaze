@@ -95,8 +95,6 @@ abstract public class MazeDescription implements IValidator {
 
     public abstract String getName();
 
-    public abstract String getLocalisedName();
-
     public abstract Class getMazeClass();
 
     public MazeProperties getOwnProperties() {

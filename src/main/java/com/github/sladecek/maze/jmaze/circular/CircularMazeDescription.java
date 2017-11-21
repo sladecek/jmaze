@@ -20,10 +20,6 @@ public class CircularMazeDescription extends MazeDescription {
         return "circular";
     }
 
-    @Override
-    public String getLocalisedName() {
-        return bundle.getString("circular");
-    }
 
     @Override
     public boolean canBePrintedIn2D() {
