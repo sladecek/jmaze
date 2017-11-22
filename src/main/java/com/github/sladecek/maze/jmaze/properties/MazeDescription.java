@@ -31,11 +31,12 @@ abstract public class MazeDescription implements IValidator {
         ArrayList<MazeOption> result = new ArrayList<>();
         result.addAll(ownOptions);
         result.addAll(getUniversalOptions());
-//        result.addAll(getComputedOptions());
-        if (canBePrintedIn2D()) {
+// TODO smazat        if (canBePrintedIn2D())
+{
             result.addAll(get2dOptions());
         }
-        if (canBePrintedIn3D()) {
+        // TODO smazat if (canBePrintedIn3D())
+        {
             result.addAll(get3dOptions());
         }
         return result;
