@@ -39,6 +39,6 @@ public class VoronoiMazeDescription extends MazeDescription {
     public Class getMazeClass() {
         return VoronoiMaze.class;
     }
-    private static final ResourceBundle bundle = getBundle("messages");
+    private static final ResourceBundle bundle = getBundle("jMazeMessages");
 
 }

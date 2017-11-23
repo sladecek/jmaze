@@ -35,7 +35,7 @@ public abstract class EggMazeDescriptionBase extends MazeDescription {
         return EggMaze.class;
     }
 
-    private static final ResourceBundle bundle = getBundle("messages");
+    private static final ResourceBundle bundle = getBundle("jMazeMessages");
 
     @Override
     public MazeValidationErrors convertAndValidate(MazeProperties properties, String prefix, Locale locale) {

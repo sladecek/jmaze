@@ -35,6 +35,6 @@ public class CircularMazeDescription extends MazeDescription {
     public Class getMazeClass() {
         return CircularMaze.class;
     }
-    private static final ResourceBundle bundle = getBundle("messages");
+    private static final ResourceBundle bundle = getBundle("jMazeMessages");
 
 }

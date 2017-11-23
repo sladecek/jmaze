@@ -37,6 +37,6 @@ public class HexagonalMazeDescription extends MazeDescription {
     public Class getMazeClass() {
         return RectangularMaze.class;
     }
-    private static final ResourceBundle bundle = getBundle("messages");
+    private static final ResourceBundle bundle = getBundle("jMazeMessages");
 
 }

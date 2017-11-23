@@ -43,7 +43,7 @@ public class MoebiusMazeDescription extends MazeDescription {
         return MoebiusMaze.class;
     }
 
-    private static final ResourceBundle bundle = getBundle("messages");
+    private static final ResourceBundle bundle = getBundle("jMazeMessages");
 
     @Override
     public MazeValidationErrors convertAndValidate(MazeProperties properties, String prefix, Locale locale) {

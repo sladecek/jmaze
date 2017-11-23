@@ -1,7 +1,7 @@
 package com.github.sladecek.maze.jmaze.geometry;
 
 /*
- * Two dimensional ArrayList.
+ * Two dimensional vector.
  */
 public final class OrientationVector2D {
 
