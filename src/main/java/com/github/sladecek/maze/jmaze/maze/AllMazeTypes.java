@@ -1,15 +1,15 @@
 package com.github.sladecek.maze.jmaze.maze;
 
-import com.github.sladecek.maze.jmaze.circular.CircularMazeDescription;
-import com.github.sladecek.maze.jmaze.hexagonal.HexagonalMazeDescription;
-import com.github.sladecek.maze.jmaze.moebius.MoebiusMazeDescription;
+import com.github.sladecek.maze.jmaze.makers.circular.CircularMazeDescription;
+import com.github.sladecek.maze.jmaze.makers.hexagonal.HexagonalMazeDescription;
+import com.github.sladecek.maze.jmaze.makers.moebius.MoebiusMazeDescription;
 import com.github.sladecek.maze.jmaze.properties.MazeDescription;
-import com.github.sladecek.maze.jmaze.rectangular.RectangularMazeDescription;
-import com.github.sladecek.maze.jmaze.spheric.EggMazeDescription;
-import com.github.sladecek.maze.jmaze.spheric.EllipsoidMazeDescription;
-import com.github.sladecek.maze.jmaze.spheric.SphericMazeDescription;
-import com.github.sladecek.maze.jmaze.triangular.TriangularMazeDescription;
-import com.github.sladecek.maze.jmaze.voronoi.VoronoiMazeDescription;
+import com.github.sladecek.maze.jmaze.makers.rectangular.RectangularMazeDescription;
+import com.github.sladecek.maze.jmaze.makers.spheric.EggMazeDescription;
+import com.github.sladecek.maze.jmaze.makers.spheric.EllipsoidMazeDescription;
+import com.github.sladecek.maze.jmaze.makers.spheric.SphericMazeDescription;
+import com.github.sladecek.maze.jmaze.makers.triangular.TriangularMazeDescription;
+import com.github.sladecek.maze.jmaze.makers.voronoi.VoronoiMazeDescription;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;

@@ -3,7 +3,7 @@ package com.github.sladecek.maze.jmaze.shapes;
 import com.github.sladecek.maze.jmaze.generator.MazePath;
 import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 import com.github.sladecek.maze.jmaze.print2d.I2DDocument;
-import com.github.sladecek.maze.jmaze.printstyle.PrintStyle;
+import com.github.sladecek.maze.jmaze.print.PrintStyle;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;

@@ -12,9 +12,8 @@ import com.github.sladecek.maze.jmaze.print3d.ModelFromShapes;
 import com.github.sladecek.maze.jmaze.print3d.output.OpenScad3DPrinter;
 import com.github.sladecek.maze.jmaze.print3d.output.StlMazePrinter;
 import com.github.sladecek.maze.jmaze.print3d.output.ThreeJs3DPrinter;
-import com.github.sladecek.maze.jmaze.printstyle.PrintStyle;
+import com.github.sladecek.maze.jmaze.print.PrintStyle;
 import com.github.sladecek.maze.jmaze.properties.MazeValidationErrors;
-import com.github.sladecek.maze.jmaze.util.MazeGenerationException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;

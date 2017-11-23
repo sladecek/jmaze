@@ -1,7 +1,7 @@
 package com.github.sladecek.maze.jmaze.shapes;
 
 import com.github.sladecek.maze.jmaze.print2d.I2DDocument;
-import com.github.sladecek.maze.jmaze.printstyle.PrintStyle;
+import com.github.sladecek.maze.jmaze.print.PrintStyle;
 
 /**
  * Maze shapes that can be printed in 2D.

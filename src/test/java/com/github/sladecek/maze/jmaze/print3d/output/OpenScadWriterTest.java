@@ -4,8 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import com.github.sladecek.maze.jmaze.print3d.output.OpenScadComposer;
-import com.github.sladecek.maze.jmaze.printstyle.Color;
+import com.github.sladecek.maze.jmaze.print.Color;
 
 public class OpenScadWriterTest {
 

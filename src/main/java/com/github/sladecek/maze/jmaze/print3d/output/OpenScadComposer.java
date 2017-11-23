@@ -1,7 +1,7 @@
 package com.github.sladecek.maze.jmaze.print3d.output;
 
 import com.github.sladecek.maze.jmaze.geometry.Point3D;
-import com.github.sladecek.maze.jmaze.printstyle.Color;
+import com.github.sladecek.maze.jmaze.print.Color;
 
 import java.io.IOException;
 import java.io.OutputStream;

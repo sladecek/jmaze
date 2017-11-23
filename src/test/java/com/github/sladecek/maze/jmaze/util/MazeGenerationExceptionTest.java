@@ -2,6 +2,7 @@ package com.github.sladecek.maze.jmaze.util;
 
 import static org.junit.Assert.*;
 
+import com.github.sladecek.maze.jmaze.maze.MazeGenerationException;
 import org.junit.Test;
 
 public class MazeGenerationExceptionTest {

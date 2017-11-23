@@ -1,6 +1,6 @@
 package com.github.sladecek.maze.jmaze.properties;
 
-import com.github.sladecek.maze.jmaze.printstyle.Color;
+import com.github.sladecek.maze.jmaze.print.Color;
 
 
 import java.util.ArrayList;

@@ -8,7 +8,7 @@ import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MFace;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MPoint;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.Model3d;
 import com.github.sladecek.maze.jmaze.print3d.maze3dmodel.*;
-import com.github.sladecek.maze.jmaze.printstyle.PrintStyle;
+import com.github.sladecek.maze.jmaze.print.PrintStyle;
 import com.github.sladecek.maze.jmaze.shapes.FloorShape;
 import com.github.sladecek.maze.jmaze.shapes.Shapes;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
