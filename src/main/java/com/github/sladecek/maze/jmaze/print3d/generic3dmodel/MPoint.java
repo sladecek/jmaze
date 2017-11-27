@@ -32,5 +32,13 @@ public class MPoint {
         return Point3D.computeDistance(p1.getCoordinate(), coordinate);
     }
 
+    public double amplitude() {
+        return Double.max(
+                Double.max(
+                        Math.abs(coordinate.getX()),
+                        Math.abs(coordinate.getY())),
+                Math.abs(coordinate.getZ()));
+    }
+
     private Point3D coordinate;
 }

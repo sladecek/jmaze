@@ -1,17 +1,17 @@
 package com.github.sladecek.maze.jmaze.print3d.output;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-
 import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 import com.github.sladecek.maze.jmaze.geometry.Point3D;
+import com.github.sladecek.maze.jmaze.maze.MazeGenerationException;
 import com.github.sladecek.maze.jmaze.print.IMazePrinter;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MFace;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MPoint;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.Model3d;
-import com.github.sladecek.maze.jmaze.maze.MazeGenerationException;
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 
 
 public class ThreeJs3DPrinter implements IMazePrinter {
@@ -31,9 +31,19 @@ public class ThreeJs3DPrinter implements IMazePrinter {
 
     @Override
     public void print(OutputStream stream) throws IOException, MazeGenerationException {
-            try (PrintWriter pw = new PrintWriter(stream)) {
+        Double maxAmplitude = model
+                .getPoints()
+                .stream()
+                .map((p) -> p.amplitude())
+                .max(Double::compare)
+                .get();
+
+        try (PrintWriter pw = new PrintWriter(stream)) {
 
                     pw.print("{\n");
+                    pw.print("\"amplitude\": ");
+                    pw.print(maxAmplitude);
+                    pw.print(",\n");
                     pw.print("\"vertices\": [");
 
                     for (MFace face : model.getFaces()) {

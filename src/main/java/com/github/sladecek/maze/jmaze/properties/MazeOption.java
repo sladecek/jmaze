@@ -97,7 +97,7 @@ public class MazeOption {
 
         // TODO zkombinovat s mazeProperties .update from properties
         String key = getName(); // TODO ?
-        System.out.println("converting "+key);
+
         Object value = properties.get(key);
         if (value == null && ! (defaultValue instanceof Boolean)) {
             return;
