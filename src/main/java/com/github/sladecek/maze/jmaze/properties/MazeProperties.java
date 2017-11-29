@@ -31,15 +31,8 @@ public class MazeProperties {
         return o;
     }
 
-
-    // TODO kontrola bude v options na vstupu
-    public int getInt(String name, int minimum, int maximum) {
-        int value = (Integer)get(name, Integer.class);
-        if (value < minimum || value > maximum) {
-            throw new IllegalArgumentException("Illegal value of property '"+name+"' is "+value+
-                    " should be between "+minimum+" and "+maximum+ ".");
-        }
-        return value;
+    public int getInt(String name) {
+        return (Integer)get(name, Integer.class);
     }
 
     public double getDouble(String name) {

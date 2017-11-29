@@ -24,8 +24,8 @@ public class CircularMaze extends Maze {
 
 
    public void buildMazeGraphAndShapes() {
-       layerCount = properties.getInt("layerCount", 1, 1000);
-       margin = properties.getInt("margin", 0, 10000);
+       layerCount = properties.getInt("layerCount");
+       margin = properties.getInt("margin");
        computeRoomCounts();
        firstRoomInLayer = new ArrayList<>();
        for (int i = 0; i < layerCount; i++) {

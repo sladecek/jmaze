@@ -37,8 +37,8 @@ public HexagonalMaze() {
 
     @Override
     public void buildMazeGraphAndShapes() {
-        size = properties.getInt("size", 2, 10000);
-        margin = properties.getInt("margin", 0, 10000);
+        size = properties.getInt("size");
+        margin = properties.getInt("margin");
         makeContext();
 
         final int roomsPerRow = 2 * size - 1;

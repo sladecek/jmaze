@@ -57,7 +57,9 @@ class MazeApp {
 
                 maze.setProperties(p);
                 maze.makeMazeAllSteps(true);
-                maze.printToFileInAllAvailableFormats();
+                maze.printToFileInAllAvailableFormats(
+                        description.canBePrintedIn2D(),
+                        description.canBePrintedIn3D());
             }
         } catch (Throwable e) {
             e.printStackTrace();

@@ -19,9 +19,9 @@ public class RectangularMaze extends Maze {
     @Override
     public void buildMazeGraphAndShapes() {
         final boolean isPolar = false;
-        final int height = properties.getInt("height",2, 100000);
-        final int width = properties.getInt("width",2, 100000);
-        final int margin = properties.getInt("margin", 0, 10000);
+        final int height = properties.getInt("height");
+        final int width = properties.getInt("width");
+        final int margin = properties.getInt("margin");
 
         // width and height in pixels
         final int h = rsp * height;

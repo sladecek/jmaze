@@ -49,7 +49,7 @@ public class MoebiusMazeDescription extends MazeDescription {
     public MazeValidationErrors convertAndValidate(MazeProperties properties, String prefix, Locale locale) {
         MazeValidationErrors  mve = super.convertAndValidate(properties, prefix, locale);
 
-        int moebWidth = properties.getInt("sizeAcross", 1, 1111);
+        int moebWidth = properties.getInt("sizeAcross");
         if (moebWidth % 2 == 1) {
             mve.addError(prefix, "sizeAccress", "must not be odd");
         }

@@ -26,7 +26,6 @@ import java.util.Random;
  */
 public abstract class Maze extends MazeData implements IMaze {
     protected Maze() {
-
     }
 
     public void makeMazeAllSteps(boolean with3d) {
@@ -35,17 +34,14 @@ public abstract class Maze extends MazeData implements IMaze {
         randomlyGenerateMazePath();
         if (with3d) {
             make3DModel();
-
         }
     }
 
     private void make3DModel() {
         IMaze3DMapper mapper = create3DMapper();
         if (mapper != null) {
-
             PrintStyle colors;
             colors = new PrintStyle();
-
             model3d = ModelFromShapes.make(pathShapes, mapper, colors, properties.getDouble("wallSize"));
         }
     }
@@ -58,7 +54,7 @@ public abstract class Maze extends MazeData implements IMaze {
 
 
     private void setupRandomGenerator() {
-        int randomSeed = properties.getInt("randomSeed", Integer.MIN_VALUE, Integer.MAX_VALUE);
+        int randomSeed = properties.getInt("randomSeed");
         randomGenerator = new Random();
         randomGenerator.setSeed(randomSeed);
     }
@@ -69,14 +65,16 @@ public abstract class Maze extends MazeData implements IMaze {
     }
 
 
-    public void printToFileInAllAvailableFormats() throws MazeGenerationException, IOException {
+    public void printToFileInAllAvailableFormats(boolean with2d, boolean with3d) throws MazeGenerationException, IOException {
         final String fileName = getProperties().getString("fileName");
         for (MazeOutputFormat format : MazeOutputFormat.values()) {
-            IMazePrinter pr = constructMazePrinterIfInProperties(format);
-            if (pr != null) {
-                FileOutputStream stream = new FileOutputStream(fileName + "." + format.fileExtension());
-                pr.print(stream);
-                stream.close();
+            if (with3d && format.is3D() || with2d && format.is2D()) {
+                IMazePrinter pr = constructMazePrinter(format);
+                if (pr != null) {
+                    FileOutputStream stream = new FileOutputStream(fileName + "." + format.fileExtension());
+                    pr.print(stream);
+                    stream.close();
+                }
             }
         }
     }
@@ -102,19 +100,7 @@ public abstract class Maze extends MazeData implements IMaze {
         return null;
     }
 
-    private IMazePrinter constructMazePrinterIfInProperties(MazeOutputFormat format) {
-
-        if (getProperties().getBooleanOrFalse(format.name())) {
-            return constructMazePrinter(format);
-
-        }
-        return null;
-    }
-
     private IMazePrinter constructMazePrinter(MazeOutputFormat format) {
-    /*    if (format.is3D() && !canBePrintedIn3D()) return null;
-        if (format.is2D() && !canBePrintedIn2D()) return null;
-*/
         IMazePrinter pr = null;
 
         switch (format) {

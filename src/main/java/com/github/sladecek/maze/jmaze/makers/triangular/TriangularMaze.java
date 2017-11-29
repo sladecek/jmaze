@@ -14,9 +14,9 @@ public class TriangularMaze extends Maze {
     @Override
     public void buildMazeGraphAndShapes() {
         final boolean isPolar = false;
-        size = properties.getInt("size", 2,10000);
+        size = properties.getInt("size");
 
-        final int margin = properties.getInt("margin", 0, 10000);
+        final int margin = properties.getInt("margin");
         final int height = size;
         final int width = 2 * size;
 

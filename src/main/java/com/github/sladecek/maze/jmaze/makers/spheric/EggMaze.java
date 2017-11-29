@@ -35,7 +35,7 @@ public final class EggMaze extends Maze {
                 properties.getDouble("eggness")
         );
 
-        this.equatorCellCnt = properties.getInt("equatorCells", 2, 1000);
+        this.equatorCellCnt = properties.getInt("equatorCells");
         this.baseRoomSizeInmm = geometry.computeBaseRoomSizeInmm(equatorCellCnt);
         north = new EggMazeHemisphere(geometry.getEllipseMajorInmm());
         south = new EggMazeHemisphere(-geometry.getEllipseMajorInmm());

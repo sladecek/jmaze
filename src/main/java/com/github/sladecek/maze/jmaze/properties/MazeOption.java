@@ -7,6 +7,7 @@ import java.util.Locale;
 /**
  * A configurable maze property such as width or height.
  */
+@SuppressWarnings("UnusedReturnValue")  // unused fluent interface
 public class MazeOption {
 
     public MazeOption(String name, int value, int min, int max) {

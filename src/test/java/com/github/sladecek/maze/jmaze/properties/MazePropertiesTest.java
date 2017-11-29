@@ -31,23 +31,14 @@ public class MazePropertiesTest {
     @Test
     public void testClone() throws Exception {
         MazeProperties c = p.deepCopy();
-        assertEquals(1, c.getInt("int", 0, 10));
+        assertEquals(1, c.getInt("int"));
     }
 
     @Test
     public void getInt() throws Exception {
-        assertEquals(1, p.getInt("int", 1, 1));
+        assertEquals(1, p.getInt("int"));
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void getIntMin() throws Exception {
-        p.getInt("int", 2, 10);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void getIntMax() throws Exception {
-        p.getInt("int", 0, 0);
-    }
 
     @Test
     public void getDouble() throws Exception {
@@ -85,7 +76,7 @@ public class MazePropertiesTest {
         MazeProperties p2 = new MazeProperties();
         p2.put("int", "7");
         p.updateFromStrings(p2);
-        assertEquals(7, p.getInt("int", 0, 10));
+        assertEquals(7, p.getInt("int"));
     }
 
     @Test

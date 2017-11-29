@@ -25,11 +25,11 @@ public class VoronoiMaze extends Maze {
          Approximate room size in pixels.
         */
         int rsp = 20;
-        this.width = properties.getInt("width", 2, 10000) * rsp;
-        this.height = properties.getInt("height", 2, 10000) * rsp;
-        int roomCount = properties.getInt("roomCount", 2, 100000);
-        int loydCnt = properties.getInt("loydCount", 0, 100000);
-        final int margin = properties.getInt("margin", 0, 10000);
+        this.width = properties.getInt("width") * rsp;
+        this.height = properties.getInt("height") * rsp;
+        int roomCount = properties.getInt("roomCount");
+        int loydCnt = properties.getInt("loydCount");
+        final int margin = properties.getInt("margin");
 
         final boolean isPolar = false;
         

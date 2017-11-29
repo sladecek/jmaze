@@ -8,7 +8,7 @@ import com.github.sladecek.maze.jmaze.properties.OptionLevel;
 public class EllipsoidMazeDescription extends EggMazeDescriptionBase {
     public EllipsoidMazeDescription() {
         super();
-        findOption("eggness").setLevel(OptionLevel.Invisible).setValue(1.0);
+        findOption("eggness").setLevel(OptionLevel.Invisible).setValue(0.0);
     }
 
     @Override

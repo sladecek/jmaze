@@ -13,12 +13,12 @@ public final class PrintStyle {
         targetMarkColor = properties.getColor("targetMarkColor");
         solutionMarkColor = properties.getColor("solutionMarkColor");
 
-        innerWallWidth = properties.getInt("innerWallWidth", 1, 1000);
-        outerWallWidth = properties.getInt("outerWallWidth", 1, 1000);
+        innerWallWidth = properties.getInt("innerWallWidth");
+        outerWallWidth = properties.getInt("outerWallWidth");
 
-        startMarkWidth = properties.getInt("startMarkWidth", 1, 1000);
-        targetMarkWidth = properties.getInt("targetMarkWidth", 1, 1000);
-        solutionMarkWidth = properties.getInt("solutionMarkWidth", 1, 1000);
+        startMarkWidth = properties.getInt("startMarkWidth");
+        targetMarkWidth = properties.getInt("targetMarkWidth");
+        solutionMarkWidth = properties.getInt("solutionMarkWidth");
 
         outerWallColor = properties.getColor("outerWallColor");
         innerWallColor = properties.getColor("innerWallColor");

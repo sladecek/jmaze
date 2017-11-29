@@ -19,8 +19,8 @@ public final class MoebiusMaze extends Maze {
    @Override
    public void buildMazeGraphAndShapes() {
        //      final boolean isPolar = false;
-       sizeAcross = properties.getInt("sizeAcross", 2, 1000);
-       sizeAlong = properties.getInt("sizeAlong", 2, 10000);
+       sizeAcross = properties.getInt("sizeAcross");
+       sizeAlong = properties.getInt("sizeAlong");
 
        if (sizeAlong % 2 != 0) {
            throw new IllegalArgumentException(
