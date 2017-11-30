@@ -3,10 +3,6 @@ package com.github.sladecek.maze.jmaze.makers.spheric;
 import com.github.sladecek.maze.jmaze.properties.MazeDescription;
 import com.github.sladecek.maze.jmaze.properties.MazeOption;
 
-import java.util.ResourceBundle;
-
-import static java.util.ResourceBundle.getBundle;
-
 /**
  * Base class for configurable options of all spheric mazes (egg, ellipsoid, sphere).
  */

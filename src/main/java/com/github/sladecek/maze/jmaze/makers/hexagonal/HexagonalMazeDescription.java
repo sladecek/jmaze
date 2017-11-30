@@ -2,14 +2,9 @@ package com.github.sladecek.maze.jmaze.makers.hexagonal;
 
 import com.github.sladecek.maze.jmaze.properties.MazeDescription;
 import com.github.sladecek.maze.jmaze.properties.MazeOption;
-import com.github.sladecek.maze.jmaze.makers.rectangular.RectangularMaze;
-
-import java.util.ResourceBundle;
-
-import static java.util.ResourceBundle.getBundle;
 
 /**
- * Configurable options for rectangular maze.
+ * Configurable options for rectangular mazes.
  */
 public class HexagonalMazeDescription extends MazeDescription {
     public HexagonalMazeDescription() {
@@ -20,8 +15,6 @@ public class HexagonalMazeDescription extends MazeDescription {
     public String getName() {
         return "hexagonal";
     }
-
-
 
     @Override
     public boolean canBePrintedIn2D() {
@@ -37,6 +30,5 @@ public class HexagonalMazeDescription extends MazeDescription {
     public Class getMazeClass() {
         return HexagonalMaze.class;
     }
-    private static final ResourceBundle bundle = getBundle("jMazeMessages");
 
 }

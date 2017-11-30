@@ -133,8 +133,7 @@ public class MazeOption {
                     errors.addError(prefix, key, "TODO number err");
                 }
             } else if (value == null) {
-                value = false;
-                properties.put(name, value);
+                properties.put(name, false);
             }
         }
 

@@ -1,14 +1,17 @@
 package com.github.sladecek.maze.jmaze.makers.spheric;
 
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 import com.github.sladecek.maze.jmaze.geometry.SouthNorth;
 import com.github.sladecek.maze.jmaze.maze.Maze;
 import com.github.sladecek.maze.jmaze.print3d.IMaze3DMapper;
-import com.github.sladecek.maze.jmaze.shapes.*;
+import com.github.sladecek.maze.jmaze.shapes.FloorShape;
+import com.github.sladecek.maze.jmaze.shapes.MarkShape;
+import com.github.sladecek.maze.jmaze.shapes.Shapes;
+import com.github.sladecek.maze.jmaze.shapes.WallShape;
+
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Rooms and walls of a maze on an geometry-like shape.
@@ -26,11 +29,10 @@ public final class EggMaze extends Maze {
     }
 
 
-
     @Override
     public void buildMazeGraphAndShapes() {
         this.geometry = new EggGeometry(
-          properties.getDouble("ellipseMajor")      ,
+                properties.getDouble("ellipseMajor"),
                 properties.getDouble("ellipseMinor"),
                 properties.getDouble("eggness")
         );
@@ -67,6 +69,7 @@ public final class EggMaze extends Maze {
         assignStartAndTargetRooms();
 
     }
+
     public EggMazeHemisphere getHemisphere(SouthNorth sn) {
         return sn == SouthNorth.north ? north : south;
     }
@@ -158,7 +161,7 @@ public final class EggMaze extends Maze {
                 // polar layers have only one room
                 r = getGraph().addRoom();
             }
-            Point2DInt center = new Point2DInt(ix*res+res/2, (iy * roomMapRatio)*res+res/2);
+            Point2DInt center = new Point2DInt(ix * res + res / 2, (iy * roomMapRatio) * res + res / 2);
             final MarkShape mark = new MarkShape(r, center);
             getAllShapes().add(mark);
             final FloorShape floor = new FloorShape(r, center);
@@ -247,9 +250,9 @@ public final class EggMaze extends Maze {
         final int roomMapRatio = equatorCellCnt / roomCntThisLayer;
         final int y1 = (yr1 * roomMapRatio) % equatorCellCnt;
         final int y2 = (yr2 * roomMapRatio) % equatorCellCnt;
-        final Point2DInt p1 = new Point2DInt(x1*res, y1*res);
-        final Point2DInt p2 = new Point2DInt(x2*res, y2*res);
-        LOG.log(Level.INFO, "addWallShape p1="+p1+" p2="+p2+" right="+rightRoom+" left="+leftRoom);
+        final Point2DInt p1 = new Point2DInt(x1 * res, y1 * res);
+        final Point2DInt p2 = new Point2DInt(x2 * res, y2 * res);
+        LOG.log(Level.INFO, "addWallShape p1=" + p1 + " p2=" + p2 + " right=" + rightRoom + " left=" + leftRoom);
         getAllShapes().add(WallShape.newInnerWall(id, p1, p2, rightRoom, leftRoom));
     }
 
@@ -273,6 +276,7 @@ public final class EggMaze extends Maze {
         return geometry;
     }
 
+    public static final int res = 10;
     private static final Logger LOG = Logger.getLogger("maze");
     private static final int MINIMAL_ROOM_COUNT_ON_EGG_MAZE_EQUATOR = 4;
     private EggGeometry geometry;
@@ -280,7 +284,4 @@ public final class EggMaze extends Maze {
     private EggMazeHemisphere north;
     private EggMazeHemisphere south;
     private double baseRoomSizeInmm;
-
-
-    public static final int res = 10;
 }

@@ -111,7 +111,5 @@ public class MazePropertiesTest {
         assertEquals(new Color("019988"), p.getColor("color"));
     }
 
-
-
     private MazeProperties p;
 }

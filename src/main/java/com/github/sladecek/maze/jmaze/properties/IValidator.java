@@ -7,5 +7,4 @@ import java.util.Locale;
  */
 interface IValidator {
     MazeValidationErrors convertAndValidate(MazeProperties properties, String prefix, Locale locale);
-
 }

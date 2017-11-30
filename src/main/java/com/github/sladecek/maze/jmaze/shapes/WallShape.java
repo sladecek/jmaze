@@ -5,6 +5,7 @@ import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 import com.github.sladecek.maze.jmaze.print2d.I2DDocument;
 import com.github.sladecek.maze.jmaze.print.PrintStyle;
 
+@SuppressWarnings("HardCodedStringLiteral")
 public final class WallShape implements IPrintableMazeShape2D {
 
 

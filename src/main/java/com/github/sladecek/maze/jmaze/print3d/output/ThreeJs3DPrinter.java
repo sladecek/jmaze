@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Optional;
 
 
 public class ThreeJs3DPrinter implements IMazePrinter {
@@ -31,12 +32,12 @@ public class ThreeJs3DPrinter implements IMazePrinter {
 
     @Override
     public void print(OutputStream stream) throws IOException, MazeGenerationException {
-        Double maxAmplitude = model
+        Optional<Double> maxAmplitude = model
                 .getPoints()
                 .stream()
-                .map((p) -> p.amplitude())
+                .map(MPoint::amplitude)
                 .max(Double::compare)
-                .get();
+                ;
 
         try (PrintWriter pw = new PrintWriter(stream)) {
 

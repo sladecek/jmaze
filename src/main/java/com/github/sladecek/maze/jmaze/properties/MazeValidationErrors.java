@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
  * Collection of maze validation errors.
  */
 public class MazeValidationErrors {
+
     private void addError(MazeValidationError error) {
         errors.add(error);
     }
@@ -19,7 +20,6 @@ public class MazeValidationErrors {
         String k = key;
         if (!prefix.isEmpty()) {
             k = prefix + "_" + key;
-
         }
         addError(new MazeValidationError(k, message));
     }
@@ -31,8 +31,14 @@ public class MazeValidationErrors {
     private final ArrayList<MazeValidationError> errors = new ArrayList<>();
 
     public boolean hasErrorForField(String field) {
-        if (isEmpty()) return false;
-        return errors.stream().filter((e)->e.getField().equals(field)).count() > 0;
+        if (isEmpty()) {
+            return false;
+        } else {
+            return errors
+                    .stream()
+                    .filter((e) -> e.getField().equals(field))
+                    .count() > 0;
+        }
     }
 
     public ArrayList<String> errorsForField(String field) {

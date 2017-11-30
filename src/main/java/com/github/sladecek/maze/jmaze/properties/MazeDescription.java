@@ -2,7 +2,6 @@ package com.github.sladecek.maze.jmaze.properties;
 
 import com.github.sladecek.maze.jmaze.print.Color;
 
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -12,34 +11,16 @@ import java.util.Locale;
  */
 abstract public class MazeDescription implements IValidator {
 
-
     public List<MazeOption> getOwnOptions() {
         return ownOptions;
     }
 
-
-    protected MazeOption findOption(String name) {
-        for (MazeOption o: getOwnOptions()) {
-            if (o.getName().equals(name)) {
-                return o;
-            }
-        }
-        throw new InternalError("nvalid option "+name);
+    public MazeProperties getOwnProperties() {
+        return getDefaultProperties(ownOptions);
     }
 
-    private List<MazeOption> getAllOptions() {
-        ArrayList<MazeOption> result = new ArrayList<>();
-        result.addAll(ownOptions);
-        result.addAll(getUniversalOptions());
-// TODO smazat        if (canBePrintedIn2D())
-{
-            result.addAll(get2dOptions());
-        }
-        // TODO smazat if (canBePrintedIn3D())
-        {
-            result.addAll(get3dOptions());
-        }
-        return result;
+    public MazeProperties getDefaultProperties() {
+        return getDefaultProperties(getAllOptions());
     }
 
     public static List<MazeOption> getUniversalOptions() {
@@ -47,8 +28,6 @@ abstract public class MazeDescription implements IValidator {
         result.add(new MazeOption("randomSeed", 0, Integer.MIN_VALUE, Integer.MAX_VALUE));
         return result;
     }
-
-
 
     public static List<MazeOption> get2dOptions() {
         ArrayList<MazeOption> result = new ArrayList<>();
@@ -87,7 +66,32 @@ abstract public class MazeDescription implements IValidator {
         result.add((new MazeOption("js", false).setLevel(OptionLevel.Invisible)));
 
         return result;
+    }
 
+
+    @Override
+    public MazeValidationErrors convertAndValidate(MazeProperties properties, String prefix, Locale locale) {
+        MazeValidationErrors result = new MazeValidationErrors();
+        getAllOptions().forEach(o -> o.convertAndValidate(properties, locale, prefix, result));
+        return result;
+    }
+
+    public MazeOption findOption(String name) {
+        for (MazeOption o : getOwnOptions()) {
+            if (o.getName().equals(name)) {
+                return o;
+            }
+        }
+        throw new InternalError("Invalid option " + name);
+    }
+
+    private List<MazeOption> getAllOptions() {
+        ArrayList<MazeOption> result = new ArrayList<>();
+        result.addAll(ownOptions);
+        result.addAll(getUniversalOptions());
+        result.addAll(get2dOptions());
+        result.addAll(get3dOptions());
+        return result;
     }
 
     public abstract boolean canBePrintedIn2D();
@@ -98,30 +102,14 @@ abstract public class MazeDescription implements IValidator {
 
     public abstract Class getMazeClass();
 
-    public MazeProperties getOwnProperties() {
-        return getDefaultProperties(ownOptions);
-    }
-
-    public MazeProperties getDefaultProperties() {
-        return getDefaultProperties(getAllOptions());
-    }
-
 
     private MazeProperties getDefaultProperties(List<MazeOption> options) {
         MazeProperties result = new MazeProperties();
-        for (MazeOption o: options) {
+        for (MazeOption o : options) {
             result.put(o.getName(), o.getDefaultValue());
         }
         return result;
     }
 
-
     protected final List<MazeOption> ownOptions = new ArrayList<>();
-
-    @Override
-    public MazeValidationErrors convertAndValidate(MazeProperties properties, String prefix, Locale locale) {
-        MazeValidationErrors result = new MazeValidationErrors();
-        getAllOptions().forEach(o->o.convertAndValidate(properties, locale, prefix, result));
-        return result;
-    }
 }

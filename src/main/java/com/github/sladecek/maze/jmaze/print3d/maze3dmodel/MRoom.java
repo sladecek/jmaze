@@ -1,16 +1,14 @@
 package com.github.sladecek.maze.jmaze.print3d.maze3dmodel;
 
 
-
 import com.github.sladecek.maze.jmaze.geometry.LeftRight;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MEdge;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.Optional;
+import java.util.Set;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 /**
  * Room floor in 3D model.
@@ -36,7 +34,7 @@ public class MRoom extends FloorFace {
         }
         Set<RoomCorner> unfinished = new HashSet<>(corners);
         for (RoomCorner rc : unfinished) {
-            LOG.info("  "+rc);
+            LOG.info("  " + rc);
         }
 
         RoomCorner current = corners.get(0);
@@ -78,8 +76,8 @@ public class MRoom extends FloorFace {
                 " edges=" + getEdges() +
                 '}';
     }
+
     private static final Logger LOG = Logger.getLogger("maze");
     private final ArrayList<RoomCorner> corners = new ArrayList<>();
     private final int floorId;
-
 }
