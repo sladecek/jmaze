@@ -8,9 +8,9 @@ import com.github.sladecek.maze.jmaze.properties.OptionLevel;
 public class SphericMazeDescription extends EggMazeDescriptionBase {
     public SphericMazeDescription() {
         super();
-        findOption("ellipseMajor").setLevel(OptionLevel.Invisible);
-        findOption("ellipseMinor").setLevel(OptionLevel.Invisible);
-        findOption("eggness").setLevel(OptionLevel.Invisible).setValue(0.0);
+        findOwnOption("ellipseMajor").setLevel(OptionLevel.Invisible);
+        findOwnOption("ellipseMinor").setLevel(OptionLevel.Invisible);
+        findOwnOption("eggness").setLevel(OptionLevel.Invisible).setValue(0.0);
     }
 
     @Override

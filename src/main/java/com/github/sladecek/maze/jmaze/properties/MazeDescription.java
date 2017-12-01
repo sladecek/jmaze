@@ -11,17 +11,6 @@ import java.util.Locale;
  */
 abstract public class MazeDescription implements IValidator {
 
-    public List<MazeOption> getOwnOptions() {
-        return ownOptions;
-    }
-
-    public MazeProperties getOwnProperties() {
-        return getDefaultProperties(ownOptions);
-    }
-
-    public MazeProperties getDefaultProperties() {
-        return getDefaultProperties(getAllOptions());
-    }
 
     public static List<MazeOption> getUniversalOptions() {
         ArrayList<MazeOption> result = new ArrayList<>();
@@ -68,6 +57,25 @@ abstract public class MazeDescription implements IValidator {
         return result;
     }
 
+    public abstract boolean canBePrintedIn2D();
+
+    public abstract boolean canBePrintedIn3D();
+
+    public abstract String getName();
+
+    public abstract Class getMazeClass();
+
+    public List<MazeOption> getOwnOptions() {
+        return ownOptions;
+    }
+
+    public MazeProperties getOwnProperties() {
+        return getDefaultProperties(ownOptions);
+    }
+
+    public MazeProperties getDefaultProperties() {
+        return getDefaultProperties(getAllOptions());
+    }
 
     @Override
     public MazeValidationErrors convertAndValidate(MazeProperties properties, String prefix, Locale locale) {
@@ -76,7 +84,7 @@ abstract public class MazeDescription implements IValidator {
         return result;
     }
 
-    public MazeOption findOption(String name) {
+    public MazeOption findOwnOption(String name) {
         for (MazeOption o : getOwnOptions()) {
             if (o.getName().equals(name)) {
                 return o;
@@ -93,15 +101,6 @@ abstract public class MazeDescription implements IValidator {
         result.addAll(get3dOptions());
         return result;
     }
-
-    public abstract boolean canBePrintedIn2D();
-
-    public abstract boolean canBePrintedIn3D();
-
-    public abstract String getName();
-
-    public abstract Class getMazeClass();
-
 
     private MazeProperties getDefaultProperties(List<MazeOption> options) {
         MazeProperties result = new MazeProperties();

@@ -1,5 +1,6 @@
 package com.github.sladecek.maze.jmaze.properties;
 
+import com.github.sladecek.maze.jmaze.makers.spheric.EllipsoidMazeDescription;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -86,9 +87,15 @@ public class MazeDescriptionTest {
 
     @Test(expected = InternalError.class)
     public void findOptionFail() throws Exception {
-        MazeOption mo = md.findOption("stlxxx");
+        MazeOption mo = md.findOwnOption("stlxxx");
     }
 
+    @Test
+    public void findOptionSucceed() throws Exception {
+        MazeDescription mde  = new EllipsoidMazeDescription();
+        MazeOption mo = mde.findOwnOption("eggness");
+        assertEquals("eggness", mo.getName());
+    }
 
     private MazeDescription md;
 
