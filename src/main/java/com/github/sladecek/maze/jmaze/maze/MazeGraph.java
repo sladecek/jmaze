@@ -5,7 +5,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
  * Generic maze space without any particular properties. There is a list of
  * rooms and a list of walls. The rooms and wall must be added to lists one by
  * one during maze construction.

@@ -21,13 +21,8 @@ public class ThreeJs3DPrinter implements IMazePrinter {
         this.model = model;
     }
 
-
-    private Model3d model;
-
-
     public ThreeJs3DPrinter() {
         super();
-
     }
 
     @Override
@@ -36,33 +31,30 @@ public class ThreeJs3DPrinter implements IMazePrinter {
                 .getPoints()
                 .stream()
                 .map(MPoint::amplitude)
-                .max(Double::compare)
-                ;
+                .max(Double::compare);
 
         try (PrintWriter pw = new PrintWriter(stream)) {
+            pw.print("{\n");
+            pw.print("\"amplitude\": ");
+            pw.print(maxAmplitude);
+            pw.print(",\n");
+            pw.print("\"vertices\": [");
 
-                    pw.print("{\n");
-                    pw.print("\"amplitude\": ");
-                    pw.print(maxAmplitude);
-                    pw.print(",\n");
-                    pw.print("\"vertices\": [");
-
-                    for (MFace face : model.getFaces()) {
-                        if (face.isVisible()) {
-                            printFace(pw, face);
-                        }
-                    }
-                    pw.print("]\n ");
-                    pw.print("}\n ");
-
-// TODO                printMarks(tjs, blockMaker, showSolution);
-// TODO                printColors(tjs);
+            for (MFace face : model.getFaces()) {
+                if (face.isVisible()) {
+                    printFace(pw, face);
+                }
             }
+            pw.print("]\n ");
+            pw.print("}\n ");
+
         }
+    }
 
     @Override
     public Point2DInt getCanvasSize() {
-        return null;
+        assert false: "3d mazes have no canvas";
+        return new Point2DInt(0,0);
     }
 
     private void printFace(PrintWriter pw, MFace face) {
@@ -96,17 +88,8 @@ public class ThreeJs3DPrinter implements IMazePrinter {
         pw.printf("%.6f, %.6f, %.6f\n", p.getX(), p.getY(), p.getZ());
     }
 
-/*
-    private void printColors(ThreeJsComposer tjs)
-            throws IOException {
+    private Model3d model;
 
-        tjs.printColor("clearColor", printStyle.getThreeJsClearColor(), true);
-        tjs.printColor("meshColor", printStyle.getThreeJsMeshColor(), true);
-        tjs.printColor("ambientLightColor", printStyle.getThreeJsAmbientLightColor(), true);
-        tjs.printColor("pointLightColor", printStyle.getThreeJsPointLightColor(), false);
-
-    }
-*/
 
     private boolean skipComma = true;
 }

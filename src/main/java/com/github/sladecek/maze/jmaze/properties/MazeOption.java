@@ -2,12 +2,13 @@ package com.github.sladecek.maze.jmaze.properties;
 
 import com.github.sladecek.maze.jmaze.print.Color;
 
+import java.text.MessageFormat;
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 /**
  * A configurable maze property such as width or height.
  */
-@SuppressWarnings("UnusedReturnValue")  // unused fluent interface
 public class MazeOption {
 
     public MazeOption(String name, int value, int min, int max) {
@@ -75,16 +76,6 @@ public class MazeOption {
         return this;
     }
 
-
-    private final String name;
-    private Object defaultValue;
-    private double min;
-    private double max;
-    private double step;
-
-    private OptionLevel level = OptionLevel.Basic;
-
-
     public OptionLevel getLevel() {
         return level;
     }
@@ -95,57 +86,71 @@ public class MazeOption {
     }
 
     public void convertAndValidate(MazeProperties properties, Locale locale, String prefix, MazeValidationErrors errors) {
-
-        // TODO zkombinovat s mazeProperties .update from properties
-        String key = getName(); // TODO ?
-
+        String key = getName();
         Object value = properties.get(key);
-        if (value == null && ! (defaultValue instanceof Boolean)) {
+        if (value == null && !(defaultValue instanceof Boolean)) {
             return;
         }
+
+        ResourceBundle messages = ResourceBundle.getBundle("jMazeMessages", locale);
+
         if (defaultValue instanceof Integer) {
             if (value instanceof String) {
                 try {
                     value = Integer.parseInt((String) value);
                     properties.put(name, value);
                 } catch (NumberFormatException e) {
-                    errors.addError(prefix, key, "TODO number err");
+                    errors.addError(prefix, key, messages.getString("integer_format_error"));
                 }
             }
 
-        }
-        else if (defaultValue instanceof Double) {
+        } else if (defaultValue instanceof Double) {
             if (value instanceof String) {
                 try {
                     value = Double.parseDouble((String) value);
                     properties.put(name, value);
                 } catch (NumberFormatException e) {
-                    errors.addError(prefix, key, "TODO number err");
+                    errors.addError(prefix, key, messages.getString("boolean_format_error"));
                 }
             }
-        }
-        else if (defaultValue instanceof Boolean) {
+        } else if (defaultValue instanceof Boolean) {
             if (value instanceof String) {
-                try {
-                    value = Boolean.parseBoolean((String) value);
-                    properties.put(name, value);
-                } catch (NumberFormatException e) {
-                    errors.addError(prefix, key, "TODO number err");
+                if (((String) value).equals("true")) {
+                    properties.put(name, true);
+                } else if (((String) value).equals("false")) {
+                    properties.put(name, false);
+                } else {
+                    final String e = messages.getString("boolean_format_error");
+                    MessageFormat formatter = new MessageFormat(e);
+                    formatter.setLocale(locale);
+
+                    errors.addError(prefix, key, formatter.format(new Object[]{value}));
                 }
             } else if (value == null) {
                 properties.put(name, false);
             }
         }
 
-        if (defaultValue instanceof Number && value instanceof Number ) {
+        if (defaultValue instanceof Number && value instanceof Number) {
             double dv = ((Number) value).doubleValue();
             if (dv < min || dv > max) {
-                errors.addError(prefix, key, "TODO range err");
+                final String e = messages.getString("number_range_error");
+                MessageFormat formatter = new MessageFormat(e);
+                formatter.setLocale(locale);
+
+                errors.addError(prefix, key, formatter.format(new Object[]{min, max, dv}));
             }
         }
 
         // TODO other types
     }
 
+    private final String name;
+    private Object defaultValue;
+    private double min;
+    private double max;
+    private double step;
+    private OptionLevel level = OptionLevel.Basic;
     private String editor = null;
+
 }
