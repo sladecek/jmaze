@@ -10,6 +10,7 @@ import com.github.sladecek.maze.jmaze.shapes.MarkShape;
 import com.github.sladecek.maze.jmaze.shapes.Shapes;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @SuppressWarnings("SameParameterValue")
@@ -41,7 +42,7 @@ public class VoronoiMaze extends Maze {
 
         for (int i = 0; i < p0.getRoomCount(); i++) {
             Point2DInt pt = p0.getIntegerPoint(i);
-            LOGGER.info("random room center [" + i + "]=" + pt);
+            LOGGER.log(Level.FINE, "random room center [" + i + "]=" + pt);
         }
 
         LoydIteration loyd = new LoydIteration(p0, loydCnt);
@@ -63,7 +64,7 @@ public class VoronoiMaze extends Maze {
 
         for (int i = 0; i < roomCount; i++) {
             Point2DInt pt = p1.getIntegerPoint(i);
-            LOGGER.info("room center [" + i + "]=" + pt);
+            LOGGER.log(Level.FINE, "room center [" + i + "]=" + pt);
             int r = getGraph().addRoom();
             final MarkShape floor = new MarkShape(r, pt);
 
@@ -80,7 +81,7 @@ public class VoronoiMaze extends Maze {
                     new Point2DInt((int) e.x1, (int) e.y1), new Point2DInt((int) e.x2, (int) e.y2)));
 
 
-            LOGGER.info("wall id=" + id + " " + e);
+            LOGGER.log(Level.FINE, "wall id=" + id + " " + e);
 
         }
 

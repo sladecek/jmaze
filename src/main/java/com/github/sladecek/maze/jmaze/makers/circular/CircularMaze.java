@@ -136,7 +136,7 @@ public class CircularMaze extends Maze {
     private void generateConcentricWalls() {
         // draw concentric wall at radius r
         for (int layer = 0; layer < layerCount - 1; layer++) {
-            LOGGER.log(Level.INFO, "generateConcentricWalls r=" + layer);
+            LOGGER.log(Level.FINE, "generateConcentricWalls r=" + layer);
 
             // the next layer may have less rooms than this one
             final int roomCntInner = roomCounts.get(layer);
@@ -168,7 +168,7 @@ public class CircularMaze extends Maze {
 
     private void generateRadialWalls() {
         for (int layer = 1; layer < layerCount; layer++) {
-            LOGGER.log(Level.INFO, "generateRadialWalls i=" + layer);
+            LOGGER.log(Level.FINE, "generateRadialWalls i=" + layer);
 
             final int cnt = roomCounts.get(layer);
             if (cnt <= 1) {

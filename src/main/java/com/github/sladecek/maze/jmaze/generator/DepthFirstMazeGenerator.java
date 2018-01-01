@@ -31,7 +31,7 @@ public final class DepthFirstMazeGenerator implements IMazeGenerator {
         while (!stack.isEmpty()) {
 
             int room = stack.peek();
-            LOGGER.log(Level.INFO, " observing room: " + room);
+            LOGGER.log(Level.FINE, " observing room: " + room);
             if (room == graph.getTargetRoom()) {
                 // save solution
                 assert solution == null : "Maze cannot have two solutions";
@@ -50,12 +50,12 @@ public final class DepthFirstMazeGenerator implements IMazeGenerator {
                     room);
             if (candidates.isEmpty()) {
                 // backtrace - no way to go
-                LOGGER.log(Level.INFO, "backtrace ");
+                LOGGER.log(Level.FINE, "backtrace ");
                 stack.pop();
                 continue;
             }
 
-            LOGGER.log(Level.INFO, " candidates: " + candidates.toString());
+            LOGGER.log(Level.FINE, " candidates: " + candidates.toString());
 
             // select next room
             int choice = 0;
@@ -63,7 +63,7 @@ public final class DepthFirstMazeGenerator implements IMazeGenerator {
                 choice = randomGenerator.nextInt(candidates.size());
             }
             int wall = candidates.get(choice);
-            LOGGER.log(Level.INFO, " opening wall " + wall);
+            LOGGER.log(Level.FINE, " opening wall " + wall);
             result.setWallClosed(wall, false);
             int otherRoom = graph.getRoomBehindWall(room, wall);
             visitRoom(otherRoom);
@@ -98,7 +98,7 @@ public final class DepthFirstMazeGenerator implements IMazeGenerator {
 
     private void visitRoom(final int room) {
         assert !visitedRooms.get(room) : "Cannot visit the same room twice";
-        LOGGER.log(Level.INFO, "visiting room " + room);
+        LOGGER.log(Level.FINE, "visiting room " + room);
         visitedRooms.set(room);
         stack.push(room);
     }

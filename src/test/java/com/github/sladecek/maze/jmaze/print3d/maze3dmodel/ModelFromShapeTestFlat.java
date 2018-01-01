@@ -105,7 +105,7 @@ public class ModelFromShapeTestFlat extends ModelFromShapesTestBase {
     public void testElementCounts() {
 
         //printBlocks();
-        printEdges();
+        //printEdges();
         //printFaces();
         //printPoints();
         assertEquals(0, model3d.getBlocks().size());

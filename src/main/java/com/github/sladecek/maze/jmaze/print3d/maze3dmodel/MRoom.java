@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -28,13 +29,13 @@ public class MRoom extends FloorFace {
      * Assigns face id to the edges.
      */
     public void finishEdges() {
-        LOG.info("finishingEdges of " + this);
+        LOG.log(Level.FINE,"finishingEdges of " + this);
         if (corners.isEmpty()) {
             return;
         }
         Set<RoomCorner> unfinished = new HashSet<>(corners);
         for (RoomCorner rc : unfinished) {
-            LOG.info("  " + rc);
+            LOG.log(Level.FINE,"  " + rc);
         }
 
         RoomCorner current = corners.get(0);

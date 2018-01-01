@@ -16,7 +16,7 @@ public final class MarkShape implements IPrintableMazeShape2D {
         this.roomId = roomId;
         this.center = position;
         this.markType = MarkType.none;
-        LOG.log(Level.FINE, "MarkShape  " + markType + " center=" + center);
+        LOG.log(Level.FINER, "MarkShape  " + markType + " center=" + center);
     }
 
     public int getX() {

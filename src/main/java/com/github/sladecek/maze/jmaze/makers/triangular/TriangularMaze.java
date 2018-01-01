@@ -6,6 +6,7 @@ import com.github.sladecek.maze.jmaze.maze.Maze;
 import com.github.sladecek.maze.jmaze.print3d.IMaze3DMapper;
 import com.github.sladecek.maze.jmaze.shapes.*;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class TriangularMaze extends Maze {
@@ -72,7 +73,7 @@ public class TriangularMaze extends Maze {
 
         final Point2DInt p1 = new Point2DInt(rsx * x1, rsy * y1);
         final Point2DInt p2 = new Point2DInt(rsx * x2, rsy * y2);
-        LOGGER.info("addWallAndWallShape roomRight=" + roomRight + " roomLeft=" +
+        LOGGER.log(Level.FINE,"addWallAndWallShape roomRight=" + roomRight + " roomLeft=" +
                 roomLeft + " y1=" + y1 + " y2=" + y2 + " x1=" + x1 + " x2=" + x2);
 
         if (roomRight >= 0 && roomLeft >= 0) {
@@ -132,7 +133,7 @@ public class TriangularMaze extends Maze {
                         myFirst = r;
                     }
                     lastRoom = r;
-                    LOGGER.info("addRoom " + r + " y=" + y + " j=" + j + " prevRoom=" + prevRoom +
+                    LOGGER.log(Level.FINE,"addRoom " + r + " y=" + y + " j=" + j + " prevRoom=" + prevRoom +
                             " myFirst=" + myFirst + " prevFirst=" + prevFirst + " lastRoom=" + lastRoom);
 
 

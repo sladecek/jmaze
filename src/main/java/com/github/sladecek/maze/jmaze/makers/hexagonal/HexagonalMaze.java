@@ -10,6 +10,7 @@ import com.github.sladecek.maze.jmaze.shapes.Shapes;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class HexagonalMaze extends Maze {
@@ -56,7 +57,7 @@ public HexagonalMaze() {
 
                 Point2DInt center = computeRoomCenter(x, isOdd, y);
 
-                LOGGER.info("addRoom " + r + " y=" + y + " x=" + x + " center=" + center);
+                LOGGER.log(Level.FINE,"addRoom " + r + " y=" + y + " x=" + x + " center=" + center);
 
                 makeFloor(r, center);
 
@@ -132,7 +133,7 @@ public HexagonalMaze() {
 
         int id = getGraph().addWall(r, r2);
 
-        LOGGER.info(
+        LOGGER.log(Level.FINE,
                 "addWallAndShape room1=" + r + " room2=" + r2 + " y1=" + y1 + " y2=" + y2 + " x1=" + x1 + " x2=" + x2);
         getAllShapes().add(WallShape.newInnerWall(id, new Point2DInt(x1, y1), new Point2DInt(x2, y2)));
     }

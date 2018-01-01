@@ -59,7 +59,7 @@ public final class EggMaze extends Maze {
         // generate both hemispheres
         for (SouthNorth sn : SouthNorth.values()) {
             divideSpace(sn);
-            LOG.log(Level.INFO, "generate hemisphere " + sn + " cnt=" + getHemisphere(sn).getCircleCnt());
+            LOG.log(Level.FINE, "generate hemisphere " + sn + " cnt=" + getHemisphere(sn).getCircleCnt());
             generateRooms(sn);
 
             generateParallelWalls(sn);
@@ -142,7 +142,7 @@ public final class EggMaze extends Maze {
             }
             final int cntThis = h.getRoomCntBeforeCircle(ix);
             final int cntNext = h.getRoomCntAfterCircle(ix);
-            LOG.log(Level.INFO,
+            LOG.log(Level.FINE,
                     "generate row of rooms ix=" + ix + " x=" + x + " ctnThis=" + cntThis + " cntNext=" + cntNext);
             generateRowOfRooms(h, x, cntThis, cntNext, h.isPolarLayer(ix));
         }
@@ -173,7 +173,7 @@ public final class EggMaze extends Maze {
     private void generateParallelWalls(SouthNorth sn) {
         EggMazeHemisphere h = getHemisphere(sn);
         for (int i = 1; i < h.getCircleCnt(); i++) {
-            LOG.log(Level.INFO, "generateParallelWalls(" + sn + ") i=" + i);
+            LOG.log(Level.FINE, "generateParallelWalls(" + sn + ") i=" + i);
 
             // the next layer may have less rooms than this one
             final int roomCntThis = h.getRoomCntBeforeCircle(i);
@@ -204,7 +204,7 @@ public final class EggMaze extends Maze {
     private void generateParallelWallsOnEquator() {
         final int gRoomNorth = north.getGreenwichRoom(0);
         final int gRoomSouth = south.getGreenwichRoom(0);
-        LOG.log(Level.INFO, "generateParallelWallsOnEquator");
+        LOG.log(Level.FINE, "generateParallelWallsOnEquator");
         for (int i = 0; i < equatorCellCnt; i++) {
             final int rightRoom = gRoomNorth + i;
             final int leftRoom = gRoomSouth + i;
@@ -217,7 +217,7 @@ public final class EggMaze extends Maze {
     private void generateMeridianWalls(SouthNorth sn) {
         EggMazeHemisphere h = getHemisphere(sn);
         for (int i = 0; i < h.getCircleCnt(); i++) {
-            LOG.log(Level.INFO, "generateMeridianWalls(" + sn + ") i=" + i);
+            LOG.log(Level.FINE, "generateMeridianWalls(" + sn + ") i=" + i);
 
             final int cnt = h.getRoomCntAfterCircle(i);
             if (cnt <= 1) {
@@ -252,7 +252,7 @@ public final class EggMaze extends Maze {
         final int y2 = (yr2 * roomMapRatio) % equatorCellCnt;
         final Point2DInt p1 = new Point2DInt(x1 * res, y1 * res);
         final Point2DInt p2 = new Point2DInt(x2 * res, y2 * res);
-        LOG.log(Level.INFO, "addWallShape p1=" + p1 + " p2=" + p2 + " right=" + rightRoom + " left=" + leftRoom);
+        LOG.log(Level.FINE, "addWallShape p1=" + p1 + " p2=" + p2 + " right=" + rightRoom + " left=" + leftRoom);
         getAllShapes().add(WallShape.newInnerWall(id, p1, p2, rightRoom, leftRoom));
     }
 

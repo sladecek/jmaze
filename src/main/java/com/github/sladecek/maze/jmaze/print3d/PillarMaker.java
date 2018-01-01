@@ -10,6 +10,7 @@ import com.github.sladecek.maze.jmaze.shapes.WallType;
 
 
 import java.util.*;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
@@ -44,9 +45,9 @@ public class PillarMaker {
     }
 
     private void sortWalls() {
-        LOG.info("sorting walls of "+ getBase().getCenter());
+        LOG.log(Level.FINE,"sorting walls of "+ getBase().getCenter());
         for(WallEnd we: unsortedWalls) {
-            LOG.info(" "+we);
+            LOG.log(Level.FINE," "+we);
         }
 
         walls = new ArrayList<>();
@@ -138,9 +139,9 @@ public class PillarMaker {
     }
 
     private Optional<WallEnd> findTheOtherWallInTheSameRoom(WallEnd current) {
-        LOG.info(".....findTheOtherWallInTheSameRoom  current="+current.getWallShape()+" leftFaceId="+current.getLeftFaceId()+" p1Pillar="+current.isP1Pillar());
+        LOG.log(Level.FINE,".....findTheOtherWallInTheSameRoom  current="+current.getWallShape()+" leftFaceId="+current.getLeftFaceId()+" p1Pillar="+current.isP1Pillar());
         for (WallEnd b : unsortedWalls) {
-            LOG.info("........b="+b.getWallShape()+" rightFaceId="+b.getRightFaceId()+" p1Pillar="+b.isP1Pillar());
+            LOG.log(Level.FINE,"........b="+b.getWallShape()+" rightFaceId="+b.getRightFaceId()+" p1Pillar="+b.isP1Pillar());
             if (current.getLeftFaceId() == b.getRightFaceId()) {
                 return Optional.of(b);
             }

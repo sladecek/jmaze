@@ -137,8 +137,6 @@ public class VerticalFaceMakerTest {
 
         prepareModel(Altitude.CEILING, Altitude.FLOOR, Altitude.FLOOR, Altitude.FLOOR);
 
-        System.out.println(model);
-
         maker = new VerticalFaceMaker(model, mapper);
         // process the central edges only to insulate tested algorithm. Otherwise the frame
         // edges would be extruded to.
@@ -256,8 +254,6 @@ public class VerticalFaceMakerTest {
 
         prepareModel(Altitude.CEILING, Altitude.GROUND, Altitude.FLOOR, Altitude.FRAME);
 
-        System.out.println(model);
-
         maker = new VerticalFaceMaker(model, mapper);
         // process the central edges only to insulate tested algorithm. Otherwise the frame
         // edges would be extruded to.
@@ -336,8 +332,6 @@ public class VerticalFaceMakerTest {
         assertEquals(5 + 3 + 3 + 2 + 1 + 2, model.getPoints().size());
         assertEquals(8 + (3 + 3 + 2 + 1 + 2) + (3 + 2 + 1 + 2), model.getEdges().size());
         assertEquals(4 + (3+2+1+2), model.getFaces().size());
-
-        System.out.println(model);
 
         assertEquals(2, pCenter.getCoordinate().getZ(), epsilon);
         assertEquals(2, pNorth.getCoordinate().getZ(), epsilon);

@@ -88,7 +88,7 @@ final class Egg3dMapper extends ConfigurableAltitudes implements IMaze3DMapper {
         double xxx = xx + offsetH * tangent.getX() + offsetA * normal.getX();
         double yyy = yy + offsetH * tangent.getY() + offsetA * normal.getY();
 
-        LOG.log(Level.INFO, "local offsets x=" + xx + " offsetA=" + offsetA +
+        LOG.log(Level.FINE, "local offsets x=" + xx + " offsetA=" + offsetA +
                 " normal=" + normal + " tangent=" + tangent +
                 " xxx=" + xxx + " yyy=" + yyy);
 
@@ -99,7 +99,7 @@ final class Egg3dMapper extends ConfigurableAltitudes implements IMaze3DMapper {
         Point3D result = new Point3D(xxx, yyyy, zzzz);
 
 
-        LOG.log(Level.INFO, "mapPoint "+image+" v=" + cellVertical + "+"+ offsetV+" h=" + cellHorizontal
+        LOG.log(Level.FINE, "mapPoint "+image+" v=" + cellVertical + "+"+ offsetV+" h=" + cellHorizontal
                 + " +" + offsetH+" =>"+result);
 
         return result;

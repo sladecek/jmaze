@@ -40,11 +40,8 @@ class PillarMakerTestBase {
         final double epsilon = 1e-5;
 
         for (int i = 0; i < baseEdges.size(); ++i) {
-            System.out.println(i);
             TelescopicPoint pp = (TelescopicPoint) baseEdges.get(i).getP1();
-            System.out.println("x ");
             assertEquals(expected[i][0]+dx, pp.getPlanarX(), epsilon);
-            System.out.println("y ");
             assertEquals(expected[i][1]+dy, pp.getPlanarY(), epsilon);
         }
 

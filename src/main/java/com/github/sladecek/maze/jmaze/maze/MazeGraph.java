@@ -29,7 +29,7 @@ public class MazeGraph implements IMazeGraph {
     public final int addRoom() {
         int id = rooms.size();
         rooms.add(new ArrayList<>());
-        LOGGER.log(Level.INFO, "add room id=" + id);
+        LOGGER.log(Level.FINE, "add room id=" + id);
         return id;
     }
 
@@ -45,7 +45,7 @@ public class MazeGraph implements IMazeGraph {
         wallRoom2.add(room2);
         wallProbabilityWeight.add(1);
         rooms.get(room2).add(id);
-        LOGGER.log(Level.INFO, "add wall id=" + id + " room1=" + room1
+        LOGGER.log(Level.FINE, "add wall id=" + id + " room1=" + room1
                 + " room2=" + room2);
         return id;
     }
@@ -61,7 +61,7 @@ public class MazeGraph implements IMazeGraph {
 
  
     public final void setStartRoom(final int startRoom) {
-        LOGGER.log(Level.INFO, "setStartRoom "+startRoom);
+        LOGGER.log(Level.FINE, "setStartRoom "+startRoom);
         this.startRoom = startRoom;
     }
 
@@ -71,7 +71,7 @@ public class MazeGraph implements IMazeGraph {
     }
 
     public final void setTargetRoom(final int targetRoom) {
-        LOGGER.log(Level.INFO, "setTargetRoom "+targetRoom);
+        LOGGER.log(Level.FINE, "setTargetRoom "+targetRoom);
         this.targetRoom = targetRoom;
     }
 

@@ -38,11 +38,12 @@ public class ModelFromShapeTestExtruded extends ModelFromShapesTestBase {
 
     @Test
     public void testElementCounts() {
-        printBlocks();
-        printEdges();
-        printFaces();
-        printPoints();
+//        printBlocks();
+//        printEdges();
+//        printFaces();
+//        printPoints();
 
+        // TODO
 
 // 42?        assertEquals(28, model3d.getEdges().size());
 // 30        assertEquals(16, model3d.getFaces().size());
@@ -52,7 +53,7 @@ public class ModelFromShapeTestExtruded extends ModelFromShapesTestBase {
 
     @Test
     public void testBlocVertexCount() {
-        printBlocks();
+        //printBlocks();
         assertEquals(1, countBlocksByVertexCount(6));
         assertEquals(9, countBlocksByVertexCount(4));
         assertEquals(2, countBlocksByVertexCount(3));
@@ -67,7 +68,7 @@ public class ModelFromShapeTestExtruded extends ModelFromShapesTestBase {
     }
     @Test
     public void testBlockAltitudes() {
-        printBlocks();
+        //printBlocks();
         assertEquals(1, countBlocksByCeilingAltitude(6, -1));
         assertEquals(4, countBlocksByCeilingAltitude(2, 2));
         assertEquals(2, countBlocksByCeilingAltitude(4, 1));
