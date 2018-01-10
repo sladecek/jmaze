@@ -18,11 +18,7 @@ public class MazeData {
     public void setProperties(MazeProperties value) {
         properties = value;
     }
-/*
-    public void updateProperties(MazeProperties partialProperties) {
-        properties.update(partialProperties);
-    }
-*/
+
     public MazeGraph getGraph() {
         return graph;
     }
@@ -35,12 +31,9 @@ public class MazeData {
         return pathShapes;
     }
 
-
     public Shapes getAllShapes() {
         return allShapes;
-
     }
-
 
     MazeProperties getProperties() {
         return properties;
