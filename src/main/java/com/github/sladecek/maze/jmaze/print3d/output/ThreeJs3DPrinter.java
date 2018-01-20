@@ -53,7 +53,7 @@ public class ThreeJs3DPrinter implements IMazePrinter {
     }
 
     @Override
-    public Point2DInt getCanvasSize() {
+    public Point2DInt get2dCanvasSize() {
         assert false: "3d mazes have no canvas";
         return new Point2DInt(0,0);
     }

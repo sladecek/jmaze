@@ -89,7 +89,7 @@ public abstract class Maze extends MazeData implements IMaze {
             if (format == MazeOutputFormat.json2d) {
                 // svg packed in json
                 String jsonEncodedSvg = JSONObject.quote(stream.toString());
-                Point2DInt canvasSize = pr.getCanvasSize();
+                Point2DInt canvasSize = pr.get2dCanvasSize();
                 String json = String.format("{ \"svg\": %s, \"width\": %d, \"height\": %d}",
                         jsonEncodedSvg, canvasSize.getX(), canvasSize.getY());
                 return new MazeResult(fileName, format, json.getBytes());

@@ -7,9 +7,9 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 /**
- * Print 3D maze into a file.
+ * Print maze into a file.
  */
 public interface IMazePrinter {
     void print(OutputStream stream) throws IOException, MazeGenerationException;
-    Point2DInt getCanvasSize(); // may be null for 3d printers TODO
+    Point2DInt get2dCanvasSize(); // may be null for 3d printers
 }

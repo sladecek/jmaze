@@ -40,7 +40,7 @@ public class StlMazePrinter implements IMazePrinter {
     }
 
     @Override
-    public Point2DInt getCanvasSize() {
+    public Point2DInt get2dCanvasSize() {
         return null;
     }
 
