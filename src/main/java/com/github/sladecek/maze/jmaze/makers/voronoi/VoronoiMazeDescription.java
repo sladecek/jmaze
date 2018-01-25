@@ -15,7 +15,7 @@ public class VoronoiMazeDescription extends MazeDescription {
         ownOptions.add(new MazeOption("width", 20, 2, 100000));
         ownOptions.add(new MazeOption("height", 20, 2, 100000));
         ownOptions.add(new MazeOption("roomCount", 100, 2, 1000000));
-        ownOptions.add(new MazeOption("loydCount", 10, 2, 10000));
+        ownOptions.add(new MazeOption("loydCount", 10, 1, 10000));
 
 
     }
