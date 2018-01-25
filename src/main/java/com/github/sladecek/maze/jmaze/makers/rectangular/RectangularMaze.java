@@ -24,8 +24,6 @@ public class RectangularMaze extends Maze {
         final int width = properties.getInt("width");
         final int margin = properties.getInt("margin");
 
-        //if (height+width == 27) throw new OutOfMemoryError(); // TODO
-        //if (height+width == 27) throw new IllegalArgumentException("IAE");
         // width and height in pixels
         final int h = rsp * height;
         final int w = rsp * width;
