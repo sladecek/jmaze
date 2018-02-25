@@ -1,5 +1,6 @@
 package com.github.sladecek.maze.jmaze.properties;
 
+import com.github.sladecek.maze.jmaze.print.Color;
 import org.junit.Test;
 
 import java.util.Locale;
@@ -149,9 +150,27 @@ public class MazeOptionTest {
         assertEquals("Chyba formátu celého čísla.", errors.errorsForField("my").get(0));
     }
 
-    // TODO double
-    // TODO string
-    // TODO color
+    @Test
+    public void convertAndValidateDouble() throws Exception {
+        MazeOption mo = new MazeOption("my", 0.5, -100, 100, 1);
+        MazeProperties mp = new MazeProperties();
+        mp.put("my", "50.5");
+        MazeValidationErrors errors = new MazeValidationErrors();
+        mo.convertAndValidate(mp, Locale.US, "", errors);
+        assert(errors.isEmpty());
+        assertEquals(50.5, mp.getDouble("my"), epsilon);
+    }
+
+    @Test
+    public void convertAndValidateIncorrectDoubleStringUS() throws Exception {
+        MazeOption mo = new MazeOption("my", 0.5, -100, 100, 1);
+        MazeProperties mp = new MazeProperties();
+        mp.put("my", "1xx");
+        MazeValidationErrors errors = new MazeValidationErrors();
+        mo.convertAndValidate(mp, Locale.US, "", errors);
+        assert(!errors.isEmpty());
+        assertEquals("Double format error.", errors.errorsForField("my").get(0));
+    }
 
     @Test
     public void convertAndValidateIncorrectRangeUS() throws Exception {
@@ -162,6 +181,15 @@ public class MazeOptionTest {
         mo.convertAndValidate(mp, Locale.US, "", errors);
         assert(!errors.isEmpty());
         assertEquals("Range error. Value should be between -120 and 100 but is 1,000.", errors.errorsForField("my").get(0));
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void convertAndValidateColor() throws Exception {
+        MazeOption mo = new MazeOption("my",  new Color(0,0,0,0));
+        MazeProperties mp = new MazeProperties();
+        mp.put("my", "1xx");
+        MazeValidationErrors errors = new MazeValidationErrors();
+        mo.convertAndValidate(mp, Locale.forLanguageTag("cs-CZ"), "", errors);
     }
 
     private static final double epsilon = 1e-6;

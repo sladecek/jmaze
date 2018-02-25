@@ -88,8 +88,15 @@ public class MazeOption {
     public void convertAndValidate(MazeProperties properties, Locale locale, String prefix, MazeValidationErrors errors) {
         String key = getName();
         Object value = properties.get(key);
+
+
         if (value == null && !(defaultValue instanceof Boolean)) {
             return;
+        }
+
+        if ((value instanceof String) && !(defaultValue instanceof Boolean) && !(defaultValue instanceof Number))
+        {
+            throw new UnsupportedOperationException("So far, only booleans and numbers can be converted from string.");
         }
 
         ResourceBundle messages = ResourceBundle.getBundle("jMazeMessages", locale);
@@ -110,7 +117,7 @@ public class MazeOption {
                     value = Double.parseDouble((String) value);
                     properties.put(name, value);
                 } catch (NumberFormatException e) {
-                    errors.addError(prefix, key, messages.getString("boolean_format_error"));
+                    errors.addError(prefix, key, messages.getString("double_format_error"));
                 }
             }
         } else if (defaultValue instanceof Boolean) {
@@ -142,7 +149,6 @@ public class MazeOption {
             }
         }
 
-        // TODO other types
     }
 
     private final String name;

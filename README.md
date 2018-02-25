@@ -1,3 +1,24 @@
 # jmaze
 
-Maze generator in Java
+jmaze is a software for generating 2D and 3D mazes. It can be used
+directly as a command line application or by a larger project as a
+library.
+
+## Usage
+
+### Maze Types and Their Parameters
+
+#### Rectangular 2D Maze
+#### Rectangular 3D Maze
+#### Triangular Maze
+
+## Implementation
+
+### Maze Graph and Maze Generation
+### Maze Shapes
+### 3D Model
+### Printing
+
+## TODOs
+
+

@@ -1,22 +1,38 @@
 package com.github.sladecek.maze.jmaze.properties;
 
+import com.github.sladecek.maze.jmaze.maze.MazeGenerationException;
 import com.github.sladecek.maze.jmaze.print.Color;
 
+import java.io.*;
 import java.util.HashMap;
 import java.util.stream.Collectors;
 
 /**
  * List of configurable maze properties such as sizes, probabilities or colors.
  */
-public class MazeProperties {
+public class MazeProperties implements java.io.Serializable {
     public boolean hasProperty(String name) {
         return data.containsKey(name);
     }
 
-    public MazeProperties deepCopy()  {
-        // TODO je to dobre?
-        MazeProperties result = new MazeProperties();
-        data.forEach(result::put);
+    public MazeProperties deepCopy() throws MazeGenerationException {
+
+        MazeProperties result = null;
+        try {
+            // Write the object out to a byte array
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            ObjectOutputStream out = new ObjectOutputStream(bos);
+            out.writeObject(this);
+            out.flush();
+            out.close();
+
+            ObjectInputStream in = new ObjectInputStream(
+                    new ByteArrayInputStream(bos.toByteArray()));
+            result = (MazeProperties)in.readObject();
+        }
+        catch(Throwable e) {
+            throw new MazeGenerationException("Internal error by deepCopy()", e);
+        }
         return result;
     }
 

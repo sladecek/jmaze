@@ -1,14 +1,16 @@
 package com.github.sladecek.maze.jmaze.print3d.maze3dmodel;
 
-import com.github.sladecek.maze.jmaze.print3d.*;
+import com.github.sladecek.maze.jmaze.maze.MazeGenerationException;
+import com.github.sladecek.maze.jmaze.print.PrintStyle;
+import com.github.sladecek.maze.jmaze.print3d.IMaze3DMapper;
+import com.github.sladecek.maze.jmaze.print3d.ModelFromShapes;
+import com.github.sladecek.maze.jmaze.print3d.PlanarMapper;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MEdge;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MFace;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.Model3d;
 import com.github.sladecek.maze.jmaze.print3d.output.OpenScad3DPrinter;
 import com.github.sladecek.maze.jmaze.print3d.output.StlMazePrinter;
-import com.github.sladecek.maze.jmaze.print.PrintStyle;
 import com.github.sladecek.maze.jmaze.shapes.Shapes;
-import com.github.sladecek.maze.jmaze.maze.MazeGenerationException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -19,7 +21,7 @@ import static junit.framework.TestCase.assertFalse;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Tests ModelFromShapes class.
+ * Tests ModelFromShapes class - the case with extrusion.
  */
 public class ModelFromShapeTestExtruded extends ModelFromShapesTestBase {
 
@@ -43,12 +45,10 @@ public class ModelFromShapeTestExtruded extends ModelFromShapesTestBase {
 //        printFaces();
 //        printPoints();
 
-        // TODO
-
-// 42?        assertEquals(28, model3d.getEdges().size());
-// 30        assertEquals(16, model3d.getFaces().size());
-        // 42?    assertEquals(14, model3d.getPoints().size());
-        //    assertEquals(16, model3d.getBlocks().size());
+        assertEquals(80, model3d.getEdges().size());
+        assertEquals(42, model3d.getFaces().size());
+        assertEquals(40, model3d.getPoints().size());
+        assertEquals(16, model3d.getBlocks().size());
     }
 
     @Test
@@ -66,6 +66,7 @@ public class ModelFromShapeTestExtruded extends ModelFromShapesTestBase {
                 .filter((b) -> b.getGroundPoints().size() == vertexCount)
                 .count();
     }
+
     @Test
     public void testBlockAltitudes() {
         //printBlocks();
@@ -78,8 +79,8 @@ public class ModelFromShapeTestExtruded extends ModelFromShapesTestBase {
 
     @Test
     public void testFaceEdgesHaveDifferentEndpoints() {
-        for (MFace f: model3d.getFaces()) {
-            for (MEdge e: f.getEdges()) {
+        for (MFace f : model3d.getFaces()) {
+            for (MEdge e : f.getEdges()) {
                 assertFalse(e.getP1() == e.getP2());
             }
         }

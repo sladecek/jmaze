@@ -4,7 +4,7 @@ package com.github.sladecek.maze.jmaze.print;
  * Represents color in maze printout.
  * 
  */
-public final class Color {	
+public final class Color implements java.io.Serializable {
 	/**
 	 * Create new color.
 	 * 

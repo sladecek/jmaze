@@ -35,6 +35,12 @@ public class MazePropertiesTest {
     }
 
     @Test
+    public void testDeepCopyMakesOwnCopyOfColor() throws Exception {
+        MazeProperties c = p.deepCopy();
+        assertFalse( c.getColor("color") == p.getColor("color"));
+    }
+
+    @Test
     public void getInt() throws Exception {
         assertEquals(1, p.getInt("int"));
     }
