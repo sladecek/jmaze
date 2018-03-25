@@ -2,21 +2,47 @@
 
 WORK IN PROGRESS
 
-jmaze is a software for generating 2D and 3D mazes. It can be used
+jmaze is software for generating 2D and 3D mazes. It can be used
 directly as a command line application or by a larger project as a
 library.
 
+## Build
 
+```
+mvn clean package
+
+```
+
+creates executable jar (with all dependencies) in the targer directory.
 
 ## Usage
 
+The command:
+
 ```
-maze --help
-maze type --list
-maze type { property==value }
-                
-type is one of 'rectangular', 'circular', 'hexagonal', 'moebius', 'egg', 'triangular', 'voronoi'
+java -jar jmaze.jar rectangular 
 ```
+
+generates rectangular maze with default parameters. All maze types are
+'rectangular', 'circular', 'hexagonal', 'moebius', 'egg', 'triangular', 'voronoi'.
+
+All maze properties can be specified on the command line. For example:
+
+```
+java -jar jmaze.jar circular printSolution=false pdf=true layerCount=27 
+```
+
+generates circular maze with 27 layers not showing the solution and saves the results to in the .pdf
+file format.
+
+
+All available properties for circular  maze type can be printed by
+```
+java -jar jmaze.jar -list circular 
+```
+
+
+
 ### Universal Properties
 
 | Property | Default | Minimum | Maximum |
@@ -54,9 +80,6 @@ type is one of 'rectangular', 'circular', 'hexagonal', 'moebius', 'egg', 'triang
 |stl| true |
 |scad| false|
 |js| false|
-
-
-
 
 
 ### Maze Types and Their Properties
