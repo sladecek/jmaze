@@ -1,11 +1,11 @@
 package com.github.sladecek.maze.jmaze.print3d.output;
-
+//REV1
 import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 import com.github.sladecek.maze.jmaze.geometry.Point3D;
+import com.github.sladecek.maze.jmaze.maze.MazeGenerationException;
 import com.github.sladecek.maze.jmaze.print.IMazePrinter;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MBlock;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.Model3d;
-import com.github.sladecek.maze.jmaze.maze.MazeGenerationException;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -17,13 +17,9 @@ import java.util.ArrayList;
 
 public class OpenScad3DPrinter implements IMazePrinter {
 
-
     public OpenScad3DPrinter(Model3d model) {
         this.model = model;
     }
-
-
-    private final Model3d model;
 
     @Override
     public void print(OutputStream stream) throws IOException, MazeGenerationException {
@@ -38,7 +34,8 @@ public class OpenScad3DPrinter implements IMazePrinter {
 
     @Override
     public Point2DInt get2dCanvasSize() {
-        return null;
+        assert false : "3d mazes have no canvas";
+        return new Point2DInt(0, 0);
     }
 
     private void printBlock(OpenScadComposer scad, MBlock b) throws IOException {
@@ -67,7 +64,7 @@ public class OpenScad3DPrinter implements IMazePrinter {
         for (int p1 = 0; p1 < sz; p1++) {
             int p2 = (p1 + 1) % sz;
             faces.add(printTriangle(p1, p2, p1 + sz));
-            faces.add(printTriangle(p2, p1+sz, p2 + sz));
+            faces.add(printTriangle(p2, p1 + sz, p2 + sz));
         }
 
         scad.printPolyhedron(allPoints, faces);
@@ -83,14 +80,15 @@ public class OpenScad3DPrinter implements IMazePrinter {
 
     private ArrayList<ArrayList<Integer>> printBaseBlocks(int sz, int offs) {
         ArrayList<ArrayList<Integer>> result = new ArrayList<>();
-        for (int p2 = 2; p2 < sz; p2++ ) {
+        for (int p2 = 2; p2 < sz; p2++) {
             ArrayList<Integer> face = new ArrayList<>();
             face.add(offs);
-            face.add(offs + p2-1);
+            face.add(offs + p2 - 1);
             face.add(offs + p2);
             result.add(face);
         }
         return result;
     }
 
+    private final Model3d model;
 }

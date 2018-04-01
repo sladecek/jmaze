@@ -1,5 +1,5 @@
 package com.github.sladecek.maze.jmaze.properties;
-
+//REV1
 import com.github.sladecek.maze.jmaze.print.Color;
 
 import java.text.MessageFormat;
@@ -94,8 +94,7 @@ public class MazeOption {
             return;
         }
 
-        if ((value instanceof String) && !(defaultValue instanceof Boolean) && !(defaultValue instanceof Number))
-        {
+        if ((value instanceof String) && !(defaultValue instanceof Boolean) && !(defaultValue instanceof Number)) {
             throw new UnsupportedOperationException("So far, only booleans and numbers can be converted from string.");
         }
 
@@ -148,7 +147,6 @@ public class MazeOption {
                 errors.addError(prefix, key, formatter.format(new Object[]{min, max, dv}));
             }
         }
-
     }
 
     private final String name;

@@ -1,5 +1,5 @@
 package com.github.sladecek.maze.jmaze.maze;
-
+//REV1
 import com.github.sladecek.maze.jmaze.print3d.IMaze3DMapper;
 
 /**
@@ -11,8 +11,6 @@ interface IMaze {
      * Generate maze graph and maze shapes. Usually uses MazeData structures for results.
      */
     void buildMazeGraphAndShapes();
-
-
 
     /**
      * Create 3D mapper responsible for embedding planar maze into three dimensional space. May be return null for

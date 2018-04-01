@@ -1,5 +1,5 @@
 package com.github.sladecek.maze.jmaze.shapes;
-
+//REV1
 /*
  * Contextual information for a collection of shapes.
  */
@@ -37,9 +37,9 @@ public class ShapeContext {
     public int getPictureWidth() {
         return pictureWidth;
     }
+
     private final boolean isPolarCoordinates;
     private final int pictureHeight;
     private final int pictureWidth;
     private final int margin;
-
 }

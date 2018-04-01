@@ -1,16 +1,18 @@
 package com.github.sladecek.maze.jmaze.shapes;
-
+//REV1
 import com.github.sladecek.maze.jmaze.generator.MazePath;
 import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
-import com.github.sladecek.maze.jmaze.print2d.I2DDocument;
 import com.github.sladecek.maze.jmaze.print.PrintStyle;
+import com.github.sladecek.maze.jmaze.print2d.I2DDocument;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Mark shape represents a room marker such as a marker for the start or target rooom
+ * or a room which is contained in the solution.
+ */
 public final class MarkShape implements IPrintableMazeShape2D {
-
-
 
     public MarkShape(int roomId, Point2DInt position) {
         this.roomId = roomId;
@@ -25,10 +27,6 @@ public final class MarkShape implements IPrintableMazeShape2D {
 
     public int getY() {
         return center.getY();
-    }
-
-    public void setMarkType(MarkType markType) {
-        this.markType = markType;
     }
 
     @Override
@@ -69,19 +67,19 @@ public final class MarkShape implements IPrintableMazeShape2D {
         }
     }
 
-
-    private MarkType markType;
-    private final int roomId;
-
-    private final Point2DInt center;
-
     public MarkType getMarkType() {
         return markType;
     }
 
+    public void setMarkType(MarkType markType) {
+        this.markType = markType;
+    }
     /**
      * Logger facility.
      */
     private static final Logger LOG = Logger.getLogger("maze");
+    private final int roomId;
+    private final Point2DInt center;
+    private MarkType markType;
 
 }

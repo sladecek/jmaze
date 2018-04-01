@@ -1,10 +1,9 @@
 package com.github.sladecek.maze.jmaze.util;
-
+//REV1
 import java.util.BitSet;
 
 /**
  * Utility class that prints bit set as set of intervals.
- *
  */
 public final class BitSetIntervalPrinter {
 
@@ -42,5 +41,4 @@ public final class BitSetIntervalPrinter {
 
     private final BitSet bitSet;
     private final int bitCount;
-
 }

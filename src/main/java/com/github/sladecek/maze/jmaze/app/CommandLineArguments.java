@@ -1,5 +1,5 @@
 package com.github.sladecek.maze.jmaze.app;
-
+//REV1
 import com.github.sladecek.maze.jmaze.properties.MazeProperties;
 
 /**

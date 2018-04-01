@@ -1,10 +1,10 @@
 package com.github.sladecek.maze.jmaze.makers.hexagonal;
-
+//REV1
 import com.github.sladecek.maze.jmaze.properties.MazeDescription;
 import com.github.sladecek.maze.jmaze.properties.MazeOption;
 
 /**
- * Configurable options for rectangular mazes.
+ * Configurable options for hexagonal maze.
  */
 public class HexagonalMazeDescription extends MazeDescription {
     public HexagonalMazeDescription() {
@@ -30,5 +30,4 @@ public class HexagonalMazeDescription extends MazeDescription {
     public Class getMazeClass() {
         return HexagonalMaze.class;
     }
-
 }

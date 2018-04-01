@@ -1,5 +1,5 @@
 package com.github.sladecek.maze.jmaze.print3d;
-
+//REV1
 import com.github.sladecek.maze.jmaze.print3d.maze3dmodel.Altitude;
 import com.github.sladecek.maze.jmaze.properties.MazeProperties;
 
@@ -7,6 +7,11 @@ import com.github.sladecek.maze.jmaze.properties.MazeProperties;
  * Helper class. Enables to define numerical values of feature altitudes such as wall heights.
  */
 public class ConfigurableAltitudes {
+
+    public void configureAltitudes(MazeProperties properties) {
+        double wh  = properties.getDouble("wallHeight");
+        configureFromWallHeight(wh);
+    }
 
     public double mapAltitude(Altitude a) {
         return altitudes[a.ordinal()];
@@ -24,12 +29,9 @@ public class ConfigurableAltitudes {
         setAltitude(Altitude.CEILING,wallHeight);
     }
 
-    public void configureAltitudes(MazeProperties properties) {
-        double wh  = properties.getDouble("wallHeight");
-        configureFromWallHeight(wh);
-    }
-
     private final double[] altitudes = new double[Altitude.values().length];
+
+    // class initialization
     {
         // default setting - each altitude is equal to value
         for (Altitude a: Altitude.values()) {

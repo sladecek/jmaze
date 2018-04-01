@@ -1,5 +1,5 @@
 package com.github.sladecek.maze.jmaze.print3d.output;
-
+//REV1
 import com.github.sladecek.maze.jmaze.geometry.Point3D;
 import com.github.sladecek.maze.jmaze.print.Color;
 
@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
-
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -23,7 +22,8 @@ final class OpenScadComposer implements java.lang.AutoCloseable {
 
     public static String formatColor(final Color color) {
         final double r = 255.0;
-        return String.format(Locale.US, "[%.2f, %.2f, %.2f]", color.getR() / r, color.getG() / r, color.getB() / r);
+        return String.format(Locale.US, "[%.2f, %.2f, %.2f]",
+                color.getR() / r, color.getG() / r, color.getB() / r);
     }
 
     public void close() throws IOException {
@@ -46,9 +46,6 @@ final class OpenScadComposer implements java.lang.AutoCloseable {
     /**
      * Print polyhedron consisting of 8 points. The points must be ordered by x
      * (most important), then y, then z.
-     *
-
-
      */
     public void printPolyhedron(
             final ArrayList<Point3D> points,
@@ -58,7 +55,7 @@ final class OpenScadComposer implements java.lang.AutoCloseable {
 
         out.write("polyhedron (points =[");
         boolean comma = false;
-        for (Point3D p: points)  {
+        for (Point3D p : points) {
             if (comma) {
                 out.write(", \n");
             }
@@ -68,7 +65,7 @@ final class OpenScadComposer implements java.lang.AutoCloseable {
         out.write("\n], \n");
         out.write("faces = [ ");
         comma = false;
-        for (ArrayList<Integer> f: faces)  {
+        for (ArrayList<Integer> f : faces) {
             if (comma) {
                 out.write(", \n");
             }
@@ -84,17 +81,16 @@ final class OpenScadComposer implements java.lang.AutoCloseable {
     private void printFace(ArrayList<Integer> f) throws IOException {
         out.write("[ ");
         boolean comma = false;
-        for (Integer i: f)  {
+        for (Integer i : f) {
             if (comma) {
                 out.write(", ");
             }
-            out.write(String.format("%d",i));
+            out.write(String.format("%d", i));
             comma = true;
         }
         out.write("] ");
     }
 
-    private Writer out;
     private final OutputStream stream;
-
+    private Writer out;
 }

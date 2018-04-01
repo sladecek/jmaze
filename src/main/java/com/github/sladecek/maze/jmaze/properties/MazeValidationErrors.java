@@ -1,5 +1,5 @@
 package com.github.sladecek.maze.jmaze.properties;
-
+//REV1
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
@@ -8,14 +8,23 @@ import java.util.stream.Collectors;
  */
 public class MazeValidationErrors {
 
-    private void addError(MazeValidationError error) {
-        errors.add(error);
-    }
 
+    /**
+     * Returns all errors in the collection.
+     *
+     * @return all errors.
+     */
     public Iterable<MazeValidationError> getAll() {
         return errors;
     }
 
+    /**
+     * Add one error to the collection.
+     *
+     * @param prefix  Error key prefix, usually maze type.
+     * @param key     Field key
+     * @param message
+     */
     public void addError(String prefix, String key, String message) {
         String k = key;
         if (!prefix.isEmpty()) {
@@ -28,23 +37,28 @@ public class MazeValidationErrors {
         return errors.isEmpty();
     }
 
-    private final ArrayList<MazeValidationError> errors = new ArrayList<>();
-
     public boolean hasErrorForField(String field) {
         if (isEmpty()) {
             return false;
-        } else {
-            return errors
-                    .stream()
-                    .filter((e) -> e.getField().equals(field))
-                    .count() > 0;
         }
+
+        return errors
+                .stream()
+                .filter((e) -> e.getField().equals(field))
+                .count() > 0;
+
     }
 
     public ArrayList<String> errorsForField(String field) {
         return errors.stream()
-                .filter((e)->e.getField().equals(field))
+                .filter((e) -> e.getField().equals(field))
                 .map(MazeValidationError::getMessage)
                 .collect(Collectors.toCollection(ArrayList::new));
     }
+
+    private void addError(MazeValidationError error) {
+        errors.add(error);
+    }
+
+    private final ArrayList<MazeValidationError> errors = new ArrayList<>();
 }

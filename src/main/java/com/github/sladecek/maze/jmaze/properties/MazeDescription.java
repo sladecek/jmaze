@@ -1,5 +1,5 @@
 package com.github.sladecek.maze.jmaze.properties;
-
+//REV1
 import com.github.sladecek.maze.jmaze.print.Color;
 
 import java.util.ArrayList;
@@ -7,10 +7,9 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * Description of certain maze type.
+ * Description of one maze type.
  */
 abstract public class MazeDescription implements IValidator {
-
 
     public static List<MazeOption> getUniversalOptions() {
         ArrayList<MazeOption> result = new ArrayList<>();

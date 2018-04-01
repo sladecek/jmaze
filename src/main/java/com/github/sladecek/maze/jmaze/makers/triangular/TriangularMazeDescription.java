@@ -1,14 +1,11 @@
 package com.github.sladecek.maze.jmaze.makers.triangular;
+//REV1
 
 import com.github.sladecek.maze.jmaze.properties.MazeDescription;
 import com.github.sladecek.maze.jmaze.properties.MazeOption;
 
-import java.util.ResourceBundle;
-
-import static java.util.ResourceBundle.getBundle;
-
 /**
- * Configurable options for rectangular maze.
+ * Configurable options for triangular maze.
  */
 public class TriangularMazeDescription extends MazeDescription {
     public TriangularMazeDescription() {
@@ -19,7 +16,6 @@ public class TriangularMazeDescription extends MazeDescription {
     public String getName() {
         return "triangular";
     }
-
 
     @Override
     public boolean canBePrintedIn2D() {
@@ -35,6 +31,4 @@ public class TriangularMazeDescription extends MazeDescription {
     public Class getMazeClass() {
         return TriangularMaze.class;
     }
-
-    private static final ResourceBundle bundle = getBundle("jMazeMessages");
 }

@@ -1,9 +1,10 @@
 package com.github.sladecek.maze.jmaze.print3d.generic3dmodel;
-
+//REV1
 import com.github.sladecek.maze.jmaze.geometry.LeftRight;
 
 /**
- * Edge in a 3D model. An edge connects two points.
+ * Edge in a 3D model. An edge connects two points. There are two faces, one on each side
+ * of the edge.
  */
 public class MEdge {
 

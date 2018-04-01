@@ -1,8 +1,7 @@
 package com.github.sladecek.maze.jmaze.makers.rectangular;
-
+//REV1
 import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 import com.github.sladecek.maze.jmaze.maze.Maze;
-import com.github.sladecek.maze.jmaze.maze.MazeGenerationException;
 import com.github.sladecek.maze.jmaze.print3d.IMaze3DMapper;
 import com.github.sladecek.maze.jmaze.print3d.PlanarMapper;
 import com.github.sladecek.maze.jmaze.shapes.FloorShape;
@@ -11,11 +10,10 @@ import com.github.sladecek.maze.jmaze.shapes.Shapes;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
 
 /**
- * 2D rectangular maze. Both rooms and walls are numbered first by rows, then by
+ * 2D rectangular maze. Rooms and walls are numbered first by rows, then by
  * columns. East/west walls are numbered before south/north ones.
  */
 public class RectangularMaze extends Maze {
-
 
     @Override
     public void buildMazeGraphAndShapes() {
@@ -29,7 +27,6 @@ public class RectangularMaze extends Maze {
         final int w = rsp * width;
 
         allShapes = new Shapes(isPolar, h, w, margin);
-
 
         // rooms
         for (int y = 0; y < height; y++) {
@@ -104,10 +101,9 @@ public class RectangularMaze extends Maze {
     }
 
 
-
-   /**
-    * Room size in pixels.
-    */
+    /**
+     * Room size in pixels.
+     */
     @SuppressWarnings("FieldCanBeLocal")
     private final int rsp = 20;
 

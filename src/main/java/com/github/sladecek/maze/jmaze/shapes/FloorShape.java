@@ -1,11 +1,10 @@
 package com.github.sladecek.maze.jmaze.shapes;
-
+//REV1
 import com.github.sladecek.maze.jmaze.generator.MazePath;
 import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 
-
 /**
- * Floor in 3D maze.
+ * Floor shape. Makes sense only in 3D mazes.
  */
 public class FloorShape implements IMazeShape {
     public FloorShape(int roomId, Point2DInt position) {
@@ -23,6 +22,10 @@ public class FloorShape implements IMazeShape {
         return roomId;
     }
 
+    public void setRoomId(int roomId) {
+        this.roomId = roomId;
+    }
+
     public MarkType getMarkType() {
         return markType;
     }
@@ -34,19 +37,8 @@ public class FloorShape implements IMazeShape {
     @Override
     public void applyPath(MazePath mr) {
 
-        isHole = wallId >=0 && !mr.isWallClosed(wallId);
+        isHole = wallId >= 0 && !mr.isWallClosed(wallId);
     }
-
-    public void setRoomId(int roomId) {
-        this.roomId = roomId;
-    }
-
-    private final Point2DInt position;
-    private int roomId;
-    private final MarkType markType = MarkType.none;
-    private boolean isHole;
-
-    // in some mazes we call pass through the floor
 
     public int getWallId() {
         return wallId;
@@ -56,5 +48,11 @@ public class FloorShape implements IMazeShape {
         this.wallId = wallId;
     }
 
+    private final Point2DInt position;
+    private final MarkType markType = MarkType.none;
+
+    // in some mazes we call pass through the floor
+    private int roomId;
+    private boolean isHole;
     private int wallId;
 }

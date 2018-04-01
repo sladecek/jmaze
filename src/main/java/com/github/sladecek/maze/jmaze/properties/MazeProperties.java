@@ -1,9 +1,12 @@
 package com.github.sladecek.maze.jmaze.properties;
-
+//REV1
 import com.github.sladecek.maze.jmaze.maze.MazeGenerationException;
 import com.github.sladecek.maze.jmaze.print.Color;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.stream.Collectors;
 
@@ -28,35 +31,34 @@ public class MazeProperties implements java.io.Serializable {
 
             ObjectInputStream in = new ObjectInputStream(
                     new ByteArrayInputStream(bos.toByteArray()));
-            result = (MazeProperties)in.readObject();
-        }
-        catch(Throwable e) {
+            result = (MazeProperties) in.readObject();
+        } catch (Throwable e) {
             throw new MazeGenerationException("Internal error by deepCopy()", e);
         }
         return result;
     }
 
     private Object get(String name, java.lang.Class cl) {
-        Object o =  data.get(name);
+        Object o = data.get(name);
         if (o == null) {
-            throw new IllegalArgumentException("Property '"+name+"' is not present.");
+            throw new IllegalArgumentException("Property '" + name + "' is not present.");
         }
         if (cl.isInstance(o.getClass())) {
-            throw new IllegalArgumentException("Property '"+name+"' is not a '"+cl.getName()+"' but a '" + o.getClass().getName());
+            throw new IllegalArgumentException("Property '" + name + "' is not a '" + cl.getName() + "' but a '" + o.getClass().getName());
         }
         return o;
     }
 
     public int getInt(String name) {
-        return (Integer)get(name, Integer.class);
+        return (Integer) get(name, Integer.class);
     }
 
     public double getDouble(String name) {
-        return ((Number)get(name, Number.class)).doubleValue();
+        return ((Number) get(name, Number.class)).doubleValue();
     }
 
     public Color getColor(String name) {
-        return (Color)get(name, Color.class);
+        return (Color) get(name, Color.class);
     }
 
     public Object get(String name) {
@@ -68,16 +70,16 @@ public class MazeProperties implements java.io.Serializable {
     }
 
     public String getString(String name) {
-        return (String)get(name, String.class);
+        return (String) get(name, String.class);
     }
 
     public boolean getBoolean(String name) {
-        return (Boolean)get(name, Boolean.class);
+        return (Boolean) get(name, Boolean.class);
     }
 
     public boolean getBooleanOrFalse(String name) {
         return data.containsKey(name) &&
-            (Boolean)get(name, Boolean.class);
+                (Boolean) get(name, Boolean.class);
     }
 
     public boolean isEmpty() {
@@ -85,12 +87,12 @@ public class MazeProperties implements java.io.Serializable {
     }
 
     public void updateFromStrings(MazeProperties stringProperties) {
-        stringProperties.data.forEach((k,v)-> {
+        stringProperties.data.forEach((k, v) -> {
             if (!hasProperty(k)) {
-                throw new IllegalArgumentException("Undefined property '"+k+"'");
+                throw new IllegalArgumentException("Undefined property '" + k + "'");
             }
             Object o = data.get(k);
-            String val = (String)v;
+            String val = (String) v;
             if (o instanceof Integer) {
                 put(k, Integer.valueOf(val));
             } else if (o instanceof Double) {
@@ -100,14 +102,14 @@ public class MazeProperties implements java.io.Serializable {
             } else if (o instanceof Color) {
                 put(k, new Color(val));
             } else {
-                assert (o instanceof  String);
+                assert (o instanceof String);
                 put(k, val);
             }
         });
     }
 
     public String toUserString() {
-        return data.keySet().stream().map((k)-> k + "=" + data.get(k).toString()).collect(Collectors.joining("\n"));
+        return data.keySet().stream().map((k) -> k + "=" + data.get(k).toString()).collect(Collectors.joining("\n"));
     }
 
     public HashMap<String, Object> getData() {
@@ -119,7 +121,9 @@ public class MazeProperties implements java.io.Serializable {
     }
 
     public void mergeDefaults(MazeProperties properties) {
-        data.forEach((k,v)-> {if (!properties.hasProperty(k)) properties.put(k,v);});
+        data.forEach((k, v) -> {
+            if (!properties.hasProperty(k)) properties.put(k, v);
+        });
     }
 
     private final HashMap<String, Object> data = new HashMap<>();

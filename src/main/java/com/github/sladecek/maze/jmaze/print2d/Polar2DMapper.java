@@ -1,5 +1,5 @@
 package com.github.sladecek.maze.jmaze.print2d;
-
+//REV1
 import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 
 /*
@@ -27,5 +27,4 @@ public class Polar2DMapper implements IMaze2DMapper {
 
     private final Point2DInt zeroPoint;
     private final int resolution;
-
 }

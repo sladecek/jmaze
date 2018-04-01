@@ -1,5 +1,5 @@
 package com.github.sladecek.maze.jmaze.print3d.generic3dmodel;
-
+//REV1
 import com.github.sladecek.maze.jmaze.geometry.Point3D;
 
 import java.util.ArrayList;
@@ -27,9 +27,6 @@ public class MBlock {
         ceilingPoints.add(p);
     }
 
-    private final ArrayList<Point3D> groundPoints = new ArrayList<>();
-    private final ArrayList<Point3D> ceilingPoints = new ArrayList<>();
-
     @Override
     public String toString() {
         return "MBlock{" +
@@ -37,4 +34,8 @@ public class MBlock {
                 ", ceilingPoints=" + ceilingPoints +
                 '}';
     }
+
+    private final ArrayList<Point3D> groundPoints = new ArrayList<>();
+    private final ArrayList<Point3D> ceilingPoints = new ArrayList<>();
+
 }

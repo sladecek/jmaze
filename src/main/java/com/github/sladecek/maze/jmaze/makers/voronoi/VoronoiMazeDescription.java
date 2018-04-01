@@ -1,14 +1,11 @@
 package com.github.sladecek.maze.jmaze.makers.voronoi;
+//REV1
 
 import com.github.sladecek.maze.jmaze.properties.MazeDescription;
 import com.github.sladecek.maze.jmaze.properties.MazeOption;
 
-import java.util.ResourceBundle;
-
-import static java.util.ResourceBundle.getBundle;
-
 /**
- * Configurable options for rectangular maze.
+ * Configurable options for irregular (Voronoi) maze.
  */
 public class VoronoiMazeDescription extends MazeDescription {
     public VoronoiMazeDescription() {
@@ -16,8 +13,6 @@ public class VoronoiMazeDescription extends MazeDescription {
         ownOptions.add(new MazeOption("height", 20, 2, 100000));
         ownOptions.add(new MazeOption("roomCount", 100, 2, 1000000));
         ownOptions.add(new MazeOption("loydCount", 10, 1, 10000));
-
-
     }
 
     @Override
@@ -39,6 +34,4 @@ public class VoronoiMazeDescription extends MazeDescription {
     public Class getMazeClass() {
         return VoronoiMaze.class;
     }
-    private static final ResourceBundle bundle = getBundle("jMazeMessages");
-
 }

@@ -1,5 +1,5 @@
 package com.github.sladecek.maze.jmaze.print3d.output;
-
+//REV1
 import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 import com.github.sladecek.maze.jmaze.geometry.Point3D;
 import com.github.sladecek.maze.jmaze.maze.MazeGenerationException;
@@ -12,17 +12,14 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Optional;
 
-
+/**
+ * Prints 3D maze to an output stream using ThreeJs file format.
+ */
 public class ThreeJs3DPrinter implements IMazePrinter {
 
     public ThreeJs3DPrinter(Model3d model) {
         this.model = model;
-    }
-
-    public ThreeJs3DPrinter() {
-        super();
     }
 
     @Override
@@ -48,14 +45,13 @@ public class ThreeJs3DPrinter implements IMazePrinter {
             }
             pw.print("]\n ");
             pw.print("}\n ");
-
         }
     }
 
     @Override
     public Point2DInt get2dCanvasSize() {
-        assert false: "3d mazes have no canvas";
-        return new Point2DInt(0,0);
+        assert false : "3d mazes have no canvas";
+        return new Point2DInt(0, 0);
     }
 
     private void printFace(PrintWriter pw, MFace face) {
@@ -90,7 +86,6 @@ public class ThreeJs3DPrinter implements IMazePrinter {
     }
 
     private Model3d model;
-
 
     private boolean skipComma = true;
 }

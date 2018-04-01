@@ -1,5 +1,5 @@
 package com.github.sladecek.maze.jmaze.maze;
-
+//REV1
 import com.github.sladecek.maze.jmaze.generator.DepthFirstMazeGenerator;
 import com.github.sladecek.maze.jmaze.generator.IMazeGenerator;
 import com.github.sladecek.maze.jmaze.geometry.Point2DInt;

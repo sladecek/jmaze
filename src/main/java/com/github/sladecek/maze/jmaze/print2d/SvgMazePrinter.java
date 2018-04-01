@@ -1,5 +1,5 @@
 package com.github.sladecek.maze.jmaze.print2d;
-
+//REV1
 import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 import com.github.sladecek.maze.jmaze.print.IMazePrinter;
 import com.github.sladecek.maze.jmaze.print.MazeOutputFormat;
@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 /*
- * Print 2D maze to SVG or PDF. 
+ * Print 2D maze to SVG or PDF. Transforms a SVG documents into output stream. Uses batik SVG library.
  */
 public final class SvgMazePrinter implements IMazePrinter
 {
@@ -35,8 +35,6 @@ public final class SvgMazePrinter implements IMazePrinter
         this.shapes = shapes;
         printStyle.configureFromProperties(properties);
     }
-
-
 
     @Override
     public void print(OutputStream stream) throws IOException, MazeGenerationException {
@@ -88,8 +86,6 @@ public final class SvgMazePrinter implements IMazePrinter
         }
         return sd;
     }
-
-
 
     private final PrintStyle printStyle = new PrintStyle();
     private Point2DInt canvasSize;

@@ -1,5 +1,5 @@
 package com.github.sladecek.maze.jmaze.properties;
-
+//REV1
 /**
  * Option importance.
  */

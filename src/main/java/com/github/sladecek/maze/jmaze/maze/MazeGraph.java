@@ -1,5 +1,5 @@
 package com.github.sladecek.maze.jmaze.maze;
-
+//REV1
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -59,9 +59,9 @@ public class MazeGraph implements IMazeGraph {
         return startRoom;
     }
 
- 
+
     public final void setStartRoom(final int startRoom) {
-        LOGGER.log(Level.FINE, "setStartRoom "+startRoom);
+        LOGGER.log(Level.FINE, "setStartRoom " + startRoom);
         this.startRoom = startRoom;
     }
 
@@ -71,7 +71,7 @@ public class MazeGraph implements IMazeGraph {
     }
 
     public final void setTargetRoom(final int targetRoom) {
-        LOGGER.log(Level.FINE, "setTargetRoom "+targetRoom);
+        LOGGER.log(Level.FINE, "setTargetRoom " + targetRoom);
         this.targetRoom = targetRoom;
     }
 
@@ -97,13 +97,11 @@ public class MazeGraph implements IMazeGraph {
     }
 
     private static final Logger LOGGER = Logger.getLogger("maze");
-
-    private int startRoom;
-    private int targetRoom;
-
     private final ArrayList<ArrayList<Integer>> rooms = new ArrayList<>();
     private final ArrayList<Integer> wallRoom1 = new ArrayList<>();
     private final ArrayList<Integer> wallRoom2 = new ArrayList<>();
     private final ArrayList<Integer> wallProbabilityWeight = new ArrayList<>();
+    private int startRoom;
+    private int targetRoom;
 
 }

@@ -1,11 +1,11 @@
 package com.github.sladecek.maze.jmaze.print3d.output;
-
+//REV1
 import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 import com.github.sladecek.maze.jmaze.geometry.Point3D;
+import com.github.sladecek.maze.jmaze.print.IMazePrinter;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MFace;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MPoint;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.Model3d;
-import com.github.sladecek.maze.jmaze.print.IMazePrinter;
 
 import java.io.OutputStream;
 import java.io.PrintWriter;
@@ -21,8 +21,6 @@ public class StlMazePrinter implements IMazePrinter {
     public StlMazePrinter(Model3d model) {
         this.model = model;
     }
-
-    private final Model3d model;
 
     @Override
     public void print(OutputStream f) {
@@ -41,7 +39,8 @@ public class StlMazePrinter implements IMazePrinter {
 
     @Override
     public Point2DInt get2dCanvasSize() {
-        return null;
+        assert false : "3d mazes have no canvas";
+        return new Point2DInt(0, 0);
     }
 
     private void printFace(PrintWriter pw, MFace face) {
@@ -71,4 +70,6 @@ public class StlMazePrinter implements IMazePrinter {
         Point3D p = pt1.getCoordinate();
         pw.printf("vertex %.6f %.6f %.6f\n", p.getX(), p.getY(), p.getZ());
     }
+
+    private final Model3d model;
 }

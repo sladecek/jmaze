@@ -1,5 +1,5 @@
 package com.github.sladecek.maze.jmaze.print2d;
-
+//REV1
 import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 import com.github.sladecek.maze.jmaze.shapes.ShapeContext;
 import org.apache.batik.dom.svg.SVGDOMImplementation;
@@ -7,6 +7,9 @@ import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+/**
+ * SVG document created by printing a maze in 2D. Uses batik SVG library.
+ */
 public class SvgDocument implements I2DDocument {
 
     public SvgDocument(ShapeContext context) {

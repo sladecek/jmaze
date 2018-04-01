@@ -6,9 +6,9 @@ import com.github.sladecek.maze.jmaze.properties.MazeDescription;
 import com.github.sladecek.maze.jmaze.properties.MazeProperties;
 
 import java.util.logging.*;
-
+//REV1
 /**
- * Generate any maze..
+ * Main program.
  */
 class MazeApp {
 
@@ -17,7 +17,7 @@ class MazeApp {
     }
 
     /**
-     * Prints a maze in all possible formats.
+     * Prints maze in all possible formats.
      */
     private void printTestMaze(String[] args) {
         System.setProperty("java.util.logging.SimpleFormatter.format",
@@ -40,7 +40,7 @@ class MazeApp {
             final String mazeType = argumentParser.getMazeType();
             MazeDescription description = AllMazeTypes.findByName(mazeType);
             if (description == null) {
-                System.out.println("Unknown maze type '"+mazeType+"' . Known typoes are: "+AllMazeTypes.listOfNamesAsString());
+                System.out.println("Unknown maze type '"+mazeType+"' . Known types are: "+AllMazeTypes.listOfNamesAsString());
                 return;
             }
 

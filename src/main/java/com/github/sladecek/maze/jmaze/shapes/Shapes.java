@@ -15,8 +15,7 @@ public final class Shapes {
     public Shapes(boolean isPolar, int h, int w, int margin) {
         this.context = new ShapeContext(isPolar, h, w, margin);
     }
-
-
+    
     public Shapes applyRealization(MazePath realization) {
         Shapes result = new Shapes(context);
 
