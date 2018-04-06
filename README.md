@@ -248,6 +248,8 @@ Generic 3D model, in the `generic3dmodel` sub-directory, can describe
 the boundary of any three dimensional solid using points, edges and
 faces.
 
+![3D Generic Model](readme_images/point_edge_face.png?raw=true "3D Generic Model")
+
 The generic 3D model is further refined by the `maze3dmodel`
 package. This package defines special types of faces such as `MPillar`
 for corners of maze rooms, `MWall` for maze walls, and `MRoom` for the
@@ -259,6 +261,9 @@ The 3D model is created from the 2D shape model by the
 `ModelFromShapes` class. This class first creates pillars from room
 corners using `PillarMakerClass`. Then it connects the pillars to make
 walls and finally assigns floor identifiers to room floors.
+
+
+![Extrusion](readme_images/extrusion.png?raw=true "Extrusion")
 
 Each maze is first created on the floor plane. There are three kinds
 of faces in the floor - room faces, wall faces and corner (pillar)
