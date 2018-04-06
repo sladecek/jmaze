@@ -1,14 +1,14 @@
 package com.github.sladecek.maze.jmaze.print3d;
-
+//REV1
 import com.github.sladecek.maze.jmaze.geometry.Point2DDbl;
 import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 import com.github.sladecek.maze.jmaze.geometry.Point3D;
+import com.github.sladecek.maze.jmaze.print.PrintStyle;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MBlock;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MFace;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MPoint;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.Model3d;
 import com.github.sladecek.maze.jmaze.print3d.maze3dmodel.*;
-import com.github.sladecek.maze.jmaze.print.PrintStyle;
 import com.github.sladecek.maze.jmaze.shapes.FloorShape;
 import com.github.sladecek.maze.jmaze.shapes.Shapes;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
@@ -17,7 +17,7 @@ import com.github.sladecek.maze.jmaze.shapes.WallType;
 import java.util.*;
 
 /**
- * Creates model from shapes
+ * Creates 3D model from 2D shapes.
  */
 @SuppressWarnings("SameParameterValue")
 public class ModelFromShapes {
@@ -195,6 +195,7 @@ public class ModelFromShapes {
             }
         }
     }
+
     private final double wallSize;
     private final Shapes shapes;
 

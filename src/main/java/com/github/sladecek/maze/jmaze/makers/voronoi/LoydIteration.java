@@ -1,4 +1,5 @@
 package com.github.sladecek.maze.jmaze.makers.voronoi;
+//REV1
 
 import be.humphreys.simplevoronoi.GraphEdge;
 import be.humphreys.simplevoronoi.Polygon;
@@ -8,8 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Loyd iterative algorithm. Works on a set of points in a rectangle. Makes the
- * distribution o points smoother by replacing every point with a centroid of
+ * Loyd iterative algorithm works on a set of points in a rectangle. Makes the
+ * distribution o points smoother by repeatedly replacing every point with a centroid of
  * its Voronoi rectangle.
  */
 class LoydIteration {
@@ -54,7 +55,7 @@ class LoydIteration {
     }
 
     private final PointsInRectangle input;
-    private PointsInRectangle output;
     private final int numberOfIterations;
+    private PointsInRectangle output;
 
 }

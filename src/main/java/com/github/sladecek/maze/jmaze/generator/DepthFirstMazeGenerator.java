@@ -1,13 +1,13 @@
 package com.github.sladecek.maze.jmaze.generator;
+//REV1
+import com.github.sladecek.maze.jmaze.maze.IMazeGraph;
 
+import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.Random;
 import java.util.Stack;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import com.github.sladecek.maze.jmaze.maze.IMazeGraph;
 
 /*
  * Generates random maze opening walls by random walk in a depth first order.
@@ -20,7 +20,7 @@ public final class DepthFirstMazeGenerator implements IMazeGenerator {
     }
 
     @Override
-    public MazePath generatePick(final IMazeGraph graph) {
+    public MazePath generateRandomSetOfWalls(final IMazeGraph graph) {
         MazePath result = new MazePath(graph.getWallCount(), graph.getStartRoom(), graph.getTargetRoom());
         ArrayList<Integer> solution = null;
         int allRoomsCnt = graph.getRoomCount();
@@ -73,7 +73,7 @@ public final class DepthFirstMazeGenerator implements IMazeGenerator {
     }
 
     private ArrayList<Integer> findAllPossibleNextRooms(final IMazeGraph mazeGraph,
-                                                     final MazePath real, final int room) {
+                                                        final MazePath real, final int room) {
         ArrayList<Integer> candidates = new ArrayList<>();
         for (int wall : mazeGraph.getWalls(room)) {
             if (real.isWallClosed(wall)) {

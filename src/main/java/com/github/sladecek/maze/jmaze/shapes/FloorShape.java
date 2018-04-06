@@ -36,7 +36,6 @@ public class FloorShape implements IMazeShape {
 
     @Override
     public void applyPath(MazePath mr) {
-
         isHole = wallId >= 0 && !mr.isWallClosed(wallId);
     }
 

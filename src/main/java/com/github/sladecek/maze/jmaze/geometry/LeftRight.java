@@ -1,5 +1,5 @@
 package com.github.sladecek.maze.jmaze.geometry;
-
+//REV1
 /**
  * Left/Right dichotomy.
  */

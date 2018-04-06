@@ -1,5 +1,5 @@
 package com.github.sladecek.maze.jmaze.print3d.maze3dmodel;
-
+//REV1
 import com.github.sladecek.maze.jmaze.geometry.LeftRight;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MEdge;
 
@@ -10,8 +10,6 @@ import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MEdge;
  */
 public class MWall extends FloorFace {
 
-    private static int glId = 0;
-    private int id = 0;
     public MWall() {
         id = glId++;
     }
@@ -82,17 +80,17 @@ public class MWall extends FloorFace {
         return 1000 * y + x;
     }
 
-
     @Override
     public String toString() {
-        return "MWall["+id+"]{" +
+        return "MWall[" + id + "]{" +
                 "e1=" + e1 +
                 ", e3=" + e3 +
                 ", e2=" + e2 +
                 ", e4=" + e4 +
                 '}';
     }
-
+    private static int glId = 0;
+    private int id = 0;
     private MEdge e1;
     private MEdge e3;
     private MEdge e2;

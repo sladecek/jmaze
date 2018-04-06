@@ -1,5 +1,5 @@
 package com.github.sladecek.maze.jmaze.shapes;
-
+//REV1
 import com.github.sladecek.maze.jmaze.generator.MazePath;
 
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ public final class Shapes {
     public Shapes(boolean isPolar, int h, int w, int margin) {
         this.context = new ShapeContext(isPolar, h, w, margin);
     }
-    
+
     public Shapes applyRealization(MazePath realization) {
         Shapes result = new Shapes(context);
 
@@ -38,7 +38,10 @@ public final class Shapes {
         shapes.add(s);
     }
 
-    public int length() { return shapes.size(); }
+    public int length() {
+        return shapes.size();
+    }
+
     private final ShapeContext context;
 
 

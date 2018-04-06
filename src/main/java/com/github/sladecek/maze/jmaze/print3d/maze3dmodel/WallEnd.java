@@ -1,4 +1,5 @@
 package com.github.sladecek.maze.jmaze.print3d.maze3dmodel;
+//REV1
 
 import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MEdge;
@@ -31,7 +32,6 @@ public class WallEnd implements Comparable<WallEnd> {
      * Returns on of the points of the mWall.
      *
      * @param whichPoint if 'true' returns the rear point (p1). If 'false' returns the front point (p2).
-
      */
     private Point2DInt getPoint(boolean whichPoint) {
         if (whichPoint) {

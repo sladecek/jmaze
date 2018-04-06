@@ -1,4 +1,5 @@
 package com.github.sladecek.maze.jmaze.geometry;
+//REV1
 
 /**
  * Point in 3D.
@@ -16,6 +17,14 @@ public final class Point3D {
     public static Point3D midpoint(Point3D p1, Point3D p2) {
         return new Point3D((p1.x + p2.x) / 2, (p1.y + p2.y) / 2,
                 (p1.z + p2.z) / 2);
+    }
+
+    public static double computeDistance(Point3D p1, Point3D p2) {
+        return Math.sqrt(
+                Math.pow(p1.getX() - p2.getX(), 2) +
+                        Math.pow(p1.getY() - p2.getY(), 2) +
+                        Math.pow(p1.getZ() - p2.getZ(), 2)
+        );
     }
 
     public double getX() {
@@ -45,14 +54,6 @@ public final class Point3D {
     @Override
     public String toString() {
         return "Point [x=" + x + ", y=" + y + ", z=" + z + "]";
-    }
-
-    public static double computeDistance(Point3D p1, Point3D p2) {
-        return Math.sqrt(
-                Math.pow(p1.getX()-p2.getX(), 2)+
-                Math.pow(p1.getY()-p2.getY(), 2)+
-                Math.pow(p1.getZ()-p2.getZ(), 2)
-        );
     }
     private double x;
     private double y;

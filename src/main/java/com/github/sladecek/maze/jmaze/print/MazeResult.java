@@ -1,9 +1,9 @@
 package com.github.sladecek.maze.jmaze.print;
-
+//REV1
 import java.io.Serializable;
 
 /**
- * Result of maze generation.
+ * Result of maze generation. Can be saved to a file or used by web application.
  */
 public class MazeResult implements Serializable {
 

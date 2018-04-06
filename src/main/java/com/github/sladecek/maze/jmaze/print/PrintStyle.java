@@ -1,8 +1,11 @@
 package com.github.sladecek.maze.jmaze.print;
-
+//REV1
 import com.github.sladecek.maze.jmaze.print.Color;
 import com.github.sladecek.maze.jmaze.properties.MazeProperties;
 
+/**
+ * Printout properties.
+ */
 public final class PrintStyle {
 
     public void configureFromProperties(MazeProperties properties) {

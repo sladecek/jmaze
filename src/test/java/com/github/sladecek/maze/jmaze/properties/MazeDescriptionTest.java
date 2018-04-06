@@ -1,6 +1,6 @@
 package com.github.sladecek.maze.jmaze.properties;
 
-import com.github.sladecek.maze.jmaze.makers.spheric.EllipsoidMazeDescription;
+import com.github.sladecek.maze.jmaze.makers.spherical.EllipsoidMazeDescription;
 import org.junit.Before;
 import org.junit.Test;
 

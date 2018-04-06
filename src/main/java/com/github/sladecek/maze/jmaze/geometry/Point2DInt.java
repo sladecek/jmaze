@@ -1,10 +1,10 @@
 package com.github.sladecek.maze.jmaze.geometry;
-
+//REV1
 /**
  * 2D point either in rectangular or polar coordinates. In case of polar coordinates, x is used for
  * angle, y for diameter. Coordinates are integer.
  */
-public final class Point2DInt implements  Comparable<Point2DInt> {
+public final class Point2DInt implements Comparable<Point2DInt> {
     public Point2DInt(int x, int y) {
         super();
         this.x = x;
@@ -46,7 +46,7 @@ public final class Point2DInt implements  Comparable<Point2DInt> {
     }
 
     public Point2DDbl toDouble() {
-        return new Point2DDbl(x,y);
+        return new Point2DDbl(x, y);
     }
 
     public static final int ANGLE_2PI = 0x1000000;

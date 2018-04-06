@@ -1,5 +1,5 @@
 package com.github.sladecek.maze.jmaze.maze;
-
+//REV1
 import com.github.sladecek.maze.jmaze.generator.MazePath;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.Model3d;
 import com.github.sladecek.maze.jmaze.properties.MazeProperties;
@@ -11,13 +11,6 @@ import java.util.Random;
  * Data structures for maze representation.
  */
 public class MazeData {
-
-    /**
-     * Set properties for concrete maze such as size or colors.
-     */
-    public void setProperties(MazeProperties value) {
-        properties = value;
-    }
 
     public MazeGraph getGraph() {
         return graph;
@@ -39,12 +32,12 @@ public class MazeData {
         return properties;
     }
 
-    protected MazeProperties properties;
-
-    protected Random randomGenerator;
-
-    protected final MazeGraph graph = new MazeGraph();
-    protected Shapes allShapes;
+    /**
+     * Set properties for concrete maze such as size or colors.
+     */
+    public void setProperties(MazeProperties value) {
+        properties = value;
+    }
 
     public Random getRandomGenerator() {
         return randomGenerator;
@@ -53,7 +46,10 @@ public class MazeData {
     public MazePath getPath() {
         return path;
     }
-
+    protected final MazeGraph graph = new MazeGraph();
+    protected MazeProperties properties;
+    protected Random randomGenerator;
+    protected Shapes allShapes;
     Shapes pathShapes;
     MazePath path;
     Model3d model3d;

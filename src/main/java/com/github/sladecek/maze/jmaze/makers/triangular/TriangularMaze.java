@@ -1,16 +1,17 @@
 package com.github.sladecek.maze.jmaze.makers.triangular;
-
+//REV1
 import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 import com.github.sladecek.maze.jmaze.maze.Maze;
-
 import com.github.sladecek.maze.jmaze.print3d.IMaze3DMapper;
-import com.github.sladecek.maze.jmaze.shapes.*;
+import com.github.sladecek.maze.jmaze.shapes.FloorShape;
+import com.github.sladecek.maze.jmaze.shapes.MarkShape;
+import com.github.sladecek.maze.jmaze.shapes.Shapes;
+import com.github.sladecek.maze.jmaze.shapes.WallShape;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class TriangularMaze extends Maze {
-
 
     @Override
     public void buildMazeGraphAndShapes() {
@@ -36,8 +37,6 @@ public class TriangularMaze extends Maze {
                 myFirst = rowBuilder.getMyFirst();
                 prevFirst = rowBuilder.getPrevFirst();
                 lastRoom = rowBuilder.getLastRoom();
-
-
             } else {
                 prevFirst = myFirst;
             }
@@ -54,7 +53,6 @@ public class TriangularMaze extends Maze {
                     i += 2;
                 }
             }
-
         }
 
         getGraph().setStartRoom(0);
@@ -67,13 +65,12 @@ public class TriangularMaze extends Maze {
     }
 
 
-
     private void addWallAndWallShape(int roomLeft, int roomRight, int x1, int x2,
                                      int y1, int y2) {
 
         final Point2DInt p1 = new Point2DInt(rsx * x1, rsy * y1);
         final Point2DInt p2 = new Point2DInt(rsx * x2, rsy * y2);
-        LOGGER.log(Level.FINE,"addWallAndWallShape roomRight=" + roomRight + " roomLeft=" +
+        LOGGER.log(Level.FINE, "addWallAndWallShape roomRight=" + roomRight + " roomLeft=" +
                 roomLeft + " y1=" + y1 + " y2=" + y2 + " x1=" + x1 + " x2=" + x2);
 
         if (roomRight >= 0 && roomLeft >= 0) {
@@ -133,7 +130,7 @@ public class TriangularMaze extends Maze {
                         myFirst = r;
                     }
                     lastRoom = r;
-                    LOGGER.log(Level.FINE,"addRoom " + r + " y=" + y + " j=" + j + " prevRoom=" + prevRoom +
+                    LOGGER.log(Level.FINE, "addRoom " + r + " y=" + y + " j=" + j + " prevRoom=" + prevRoom +
                             " myFirst=" + myFirst + " prevFirst=" + prevFirst + " lastRoom=" + lastRoom);
 
 
@@ -154,11 +151,11 @@ public class TriangularMaze extends Maze {
             return this;
         }
 
+        private final int y;
+        private final int roomsInRow;
         private int prevFirst;
         private int lastRoom;
         private int myFirst;
-        private final int y;
-        private final int roomsInRow;
         private int prevRoom;
     }
 

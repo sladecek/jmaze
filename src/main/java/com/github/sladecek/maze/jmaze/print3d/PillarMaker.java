@@ -1,5 +1,5 @@
 package com.github.sladecek.maze.jmaze.print3d;
-
+//REV1
 import com.github.sladecek.maze.jmaze.geometry.Point2DDbl;
 import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 import com.github.sladecek.maze.jmaze.geometry.Point3D;
@@ -8,8 +8,10 @@ import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MPoint;
 import com.github.sladecek.maze.jmaze.print3d.maze3dmodel.*;
 import com.github.sladecek.maze.jmaze.shapes.WallType;
 
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -45,9 +47,9 @@ public class PillarMaker {
     }
 
     private void sortWalls() {
-        LOG.log(Level.FINE,"sorting walls of "+ getBase().getCenter());
-        for(WallEnd we: unsortedWalls) {
-            LOG.log(Level.FINE," "+we);
+        LOG.log(Level.FINE, "sorting walls of " + getBase().getCenter());
+        for (WallEnd we : unsortedWalls) {
+            LOG.log(Level.FINE, " " + we);
         }
 
         walls = new ArrayList<>();
@@ -117,7 +119,7 @@ public class PillarMaker {
         double py2 = k2 * s2 - dy2;
         assert Math.abs(px - px2) < 0.000001 : "PillarMaker intersection solutions not equal x";
         assert Math.abs(py - py2) < 0.000001 : "PillarMaker intersection solutions not equal y";
-        assert(Altitude.GROUND.getValue() == 0) : "Assuming that ground altitude is zero)";
+        assert (Altitude.GROUND.getValue() == 0) : "Assuming that ground altitude is zero)";
         return new Point3D(px + center.getX(), py + center.getY(), Altitude.GROUND.getValue());
     }
 
@@ -139,28 +141,24 @@ public class PillarMaker {
     }
 
     private Optional<WallEnd> findTheOtherWallInTheSameRoom(WallEnd current) {
-        LOG.log(Level.FINE,".....findTheOtherWallInTheSameRoom  current="+current.getWallShape()+" leftFaceId="+current.getLeftFaceId()+" p1Pillar="+current.isP1Pillar());
+        LOG.log(Level.FINE, ".....findTheOtherWallInTheSameRoom  current=" + current.getWallShape() + " leftFaceId=" + current.getLeftFaceId() + " p1Pillar=" + current.isP1Pillar());
         for (WallEnd b : unsortedWalls) {
-            LOG.log(Level.FINE,"........b="+b.getWallShape()+" rightFaceId="+b.getRightFaceId()+" p1Pillar="+b.isP1Pillar());
+            LOG.log(Level.FINE, "........b=" + b.getWallShape() + " rightFaceId=" + b.getRightFaceId() + " p1Pillar=" + b.isP1Pillar());
             if (current.getLeftFaceId() == b.getRightFaceId()) {
                 return Optional.of(b);
             }
         }
         return Optional.empty();
     }
-
+    private static final Logger LOG = Logger.getLogger("maze");
     private final ILocalCoordinateSystem cs;
-
     private final List<WallEnd> wallEnds;
     private final LinkedList<WallEnd> unsortedWalls;
     private final Point2DDbl center;
     private final double wallWidthInMm;
-    private MPillar base;
-    private ArrayList<WallEnd> walls;
     private final ArrayList<RoomCorner> corners = new ArrayList<>();
     private final ArrayList<MPoint> intersections = new ArrayList<>();
-
-
-    private static final Logger LOG = Logger.getLogger("maze");
+    private MPillar base;
+    private ArrayList<WallEnd> walls;
 
 }

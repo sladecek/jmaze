@@ -48,7 +48,7 @@ public abstract class Maze extends MazeData implements IMaze {
 
     private void randomlyGenerateMazePath() {
         IMazeGenerator g = new DepthFirstMazeGenerator(randomGenerator);
-        path = g.generatePick(getGraph());
+        path = g.generateRandomSetOfWalls(getGraph());
         pathShapes = getAllShapes().applyRealization(path);
     }
 

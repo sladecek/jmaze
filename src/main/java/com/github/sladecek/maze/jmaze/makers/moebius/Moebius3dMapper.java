@@ -1,5 +1,5 @@
 package com.github.sladecek.maze.jmaze.makers.moebius;
-
+//REV1
 import com.github.sladecek.maze.jmaze.geometry.Point2DDbl;
 import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 import com.github.sladecek.maze.jmaze.geometry.Point3D;
@@ -31,12 +31,12 @@ public final class Moebius3dMapper extends ConfigurableAltitudes implements IMaz
         if (sizeAlong % 2 != 0) {
             throw new IllegalArgumentException("Moebius maze must have even number of cells.");
         }
-        
-        if (sizeAlong <= 0 || sizeAcross <= 0 || cellSize <= 0 || wallThickness <= 0 ) {
+
+        if (sizeAlong <= 0 || sizeAcross <= 0 || cellSize <= 0 || wallThickness <= 0) {
             throw new IllegalArgumentException("Maze sizes must be positive.");
         }
-        
-        if (wallThickness > cellSize/2) {
+
+        if (wallThickness > cellSize / 2) {
             throw new IllegalArgumentException("Maze walls are too thick.");
         }
 
@@ -67,6 +67,17 @@ public final class Moebius3dMapper extends ConfigurableAltitudes implements IMaz
         return (alt != Altitude.FRAME) && (alt != Altitude.GROUND);
     }
 
+    public double getLength() {
+        return length;
+    }
+
+    public double getCellStep() {
+        return cellStep;
+    }
+
+    public MoebiusStripGeometry getGeometry() {
+        return geometry;
+    }
 
     class MoebiusLocalCoordinateSystem implements ILocalCoordinateSystem {
         MoebiusLocalCoordinateSystem(Point2DInt center, int maxX) {
@@ -91,20 +102,6 @@ public final class Moebius3dMapper extends ConfigurableAltitudes implements IMaz
         private final Point2DInt center;
         private final double maxX;
     }
-
-
-    public double getLength() {
-        return length;
-    }
-
-    public double getCellStep() {
-        return cellStep;
-    }
-
-    public MoebiusStripGeometry getGeometry() {
-        return geometry;
-    }
-
     private final int sizeAcross;
     private final int sizeAlong;
     private final double length;

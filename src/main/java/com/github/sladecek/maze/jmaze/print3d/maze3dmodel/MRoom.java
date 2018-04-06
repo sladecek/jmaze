@@ -1,5 +1,5 @@
 package com.github.sladecek.maze.jmaze.print3d.maze3dmodel;
-
+//REV1
 
 import com.github.sladecek.maze.jmaze.geometry.LeftRight;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MEdge;
@@ -29,13 +29,13 @@ public class MRoom extends FloorFace {
      * Assigns face id to the edges.
      */
     public void finishEdges() {
-        LOG.log(Level.FINE,"finishingEdges of " + this);
+        LOG.log(Level.FINE, "finishingEdges of " + this);
         if (corners.isEmpty()) {
             return;
         }
         Set<RoomCorner> unfinished = new HashSet<>(corners);
         for (RoomCorner rc : unfinished) {
-            LOG.log(Level.FINE,"  " + rc);
+            LOG.log(Level.FINE, "  " + rc);
         }
 
         RoomCorner current = corners.get(0);

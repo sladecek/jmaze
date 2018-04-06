@@ -1,5 +1,5 @@
 package com.github.sladecek.maze.jmaze.print3d.maze3dmodel;
-
+//REV1
 import com.github.sladecek.maze.jmaze.geometry.Point2DDbl;
 import com.github.sladecek.maze.jmaze.print3d.generic3dmodel.MPoint;
 
@@ -17,10 +17,6 @@ public class MPillar extends FloorFace {
         this.intersections = intersections;
     }
 
-    public void setCenter(Point2DDbl center) {
-        this.center = center;
-    }
-
     @Override
     public String toString() {
         return "MPillar{" +
@@ -29,10 +25,13 @@ public class MPillar extends FloorFace {
                 '}';
     }
 
-    private ArrayList<MPoint> intersections = new ArrayList<>();
-    private Point2DDbl center = new Point2DDbl(0,0);
-
     public Point2DDbl getCenter() {
         return center;
     }
+
+    public void setCenter(Point2DDbl center) {
+        this.center = center;
+    }
+    private ArrayList<MPoint> intersections = new ArrayList<>();
+    private Point2DDbl center = new Point2DDbl(0, 0);
 }

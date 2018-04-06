@@ -1,5 +1,9 @@
 package com.github.sladecek.maze.jmaze.print;
+//REV1
 
+/**
+ * Output formats for maze printout.
+ */
 public enum MazeOutputFormat {
 	svg, pdf, json2d, json3d , stl, scad;
 

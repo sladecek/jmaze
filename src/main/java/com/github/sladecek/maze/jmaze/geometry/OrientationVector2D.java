@@ -1,7 +1,7 @@
 package com.github.sladecek.maze.jmaze.geometry;
-
+//REV1
 /*
- * Two dimensional vector.
+ * Two dimensional free vector (without origin).
  */
 public final class OrientationVector2D {
 

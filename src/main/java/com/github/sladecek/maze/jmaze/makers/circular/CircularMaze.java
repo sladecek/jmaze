@@ -1,5 +1,5 @@
 package com.github.sladecek.maze.jmaze.makers.circular;
-
+//REV1
 import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 import com.github.sladecek.maze.jmaze.maze.Maze;
 import com.github.sladecek.maze.jmaze.print3d.IMaze3DMapper;
@@ -22,31 +22,29 @@ public class CircularMaze extends Maze {
     public CircularMaze() {
     }
 
+    public void buildMazeGraphAndShapes() {
+        layerCount = properties.getInt("layerCount");
+        margin = properties.getInt("margin");
+        computeRoomCounts();
+        firstRoomInLayer = new ArrayList<>();
+        for (int i = 0; i < layerCount; i++) {
+            firstRoomInLayer.add(-1);
+        }
 
-   public void buildMazeGraphAndShapes() {
-       layerCount = properties.getInt("layerCount");
-       margin = properties.getInt("margin");
-       computeRoomCounts();
-       firstRoomInLayer = new ArrayList<>();
-       for (int i = 0; i < layerCount; i++) {
-           firstRoomInLayer.add(-1);
-       }
+        createShapeCollection();
 
-       createModel();
+        generateRooms();
+        generateConcentricWalls();
+        generateRadialWalls();
+        generateOuterWalls();
+        setStartAndTargetRooms();
+    }
 
-       generateRooms();
-       generateConcentricWalls();
-       generateRadialWalls();
-       generateOuterWalls();
-       setStartAndTargetRooms();
-   }
-
-   @Override
-   public IMaze3DMapper create3DMapper() {
-       // Cannot be printed in 3D yet.
-       return null;
-   }
-
+    @Override
+    public IMaze3DMapper create3DMapper() {
+        // Cannot be printed in 3D yet.
+        return null;
+    }
 
     private void computeRoomCounts() {
         roomCounts = new ArrayList<>();
@@ -76,7 +74,6 @@ public class CircularMaze extends Maze {
         }
         assert roomCounts.size() == layerCount;
         assert roomCountRatio.size() == layerCount;
-
     }
 
     private int computeRadius(int i) {
@@ -85,7 +82,7 @@ public class CircularMaze extends Maze {
         return zeroLayerRadius + i * layerSize;
     }
 
-    private void createModel() {
+    private void createShapeCollection() {
         final int rMax = computeRadius(layerCount);
         final int height = 2 * rMax;
         final int width = 2 * rMax;

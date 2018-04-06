@@ -1,9 +1,9 @@
 package com.github.sladecek.maze.jmaze.generator;
-
-import java.util.BitSet;
-import java.util.ArrayList;
-
+//REV1
 import com.github.sladecek.maze.jmaze.util.BitSetIntervalPrinter;
+
+import java.util.ArrayList;
+import java.util.BitSet;
 
 /**
  * Defines concrete maze by picking opened walls among all possible walls in the maze. This also contains solution.
@@ -43,11 +43,6 @@ public final class MazePath {
         isWallClosed.set(0, isWallClosed.size(), true);
     }
 
-    private BitSet isWallClosed;
-    private final int wallCount;
-
-    private ArrayList<Integer> solution = new ArrayList<>();
-
     public int getStartRoom() {
         return startRoom;
     }
@@ -55,9 +50,10 @@ public final class MazePath {
     public int getTargetRoom() {
         return targetRoom;
     }
-
+    private final int wallCount;
     private final int startRoom;
     private final int targetRoom;
-
+    private BitSet isWallClosed;
+    private ArrayList<Integer> solution = new ArrayList<>();
 
 }

@@ -1,7 +1,7 @@
 package com.github.sladecek.maze.jmaze.makers.rectangular;
-
-import com.github.sladecek.maze.jmaze.properties.MazeOption;
+//REV1
 import com.github.sladecek.maze.jmaze.properties.MazeDescription;
+import com.github.sladecek.maze.jmaze.properties.MazeOption;
 
 import java.util.ResourceBundle;
 

@@ -1,13 +1,29 @@
 package com.github.sladecek.maze.jmaze.shapes;
-
+//REV1
 import com.github.sladecek.maze.jmaze.generator.MazePath;
 import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
-import com.github.sladecek.maze.jmaze.print2d.I2DDocument;
 import com.github.sladecek.maze.jmaze.print.PrintStyle;
+import com.github.sladecek.maze.jmaze.print2d.I2DDocument;
 
+/**
+ * Wall shape describes a wall in 2D space.
+ */
 @SuppressWarnings("HardCodedStringLiteral")
 public final class WallShape implements IPrintableMazeShape2D {
 
+
+    WallShape(int wallId, WallType type, Point2DInt p1, Point2DInt p2, int rightFaceId, int leftFaceId) {
+        if (type == WallType.innerWall && wallId < 0) {
+            throw new IllegalArgumentException("Inner wall must have positive wallId.");
+        }
+
+        this.wallId = wallId;
+        this.wallType = type;
+        this.p1 = p1;
+        this.p2 = p2;
+        this.rightFaceId = rightFaceId;
+        this.leftFaceId = leftFaceId;
+    }
 
     public static WallShape newInnerWall(int wallId, Point2DInt p1, Point2DInt p2) {
         return new WallShape(wallId, WallType.innerWall, p1, p2, -1, -1);
@@ -28,20 +44,6 @@ public final class WallShape implements IPrintableMazeShape2D {
     public int getWallId() {
         return wallId;
     }
-
-    WallShape(int wallId, WallType type, Point2DInt p1, Point2DInt p2, int rightFaceId, int leftFaceId) {
-        if (type == WallType.innerWall && wallId < 0) {
-            throw new IllegalArgumentException("Inner wall must have positive wallId.");
-        }
-
-        this.wallId = wallId;
-        this.wallType = type;
-        this.p1 = p1;
-        this.p2 = p2;
-        this.rightFaceId = rightFaceId;
-        this.leftFaceId = leftFaceId;
-    }
-
 
     @Override
     public void print2D(I2DDocument doc, PrintStyle printStyle) {
@@ -121,17 +123,20 @@ public final class WallShape implements IPrintableMazeShape2D {
         }
     }
 
-    public Point2DInt getP1() { return p1; }
-    public Point2DInt getP2() { return p2; }
+    public Point2DInt getP1() {
+        return p1;
+    }
 
-
-    private Point2DInt p1;
-    private Point2DInt p2;
+    public Point2DInt getP2() {
+        return p2;
+    }
 
     public WallType getWallType() {
         return wallType;
     }
 
+    private Point2DInt p1;
+    private Point2DInt p2;
     private WallType wallType;
     private int wallId;
     private int rightFaceId = -1;

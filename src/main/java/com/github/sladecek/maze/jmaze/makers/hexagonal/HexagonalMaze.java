@@ -1,11 +1,9 @@
 package com.github.sladecek.maze.jmaze.makers.hexagonal;
-
+//REV1
 import com.github.sladecek.maze.jmaze.geometry.Point2DInt;
 import com.github.sladecek.maze.jmaze.maze.Maze;
-
 import com.github.sladecek.maze.jmaze.print3d.IMaze3DMapper;
 import com.github.sladecek.maze.jmaze.shapes.MarkShape;
-
 import com.github.sladecek.maze.jmaze.shapes.Shapes;
 import com.github.sladecek.maze.jmaze.shapes.WallShape;
 
@@ -15,26 +13,8 @@ import java.util.logging.Logger;
 
 public class HexagonalMaze extends Maze {
 
-    private int size;
-
-
-public HexagonalMaze() {
-
-}
-
-    // Radius of the hexagon.
-    private static final int hP = 20;
-
-    /// Half-height of the hexagon
-    private static final int hH = (int) Math.floor(hP * Math.sqrt(3f) / 2f);
-
-    // parameters of six walls of a hexagon
-    // walls numbered counterclockwise, starting at upper room
-    private static final int[] wallXOffs = {hP / 2, -hP / 2, -hP, -hP / 2, hP / 2, hP};
-    private static final int[] wallYOffs = {-hH, -hH, 0, hH, hH, 0};
-    private static final int[] neighborRoomX = {0, -1, -1, 0, 1, 1};
-    private static final int[] neighborRoomYOdd = {-1, 0, 1, 1, 1, 0};
-    private static final int[] neighborRoomYEven = {-1, -1, 0, 1, 0, -1};
+    public HexagonalMaze() {
+    }
 
     @Override
     public void buildMazeGraphAndShapes() {
@@ -57,7 +37,7 @@ public HexagonalMaze() {
 
                 Point2DInt center = computeRoomCenter(x, isOdd, y);
 
-                LOGGER.log(Level.FINE,"addRoom " + r + " y=" + y + " x=" + x + " center=" + center);
+                LOGGER.log(Level.FINE, "addRoom " + r + " y=" + y + " x=" + x + " center=" + center);
 
                 makeFloor(r, center);
 
@@ -149,7 +129,18 @@ public HexagonalMaze() {
     public int getSize() {
         return size;
     }
-
-    private int margin;
+    // Radius of the hexagon.
+    private static final int hP = 20;
+    /// Half-height of the hexagon
+    private static final int hH = (int) Math.floor(hP * Math.sqrt(3f) / 2f);
+    // parameters of six walls of a hexagon
+    // walls numbered counterclockwise, starting at upper room
+    private static final int[] wallXOffs = {hP / 2, -hP / 2, -hP, -hP / 2, hP / 2, hP};
+    private static final int[] wallYOffs = {-hH, -hH, 0, hH, hH, 0};
+    private static final int[] neighborRoomX = {0, -1, -1, 0, 1, 1};
+    private static final int[] neighborRoomYOdd = {-1, 0, 1, 1, 1, 0};
+    private static final int[] neighborRoomYEven = {-1, -1, 0, 1, 0, -1};
     private static final Logger LOGGER = Logger.getLogger("maze");
+    private int size;
+    private int margin;
 }

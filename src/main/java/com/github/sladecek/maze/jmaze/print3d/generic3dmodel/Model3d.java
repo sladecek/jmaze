@@ -1,13 +1,12 @@
 package com.github.sladecek.maze.jmaze.print3d.generic3dmodel;
-
-
+//REV1
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
 /**
- * Complete 3d maze model.
+ * Complete 3D maze model.
  */
 public class Model3d implements IModel3d {
 
@@ -70,12 +69,6 @@ public class Model3d implements IModel3d {
         this.name = name;
     }
 
-    private String name = "";
-    private final ArrayList<MPoint> points = new ArrayList<>();
-    private final ArrayList<MEdge> edges = new ArrayList<>();
-    private final ArrayList<MFace> faces = new ArrayList<>();
-    private final ArrayList<MBlock> blocks = new ArrayList<>();
-
     @Override
     public String toString() {
         return "Model3d{" +
@@ -90,7 +83,12 @@ public class Model3d implements IModel3d {
     private String facesToString() {
         return faces
                 .stream()
-                .map(f->"   "+f.toString())
+                .map(f -> "   " + f.toString())
                 .collect(Collectors.joining("\n"));
     }
+    private final ArrayList<MPoint> points = new ArrayList<>();
+    private final ArrayList<MEdge> edges = new ArrayList<>();
+    private final ArrayList<MFace> faces = new ArrayList<>();
+    private final ArrayList<MBlock> blocks = new ArrayList<>();
+    private String name = "";
 }

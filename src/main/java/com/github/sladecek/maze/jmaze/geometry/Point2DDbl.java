@@ -1,5 +1,5 @@
 package com.github.sladecek.maze.jmaze.geometry;
-
+//REV1
 /**
  * Point in 2D - real number coordinates.
  */
@@ -13,7 +13,9 @@ public final class Point2DDbl {
 
     public Point2DDbl(Point2DDbl image) {
         this(image.getX(), image.getY());
-    }public double getX() {
+    }
+
+    public double getX() {
         return x;
     }
 

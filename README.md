@@ -168,9 +168,9 @@ A|equatorCells| 8| 2| 64 |
 For each generated maze type, there is a package in the directory
 `makers`. For example, rectangular mazes are implemented in the
 `makers.rectangular` package and triangular mazes in the
-`makers.triangular` package. The shperic and ellipsoid mazes are just
+`makers.triangular` package. The spherical and ellipsoid mazes are just
 a special case of the egg-shaped maze, they share the package
-`makes.spheric`. All other packages in the projects are shared 
+`makers.spherical`. All other packages in the projects are shared 
 between all maze types.
 
 Each maker package contains at least the maker class derived from
@@ -204,7 +204,7 @@ interface `IMazeGraph` with concrete implementation in the class
 
 Each concrete maze maker builds a maze with all rooms and walls. Such
 maze is of course useless - there is no path between start and target
-because all rooms are completelly surrounded by walls.. Therefore a
+because all rooms are completely surrounded by walls.. Therefore a
 random generator (`IMazeGenerator` in package `generators`) must
 remove certain walls to make the puzzle solvable with an unique
 solution. The generator creates `MazePath` object containing both the
@@ -223,7 +223,7 @@ Not only must be the maze generated, it should also be
 printed. Therefore each room and wall must have geometric coordinates
 assigned in the process of maze making. In case of planar (2D)
 mazes, the rooms can be drawn to screen or paper in a straightforward
-way. Three-dimensonal mazes such as Möebius or spheric mazes are not
+way. Three-dimensional mazes such as Möbius or spherical mazes are not
 so simple. Their planar coordinates make sense only in certain region
 of the maze and several maze regions must be cleverly glued together
 when printing the maze. The `ILocalCoordinateSystem` interface is
@@ -233,7 +233,7 @@ The classes related to the planar coordinates are defined in the
 `shapes` package. They depend on general geometric objects such as
 points and directions which are defined in the `geometry` package.
 
-Planar coordinates may be either cartesian (*x*, *y*, used by most
+Planar coordinates may be either Cartesian (*x*, *y*, used by most
 maze types) or polar (radius and angle, used by circular maze only).
 Each maze maker generates a collection (class `Shapes`) of shapes such
 as walls and floors. Certain part of shape information, such as canvas
@@ -242,39 +242,53 @@ stored in the collection `ShapeContext`.
 
 ### 3D Model
 
-3d printing classes are organised in the `3dprint` package. 
+3d printing classes are organized in the `3dprint` package. 
 
-Generic 3D model, in the `generic3dmodel` subdirectory, can describe
+Generic 3D model, in the `generic3dmodel` sub-directory, can describe
 the boundary of any three dimensional solid using points, edges and
 faces.
 
 The generic 3D model is further refined by the `maze3dmodel`
-package. This package defines special types of faces and blocks.
+package. This package defines special types of faces such as `MPillar`
+for corners of maze rooms, `MWall` for maze walls, and `MRoom` for the
+inside floor of the room. All these faces are derived from `FloorFace`
+class. There are two auxiliary classes `WallEnd` and `RoomCorner`
+which function as joining classes for relations between 3D objects.
+
+The 3D model is created from the 2D shape model by the
+`ModelFromShapes` class. This class first creates pillars from room
+corners using `PillarMakerClass`. Then it connects the pillars to make
+walls and finally assigns floor identifiers to room floors.
 
 Each maze is first created on the floor plane. There are three kinds
 of faces in the floor - room faces, wall faces and corner (pillar)
 faces. Then the floor faces are elevated (extruded) to required height
 (altitude).  Floor faces remain on the base altitude. Pillar bases are
 extruded into pillars. Open wall remain in the base altitude; closed
-walls get extruded.
+walls get extruded. There is the `TelescopicPoint` class which
+contains the data for extrusion. The telescopic point initially
+represents one point in 2D. When the maze gets extruded, a telescopic
+point is either moved to a proper altitude or converted into several
+points at different altitudes. The extrusion is implemented in the
+`VerticalFaceMaker` class.
 
 Then the planar coordinates are converted into 3-D coordinates with
 respect to peculiarities of particular maze type. There is an
 interface `IMaze3DMapper` implemented in each maze maker package. The
 local coordinate system created by a `IMaze3DMapper` is represented by
 the interface `ILocalCoordinateSystem`. There exists special
-coordinate systems for Möbius and sperical mazes. Any planar maze can
+coordinate systems for Möbius and spherical mazes. Any planar maze can
 be transformed into 3D maze using the `TrivialCoordinateSystem` which
 only 
 
 When all vertices, edges and faces of maze boundary model are created,
 they can be converted to any particular 3D file format. Currently, the
-library generates STL files and javascript representation suitable for
-the ThreeJS library.  The converters live in the `print3d.output` package.
+library generates STL files and JavaScript representation suitable for
+the Three-JS library.  The converters live in the `print3d.output` package.
 
 For solid modeling (SCAD modeling tools), the boundary model is not
 sufficient. It is necessary to create solid model of all blocks
-(pillars, walls, floors) created during extrussion using the `MBlock`
+(pillars, walls, floors) created during extrusion using the `MBlock`
 objects.
 
 ### 2D Printing
